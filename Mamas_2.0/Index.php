@@ -10,10 +10,7 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <title>Material Design for Bootstrap</title>
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="css/all.css">
-        <!-- Google Fonts Roboto -->
-        <link rel="stylesheet" href="css/css">
+
         <!-- Bootstrap core CSS -->
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <!-- Material Design Bootstrap -->
@@ -34,9 +31,6 @@ and open the template in the editor.
                 background-color: #ef5350 !important;
             }
         </style>
-        <style type="text/css">/* Chart.js */
-            @-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}</style></head>
-
 </head>
 <body>
     <?php
