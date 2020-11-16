@@ -9,7 +9,7 @@ and open the template in the editor.
 
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Material Design for Bootstrap</title>
+        <title>Mamás 2.0</title>
 
         <!-- Bootstrap core CSS -->
         <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -17,105 +17,71 @@ and open the template in the editor.
         <link rel="stylesheet" href="css/mdb.min.css">
         <!-- Your custom styles (optional) -->
         <link rel="stylesheet" href="css/style.css">
-        <style>
-            body {
-                background-color: #2e2e2e;
-            }
-            .text-poppy-red {
-                color: #ef5350 !important;
-            }
-            .btn-poppy-red {
-                background-color: #ef5350 !important;
-            }
-            .bg-poppy-red {
-                background-color: #ef5350 !important;
-            }
-        </style>
-</head>
-<body>
-    <?php
-    // put your code here
-    ?>
-    <!-- Material form login -->
-    <div class="card">
-
-        <h5 class="card-header info-color white-text text-center py-4">
-            <strong>Sign in</strong>
-        </h5>
-
-        <!--Card content-->
-        <div class="card-body px-lg-5 pt-0">
-
-            <!-- Form -->
-            <form class="text-center" style="color: #757575;" action="#!">
-
-                <!-- Email -->
-                <div class="md-form">
-                    <input type="email" id="materialLoginFormEmail" class="form-control">
-                    <label for="materialLoginFormEmail">E-mail</label>
-                </div>
-
-                <!-- Password -->
-                <div class="md-form">
-                    <input type="password" id="materialLoginFormPassword" class="form-control">
-                    <label for="materialLoginFormPassword">Password</label>
-                </div>
-
-                <div class="d-flex justify-content-around">
-                    <div>
-                        <!-- Remember me -->
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="materialLoginFormRemember">
-                            <label class="form-check-label" for="materialLoginFormRemember">Remember me</label>
+    </head>
+    <body>
+        <?php
+        // put your code here
+        ?>
+        <!-- Material form login -->
+        <header>
+            <div class="d-flex justify-content-center align-items-center portada mt-5">
+                <div class="container">
+                    <!--Grid row-->
+                    <div class="row row fadeIn">
+                        <!--Grid column-->
+                        <div class="col-md-12 mb-4 white-text text-center wow fadeIn">
+                            <!--IMG-->
+                            <img src="img/logo.png" height="230px"/>
+                            <h3 class="display-3 font-weight-bold white-text">Mamás 2.0</h3>
+                            <hr class="hr-light my-4 w-75">
+                            <h4 class="subtext-header mt-2 mb-4">Hoy en día el aprendizaje no conoce barreras. Accede al aula virtual o haz un 
+                                recorrido para que conozcas su funcionamiento</h4>
+                            <a href="Vistas/Login.php" class="btn btn-rounded btn-outline-white">
+                                <i class="fa fa-home"></i> Acceder
+                            </a>
                         </div>
                     </div>
-                    <div>
-                        <!-- Forgot password -->
-                        <a href="">Forgot password?</a>
-                    </div>
                 </div>
+            </div>
+        </header>
+        
+        <!-- Footer -->
+        <footer class="page-footer font-small  rgba-indigo-light pt-4 mt-5 fixed-bottom">
+            
+            <!-- Footer Elements -->
+            <div class="container">
+                <!-- Call to action -->
+                <ul class="list-unstyled list-inline text-center py-2">
+                    <li class="list-inline-item">
+                        <h5 class="mb-1">Registrate aquí</h5>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#!" class="btn btn-outline-white btn-rounded">Registrate!</a>
+                    </li>
+                </ul>
+                <!-- Call to action -->
+            </div>
+            <!-- Footer Elements -->
 
-                <!-- Sign in button -->
-                <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Sign in</button>
+            <!-- Copyright -->
+            <div class="footer-copyright text-center py-3">© 2020 Copyright:
+                <a href="https://mdbootstrap.com/"> Israel y María</a>
+            </div>
+            <!-- Copyright -->
 
-                <!-- Register -->
-                <p>Not a member?
-                    <a href="">Register</a>
-                </p>
+        </footer>
+        <!-- Footer -->
 
-                <!-- Social login -->
-                <p>or sign in with:</p>
-                <a type="button" class="btn-floating btn-fb btn-sm">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <a type="button" class="btn-floating btn-tw btn-sm">
-                    <i class="fab fa-twitter"></i>
-                </a>
-                <a type="button" class="btn-floating btn-li btn-sm">
-                    <i class="fab fa-linkedin-in"></i>
-                </a>
-                <a type="button" class="btn-floating btn-git btn-sm">
-                    <i class="fab fa-github"></i>
-                </a>
+        <!-- jQuery -->
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <!-- Bootstrap tooltips -->
+        <script type="text/javascript" src="js/popper.min.js"></script>
+        <!-- Bootstrap core JavaScript -->
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <!-- MDB core JavaScript -->
+        <script type="text/javascript" src="js/mdb.min.js"></script>
+        <!-- Your custom scripts (optional) -->
+        <script type="text/javascript"></script>
 
-            </form>
-            <!-- Form -->
-
-        </div>
-
-    </div>
-    <!-- Material form login -->
-
-    <!-- jQuery -->
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="js/popper.min.js"></script>
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="js/mdb.min.js"></script>
-    <!-- Your custom scripts (optional) -->
-    <script type="text/javascript"></script>
-
-</body>
+    </body>
 </html>
