@@ -16,7 +16,7 @@ and open the template in the editor.
         <!-- Your custom styles (optional) -->
         <link rel="stylesheet" href="../css/style.css">
     </head>
-    <body>
+    <body onload="login()">
 
         <div class="container my-5 px-0 z-depth-1">
             <!--Section: Content-->
@@ -32,19 +32,20 @@ and open the template in the editor.
                                 <div class="card-body">
 
                                     <!-- Form -->
-                                    <form class="text-center" style="color: #757575;" action="../Controlador/controlador.php" method="POST">
+                                    <form class="text-center needs-validation" style="color: #757575;" action="../Controlador/controlador.php" method="POST" novalidate>
 
                                         <h3 class="font-weight-bold my-4 pb-2 text-center dark-grey-text display-4">Log in</h3>
 
-                                        <!-- email -->
                                         <div class="md-form">
-                                            <input type="email" id="email" name="email" class="form-control mb-4">
+                                            <input type="email" id="email" name="email" class="form-control mb-4" required>
                                             <label  for="email">E-mail</label>
+
                                         </div>
                                         <!-- password -->
                                         <div class="md-form">
-                                            <input type="password" id="password" name="password" class="form-control">
+                                            <input type="password" id="password" name="password" class="form-control" required>
                                             <label for="password">Password</label>
+
                                         </div>
                                         <?php
                                         session_start();
@@ -59,7 +60,7 @@ and open the template in the editor.
                                             <button type="submit" name="login"  class="btn mean-fruit-gradient text-white btn-block btn-rounded my-4 waves-effect z-depth-1a">Log in</button>
                                         </div>
                                         <small id="olvidado" class="form-text text-right">
-                                            <a href="" style="color: #D681E8">¿Contraseña olvidada?</a>
+                                            <a href="../Vistas/olvidado.php" style="color: #D681E8">¿Contraseña olvidada?</a>
                                         </small>
                                     </form>
                                 </div>
@@ -78,6 +79,7 @@ and open the template in the editor.
         <!-- MDB core JavaScript -->
         <script type="text/javascript" src="../js/mdb.min.js"></script>
         <!-- Your custom scripts (optional) -->
-        <script type="text/javascript"></script>
+        <script type="text/javascript" src="../js/validar.js">
+        </script>
     </body>
 </html>
