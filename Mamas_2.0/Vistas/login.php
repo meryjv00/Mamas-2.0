@@ -8,79 +8,68 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <title></title>
+
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="../css/bootstrap.min.css">
+        <!-- Material Design Bootstrap -->
+        <link rel="stylesheet" href="../css/mdb.min.css">
+        <!-- Your custom styles (optional) -->
+        <link rel="stylesheet" href="../css/style.css">
     </head>
     <body>
         <?php
         // put your code here
         ?>
-        <!-- Material form login -->
-<div class="card">
+        <div class="container my-5 px-0 z-depth-1">
+            <!--Section: Content-->
+            <section class="p-5 my-md-5 text-center">
+                <div class="my-5 mx-md-5">
 
-  <h5 class="card-header info-color white-text text-center py-4">
-    <strong>Sign in</strong>
-  </h5>
+                    <div class="row">
+                        <div class="col-md-8 mx-auto">
+                            <!-- Material form login -->
+                            <div class="card" style="border: 2px solid antiquewhite">
 
-  <!--Card content-->
-  <div class="card-body px-lg-5 pt-0">
+                                <!--Card content-->
+                                <div class="card-body">
 
-    <!-- Form -->
-    <form class="text-center" style="color: #757575;" action="#!">
+                                    <!-- Form -->
+                                    <form class="text-center" style="color: #757575;" action="../Controlador/controlador.php" method="POST">
 
-      <!-- Email -->
-      <div class="md-form">
-        <input type="email" id="materialLoginFormEmail" class="form-control">
-        <label for="materialLoginFormEmail">E-mail</label>
-      </div>
+                                        <h3 class="font-weight-bold my-4 pb-2 text-center dark-grey-text display-4">Log in</h3>
 
-      <!-- Password -->
-      <div class="md-form">
-        <input type="password" id="materialLoginFormPassword" class="form-control">
-        <label for="materialLoginFormPassword">Password</label>
-      </div>
+                                        <!-- email -->
+                                        <div class="md-form">
+                                            <input type="email" id="email" class="form-control mb-4">
+                                            <label  for="email">E-mail</label>
+                                        </div>
+                                        <!-- password -->
+                                        <div class="md-form">
+                                            <input type="password" id="password" class="form-control">
+                                            <label for="password">Password</label>
+                                        </div>
+                                        <small id="olvidado" class="form-text text-right">
+                                            <a href="" style="color: #D681E8">¿Contraseña olvidada?</a>
+                                        </small>
+                                        <div class="text-center mb-3 pl-5 pr-5">
+                                            <button type="button" class="btn mean-fruit-gradient text-white btn-block btn-rounded my-4 waves-effect z-depth-1a">Log in</button>
+                                        </div>
 
-      <div class="d-flex justify-content-around">
-        <div>
-          <!-- Remember me -->
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="materialLoginFormRemember">
-            <label class="form-check-label" for="materialLoginFormRemember">Remember me</label>
-          </div>
-        </div>
-        <div>
-          <!-- Forgot password -->
-          <a href="">Forgot password?</a>
-        </div>
-      </div>
-
-      <!-- Sign in button -->
-      <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Sign in</button>
-
-      <!-- Register -->
-      <p>Not a member?
-        <a href="">Register</a>
-      </p>
-
-      <!-- Social login -->
-      <p>or sign in with:</p>
-      <a type="button" class="btn-floating btn-fb btn-sm">
-        <i class="fab fa-facebook-f"></i>
-      </a>
-      <a type="button" class="btn-floating btn-tw btn-sm">
-        <i class="fab fa-twitter"></i>
-      </a>
-      <a type="button" class="btn-floating btn-li btn-sm">
-        <i class="fab fa-linkedin-in"></i>
-      </a>
-      <a type="button" class="btn-floating btn-git btn-sm">
-        <i class="fab fa-github"></i>
-      </a>
-
-    </form>
-    <!-- Form -->
-
-  </div>
-
-</div>
-<!-- Material form login -->
-    </body>
-</html>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        </section>
+                    </div>
+                    <!-- jQuery -->
+                    <script type="text/javascript" src="../js/jquery.min.js"></script>
+                    <!-- Bootstrap tooltips -->
+                    <script type="text/javascript" src="../js/popper.min.js"></script>
+                    <!-- Bootstrap core JavaScript -->
+                    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+                    <!-- MDB core JavaScript -->
+                    <script type="text/javascript" src="../js/mdb.min.js"></script>
+                    <!-- Your custom scripts (optional) -->
+                    <script type="text/javascript"></script>
+                    </body>
+                    </html>

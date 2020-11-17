@@ -32,7 +32,7 @@ and open the template in the editor.
                                     <!-- Form -->
                                     <form class="text-center" style="color: #757575;" action="../Controlador/controlador.php">
 
-                                        <h3 class="font-weight-bold my-4 pb-2 text-center display-4">Sign Up</h3>
+                                        <h3 class="font-weight-bold my-4 pb-2 text-center dark-grey-text display-4">Sign Up</h3>
 
                                         <!--Nombre y apellidos-->
                                         <div class="form-row">

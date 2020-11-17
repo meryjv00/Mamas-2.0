@@ -23,6 +23,7 @@ and open the template in the editor.
         // put your code here
         ?>
         <!-- Material form login -->
+
         <header>
             <div class="d-flex justify-content-center align-items-center portada">
                 <div class="container">
@@ -67,6 +68,7 @@ and open the template in the editor.
 
         </footer>
         <!-- Footer -->
+
 
         <!-- jQuery -->
         <script type="text/javascript" src="js/jquery.min.js"></script>
