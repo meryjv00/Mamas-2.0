@@ -38,12 +38,12 @@ and open the template in the editor.
 
                                         <!-- email -->
                                         <div class="md-form">
-                                            <input type="email" id="email" name="email" class="form-control mb-4">
+                                            <input type="email" id="email" name="email" class="form-control mb-4" required>
                                             <label  for="email">E-mail</label>
                                         </div>
                                         <!-- password -->
                                         <div class="md-form">
-                                            <input type="password" id="password" name="password" class="form-control">
+                                            <input type="password" id="password" name="password" class="form-control" required>
                                             <label for="password">Password</label>
                                         </div>
                                         <?php
