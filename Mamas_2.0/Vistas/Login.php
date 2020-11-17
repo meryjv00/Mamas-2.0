@@ -21,58 +21,48 @@ and open the template in the editor.
         <?php
         // put your code here
         ?>
-        <div class="container my-5 px-0 z-depth-1">
+        <div class="container my-5 px-0 z-depth-1 ">
 
             <!--Section: Content-->
-            <section class="p-5 my-md-5 text-center" 
+            <section class="p-5 my-md-5 text-center " >
+                <div class="col-md-6 mx-auto">
+                    <!-- Material form login -->
+                    <div class="card">
+
+                        <!--Card content-->
+                        <div class="card-body">
+
+                            <!-- Form -->
+                            <form class="text-center" style="color: #757575;" action="../Controlador/controlador.php" method="POST">
+
+                                <h3 class="font-weight-bold my-4 pb-2 text-center dark-grey-text">Log in</h3>
+
+                                <!-- email -->
 
 
-                     <form class="my-5 mx-md-5" action="">
+                                <div class="md-form">
+                                    <input type="email" id="email" class="form-control mb-4">
+                                    <label class="purple-text" for="email">e-mail</label>
+                                </div>
+                                <!-- password -->
+                                <div class="md-form">
+                                    <input type="password" id="password" class="form-control">
+                                    <label for="password">Contraseña</label>
+                                </div>
+                                <small id="olvidado" class="form-text text-right blue-text">
+                                    <a href="">¿Contraseña olvidada?</a>
+                                </small>
 
-                <div class="row">
-                    <div class="col-md-6 mx-auto">
-                        <!-- Material form login -->
-                        <div class="card">
+                                <div class="text-center">
+                                    <button type="submit" id="login" class="btn purple-gradient  my-4 waves-effect">Iniciar Sesion</button>
+                                </div>
 
-                            <!--Card content-->
-                            <div class="card-body">
-
-                                <!-- Form -->
-                                <form class="text-center" style="color: #757575;" action="#!">
-
-                                    <h3 class="font-weight-bold my-4 pb-2 text-center dark-grey-text">Log in</h3>
-
-                                    <!-- Name -->
-                                    <input type="email" id="password" class="form-control mb-4" placeholder="E-mail">
-
-                                    <!-- Email -->
-                                    <input type="password" id="email" class="form-control" placeholder="Contraseña">
-                                    <small id="passwordHelpBlock" class="form-text text-right blue-text">
-                                        <a href="">Recover Password</a>
-                                    </small>
-
-                                    <div class="text-center">
-                                        <button type="button" class="btn btn-outline-orange btn-rounded my-4 waves-effect">Iniciar Sesion</button>
-                                    </div>
-
-                                </form>
-                                <!-- Form -->
-
-                            </div>
-
+                            </form>
                         </div>
-                        <!-- Material form login -->
                     </div>
                 </div>
-
-                </form>
-
             </section>
-            <!--Section: Content-->
-
-
         </div>
-
         <!-- jQuery -->
         <script type="text/javascript" src="../js/jquery.min.js"></script>
         <!-- Bootstrap tooltips -->
