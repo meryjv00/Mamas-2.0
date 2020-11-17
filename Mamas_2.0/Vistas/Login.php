@@ -25,7 +25,7 @@ and open the template in the editor.
 
             <!--Section: Content-->
             <section class="p-5 my-md-5 text-center " >
-                <div class="col-md-6 mx-auto">
+                <div class="col-md-8 mx-auto">
                     <!-- Material form login -->
                     <div class="card">
 
@@ -42,19 +42,18 @@ and open the template in the editor.
 
                                 <div class="md-form">
                                     <input type="email" id="email" class="form-control mb-4">
-                                    <label class="purple-text" for="email">e-mail</label>
+                                    <label  for="email">e-mail</label>
                                 </div>
                                 <!-- password -->
                                 <div class="md-form">
                                     <input type="password" id="password" class="form-control">
                                     <label for="password">Contraseña</label>
                                 </div>
-                                <small id="olvidado" class="form-text text-right blue-text">
+                                <small id="olvidado" class="form-text text-right">
                                     <a href="">¿Contraseña olvidada?</a>
                                 </small>
-
-                                <div class="text-center">
-                                    <button type="submit" id="login" class="btn purple-gradient  my-4 waves-effect">Iniciar Sesion</button>
+                                <div class="text-center mb-3 pl-5 pr-5">
+                                    <button type="button" class="btn mean-fruit-gradient text-white btn-block btn-rounded my-4 waves-effect z-depth-1a">Log in</button>
                                 </div>
 
                             </form>

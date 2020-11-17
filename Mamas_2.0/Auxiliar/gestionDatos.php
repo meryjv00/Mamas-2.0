@@ -32,25 +32,52 @@ class gestionDatos {
     }
 
     //------------------------------------Consultas
-    static function getUsuario($usuario, $password) {
+    static function getUsuario($mail, $password) {
         session_start();
         self::conexion();
-        $stmt = self::$conexion->prepare("SELECT * FROM usuarios WHERE email= ? AND password= ?");
-        $stmt->bind_param("ss", $usuario, $password);
+        $activo = -1; // valor -1 para control de error en caso de consulta fallida. 
+        $stmt = self::$conexion->prepare("SELECT * FROM usuarios WHERE mail= ? AND contrasenia= ?");
+        $stmt->bind_param("ss", $mail, $password);
         if ($stmt->execute()) {
             $resultado = $stmt->get_result();
             var_dump($resultado);
             if ($fila = $resultado->fetch_assoc()) {
                 var_dump($fila);
-                $user = $fila['email'];
+                //obtenemos los datos  en variables individuales para la creacion del objeto usuario.
+                $email = $fila['mail'];
                 $nombre = $fila['nombre'];
-                $rol = $fila['rol'];
-                $p = new Usuario($user, $nombre, $rol);
+                $dni = $fila['dni'];
+                $apellidos = $fila['apellidos'];
+                $telefono = $fila['telefono'];
+                $activo = $fila['activo'];
+
+                $p = new Usuario($email, $dni, $nombre, $apellidos, $telefono);
                 $_SESSION['usuario'] = $p;
-                return true;
+                //almacenamos en sesion al usuario que ha realizado el Login.
+                return $activo; // devuelve  0 o 1 para ver en controlador si el usuario esta activado.
             }
         } else {
-            return false;
+            return $activo; //Devuelve -1 porque la consulta en BD fallo o la contraseña es erronea.
+        }
+        mysqli_close(self::$conexion);
+    }
+
+    static function getRol($email) {
+        self::conexion();
+        $rol = -1; // Asignamos -1 por defecto para controlar el error en obtencion de rol.
+        $stmt = self::$conexion->prepare("SELECT * FROM asignacionrol WHERE mail= ?");
+        $stmt->bind_param("s", $email); //EVITAMOS INYECCION SQL
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            var_dump($resultado);
+            if ($fila = $resultado->fetch_assoc()) {
+                var_dump($fila);
+                $rol = $fila['idRol'];
+                return $rol;
+            }
+        } else {
+            print "Fallo al obtener ROL en MySQL: " . mysqli_connect_error();
+            return $rol; // Devuelve -1 para controlar el error fuera de  la funcion.
         }
         mysqli_close(self::$conexion);
     }
