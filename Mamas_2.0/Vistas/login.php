@@ -61,8 +61,9 @@ and open the template in the editor.
                                         </div>
 
                                         <div class="modal-footer mx-5 pt-3 mb-1">
-                                            <span>Forgot password?
-                                                <a href="olvidado.php" style="color: #D681E8">Click here</a>
+                                            <span>
+                                                <a href="registro.php" style="color: #D681E8">Don't have an account?</a>
+                                                or <a href="olvidado.php" style="color: #D681E8">Forgot password?</a>
                                             </span>
                                         </div>
                                         
