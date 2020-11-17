@@ -22,7 +22,7 @@ and open the template in the editor.
                 <div class="my-5 mx-md-5">
 
                     <div class="row">
-                        <div class="col-md-6 mx-auto">
+                        <div class="col-md-8 mx-auto">
                             <!-- Material form login -->
                             <div class="card">
 
@@ -32,56 +32,61 @@ and open the template in the editor.
                                     <!-- Form -->
                                     <form class="text-center" style="color: #757575;" action="../Controlador/controlador.php">
 
-                                        <h3 class="font-weight-bold my-4 pb-2 text-center dark-grey-text">Sign In</h3>
+                                        <h3 class="font-weight-bold my-4 pb-2 text-center display-4">Sign Up</h3>
+
+                                        <!--Nombre y apellidos-->
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <!-- First name -->
+                                                <div class="md-form">
+                                                    <input type="text" id="nombre" name="nombre" class="form-control">
+                                                    <label for="nombre">First name</label>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <!-- Last name -->
+                                                <div class="md-form">
+                                                    <input type="text" id="lastname" name="apellido" class="form-control">
+                                                    <label for="apellido">Last name</label>
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         <!-- Email -->
-                                        <div class="md-form">
+                                        <div class="md-form mt-0">
                                             <input type="email" id="email" name="email" class="form-control mb-4">
-                                            <label for="email">E-mail *</label>
+                                            <label for="email">E-mail </label>
                                         </div>
 
                                         <!-- Dni -->
                                         <div class="md-form">
                                             <input type="text" id="dni" name="dni" class="form-control mb-4" >
-                                            <label for="dni">Dni *</label>
+                                            <label for="dni">Dni </label>
                                         </div>
 
-                                        <!-- Nombre -->
-                                        <div class="md-form">
-                                            <input type="text" id="name" name="name" class="form-control mb-4">
-                                            <label for="name">Name *</label>
-                                        </div>
-
-                                        <!-- Apellidos -->
-                                        <div class="md-form">
-                                            <input type="text" id="surnames" name="surnames" class="form-control mb-4">
-                                            <label for="surnames">Surnames *</label>
-                                        </div>
-
-                                        <!-- Nick -->
-                                        <div class="md-form">
-                                            <input type="text" id="nick" name="nick" class="form-control mb-4">
-                                            <label for="nick">Nick</label>
-                                        </div>
-                                        
                                         <!-- Tfno -->
                                         <div class="md-form">
-                                            <input type="text" id="phone" name="phone" class="form-control mb-4">
-                                            <label for="phone">Phone</label>
+                                            <input type="text" id="phone" name="tfno" class="form-control mb-4">
+                                            <label for="tfno">Phone number</label>
                                         </div>
 
                                         <!-- Pass -->
                                         <div class="md-form">
                                             <input type="password" id="pass" name="pass" class="form-control">
-                                            <label for="pass">Password *</label>
+                                            <label for="pass">Password </label>
                                         </div>
 
-                                        <div class="text-center">
-                                            <button type="button" class="btn purple-gradient btn-rounded my-4 waves-effect">Sign in</button>
+                                        <div class="text-center mb-3 pl-5 pr-5">
+                                            <button type="button" class="btn mean-fruit-gradient text-white btn-block btn-rounded my-4 
+                                                    waves-effect z-depth-1a">Sign up</button>
                                         </div>
-                                        <span>You already have an account?
-                                            <a href="inicio.php" class="text-secondary">Log in</a>
-                                        </span>
+                                        
+                                        <div class="modal-footer mx-5 pt-3 mb-1">
+                                            <span>Already have an account?
+                                                <a href="inicio.php" style="color: #D681E8">Sign in</a>
+                                            </span>
+                                        </div>
+
                                     </form>
                                     <!-- Form -->
 
