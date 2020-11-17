@@ -36,7 +36,7 @@ and open the template in the editor.
                             <hr class="hr-light my-4 w-75">
                             <h4 class="subtext-header mt-2 mb-4">Hoy en día el aprendizaje no conoce barreras. Accede al aula virtual o haz un 
                                 recorrido para que conozcas su funcionamiento</h4>
-                            <a href="Vistas/Login.php" class="btn btn-rounded btn-outline-white">
+                            <a href="Vistas/login.php" class="btn btn-rounded btn-outline-white">
                                 <i class="fa fa-home"></i> Acceder
                             </a>
                         </div>
@@ -52,7 +52,7 @@ and open the template in the editor.
                 <!-- Call to action -->
                 <ul class="list-unstyled list-inline text-center py-2">
                     <li class="list-inline-item">
-                        <a href="Vistas/Registro.php" class="btn btn-outline-white btn-rounded">Registrate aquí</a>
+                        <a href="Vistas/registro.php" class="btn btn-outline-white btn-rounded">Registrate aquí</a>
                     </li>
                 </ul>
                 <!-- Call to action -->
