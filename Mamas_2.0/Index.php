@@ -24,14 +24,14 @@ and open the template in the editor.
         ?>
         <!-- Material form login -->
         <header>
-            <div class="d-flex justify-content-center align-items-center portada mt-5">
+            <div class="d-flex justify-content-center align-items-center portada">
                 <div class="container">
                     <!--Grid row-->
                     <div class="row row fadeIn">
                         <!--Grid column-->
                         <div class="col-md-12 mb-4 white-text text-center wow fadeIn">
                             <!--IMG-->
-                            <img src="img/logo.png" height="230px"/>
+                            <img src="img/logo.png" height="200px"/>
                             <h3 class="display-3 font-weight-bold white-text">Mamás 2.0</h3>
                             <hr class="hr-light my-4 w-75">
                             <h4 class="subtext-header mt-2 mb-4">Hoy en día el aprendizaje no conoce barreras. Accede al aula virtual o haz un 
@@ -47,16 +47,12 @@ and open the template in the editor.
         
         <!-- Footer -->
         <footer class="page-footer font-small  rgba-indigo-light pt-4 mt-5 fixed-bottom">
-            
             <!-- Footer Elements -->
             <div class="container">
                 <!-- Call to action -->
                 <ul class="list-unstyled list-inline text-center py-2">
                     <li class="list-inline-item">
-                        <h5 class="mb-1">Registrate aquí</h5>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="#!" class="btn btn-outline-white btn-rounded">Registrate!</a>
+                        <a href="Vistas/Registro.php" class="btn btn-outline-white btn-rounded">Registrate aquí</a>
                     </li>
                 </ul>
                 <!-- Call to action -->
