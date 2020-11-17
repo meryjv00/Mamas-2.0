@@ -114,5 +114,6 @@ and open the template in the editor.
         <script type="text/javascript" src="../js/mdb.min.js"></script>
         <!-- Your custom scripts (optional) -->
         <script type="text/javascript"></script>
+
     </body>
 </html>
