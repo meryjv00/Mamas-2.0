@@ -113,4 +113,16 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
+    static function setPassword($email,$pass){
+        self::conexion();
+        $consulta = "UPDATE usuarios SET contrasenia ='" . $pass . "' WHERE mail='" . $email . "'";
+        if (self::$conexion->query($consulta)) {
+            $correcto = true;
+        } else {
+            $correcto = false;
+            echo "Error al establecer contraseña: " . self::$conexion->error . '<br/>';
+        }
+        return correcto;
+        mysqli_close(self::$conexion);
+    }
 }

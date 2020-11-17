@@ -7,7 +7,7 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title></title>
+        <title>Sign up</title>
         <!-- Bootstrap core CSS -->
         <link rel="stylesheet" href="../css/bootstrap.min.css">
         <!-- Material Design Bootstrap -->
