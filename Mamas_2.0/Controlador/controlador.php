@@ -37,3 +37,17 @@ if (isset($_REQUEST['login'])) {
         }
     }
 }
+
+//---------------REGISTRO
+if(isset($_REQUEST['registro'])){
+    $email = $_REQUEST['email'];
+    $dni = $_REQUEST['dni'];
+    $nombre = $_REQUEST['nombre'];
+    $apellidos = $_REQUEST['apellidos'];
+    $tfno = $_REQUEST['tfno'];
+    $pass = $_REQUEST['pass'];
+    if(!gestionDatos::insertUsuario($email,$dni,$nombre,$apellidos,$tfno,$pass)){
+        $mensaje = "No se ha podido insertar el usuario";
+    }
+    header('Location: ../Vistas/login.php');
+}

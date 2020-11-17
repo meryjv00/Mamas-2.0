@@ -39,51 +39,58 @@ and open the template in the editor.
                                             <div class="col">
                                                 <!-- First name -->
                                                 <div class="md-form">
-                                                    <input type="text" id="nombre" name="nombre" class="form-control">
+                                                    <input type="text" id="nombre" name="nombre" class="form-control" required>
                                                     <label for="nombre">First name</label>
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <!-- Last name -->
                                                 <div class="md-form">
-                                                    <input type="text" id="lastname" name="apellido" class="form-control">
-                                                    <label for="apellido">Last name</label>
+                                                    <input type="text" id="apellidos" name="apellidos" class="form-control" required>
+                                                    <label for="apellidos">Last name</label>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <!-- Email -->
                                         <div class="md-form mt-0">
-                                            <input type="email" id="email" name="email" class="form-control mb-4">
+                                            <input type="email" id="email" name="email" class="form-control mb-4" required>
                                             <label for="email">E-mail </label>
                                         </div>
 
                                         <!-- Dni -->
                                         <div class="md-form">
-                                            <input type="text" id="dni" name="dni" class="form-control mb-4" >
+                                            <input type="text" id="dni" name="dni" class="form-control mb-4" required>
                                             <label for="dni">Dni </label>
                                         </div>
 
                                         <!-- Tfno -->
                                         <div class="md-form">
-                                            <input type="text" id="phone" name="tfno" class="form-control mb-4">
+                                            <input type="text" id="tfno" name="tfno" class="form-control mb-4" required>
                                             <label for="tfno">Phone number</label>
                                         </div>
 
                                         <!-- Pass -->
                                         <div class="md-form">
-                                            <input type="password" id="pass" name="pass" class="form-control">
+                                            <input type="password" id="pass" name="pass" class="form-control" required>
                                             <label for="pass">Password </label>
                                         </div>
-
+                                        <?php
+                                        session_start();
+                                        if (isset($_SESSION['mensaje'])) {
+                                            $mensaje = $_SESSION['mensaje'];
+                                            echo $mensaje . '<br>';
+                                            unset($_SESSION['mensaje']);
+                                        }
+                                        ?>
                                         <div class="text-center mb-3 pl-5 pr-5">
-                                            <button type="button" class="btn mean-fruit-gradient text-white btn-block btn-rounded my-4 
-                                                    waves-effect z-depth-1a">Sign up</button>
+                                            <button type="submit" name="registro" class="btn mean-fruit-gradient text-white btn-block 
+                                                    btn-rounded my-4 waves-effect z-depth-1a">Sign up</button>
                                         </div>
                                         
                                         <div class="modal-footer mx-5 pt-3 mb-1">
                                             <span>Already have an account?
-                                                <a href="inicio.php" style="color: #D681E8">Sign in</a>
+                                                <a href="login.php" style="color: #D681E8">Sign in</a>
                                             </span>
                                         </div>
 
