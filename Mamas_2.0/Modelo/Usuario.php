@@ -23,13 +23,13 @@ class Usuario {
     private $roles;
 
     //-----------------------CONSTRUCTOR
-    function __construct($email, $dni, $nombre, $apellidos, $telefono, $activo) {
+    function __construct($email, $dni, $nombre, $apellidos, $telefono) {
         $this->email = $email;
         $this->dni = $dni;
         $this->nombre = $nombre;
         $this->apellidos = $apellidos;
         $this->telefono = $telefono;
-        $this->activo = $activo;
+        //$this->activo = $activo;
         $this->roles = Array();
     }
 
