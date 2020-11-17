@@ -55,11 +55,11 @@ class gestionDatos {
                 $_SESSION['usuario'] = $p;
                 //almacenamos en sesion al usuario que ha realizado el Login.
                 return $activo; // devuelve  0 o 1 para ver en controlador si el usuario esta activado.
+            } else {
+                return $activo; //Devuelve -1 porque la consulta en BD fallo o la contraseña es erronea.
             }
-        } else {
-            return $activo; //Devuelve -1 porque la consulta en BD fallo o la contraseña es erronea.
+            mysqli_close(self::$conexion);
         }
-        mysqli_close(self::$conexion);
     }
 
     static function getRol($email) {
