@@ -19,6 +19,7 @@ class gestionDatos {
     static private $conexion;
 
     static function conexion() {
+        //self::$conexion = mysqli_connect('localhost', 'usuario', 'Chubaca2020', 'desafio2');
         self::$conexion = mysqli_connect('localhost', 'Maria', 'Chubaca2020', 'desafio2');
         print "Conexión realizada de forma procedimental: " . mysqli_get_server_info(self::$conexion) . "<br/>";
         if (mysqli_connect_errno(self::$conexion)) {
@@ -84,17 +85,21 @@ class gestionDatos {
 
     static function isUsuario($email) {
         self::conexion();
-        $consulta = "SELECT * FROM usuarios WHERE mail='" . $email . "'";
-        if ($resultado = self::$conexion->query($consulta)) {
+        $stmt = self::$conexion->prepare("SELECT * FROM usuarios WHERE mail= ?");
+        $stmt->bind_param("s", $email);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            var_dump($resultado);
             if ($fila = $resultado->fetch_assoc()) {
+
                 $existe = true;
+            } else {
+                echo "Error al encontrar usuario: " . self::$conexion->error . '<br/>';
+                $existe = false;
             }
-        } else {
-            echo "Error al encontrar usuario: " . self::$conexion->error . '<br/>';
-            $existe = false;
+            return $existe;
+            mysqli_close(self::$conexion);
         }
-        return $existe;
-        mysqli_close(self::$conexion);
     }
 
     static function insertUsuario($email, $dni, $nombre, $apellidos, $tfno, $pass) {
@@ -113,7 +118,7 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
-    static function setPassword($email,$pass){
+    static function setPassword($email, $pass) {
         self::conexion();
         $consulta = "UPDATE usuarios SET contrasenia ='" . $pass . "' WHERE mail='" . $email . "'";
         if (self::$conexion->query($consulta)) {
@@ -125,4 +130,5 @@ class gestionDatos {
         return correcto;
         mysqli_close(self::$conexion);
     }
+
 }

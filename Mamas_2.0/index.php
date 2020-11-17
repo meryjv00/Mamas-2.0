@@ -19,7 +19,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
-       
+
         <!-- Material form login -->
 
         <header>
@@ -59,8 +59,8 @@ and open the template in the editor.
             <!-- Footer Elements -->
 
             <!-- Copyright -->
-            <div class="footer-copyright text-center py-3">© 2020 Copyright:
-                <a href="https://mdbootstrap.com/"> Israel y María</a>
+            <div class="footer-copyright text-center py-3"><a href="https://github.com/meryjv00/Mamas-2.0"> © 2020 Copyright:</a>
+                <a href="https://github.com/TP01AB"> Israel</a> y <a href="https://github.com/meryjv00">María</a>
             </div>
             <!-- Copyright -->
 

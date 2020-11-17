@@ -10,7 +10,7 @@ session_start();
 //---------------LOGIN
 if (isset($_REQUEST['login'])) {
     $email = $_REQUEST['email'];
-    $password = $_REQUEST['password'];
+    $password = md5($_REQUEST['password']);
     $activo = gestionDatos::getUsuario($email, $password);
     if ($activo == -1) {
         $mensaje = 'Error al realizar el Login.';
@@ -45,13 +45,13 @@ if (isset($_REQUEST['registro'])) {
     $nombre = $_REQUEST['nombre'];
     $apellidos = $_REQUEST['apellidos'];
     $tfno = $_REQUEST['tfno'];
-    $pass = $_REQUEST['pass'];
+    $pass = md5($_REQUEST['pass']);
     if (!gestionDatos::isUsuario($email)) {
         if (!gestionDatos::insertUsuario($email, $dni, $nombre, $apellidos, $tfno, $pass)) {
             $mensaje = "No se ha podido insertar el usuario";
             $_SESSION['mensaje'] = $mensaje;
             header('Location: ../Vistas/registro.php');
-        }else{
+        } else {
             $mensaje = "¡Cuenta creada!";
             $_SESSION['mensaje'] = $mensaje;
             header('Location: ../Vistas/login.php');
@@ -61,6 +61,4 @@ if (isset($_REQUEST['registro'])) {
         $_SESSION['mensaje'] = $mensaje;
         header('Location: ../Vistas/registro.php');
     }
-
-    
 }

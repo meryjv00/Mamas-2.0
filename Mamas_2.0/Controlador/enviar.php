@@ -16,11 +16,11 @@ and open the template in the editor.
         use PHPMailer\PHPMailer\PHPMailer;
         use PHPMailer\PHPMailer\SMTP;
 
-        require_once '../phpmailer/src/Exception.php';
+require_once '../phpmailer/src/Exception.php';
         require_once '../phpmailer/src/PHPMailer.php';
         require_once '../phpmailer/src/SMTP.php';
         require_once '../Auxiliar/gestionDatos.php';
-        
+
         $emailDestino = $_REQUEST['email'];
 
         $mail = new PHPMailer();
@@ -46,13 +46,12 @@ and open the template in the editor.
 
             $mail->send();
 
-            if (gestionDatos::setPassword($emailDestino, $az)) {
+            if (gestionDatos::setPassword($emailDestino, md5($az))) {
                 $_SESSION['mensaje'] = 'Correo enviado';
             } else {
                 $_SESSION['mensaje'] = 'No se ha podido establecer la contraseña';
             }
             header('Location: ../Vistas/login.php');
-            
         } catch (Exception $e) {
             $_SESSION['mensaje'] = 'No se ha podido enviar el correo';
         }
