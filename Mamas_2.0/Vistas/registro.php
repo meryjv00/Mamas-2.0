@@ -16,7 +16,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="../css/style.css">
     </head>
     <body>
-        <div class="container my-5 px-0 z-depth-2">
+        <div class="container my-5 px-0 z-depth-1">
             <!--Section: Content-->
             <section class="p-5 my-md-5 text-center">
                 <div class="my-5 mx-md-5">
@@ -24,7 +24,7 @@ and open the template in the editor.
                     <div class="row">
                         <div class="col-md-8 mx-auto">
                             <!-- Material form login -->
-                            <div class="card">
+                            <div class="card" style="border: 2px solid antiquewhite">
 
                                 <!--Card content-->
                                 <div class="card-body">
