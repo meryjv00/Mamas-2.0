@@ -80,7 +80,7 @@ and open the template in the editor.
                                             <button type="button" class="btn mean-fruit-gradient text-white btn-block btn-rounded my-4 
                                                     waves-effect z-depth-1a">Sign up</button>
                                         </div>
-                                        
+
                                         <div class="modal-footer mx-5 pt-3 mb-1">
                                             <span>Already have an account?
                                                 <a href="inicio.php" style="color: #D681E8">Sign in</a>

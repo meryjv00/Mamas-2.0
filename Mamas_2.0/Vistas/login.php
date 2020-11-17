@@ -36,15 +36,15 @@ and open the template in the editor.
 
                                         <h3 class="font-weight-bold my-4 pb-2 text-center dark-grey-text display-4">Log in</h3>
 
-                                        <div class="md-form">
+                                        <div class="md-form form-group">
                                             <input type="email" id="email" name="email" class="form-control mb-4" required>
-                                            <label  for="email">E-mail</label>
+                                            <label class="form-control-label" for="email">E-mail</label>
 
                                         </div>
                                         <!-- password -->
-                                        <div class="md-form">
+                                        <div class="md-form form-group">
                                             <input type="password" id="password" name="password" class="form-control" required>
-                                            <label for="password">Password</label>
+                                            <label class="form-control-label"  for="password">Password</label>
 
                                         </div>
                                         <?php

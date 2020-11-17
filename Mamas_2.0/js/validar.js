@@ -17,8 +17,9 @@ function login() {
                     event.preventDefault();
                     event.stopPropagation();
                 }
-                form.classList.add('was-validated');
+                form.classList.add('has-success');
             }, false);
         });
     }, false);
+
 }
