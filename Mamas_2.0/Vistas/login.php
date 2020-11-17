@@ -17,9 +17,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="../css/style.css">
     </head>
     <body>
-        <?php
-        // put your code here
-        ?>
+
         <div class="container my-5 px-0 z-depth-1">
             <!--Section: Content-->
             <section class="p-5 my-md-5 text-center">
@@ -40,21 +38,29 @@ and open the template in the editor.
 
                                         <!-- email -->
                                         <div class="md-form">
-                                            <input type="email" id="email" class="form-control mb-4">
+                                            <input type="email" id="email" name="email" class="form-control mb-4">
                                             <label  for="email">E-mail</label>
                                         </div>
                                         <!-- password -->
                                         <div class="md-form">
-                                            <input type="password" id="password" class="form-control">
+                                            <input type="password" id="password" name="password" class="form-control">
                                             <label for="password">Password</label>
+                                        </div>
+                                        <?php
+                                        session_start();
+                                        if (isset($_SESSION['mensaje'])) {
+                                            $mensaje = $_SESSION['mensaje'];
+                                            echo $mensaje . '<br>';
+                                            unset($_SESSION['mensaje']);
+                                        }
+                                        ?>
+
+                                        <div class="text-center mb-3 pl-5 pr-5">
+                                            <button type="submit" name="login"  class="btn mean-fruit-gradient text-white btn-block btn-rounded my-4 waves-effect z-depth-1a">Log in</button>
                                         </div>
                                         <small id="olvidado" class="form-text text-right">
                                             <a href="" style="color: #D681E8">¿Contraseña olvidada?</a>
                                         </small>
-                                        <div class="text-center mb-3 pl-5 pr-5">
-                                            <button type="button" class="btn mean-fruit-gradient text-white btn-block btn-rounded my-4 waves-effect z-depth-1a">Log in</button>
-                                        </div>
-
                                     </form>
                                 </div>
                             </div>

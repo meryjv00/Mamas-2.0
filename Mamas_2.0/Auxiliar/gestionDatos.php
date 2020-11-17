@@ -33,7 +33,7 @@ class gestionDatos {
 
     //------------------------------------Consultas
     static function getUsuario($mail, $password) {
-        session_start();
+
         self::conexion();
         $activo = -1; // valor -1 para control de error en caso de consulta fallida. 
         $stmt = self::$conexion->prepare("SELECT * FROM usuarios WHERE mail= ? AND contrasenia= ?");

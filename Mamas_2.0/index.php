@@ -19,9 +19,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
-        <?php
-        // put your code here
-        ?>
+       
         <!-- Material form login -->
 
         <header>
@@ -45,7 +43,7 @@ and open the template in the editor.
                 </div>
             </div>
         </header>
-        
+
         <!-- Footer -->
         <footer class="page-footer font-small  rgba-indigo-light pt-4 mt-5 fixed-bottom">
             <!-- Footer Elements -->
