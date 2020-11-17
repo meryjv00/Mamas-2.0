@@ -16,6 +16,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="../css/style.css">
     </head>
     <body>
+        <?php session_start(); ?>
         <div class="container my-5 px-0 z-depth-1">
             <!--Section: Content-->
             <section class="p-5 my-md-5 text-center">
@@ -76,7 +77,6 @@ and open the template in the editor.
                                             <label for="pass">Password </label>
                                         </div>
                                         <?php
-                                        session_start();
                                         if (isset($_SESSION['mensaje'])) {
                                             $mensaje = $_SESSION['mensaje'];
                                             echo $mensaje . '<br>';

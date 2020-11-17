@@ -82,9 +82,24 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
+    static function isUsuario($email) {
+        self::conexion();
+        $consulta = "SELECT * FROM usuarios WHERE mail='" . $email . "'";
+        if ($resultado = self::$conexion->query($consulta)) {
+            if ($fila = $resultado->fetch_assoc()) {
+                $existe = true;
+            }
+        } else {
+            echo "Error al encontrar usuario: " . self::$conexion->error . '<br/>';
+            $existe = false;
+        }
+        return $existe;
+        mysqli_close(self::$conexion);
+    }
+
     static function insertUsuario($email, $dni, $nombre, $apellidos, $tfno, $pass) {
         self::conexion();
-        $consulta = "INSERT INTO usuarios VALUES ('" . $email . "','" . $dni . "','" . $nombre . "','" . $apellidos . "','" . $pass . "','" . $tfno ."',0)";
+        $consulta = "INSERT INTO usuarios VALUES ('" . $email . "','" . $dni . "','" . $nombre . "','" . $apellidos . "','" . $pass . "','" . $tfno . "',0)";
         if (self::$conexion->query($consulta)) {
             $consulta = "INSERT INTO asignacionrol VALUES ('" . $email . "',0)";
             if (self::$conexion->query($consulta)) {

@@ -58,9 +58,13 @@ and open the template in the editor.
                                         <div class="text-center mb-3 pl-5 pr-5">
                                             <button type="submit" name="login"  class="btn mean-fruit-gradient text-white btn-block btn-rounded my-4 waves-effect z-depth-1a">Log in</button>
                                         </div>
-                                        <small id="olvidado" class="form-text text-right">
-                                            <a href="" style="color: #D681E8">¿Contraseña olvidada?</a>
-                                        </small>
+
+                                        <div class="modal-footer mx-5 pt-3 mb-1">
+                                            <span>Forgot password?
+                                                <a href="olvidado.php" style="color: #D681E8">Click here</a>
+                                            </span>
+                                        </div>
+                                        
                                     </form>
                                 </div>
                             </div>
