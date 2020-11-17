@@ -21,57 +21,58 @@ and open the template in the editor.
         <?php
         // put your code here
         ?>
-        <header class="row">
-            <div class="col-3 bg-secondary"><p>LOGO</p></div>
+        <div class="container my-5 px-0 z-depth-1">
 
-        </header>
-        <section id="form" class="row">
-            <div class="col-2"></div>
-            <div id="formularioLogin" class="card col-8">
+            <!--Section: Content-->
+            <section class="p-5 my-md-5 text-center" 
 
-                <h5 class="card-header info-color white-text text-center py-4">
-                    <strong>Inicio de Sesion</strong>
-                </h5>
 
-                <!--Card content-->
-                <div class="card-body px-lg-5 pt-0">
+                     <form class="my-5 mx-md-5" action="">
 
-                    <!-- Form -->
-                    <form class="text-center" style="color: #757575;" method="POST" action="../Controlador/Controlador.php">
+                <div class="row">
+                    <div class="col-md-6 mx-auto">
+                        <!-- Material form login -->
+                        <div class="card">
 
-                        <!-- Email -->
-                        <div class="md-form">
-                            <input type="email" id="email" class="form-control">
-                            <label for="email">E-mail</label>
-                        </div>
+                            <!--Card content-->
+                            <div class="card-body">
 
-                        <!-- Password -->
-                        <div class="md-form">
-                            <input type="password" id="password" class="form-control">
-                            <label for="password">Password</label>
-                        </div>
+                                <!-- Form -->
+                                <form class="text-center" style="color: #757575;" action="#!">
 
-                        <div class="d-flex justify-content-around">
-                            <div>
-                                <!-- Forgot password -->
-                                <a href="../Vistas/olvidado.php">¿Has olvidado tu contraseña?</a>
+                                    <h3 class="font-weight-bold my-4 pb-2 text-center dark-grey-text">Log in</h3>
+
+                                    <!-- Name -->
+                                    <input type="email" id="password" class="form-control mb-4" placeholder="E-mail">
+
+                                    <!-- Email -->
+                                    <input type="password" id="email" class="form-control" placeholder="Contraseña">
+                                    <small id="passwordHelpBlock" class="form-text text-right blue-text">
+                                        <a href="">Recover Password</a>
+                                    </small>
+
+                                    <div class="text-center">
+                                        <button type="button" class="btn btn-outline-orange btn-rounded my-4 waves-effect">Iniciar Sesion</button>
+                                    </div>
+
+                                </form>
+                                <!-- Form -->
+
                             </div>
+
                         </div>
-
-                        <!-- Sign in button -->
-                        <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Sign in</button>
-
-                        <!-- Register -->
-                        <p>Not a member?
-                            <a href="../Vistas/registro.php">Registrarse</a>
-                        </p>
-
-                    </form>
+                        <!-- Material form login -->
+                    </div>
                 </div>
 
-            </div>
-            <div class="col-2"></div>
-        </section>
+                </form>
+
+            </section>
+            <!--Section: Content-->
+
+
+        </div>
+
         <!-- jQuery -->
         <script type="text/javascript" src="../js/jquery.min.js"></script>
         <!-- Bootstrap tooltips -->
