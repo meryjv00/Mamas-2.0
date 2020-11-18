@@ -24,8 +24,6 @@ if (isset($_REQUEST['login'])) {
             $_SESSION['mensaje'] = $mensaje;
             header('Location: ../Vistas/login.php');
         } else if ($usuario->getActivo() == 1) {
-
-            $rol = gestionDatos::getRol($email);
             if ($usuario->getRol() == 2) {
                 header('Location: ../Vistas/crudAdmin.php');
             } else if ($usuario->getRol() == 0) {
