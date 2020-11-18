@@ -17,7 +17,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="css/mdb.min.css">
         <!-- Your custom styles (optional) -->
         <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+        <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">-->s
 
     </head>
     <body>
