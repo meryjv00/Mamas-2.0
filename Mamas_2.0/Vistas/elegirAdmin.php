@@ -7,7 +7,7 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title></title>
+        <title>Entrar como...</title>
         <!-- Bootstrap core CSS -->
         <link rel="stylesheet" href="../css/bootstrap.min.css">
         <!-- Material Design Bootstrap -->
@@ -27,13 +27,7 @@ and open the template in the editor.
             <nav class="row navbar navbar-expand-lg navbar-dark fixed-top">
                 <div class="container">
                     <!--Left-->
-                    <ul class="navbar-nav mr-auto smooth-scroll">
-                        <!--
-                        <li class="nav-item">
-                            <a class="navbar-brand pl-2" href="">Mamás 2.0</a>
-                        </li>
-                        -->
-                    </ul>
+                    <ul class="navbar-nav mr-auto smooth-scroll"></ul>
                     <!-- Right -->
                     <ul class="navbar-nav ">
                         <li class="nav-item">

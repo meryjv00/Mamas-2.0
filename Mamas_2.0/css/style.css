@@ -25,3 +25,14 @@ body{
   font-family: Pacifico;
   src: url(Pacifico-Regular.ttf);
 }
+@font-face {
+  font-family: Rubik;
+  src: url(Rubik-Regular.ttf);
+}
+button, input[type=submit]{
+    font-family: Rubik;
+}
+.c1{
+    color:  #543b54; 
+    font-size: 25px;
+}

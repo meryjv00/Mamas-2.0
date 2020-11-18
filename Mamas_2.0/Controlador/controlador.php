@@ -68,6 +68,8 @@ if (isset($_REQUEST['cerrarSesion'])) {
 
 //-----------------IR AL CRUD DE USUARIOS
 if (isset($_REQUEST['CRUDadmin'])) {
+    $usuarios = gestionDatos::getUsuarios();
+    $_SESSION['usuarios'] = $usuarios;
     header('Location: ../Vistas/crudAdmin.php');
 }
 //-----------------IR A LA PÁGINA PRINCIPAL PROFESORADO
