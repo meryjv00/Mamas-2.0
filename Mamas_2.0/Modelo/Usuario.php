@@ -19,17 +19,29 @@ class Usuario {
     private $nombre;
     private $apellidos;
     private $telefono;
+    private $rol;
+    private $activo;
 
     //-----------------------CONSTRUCTOR
-    function __construct($email, $dni, $nombre, $apellidos, $telefono) {
+    function __construct($email, $dni, $nombre, $apellidos, $telefono, $rol, $activo) {
         $this->email = $email;
         $this->dni = $dni;
         $this->nombre = $nombre;
         $this->apellidos = $apellidos;
         $this->telefono = $telefono;
+        $this->rol = $rol;
+        $this->activo = $activo;
     }
 
-        //-----------------------GETTERS
+    //-----------------------GETTERS
+    function getRol() {
+        return $this->rol;
+    }
+
+    function getActivo() {
+        return $this->activo;
+    }
+
     function getEmail() {
         return $this->email;
     }
@@ -71,6 +83,13 @@ class Usuario {
         $this->telefono = $telefono;
     }
 
+    function setRol($rol): void {
+        $this->rol = $rol;
+    }
+
+    function setActivo($activo): void {
+        $this->activo = $activo;
+    }
 
     //---------------------------TO STRING
     public function __toString() {
