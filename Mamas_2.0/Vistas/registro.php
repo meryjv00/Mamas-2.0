@@ -19,9 +19,9 @@ and open the template in the editor.
         <?php session_start(); ?>
         <div class="container my-5 px-0 z-depth-1">
             <!--Section: Content-->
-            <section class="p-5 my-md-5 text-center">
+            <section class="pb-5 my-md-5 text-center">
                 <div class="my-5 mx-md-5">
-
+                    <a href="../index.php"><img src="../img/log0.png" width="250px"/></a>
                     <div class="row">
                         <div class="col-md-8 mx-auto">
                             <!-- Material form login -->
@@ -33,7 +33,7 @@ and open the template in the editor.
                                     <!-- Form -->
                                     <form class="text-center" style="color: #757575;" action="../Controlador/controlador.php">
 
-                                        <h3 class="font-weight-bold my-4 pb-2 text-center dark-grey-text display-4">Sign Up</h3>
+                                        <h3 class="font-weight-bold my-4 pb-2 text-center  tit">Sign up</h3>
 
                                         <!--Nombre y apellidos-->
                                         <div class="form-row">

@@ -17,6 +17,8 @@ and open the template in the editor.
         <link rel="stylesheet" href="css/mdb.min.css">
         <!-- Your custom styles (optional) -->
         <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+
     </head>
     <body>
 
@@ -35,8 +37,11 @@ and open the template in the editor.
                             <hr class="hr-light my-4 w-75">
                             <h4 class="subtext-header mt-2 mb-4">Hoy en día el aprendizaje no conoce barreras. Accede al aula virtual o haz un 
                                 recorrido para que conozcas su funcionamiento</h4>
-                            <a href="Vistas/login.php" class="btn btn-rounded btn-outline-white">
-                                <i class="fa fa-home"></i> Acceder
+                            <a href="Vistas/login.php" class="btn btn-outline-white text-white btn-rounded my-4 waves-effect z-depth-1a">
+                                Acceder
+                            </a>
+                            <a href="Vistas/registro.php" class="btn btn-outline-white text-white btn-rounded my-4 waves-effect z-depth-1a">
+                                Registrate
                             </a>
                         </div>
                     </div>
@@ -49,18 +54,15 @@ and open the template in the editor.
             <!-- Footer Elements -->
             <div class="container">
                 <!-- Call to action -->
-                <ul class="list-unstyled list-inline text-center py-2">
-                    <li class="list-inline-item">
-                        <a href="Vistas/registro.php" class="btn btn-outline-white btn-rounded">Registrate aquí</a>
-                    </li>
-                </ul>
+
+
                 <!-- Call to action -->
             </div>
             <!-- Footer Elements -->
 
             <!-- Copyright -->
-            <div class="footer-copyright text-center py-3"><a href="https://github.com/meryjv00/Mamas-2.0"> © 2020 Copyright:</a>
-                <a href="https://github.com/TP01AB"> Israel</a> y <a href="https://github.com/meryjv00">María</a>
+            <div class="footer-copyright text-center py-3">
+                <a href=""> © 2020 Copyright: Israel y María</a>
             </div>
             <!-- Copyright -->
 
