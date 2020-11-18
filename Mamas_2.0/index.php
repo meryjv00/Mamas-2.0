@@ -17,12 +17,43 @@ and open the template in the editor.
         <link rel="stylesheet" href="css/mdb.min.css">
         <!-- Your custom styles (optional) -->
         <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+
     </head>
     <body>
-
-        <!-- Material form login -->
-
         <header>
+            <nav class="row navbar navbar-expand-lg navbar-dark fixed-top">
+                <div class="container">
+                    <!--Left-->
+                    <ul class="navbar-nav mr-auto smooth-scroll">
+                        <!--
+                        <li class="nav-item">
+                            <a class="navbar-brand pl-2" href="">Mamás 2.0</a>
+                        </li>
+                        -->
+                    </ul>
+                    <!-- Right -->
+                    <ul class="navbar-nav ">
+                        <li class="nav-item">
+                            <!--Boton desplegable-->
+                            <div class="btn-group">
+                                <a href="Vistas/login.php">
+                                    <button type="button" class="btn btn-outline-white text-white waves-effect z-depth-1a">Acceder</button>
+                                </a>
+                                <button type="button" class="btn text-white dropdown-toggle px-3" 
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="Vistas/registro.php">Registrate aquí</a>
+                                </div>
+                            </div>
+                        </li> 
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <main class="mt-5">
             <div class="d-flex justify-content-center align-items-center portada">
                 <div class="container">
                     <!--Grid row-->
@@ -30,43 +61,23 @@ and open the template in the editor.
                         <!--Grid column-->
                         <div class="col-md-12 mb-4 white-text text-center wow fadeIn">
                             <!--IMG-->
-                            <img src="img/logo.png" height="200px"/>
-                            <h3 class="display-3 font-weight-bold white-text">Mamás 2.0</h3>
+                            <img src="img/log00.png" height="200px"/>
+                            <h3 class="display-3 font-weight-bold white-text tit2">Mamás 2.0</h3>
                             <hr class="hr-light my-4 w-75">
                             <h4 class="subtext-header mt-2 mb-4">Hoy en día el aprendizaje no conoce barreras. Accede al aula virtual o haz un 
                                 recorrido para que conozcas su funcionamiento</h4>
-                            <a href="Vistas/login.php" class="btn btn-rounded btn-outline-white">
-                                <i class="fa fa-home"></i> Acceder
-                            </a>
+
                         </div>
                     </div>
                 </div>
             </div>
-        </header>
-
-        <!-- Footer -->
-        <footer class="page-footer font-small  rgba-indigo-light pt-4 mt-5 fixed-bottom">
-            <!-- Footer Elements -->
-            <div class="container">
-                <!-- Call to action -->
-                <ul class="list-unstyled list-inline text-center py-2">
-                    <li class="list-inline-item">
-                        <a href="Vistas/registro.php" class="btn btn-outline-white btn-rounded">Registrate aquí</a>
-                    </li>
-                </ul>
-                <!-- Call to action -->
-            </div>
-            <!-- Footer Elements -->
-
-            <!-- Copyright -->
-            <div class="footer-copyright text-center py-3"><a href="https://github.com/meryjv00/Mamas-2.0"> © 2020 Copyright:</a>
-                <a href="https://github.com/TP01AB"> Israel</a> y <a href="https://github.com/meryjv00">María</a>
-            </div>
-            <!-- Copyright -->
-
+        </main>
+        <footer class="footer-copyright text-center text-white fixed-bottom py-3 z-depth-2">
+            <a href="https://github.com/meryjv00/Mamas-2.0" class="text-white">
+                <button type="button" class="btn btn-git" style="background-color: #543b54"><i class="fab fa-github pr-1" ></i> Github</button>
+            </a>
+            <div class="mt-4"> © 2020 Copyright: Israel y María</div>
         </footer>
-        <!-- Footer -->
-
 
         <!-- jQuery -->
         <script type="text/javascript" src="js/jquery.min.js"></script>

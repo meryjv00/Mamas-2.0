@@ -7,3 +7,32 @@ body{
     background: linear-gradient(to right, rgba(204, 83, 51, 0.6), rgba(35, 7, 77, 0.6));
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
+.tit{
+    font-family: Pacifico;
+    font-size: 50px;
+    color:  #543b54; 
+}
+.tit2{
+    font-family: Pacifico;
+    font-size: 90px;
+    color:  #543b54; 
+}
+
+.btn-rounded{
+    border-radius: 10em;
+}
+@font-face {
+  font-family: Pacifico;
+  src: url(Pacifico-Regular.ttf);
+}
+@font-face {
+  font-family: Rubik;
+  src: url(Rubik-Regular.ttf);
+}
+button, input[type=submit]{
+    font-family: Rubik;
+}
+.c1{
+    color:  #543b54; 
+    font-size: 25px;
+}

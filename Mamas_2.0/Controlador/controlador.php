@@ -11,28 +11,25 @@ session_start();
 if (isset($_REQUEST['login'])) {
     $email = $_REQUEST['email'];
     $password = md5($_REQUEST['password']);
-    $activo = gestionDatos::getUsuario($email, $password);
-    if ($activo == -1) {
+    gestionDatos::getUsuario($email, $password);
+
+    if (!isset($_SESSION['usuario'])) {
         $mensaje = 'Error al realizar el Login.';
         $_SESSION['mensaje'] = $mensaje;
         header('Location: ../Vistas/login.php');
-    } else if ($activo == 0) {
-        $mensaje = 'Usuario desactivado , contacte con administrador';
-        $_SESSION['mensaje'] = $mensaje;
-        header('Location: ../Vistas/login.php');
-    } else if ($activo == 1) {
-        $usuarioActivo = $_SESSION['usuario'];
-        $rol = gestionDatos::getRol($email);
-        if ($rol == -1) {
-            $mensaje = 'Error al realizar el Login/Rol.'; //Pongo temporalmente /Rol para saber si salta un error en esta parte
+    } else {
+        $usuario = $_SESSION['usuario'];
+        if ($usuario->getActivo() == 0) {
+            $mensaje = 'Usuario desactivado , contacte con administrador';
             $_SESSION['mensaje'] = $mensaje;
             header('Location: ../Vistas/login.php');
-        } else {
-            $usuarioActivo->setRol($rol);
-            if ($rol == 0) {
+        } else if ($usuario->getActivo() == 1) {
+            if ($usuario->getRol() == 2) {
+                header('Location: ../Vistas/elegirAdmin.php');
+            } else if ($usuario->getRol() == 0) {
                 header('Location: ../Vistas/inicio.php');
-            } else if ($rol == 1) {
-                header('Location: ../Vistas/crudAdmin.php');
+            } else if ($usuario->getRol() == 1) {
+                header('Location: ../Vistas/crudProfesor.php');
             }
         }
     }
@@ -61,4 +58,21 @@ if (isset($_REQUEST['registro'])) {
         $_SESSION['mensaje'] = $mensaje;
         header('Location: ../Vistas/registro.php');
     }
+}
+
+//-----------------CERRAR SESIÓN
+if (isset($_REQUEST['cerrarSesion'])) {
+    unset($_SESSION['usuario']);
+    header('Location: ../index.php');
+}
+
+//-----------------IR AL CRUD DE USUARIOS
+if (isset($_REQUEST['CRUDadmin'])) {
+    $usuarios = gestionDatos::getUsuarios();
+    $_SESSION['usuarios'] = $usuarios;
+    header('Location: ../Vistas/crudAdmin.php');
+}
+//-----------------IR A LA PÁGINA PRINCIPAL PROFESORADO
+if (isset($_REQUEST['CRUDprofesor'])) {
+    header('Location: ../Vistas/crudProfesor.php');
 }

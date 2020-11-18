@@ -15,16 +15,20 @@ and open the template in the editor.
         <link rel="stylesheet" href="../css/mdb.min.css">
         <!-- Your custom styles (optional) -->
         <link rel="stylesheet" href="../css/style.css">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
     </head>
     <body onload="login()">
 
         <div class="container my-5 px-0 z-depth-1">
             <!--Section: Content-->
-            <section class="p-5 my-md-5 text-center">
+            <section class="pb-5 text-center">
                 <div class="my-5 mx-md-5">
+                    <a href="../index.php"><img src="../img/log0.png" width="250px"/></a>
 
                     <div class="row">
                         <div class="col-md-8 mx-auto">
+
                             <!-- Material form login -->
                             <div class="card" style="border: 2px solid antiquewhite">
 
@@ -34,7 +38,7 @@ and open the template in the editor.
                                     <!-- Form -->
                                     <form class="text-center needs-validation" style="color: #757575;" action="../Controlador/controlador.php" method="POST" novalidate>
 
-                                        <h3 class="font-weight-bold my-4 pb-2 text-center dark-grey-text display-4">Log in</h3>
+                                        <h3 class="font-weight-bold my-4 pb-2 text-center tit">Log in</h3>
 
                                         <div class="md-form form-group">
                                             <input type="email" id="email" name="email" class="form-control mb-4" required>
@@ -66,7 +70,7 @@ and open the template in the editor.
                                                 or <a href="olvidado.php" style="color: #D681E8">Forgot password?</a>
                                             </span>
                                         </div>
-                                        
+
                                     </form>
                                 </div>
                             </div>

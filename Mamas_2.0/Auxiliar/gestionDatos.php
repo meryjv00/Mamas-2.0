@@ -11,7 +11,8 @@
  *
  * @author isra9
  */
-include_once '../Modelo/usuario.php';
+include_once '../Modelo/Usuario.php';
+session_start();
 
 class gestionDatos {
 
@@ -36,7 +37,7 @@ class gestionDatos {
     static function getUsuario($mail, $password) {
 
         self::conexion();
-        $activo = -1; // valor -1 para control de error en caso de consulta fallida. 
+
         $stmt = self::$conexion->prepare("SELECT * FROM usuarios WHERE mail= ? AND contrasenia= ?");
         $stmt->bind_param("ss", $mail, $password);
         if ($stmt->execute()) {
@@ -51,36 +52,13 @@ class gestionDatos {
                 $apellidos = $fila['apellidos'];
                 $telefono = $fila['telefono'];
                 $activo = $fila['activo'];
-
-                $p = new Usuario($email, $dni, $nombre, $apellidos, $telefono);
+                $rol = $fila['rol'];
+                $p = new Usuario($email, $dni, $nombre, $apellidos, $telefono, $rol, $activo);
                 $_SESSION['usuario'] = $p;
                 //almacenamos en sesion al usuario que ha realizado el Login.
-                return $activo; // devuelve  0 o 1 para ver en controlador si el usuario esta activado.
-            } else {
-                return $activo; //Devuelve -1 porque la consulta en BD fallo o la contraseña es erronea.
             }
             mysqli_close(self::$conexion);
         }
-    }
-
-    static function getRol($email) {
-        self::conexion();
-        $rol = -1; // Asignamos -1 por defecto para controlar el error en obtencion de rol.
-        $stmt = self::$conexion->prepare("SELECT * FROM asignacionrol WHERE mail= ?");
-        $stmt->bind_param("s", $email); //EVITAMOS INYECCION SQL
-        if ($stmt->execute()) {
-            $resultado = $stmt->get_result();
-            var_dump($resultado);
-            if ($fila = $resultado->fetch_assoc()) {
-                var_dump($fila);
-                $rol = $fila['idRol'];
-                return $rol;
-            }
-        } else {
-            print "Fallo al obtener ROL en MySQL: " . mysqli_connect_error();
-            return $rol; // Devuelve -1 para controlar el error fuera de  la funcion.
-        }
-        mysqli_close(self::$conexion);
     }
 
     static function isUsuario($email) {
@@ -104,12 +82,38 @@ class gestionDatos {
 
     static function insertUsuario($email, $dni, $nombre, $apellidos, $tfno, $pass) {
         self::conexion();
-        $consulta = "INSERT INTO usuarios VALUES ('" . $email . "','" . $dni . "','" . $nombre . "','" . $apellidos . "','" . $pass . "','" . $tfno . "',0)";
+        $consulta = "INSERT INTO usuarios VALUES ('" . $email . "','" . $dni . "','" . $nombre . "','" . $apellidos . "','" . $pass . "','" . $tfno . "',0,0)";
         if (self::$conexion->query($consulta)) {
-            $consulta = "INSERT INTO asignacionrol VALUES ('" . $email . "',0)";
-            if (self::$conexion->query($consulta)) {
-                $correcto = true;
-            }
+
+            $correcto = true;
+        } else {
+            $correcto = false;
+            echo "Error al insertar: " . self::$conexion->error . '<br/>';
+        }
+        return $correcto;
+        mysqli_close(self::$conexion);
+    }
+
+    static function insertProfesor($email, $dni, $nombre, $apellidos, $tfno, $pass) {
+        self::conexion();
+        $consulta = "INSERT INTO usuarios VALUES ('" . $email . "','" . $dni . "','" . $nombre . "','" . $apellidos . "','" . $pass . "','" . $tfno . "',1,1)";
+        if (self::$conexion->query($consulta)) {
+
+            $correcto = true;
+        } else {
+            $correcto = false;
+            echo "Error al insertar: " . self::$conexion->error . '<br/>';
+        }
+        return $correcto;
+        mysqli_close(self::$conexion);
+    }
+
+    static function insertAdministrador($email, $dni, $nombre, $apellidos, $tfno, $pass) {
+        self::conexion();
+        $consulta = "INSERT INTO usuarios VALUES ('" . $email . "','" . $dni . "','" . $nombre . "','" . $apellidos . "','" . $pass . "','" . $tfno . "',2,1)";
+        if (self::$conexion->query($consulta)) {
+
+            $correcto = true;
         } else {
             $correcto = false;
             echo "Error al insertar: " . self::$conexion->error . '<br/>';
@@ -128,6 +132,81 @@ class gestionDatos {
             echo "Error al establecer contraseña: " . self::$conexion->error . '<br/>';
         }
         return correcto;
+        mysqli_close(self::$conexion);
+    }
+
+    static function getUsuarios() {
+        self::conexion();
+        $usuarios = Array();
+        $consulta = "SELECT * FROM usuarios";
+
+        if ($resultado = self::$conexion->query($consulta)) {
+            while ($fila = $resultado->fetch_assoc()) {
+                $email = $fila['mail'];
+                $nombre = $fila['nombre'];
+                $dni = $fila['dni'];
+                $apellidos = $fila['apellidos'];
+                $telefono = $fila['telefono'];
+                $activo = $fila['activo'];
+                $rol = $fila['rol'];
+                $usuario = new Usuario($email, $dni, $nombre, $apellidos, $telefono, $rol, $activo);
+                $usuarios[] = $usuario;
+            }
+        }
+        return $usuarios;
+        mysqli_close(self::$conexion);
+    }
+
+    static function updateUsuario($usuario) {
+        self::conexion();
+        $consulta = "UPDATE usuarios SET nombre='" . $usuario->getNombre() . "', telefono = '" . $usuario->getTelefono() . "', apellidos = '" .
+                $usuario->getApellidos() . "' WHERE mail ='" . $usuario->getEmail() . "'";
+        if (self::$conexion->query($consulta)) {
+            $correcto = true;
+        } else {
+            $correcto = false;
+            echo "Error al actualizar: " . self::$conexion->error . '<br/>';
+        }
+        return $correcto;
+        mysqli_close(self::$conexion);
+    }
+
+    static function deleteUsuario($usuario) {
+        self::conexion();
+        $consulta = "DELETE FROM usuarios WHERE mail ='" . $usuario->getEmail() . "'";
+        if (self::$conexion->query($consulta)) {
+            $correcto = true;
+        } else {
+            $correcto = false;
+            echo "Error al borrar usuario: " . self::$conexion->error . '<br/>';
+        }
+        return $correcto;
+        mysqli_close(self::$conexion);
+    }
+
+    static function updateActivo($usuario) {
+        self::conexion();
+        $consulta = "UPDATE usuarios SET activo=" . $usuario->getActivo() . " WHERE mail ='" . $usuario->getEmail() . "'";
+        if (self::$conexion->query($consulta)) {
+            $correcto = true;
+        } else {
+            $correcto = false;
+            echo "Error al actualizar: " . self::$conexion->error . '<br/>';
+        }
+        return $correcto;
+        mysqli_close(self::$conexion);
+    }
+
+    static function updateRol($usuario) {
+        self::conexion();
+        $consulta = "UPDATE usuarios SET rol=" . $usuario->getRol() . " WHERE mail ='" . $usuario->getEmail() . "'";
+        if (self::$conexion->query($consulta)) {
+            $correcto = true;
+        } else {
+            $correcto = false;
+            echo "Error al actualizar: " . self::$conexion->error . '<br/>';
+        }
+        return $correcto;
         mysqli_close(self::$conexion);
     }
 

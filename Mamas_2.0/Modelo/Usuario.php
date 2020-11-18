@@ -19,21 +19,29 @@ class Usuario {
     private $nombre;
     private $apellidos;
     private $telefono;
+    private $rol;
     private $activo;
-    private $roles;
 
     //-----------------------CONSTRUCTOR
-    function __construct($email, $dni, $nombre, $apellidos, $telefono) {
+    function __construct($email, $dni, $nombre, $apellidos, $telefono, $rol, $activo) {
         $this->email = $email;
         $this->dni = $dni;
         $this->nombre = $nombre;
         $this->apellidos = $apellidos;
         $this->telefono = $telefono;
-        //$this->activo = $activo;
-        $this->roles = Array();
+        $this->rol = $rol;
+        $this->activo = $activo;
     }
 
     //-----------------------GETTERS
+    function getRol() {
+        return $this->rol;
+    }
+
+    function getActivo() {
+        return $this->activo;
+    }
+
     function getEmail() {
         return $this->email;
     }
@@ -52,10 +60,6 @@ class Usuario {
 
     function getTelefono() {
         return $this->telefono;
-    }
-
-    function getActivo() {
-        return $this->activo;
     }
 
     //------------------------SETTERS
@@ -79,21 +83,12 @@ class Usuario {
         $this->telefono = $telefono;
     }
 
+    function setRol($rol): void {
+        $this->rol = $rol;
+    }
+
     function setActivo($activo): void {
         $this->activo = $activo;
-    }
-
-    //----------------------------ROLES
-    function setRol($rol) {
-        $this->roles[] = $rol;
-    }
-
-    function getRol($i) {
-        return $this->roles[$i];
-    }
-
-    function sizeRol() {
-        return count($this->roles);
     }
 
     //---------------------------TO STRING
