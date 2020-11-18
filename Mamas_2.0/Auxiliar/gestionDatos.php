@@ -20,8 +20,8 @@ class gestionDatos {
     static private $conexion;
 
     static function conexion() {
-        //self::$conexion = mysqli_connect('localhost', 'usuario', 'Chubaca2020', 'desafio2');
-        self::$conexion = mysqli_connect('localhost', 'maria', 'Chubaca2020', 'desafio2');
+        self::$conexion = mysqli_connect('localhost', 'usuario', 'Chubaca2020', 'desafio2');
+        //self::$conexion = mysqli_connect('localhost', 'maria', 'Chubaca2020', 'desafio2');
         print "Conexión realizada de forma procedimental: " . mysqli_get_server_info(self::$conexion) . "<br/>";
         if (mysqli_connect_errno(self::$conexion)) {
             print "Fallo al conectar a MySQL: " . mysqli_connect_error();
@@ -37,7 +37,7 @@ class gestionDatos {
     static function getUsuario($mail, $password) {
 
         self::conexion();
-        $activo = -1; // valor -1 para control de error en caso de consulta fallida. 
+
         $stmt = self::$conexion->prepare("SELECT * FROM usuarios WHERE mail= ? AND contrasenia= ?");
         $stmt->bind_param("ss", $mail, $password);
         if ($stmt->execute()) {
@@ -52,36 +52,13 @@ class gestionDatos {
                 $apellidos = $fila['apellidos'];
                 $telefono = $fila['telefono'];
                 $activo = $fila['activo'];
-
-                $p = new Usuario($email, $dni, $nombre, $apellidos, $telefono);
+                $rol = $fila['rol'];
+                $p = new Usuario($email, $dni, $nombre, $apellidos, $telefono, $rol, $activo);
                 $_SESSION['usuario'] = $p;
                 //almacenamos en sesion al usuario que ha realizado el Login.
-                return $activo; // devuelve  0 o 1 para ver en controlador si el usuario esta activado.
-            } else {
-                return $activo; //Devuelve -1 porque la consulta en BD fallo o la contraseña es erronea.
             }
             mysqli_close(self::$conexion);
         }
-    }
-
-    static function getRol($email) {
-        self::conexion();
-        $rol = -1; // Asignamos -1 por defecto para controlar el error en obtencion de rol.
-        $stmt = self::$conexion->prepare("SELECT * FROM asignacionrol WHERE mail= ?");
-        $stmt->bind_param("s", $email); //EVITAMOS INYECCION SQL
-        if ($stmt->execute()) {
-            $resultado = $stmt->get_result();
-            var_dump($resultado);
-            if ($fila = $resultado->fetch_assoc()) {
-                var_dump($fila);
-                $rol = $fila['idRol'];
-                return $rol;
-            }
-        } else {
-            print "Fallo al obtener ROL en MySQL: " . mysqli_connect_error();
-            return $rol; // Devuelve -1 para controlar el error fuera de  la funcion.
-        }
-        mysqli_close(self::$conexion);
     }
 
     static function isUsuario($email) {
@@ -105,12 +82,10 @@ class gestionDatos {
 
     static function insertUsuario($email, $dni, $nombre, $apellidos, $tfno, $pass) {
         self::conexion();
-        $consulta = "INSERT INTO usuarios VALUES ('" . $email . "','" . $dni . "','" . $nombre . "','" . $apellidos . "','" . $pass . "','" . $tfno . "',0)";
+        $consulta = "INSERT INTO usuarios VALUES ('" . $email . "','" . $dni . "','" . $nombre . "','" . $apellidos . "','" . $pass . "','" . $tfno . "',0,0)";
         if (self::$conexion->query($consulta)) {
-            $consulta = "INSERT INTO asignacionrol VALUES ('" . $email . "',0)";
-            if (self::$conexion->query($consulta)) {
-                $correcto = true;
-            }
+
+            $correcto = true;
         } else {
             $correcto = false;
             echo "Error al insertar: " . self::$conexion->error . '<br/>';
