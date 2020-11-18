@@ -25,7 +25,7 @@ if (isset($_REQUEST['login'])) {
             header('Location: ../Vistas/login.php');
         } else if ($usuario->getActivo() == 1) {
             if ($usuario->getRol() == 2) {
-                header('Location: ../Vistas/crudAdmin.php');
+                header('Location: ../Vistas/elegirAdmin.php');
             } else if ($usuario->getRol() == 0) {
                 header('Location: ../Vistas/inicio.php');
             } else if ($usuario->getRol() == 1) {
