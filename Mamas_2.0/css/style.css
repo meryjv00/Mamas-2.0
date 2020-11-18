@@ -8,8 +8,15 @@ body{
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 .tit{
-    font-family: 'Pacifico', cursive;
+    font-family: Pacifico;
     font-size: 50px;
-    color:  #543b54;
-    
+    color:  #543b54; 
+}
+
+.btn-rounded{
+    border-radius: 10em;
+}
+@font-face {
+  font-family: Pacifico;
+  src: url(Pacifico.ttf);
 }

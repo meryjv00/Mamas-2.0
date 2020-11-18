@@ -17,7 +17,6 @@ and open the template in the editor.
         <link rel="stylesheet" href="../css/style.css">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Pacifico&family=Quicksand:wght@300&display=swap" rel="stylesheet">
     </head>
     <body onload="login()">
 
@@ -26,10 +25,10 @@ and open the template in the editor.
             <section class="pb-5 text-center">
                 <div class="my-5 mx-md-5">
                     <a href="../index.php"><img src="../img/log0.png" width="250px"/></a>
-                    
+
                     <div class="row">
                         <div class="col-md-8 mx-auto">
-                            
+
                             <!-- Material form login -->
                             <div class="card" style="border: 2px solid antiquewhite">
 
