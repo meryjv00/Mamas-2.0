@@ -59,3 +59,18 @@ if (isset($_REQUEST['registro'])) {
         header('Location: ../Vistas/registro.php');
     }
 }
+
+//-----------------CERRAR SESIÓN
+if (isset($_REQUEST['cerrarSesion'])) {
+    unset($_SESSION['usuario']);
+    header('Location: ../index.php');
+}
+
+//-----------------IR AL CRUD DE USUARIOS
+if (isset($_REQUEST['CRUDadmin'])) {
+    header('Location: ../Vistas/crudAdmin.php');
+}
+//-----------------IR A LA PÁGINA PRINCIPAL PROFESORADO
+if (isset($_REQUEST['CRUDprofesor'])) {
+    header('Location: ../Vistas/crudProfesor.php');
+}

@@ -20,8 +20,8 @@ class gestionDatos {
     static private $conexion;
 
     static function conexion() {
-        self::$conexion = mysqli_connect('localhost', 'usuario', 'Chubaca2020', 'desafio2');
-        //self::$conexion = mysqli_connect('localhost', 'maria', 'Chubaca2020', 'desafio2');
+        //self::$conexion = mysqli_connect('localhost', 'usuario', 'Chubaca2020', 'desafio2');
+        self::$conexion = mysqli_connect('localhost', 'Maria', 'Chubaca2020', 'desafio2');
         print "Conexión realizada de forma procedimental: " . mysqli_get_server_info(self::$conexion) . "<br/>";
         if (mysqli_connect_errno(self::$conexion)) {
             print "Fallo al conectar a MySQL: " . mysqli_connect_error();

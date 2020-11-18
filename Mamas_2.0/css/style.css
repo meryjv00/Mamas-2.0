@@ -12,11 +12,16 @@ body{
     font-size: 50px;
     color:  #543b54; 
 }
+.tit2{
+    font-family: Pacifico;
+    font-size: 90px;
+    color:  #543b54; 
+}
 
 .btn-rounded{
     border-radius: 10em;
 }
 @font-face {
   font-family: Pacifico;
-  src: url(Pacifico.ttf);
+  src: url(Pacifico-Regular.ttf);
 }

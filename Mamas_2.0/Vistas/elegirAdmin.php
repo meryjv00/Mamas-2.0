@@ -23,84 +23,65 @@ and open the template in the editor.
         session_start();
         $usu = $_SESSION['usuario'];
         ?>
-        <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar">
-            <div class="container">
-                <a class="navbar-brand" href="">Mamás 2.0</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
-                        aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <header>
+            <nav class="row navbar navbar-expand-lg navbar-dark fixed-top">
+                <div class="container">
+                    <!--Left-->
                     <ul class="navbar-nav mr-auto smooth-scroll">
-                        <li class="nav-item ">
-                            <form class="nav-link" name="cerrarSes" action="../Controlador/controlador.php" method="post">
+                        <!--
+                        <li class="nav-item">
+                            <a class="navbar-brand pl-2" href="">Mamás 2.0</a>
+                        </li>
+                        -->
+                    </ul>
+                    <!-- Right -->
+                    <ul class="navbar-nav ">
+                        <li class="nav-item">
+                            <form name="cerrarSes" action="../Controlador/controlador.php" method="post">
                                 <input type="submit" class="btn mean-fruit-gradient text-white
                                        btn-rounded waves-effect z-depth-1a" name="cerrarSesion" value="Cerrar sesión">
                             </form>
-                        </li>
-                    </ul>
-                    <!-- Social Icon  -->
-                    <ul class="navbar-nav nav-flex-icons">
-                        <li class="nav-item">
-                            <a class="nav-link">
-                                <i class="fab fa-facebook light-green-text-2"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link">
-                                <i class="fab fa-twitter light-green-text-2"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link">
-                                <i class="fab fa-instagram light-green-text-2"></i>
-                            </a>
-                        </li>
+                        </li> 
                     </ul>
                 </div>
-            </div>
-        </nav>
-
-        <div class="container my-5 px-0 z-depth-1">
+            </nav>
+        </header>
+        <div class="pt-5"></div>
+        <main class="container my-5 px-0 z-depth-1 ">
             <!--Section: Content-->
-            <section class="pb-5 text-center">
-                <div class="my-5 mx-md-5">
-                    <!--<a href="../index.php"><img src="../img/log0.png" width="250px"/></a>-->
+            <section class="pb-5 text-center ">
+                <div class="row">  
+                    <div class="col-md-8 mx-auto">
+                        <img src="../img/log0.png" width="220px"/>
+                        <!--BORDE-->
+                        <div class="card mb-5" style="border: 2px solid antiquewhite">
 
-                    <div class="row">
-                        <div class="col-md-8 mx-auto">
+                            <div class="card-body">
 
-                            <!-- Material form login -->
-                            <div class="card mt-5" style="border: 2px solid antiquewhite">
+                                <form class="text-center needs-validation" style="color: #757575;" action="../Controlador/controlador.php" method="POST" novalidate>
 
-                                <!--Card content-->
-                                <div class="card-body">
+                                    <h3 class="font-weight-bold my-4 pb-2 text-center tit">Bienvenido <?= $usu->getNombre() ?></h3>
 
-                                    <!-- Form -->
-                                    <form class="text-center needs-validation" style="color: #757575;" action="../Controlador/controlador.php" method="POST" novalidate>
-
-                                        <h3 class="font-weight-bold my-4 pb-2 text-center tit">Bienvenido <?= $usu->getNombre() ?></h3>
-
-                                        <div class="text-center mb-3 pl-5 pr-5">
-                                            <button type="submit" name="admin"  class="btn mean-fruit-gradient text-white btn-block btn-rounded my-4 waves-effect z-depth-1a">
-                                                Entrar como administrador
-                                            </button>
-                                        </div>
-                                        <div class="text-center mb-3 pl-5 pr-5">
-                                            <button type="submit" name="profesor"  class="btn mean-fruit-gradient text-white btn-block btn-rounded my-4 waves-effect z-depth-1a">
-                                                Entrar como profesor
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
+                                    <div class="text-center mb-3 pl-5 pr-5">
+                                        <button type="submit" name="CRUDadmin"  class="btn mean-fruit-gradient text-white btn-block btn-rounded my-4 waves-effect z-depth-1a">
+                                            Entrar como administrador
+                                        </button>
+                                    </div>
+                                    <div class="text-center mb-3 pl-5 pr-5">
+                                        <button type="submit" name="CRUDprofesor"  class="btn mean-fruit-gradient text-white btn-block btn-rounded my-4 waves-effect z-depth-1a">
+                                            Entrar como profesor
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
-        </div>
+        </main>
+
         <footer class="footer-copyright text-center text-white fixed-bottom py-3 z-depth-2">
-                <div> © 2020 Copyright: Israel y María</div>
+            <div> © 2020 Copyright: Israel y María</div>
         </footer>
         <!-- jQuery -->
         <script type="text/javascript" src="../js/jquery.min.js"></script>
