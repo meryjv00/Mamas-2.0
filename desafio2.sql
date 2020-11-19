@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-11-2020 a las 12:36:58
+-- Tiempo de generación: 19-11-2020 a las 19:50:34
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.4.10
 
@@ -20,6 +20,17 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `desafio2`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `asignacionasignatura`
+--
+
+CREATE TABLE `asignacionasignatura` (
+  `Asignatura` varchar(30) NOT NULL COMMENT 'nombre asignatura',
+  `idUsuario` varchar(35) NOT NULL COMMENT 'id Usuario '
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -111,7 +122,7 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`mail`, `dni`, `nombre`, `apellidos`, `contrasenia`, `telefono`, `rol`, `activo`) VALUES
 ('belen@gmail.com', '06280000c', 'belen', 'navarroi', 'eccb65165b7a4aafdd69cb8dfa564fbd', '659478888', 0, 1),
-('fernando@gmail.com', '06280823M', 'fernando', 'aranzabe', 'eccb65165b7a4aafdd69cb8dfa564fbd', '123456789', 0, 0),
+('fernando@gmail.com', '06280823M', 'fernando', 'aranzabe', 'eccb65165b7a4aafdd69cb8dfa564fbd', '123456789', 1, 1),
 ('isra9shadow@gmail.com', '05950348Q', 'Israel', 'Molina Pulpon', 'Chubaca2020', '685111156', 0, 1),
 ('maria.juan.vi@gmail.com', '05980367E', 'María', 'Juan Viñas', 'Chubaca2020', '656877754', 0, 1),
 ('probando@gmail.com', '66666666M', 'probando', 'probando', 'eccb65165b7a4aafdd69cb8dfa564fbd', '647641678', 0, 0),
@@ -120,6 +131,13 @@ INSERT INTO `usuarios` (`mail`, `dni`, `nombre`, `apellidos`, `contrasenia`, `te
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `asignacionasignatura`
+--
+ALTER TABLE `asignacionasignatura`
+  ADD PRIMARY KEY (`Asignatura`),
+  ADD KEY `idUsuario` (`idUsuario`);
 
 --
 -- Indices de la tabla `asignacionpreguntas`
@@ -132,7 +150,8 @@ ALTER TABLE `asignacionpreguntas`
 -- Indices de la tabla `examenes`
 --
 ALTER TABLE `examenes`
-  ADD PRIMARY KEY (`idExamen`);
+  ADD PRIMARY KEY (`idExamen`),
+  ADD KEY `asignatura` (`asignatura`);
 
 --
 -- Indices de la tabla `examenesrealizados`
@@ -195,11 +214,23 @@ ALTER TABLE `respuestas`
 --
 
 --
+-- Filtros para la tabla `asignacionasignatura`
+--
+ALTER TABLE `asignacionasignatura`
+  ADD CONSTRAINT `asignacionasignatura_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`mail`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Filtros para la tabla `asignacionpreguntas`
 --
 ALTER TABLE `asignacionpreguntas`
   ADD CONSTRAINT `fk_examen` FOREIGN KEY (`idExamen`) REFERENCES `examenes` (`idExamen`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_preguntaExamen` FOREIGN KEY (`idPregunta`) REFERENCES `preguntas` (`idPregunta`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `examenes`
+--
+ALTER TABLE `examenes`
+  ADD CONSTRAINT `examenes_ibfk_1` FOREIGN KEY (`asignatura`) REFERENCES `asignacionasignatura` (`Asignatura`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `examenesrealizados`
