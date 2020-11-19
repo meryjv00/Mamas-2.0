@@ -62,11 +62,15 @@ if (isset($_REQUEST['registro'])) {
                     header('Location: ../Vistas/login.php');
                 }
             } else {
+                $r_usu = new Usuario($email, "", $nombre, $apellidos, $tfno, 0, 0);
+                $_SESSION['usu'] = $r_usu;
                 $mensaje = "El dni introducido ya está registrado";
                 $_SESSION['mensaje'] = $mensaje;
                 header('Location: ../Vistas/registro.php');
             }
         } else {
+            $r_usu = new Usuario("", $dni, $nombre, $apellidos, $tfno, 0, 0);
+            $_SESSION['usu'] = $r_usu;
             $mensaje = "El email introducido ya está registrado";
             $_SESSION['mensaje'] = $mensaje;
             header('Location: ../Vistas/registro.php');

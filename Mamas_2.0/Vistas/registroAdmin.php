@@ -17,7 +17,10 @@ and open the template in the editor.
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
     </head>
     <body onload="validarRegistro()">
-        <?php session_start() ?>
+        <?php
+        require_once '../Modelo/Usuario.php';
+        session_start()
+        ?>
         <header>
             <nav class="row navbar navbar-expand-lg navbar-dark fixed-top">
                 <div class="container">
@@ -58,13 +61,20 @@ and open the template in the editor.
                                     <form id="registro" class="text-left" style="color: #757575;" action="../Controlador/controladorCrud.php" novalidate>
 
                                         <h3 class="font-weight-bold my-4 pb-2 text-center  tit">Sign up</h3>
-
+                                        <?php
+                                        if (isset($_SESSION['usu'])) {
+                                            $usu = $_SESSION['usu'];
+                                            unset($_SESSION['usu']);
+                                        } else {
+                                            $usu = new Usuario("", "", "", "", "", "", "");
+                                        }
+                                        ?>
                                         <!--Nombre y apellidos-->
                                         <div class="form-row">
                                             <div class="col">
                                                 <!-- First name -->
                                                 <div class="md-form">
-                                                    <input type="text" id="nombre" name="nombre" class="form-control" 
+                                                    <input type="text" id="nombre" name="nombre" class="form-control"  value="<?=$usu->getNombre()?>"
                                                            minlength="2" maxlength="25" required>
                                                     <label for="nombre">First name</label>
                                                     <div id="nombreError"></div>
@@ -73,7 +83,7 @@ and open the template in the editor.
                                             <div class="col">
                                                 <!-- Last name -->
                                                 <div class="md-form">
-                                                    <input type="text" id="apellidos" name="apellidos" class="form-control" 
+                                                    <input type="text" id="apellidos" name="apellidos" class="form-control" value="<?=$usu->getApellidos()?>"
                                                            minlength="6" maxlength="25" required>
                                                     <label for="apellidos">Last name</label>
                                                     <div id="apellidosError"></div>
@@ -83,14 +93,14 @@ and open the template in the editor.
                                         </div>
                                         <!-- Email -->
                                         <div class="md-form mt-0">
-                                            <input type="email" id="email" name="email" class="form-control mb-4" required>
+                                            <input type="email" id="email" name="email" class="form-control mb-4" required value="<?=$usu->getEmail()?>">
                                             <label for="email">E-mail </label>
                                             <div id="emailError"></div>
                                         </div>
 
                                         <!-- Dni -->
                                         <div class="md-form">
-                                            <input type="text" id="dni" name="dni" class="form-control mb-4" 
+                                            <input type="text" id="dni" name="dni" class="form-control mb-4" value="<?=$usu->getDni()?>"
                                                    pattern="^[0-9]{8}[A-Z]{1}$" required>
                                             <label for="dni">Dni </label>
                                             <div id="dniError"></div>
@@ -98,7 +108,7 @@ and open the template in the editor.
 
                                         <!-- Tfno -->
                                         <div class="md-form">
-                                            <input type="text" id="tfno" name="tfno" class="form-control mb-4" 
+                                            <input type="text" id="tfno" name="tfno" class="form-control mb-4" value="<?=$usu->getTelefono()?>"
                                                    pattern="^[0-9]{9}$" required>
                                             <label for="tfno">Phone number</label>
                                             <div id="tfnoError"></div>
