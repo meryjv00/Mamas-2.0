@@ -26,7 +26,7 @@ and open the template in the editor.
         $usuarios = $_SESSION['usuarios'];
         ?>
         <header>
-            <nav class="row navbar navbar-expand-lg navbar-dark fixed-top">
+            <nav class="row navbar navbar-expand-lg navbar-dark fixed-top deg">
                 <div class="container">
                     <!--Left-->
                     <ul class="navbar-nav mr-auto smooth-scroll">
@@ -113,7 +113,7 @@ and open the template in the editor.
 
                                         <div class="px-4">
 
-                                            <div class="table-wrapper">
+                                            <div class="table-responsive">
                                                 <!--Table-->
                                                 <table class="table table-hover mb-0">
 

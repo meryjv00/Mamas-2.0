@@ -74,7 +74,7 @@ and open the template in the editor.
             </section>
         </main>
 
-        <footer class="footer-copyright text-center text-white fixed-bottom py-3 z-depth-2">
+        <footer class="footer-copyright text-center text-white sticky py-3 z-depth-2">
             <div> © 2020 Copyright: Israel y María</div>
         </footer>
         <!-- jQuery -->

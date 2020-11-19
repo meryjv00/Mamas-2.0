@@ -15,7 +15,7 @@ and open the template in the editor.
         <!-- Your custom styles (optional) -->
         <link rel="stylesheet" href="../css/style.css">
     </head>
-    <body>
+    <body onload="validarRegistro()">
         <?php session_start(); ?>
         <div class="container my-5 px-0 z-depth-1">
             <!--Section: Content-->
@@ -31,7 +31,7 @@ and open the template in the editor.
                                 <div class="card-body">
 
                                     <!-- Form -->
-                                    <form class="text-center" style="color: #757575;" action="../Controlador/controlador.php">
+                                    <form id="registro" class="text-center" style="color: #757575;" action="../Controlador/controlador.php">
 
                                         <h3 class="font-weight-bold my-4 pb-2 text-center  tit">Sign up</h3>
 
@@ -40,41 +40,58 @@ and open the template in the editor.
                                             <div class="col">
                                                 <!-- First name -->
                                                 <div class="md-form">
-                                                    <input type="text" id="nombre" name="nombre" class="form-control" required>
+                                                    <input type="text" id="nombre" name="nombre" class="form-control" 
+                                                           minlength="2" maxlength="25" required>
                                                     <label for="nombre">First name</label>
+                                                    <div id="nombreError"></div>
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <!-- Last name -->
                                                 <div class="md-form">
-                                                    <input type="text" id="apellidos" name="apellidos" class="form-control" required>
+                                                    <input type="text" id="apellidos" name="apellidos" class="form-control" 
+                                                           minlength="6" maxlength="25" required>
                                                     <label for="apellidos">Last name</label>
+                                                    <div id="apellidosError"></div>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <!-- Email -->
                                         <div class="md-form mt-0">
-                                            <input type="email" id="email" name="email" class="form-control mb-4" required>
+                                            <input type="email" id="email" name="email" class="form-control mb-4" required
+                                                   pattern="^[a-z0-9!#$%&'+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'+/=?^_`{|}~-]+)@(?:[a-z0-9](?:[a-z0-9-][a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$">
                                             <label for="email">E-mail </label>
+                                            <div id="emailError"></div>
                                         </div>
 
                                         <!-- Dni -->
                                         <div class="md-form">
-                                            <input type="text" id="dni" name="dni" class="form-control mb-4" required>
+                                            <input type="text" id="dni" name="dni" class="form-control mb-4" 
+                                                   pattern="^[0-9]{8}[A-Za-z]{1}$" required>
                                             <label for="dni">Dni </label>
+                                            <div id="dniError"></div>
                                         </div>
 
                                         <!-- Tfno -->
                                         <div class="md-form">
-                                            <input type="text" id="tfno" name="tfno" class="form-control mb-4" required>
+                                            <input type="text" id="tfno" name="tfno" class="form-control mb-4" 
+                                                   pattern="^[0-9]{9}$" required>
                                             <label for="tfno">Phone number</label>
+                                            <div id="tfnoError"></div>
                                         </div>
 
                                         <!-- Pass -->
                                         <div class="md-form">
-                                            <input type="password" id="pass" name="pass" class="form-control" required>
+                                            <input type="password" id="pass" name="pass" minlength="3" maxlength="15" class="form-control" required>
                                             <label for="pass">Password </label>
+                                            <div id="passError"></div>
+                                        </div>
+                                        <!-- Repeat password -->
+                                        <div class="md-form">
+                                            <input type="password" id="pass2" name="pass2" class="form-control" required>
+                                            <label for="pass2">Repeat password </label>
+                                            <div id="pass2Error"></div>
                                         </div>
                                         <?php
                                         if (isset($_SESSION['mensaje'])) {
@@ -120,7 +137,7 @@ and open the template in the editor.
         <!-- MDB core JavaScript -->
         <script type="text/javascript" src="../js/mdb.min.js"></script>
         <!-- Your custom scripts (optional) -->
-        <script type="text/javascript"></script>
+        <script type="text/javascript" src="../js/validar.js"></script>
 
     </body>
 </html>

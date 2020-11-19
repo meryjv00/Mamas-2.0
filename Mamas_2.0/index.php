@@ -59,7 +59,7 @@ and open the template in the editor.
                     <!--Grid row-->
                     <div class="row row fadeIn">
                         <!--Grid column-->
-                        <div class="col-md-12 mb-4 white-text text-center wow fadeIn altura align-content-center">
+                        <div class="col-md-12 mb-4 white-text text-center wow fadeIn altura d-flex flex-column justify-content-center align-items-center">
                             <!--IMG-->
                             <img src="img/log00.png" height="200px"/>
                             <h3 class="display-3 font-weight-bold white-text tit2">Mamás 2.0</h3>
