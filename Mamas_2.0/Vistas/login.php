@@ -18,38 +18,37 @@ and open the template in the editor.
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link rel="preconnect" href="https://fonts.gstatic.com">
     </head>
-    <body onload="login()">
-
+    <body onload="validacionLogin()" >
         <div class="container my-5 px-0 z-depth-1">
             <!--Section: Content-->
             <section class="pb-5 text-center">
                 <div class="my-5 mx-md-5">
                     <a href="../index.php"><img src="../img/log0.png" width="250px"/></a>
-
                     <div class="row">
                         <div class="col-md-8 mx-auto">
-
                             <!-- Material form login -->
                             <div class="card" style="border: 2px solid antiquewhite">
-
                                 <!--Card content-->
                                 <div class="card-body">
-
                                     <!-- Form -->
                                     <form class="text-center needs-validation" style="color: #757575;" action="../Controlador/controlador.php" method="POST" novalidate>
 
                                         <h3 class="font-weight-bold my-4 pb-2 text-center tit">Log in</h3>
-
+                                        <!-- e-mail -->
                                         <div class="md-form form-group">
-                                            <input type="email" id="email" name="email" class="form-control mb-4" required>
+                                            <input type="email" id="email" name="email" class="form-control mb-4" required  pattern="[a-z0-9!#$%&'+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'+/=?^_`{|}~-]+)@(?:[a-z0-9](?:[a-z0-9-][a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$">
                                             <label class="form-control-label" for="email">E-mail</label>
-
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
                                         </div>
                                         <!-- password -->
                                         <div class="md-form form-group">
                                             <input type="password" id="password" name="password" class="form-control" required>
                                             <label class="form-control-label"  for="password">Password</label>
-
+                                            <div name="mailError" class="valid-feedback">
+                                                Looks good!
+                                            </div>
                                         </div>
                                         <?php
                                         session_start();
