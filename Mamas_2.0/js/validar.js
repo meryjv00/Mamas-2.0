@@ -24,8 +24,9 @@ function validacionLogin() {
     email.addEventListener('blur', function (event) {
         if (email.validity.valid) {
             emailError.className = 'valid-feedback';
+            email.classList.remove('is-invalid');
             email.classList.add('is-valid');
-
+            emailError.textContent = '';
         } else {
             error(email);
         }
@@ -107,6 +108,7 @@ function validarRegistro() {
         if (nombre.validity.valid) {
             nombreError.className = 'valid-feedback';
             nombre.classList.add('is-valid');
+            nombre.classList.remove('is-invalid');
             nombreError.textContent = 'Looks good!';
         } else {
             error(nombre);
@@ -116,6 +118,7 @@ function validarRegistro() {
         if (apellidos.validity.valid) {
             apellidosError.className = 'valid-feedback';
             apellidos.classList.add('is-valid');
+            apellidos.classList.remove('is-invalid');
             apellidosError.textContent = 'Looks good!';
         } else {
             error(apellidos);
@@ -126,6 +129,7 @@ function validarRegistro() {
         if (email.validity.valid) {
             emailError.className = 'valid-feedback';
             email.classList.add('is-valid');
+            email.classList.remove('is-invalid');
             emailError.textContent = 'Looks good!';
         } else {
             error(email);
@@ -136,6 +140,7 @@ function validarRegistro() {
         if (dni.validity.valid) {
             dniError.className = 'valid-feedback';
             dni.classList.add('is-valid');
+            dni.classList.remove('is-invalid');
             dniError.textContent = 'Looks good!';
         } else {
             error(dni);
@@ -146,6 +151,7 @@ function validarRegistro() {
         if (tfno.validity.valid) {
             tfnoError.className = 'valid-feedback';
             tfno.classList.add('is-valid');
+            tfno.classList.remove('is-invalid');
             tfnoError.textContent = 'Looks good!';
         } else {
             error(tfno);
@@ -156,6 +162,7 @@ function validarRegistro() {
         if (pass.validity.valid) {
             passError.className = 'valid-feedback';
             pass.classList.add('is-valid');
+            pass.classList.remove('is-invalid');
             passError.textContent = 'Looks good!';
         } else {
             error(pass);
@@ -181,6 +188,7 @@ function validarRegistro() {
                 pass2Error.textContent = 'Looks good!';
                 pass2Error.className = 'valid-feedback';
                 pass2.classList.add('is-valid');
+                pass2.classList.remove('is-invalid');
             }
         }
     }

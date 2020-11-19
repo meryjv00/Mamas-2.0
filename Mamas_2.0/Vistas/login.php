@@ -52,30 +52,32 @@ and open the template in the editor.
                                             <label for="email">E-mail </label>
                                             <div name="emailError" class="" id="emailError"></div>
                                         </div>
-                                </div>
-                                <!-- password -->
-                                <div class="md-form form-group">
-                                    <input type="password" id="password" name="password" class="form-control" required>
-                                    <label class="form-control-label"  for="password">Password</label>
-                                </div>
-                                <?php
-                                session_start();
-                                if (isset($_SESSION['mensaje'])) {
-                                    $mensaje = $_SESSION['mensaje'];
-                                    echo $mensaje . '<br>';
-                                    unset($_SESSION['mensaje']);
-                                }
-                                ?>
 
-                                <div class="text-center mb-3 pl-5 pr-5">
-                                    <button type="submit" name="login"  class="btn mean-fruit-gradient text-white btn-block btn-rounded my-4 waves-effect z-depth-1a">Log in</button>
-                                </div>
+                                        <!-- password -->
+                                        <div class="md-form form-group mt-5 ">
+                                            <input type="password" id="password" name="password" class="form-control" required>
+                                            <label class="form-control-label"  for="password">Password</label>
 
-                                <div class="modal-footer mx-5 pt-3 mb-1">
-                                    <span>
-                                        <a href="registro.php" style="color: #D681E8">Don't have an account?</a>
-                                        or <a href="olvidado.php" style="color: #D681E8">Forgot password?</a>
-                                    </span>
+                                        </div>
+                                        <?php
+                                        session_start();
+                                        if (isset($_SESSION['mensaje'])) {
+                                            $mensaje = $_SESSION['mensaje'];
+                                            echo $mensaje . '<br>';
+                                            unset($_SESSION['mensaje']);
+                                        }
+                                        ?>
+
+                                        <div class="text-center mb-3 pl-5 pr-5">
+                                            <button type="submit" name="login"  class="btn mean-fruit-gradient text-white btn-block btn-rounded my-4 waves-effect z-depth-1a">Log in</button>
+                                        </div>
+
+                                        <div class="modal-footer mx-5 pt-3 mb-1">
+                                            <span>
+                                                <a href="registro.php" style="color: #D681E8">Don't have an account?</a>
+                                                or <a href="olvidado.php" style="color: #D681E8">Forgot password?</a>
+                                            </span>
+                                        </div>
                                 </div>
                                 <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
                                 </form>
