@@ -6,32 +6,44 @@
  * and open the template in the editor.
  */
 include_once '../Auxiliar/gestionDatos.php';
-session_start();
+
 //---------------LOGIN
 if (isset($_REQUEST['login'])) {
-    $email = $_REQUEST['email'];
-    $password = md5($_REQUEST['password']);
-    gestionDatos::getUsuario($email, $password);
+    $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
+    $recaptcha_secret = '6LdU7-QZAAAAAChZ7pnDbgTL--nSmYG6aJxTMj2f';
+    $recaptcha_response = $_POST['recaptcha_response'];
+    $recaptcha = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $recaptcha_response);
+    $recaptcha = json_decode($recaptcha);
 
-    if (!isset($_SESSION['usuario'])) {
-        $mensaje = 'Error al realizar el Login.';
-        $_SESSION['mensaje'] = $mensaje;
-        header('Location: ../Vistas/login.php');
-    } else {
-        $usuario = $_SESSION['usuario'];
-        if ($usuario->getActivo() == 0) {
-            $mensaje = 'Usuario desactivado , contacte con administrador';
+    if ($recaptcha->score >= 0.7) {
+        $email = $_REQUEST['email'];
+        $password = md5($_REQUEST['password']);
+        gestionDatos::getUsuario($email, $password);
+
+        if (!isset($_SESSION['usuario'])) {
+            $mensaje = 'Error al realizar el Login.';
             $_SESSION['mensaje'] = $mensaje;
             header('Location: ../Vistas/login.php');
-        } else if ($usuario->getActivo() == 1) {
-            if ($usuario->getRol() == 2) {
-                header('Location: ../Vistas/elegirAdmin.php');
-            } else if ($usuario->getRol() == 0) {
-                header('Location: ../Vistas/inicio.php');
-            } else if ($usuario->getRol() == 1) {
-                header('Location: ../Vistas/crudProfesor.php');
+        } else {
+            $usuario = $_SESSION['usuario'];
+            if ($usuario->getActivo() == 0) {
+                $mensaje = 'Usuario desactivado , contacte con administrador';
+                $_SESSION['mensaje'] = $mensaje;
+                header('Location: ../Vistas/login.php');
+            } else if ($usuario->getActivo() == 1) {
+                if ($usuario->getRol() == 2) {
+                    header('Location: ../Vistas/elegirAdmin.php');
+                } else if ($usuario->getRol() == 0) {
+                    header('Location: ../Vistas/inicio.php');
+                } else if ($usuario->getRol() == 1) {
+                    header('Location: ../Vistas/crudProfesor.php');
+                }
             }
         }
+    } else {
+        $mensaje = 'Error captcha no superado.';
+        $_SESSION['mensaje'] = $mensaje;
+        header('Location: ../Vistas/login.php');
     }
 }
 

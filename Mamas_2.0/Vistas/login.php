@@ -17,6 +17,18 @@ and open the template in the editor.
         <link rel="stylesheet" href="../css/style.css">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link rel="stylesheet" href="../css/style.css">
+        <script src='https://www.google.com/recaptcha/api.js?render=6LdU7-QZAAAAANmiNBKJU677B_eGaE-tJsZL0TMT'>
+        </script>
+        <script>
+            grecaptcha.ready(function () {
+                grecaptcha.execute('6LdU7-QZAAAAANmiNBKJU677B_eGaE-tJsZL0TMT', {action: 'login'})
+                        .then(function (token) {
+                            var recaptchaResponse = document.getElementById('recaptchaResponse');
+                            recaptchaResponse.value = token;
+                        });
+            });
+        </script>
     </head>
     <body onload="validacionLogin()" >
         <div class="container my-5 px-0 z-depth-1">
@@ -31,7 +43,7 @@ and open the template in the editor.
                                 <!--Card content-->
                                 <div class="card-body">
                                     <!-- Form -->
-                                    <form class="text-center needs-validation" style="color: #757575;" action="../Controlador/controlador.php" method="POST" novalidate>
+                                    <form name="login" class="text-center needs-validation" style="color: #757575;" action="../Controlador/controlador.php" method="POST" novalidate>
 
                                         <h3 class="font-weight-bold my-4 pb-2 text-center tit">Log in</h3>
                                         <!-- e-mail -->
@@ -69,7 +81,7 @@ and open the template in the editor.
                                                 or <a href="olvidado.php" style="color: #D681E8">Forgot password?</a>
                                             </span>
                                         </div>
-
+                                        <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
                                     </form>
                                 </div>
                             </div>

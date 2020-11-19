@@ -13,7 +13,7 @@ and open the template in the editor.
         <!-- Material Design Bootstrap -->
         <link rel="stylesheet" href="../css/mdb.min.css">
         <!-- Your custom styles (optional) -->
-        <link rel="stylesheet" href="../css/style.css">
+      
     </head>
     <body>
         <?php session_start(); ?>
