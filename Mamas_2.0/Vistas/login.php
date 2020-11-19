@@ -43,7 +43,7 @@ and open the template in the editor.
                                 <!--Card content-->
                                 <div class="card-body">
                                     <!-- Form -->
-                                    <form name="login" id="login" class="text-center needs-validation" style="color: #757575;" action="../Controlador/controlador.php" method="POST" novalidate>
+                                    <form name="login" id="login" class="text-left needs-validation" style="color: #757575;" action="../Controlador/controlador.php" method="POST" novalidate>
 
                                         <h3 class="font-weight-bold my-4 pb-2 text-center tit">Log in</h3>
                                         <!-- e-mail -->
@@ -57,7 +57,6 @@ and open the template in the editor.
                                 <div class="md-form form-group">
                                     <input type="password" id="password" name="password" class="form-control" required>
                                     <label class="form-control-label"  for="password">Password</label>
-
                                 </div>
                                 <?php
                                 session_start();

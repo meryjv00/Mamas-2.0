@@ -15,14 +15,14 @@ function validacionLogin() {
     const emailError = document.getElementById("emailError");
 
     form.addEventListener('submit', function (event) {
-        if (!mail.validity.valid) {
+        if (!email.validity.valid) {
             error(email);
             event.preventDefault();
         }
     });
 
-    mail.addEventListener('blur', function (event) {
-        if (mail.validity.valid) {
+    email.addEventListener('blur', function (event) {
+        if (email.validity.valid) {
             emailError.className = 'valid-feedback';
             email.classList.add('is-valid');
 
