@@ -44,17 +44,23 @@ if (isset($_REQUEST['registro'])) {
     $tfno = $_REQUEST['tfno'];
     $pass = md5($_REQUEST['pass']);
     if (!gestionDatos::isUsuario($email)) {
-        if (!gestionDatos::insertUsuario($email, $dni, $nombre, $apellidos, $tfno, $pass)) {
-            $mensaje = "No se ha podido insertar el usuario";
+        if (!gestionDatos::isDni($dni)) {
+            if (!gestionDatos::insertUsuario($email, $dni, $nombre, $apellidos, $tfno, $pass)) {
+                $mensaje = "No se ha podido insertar el usuario";
+                $_SESSION['mensaje'] = $mensaje;
+                header('Location: ../Vistas/registro.php');
+            } else {
+                $mensaje = "¡Cuenta creada!";
+                $_SESSION['mensaje'] = $mensaje;
+                header('Location: ../Vistas/login.php');
+            }
+        } else {
+            $mensaje = "El dni introducido ya está registrado";
             $_SESSION['mensaje'] = $mensaje;
             header('Location: ../Vistas/registro.php');
-        } else {
-            $mensaje = "¡Cuenta creada!";
-            $_SESSION['mensaje'] = $mensaje;
-            header('Location: ../Vistas/login.php');
         }
     } else {
-        $mensaje = "El email introducido ya existe";
+        $mensaje = "El email introducido ya está registrado";
         $_SESSION['mensaje'] = $mensaje;
         header('Location: ../Vistas/registro.php');
     }
