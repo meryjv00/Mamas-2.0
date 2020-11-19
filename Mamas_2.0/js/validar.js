@@ -50,7 +50,22 @@ function validarRegistro() {
             error(nombre);
             event.preventDefault();
         }
-
+        if (!apellidos.validity.valid) {
+            error(apellidos);
+            event.preventDefault();
+        }
+        if (!dni.validity.valid) {
+            error(dni);
+            event.preventDefault();
+        }
+        if (!tfno.validity.valid) {
+            error(tfno);
+            event.preventDefault();
+        }
+        if (!pass.validity.valid) {
+            error(pass);
+            event.preventDefault();
+        }
         comprobarContras();
         if (!correcto) {
             event.preventDefault();
@@ -64,6 +79,15 @@ function validarRegistro() {
             nombreError.textContent = 'Looks good!';
         } else {
             error(nombre);
+        }
+    });
+    apellidos.addEventListener('blur', function (event) {
+        if (apellidos.validity.valid) {
+            apellidosError.className = 'valid-feedback';
+            apellidos.className = 'is-valid';
+            apellidosError.textContent = 'Looks good!';
+        } else {
+            error(apellidos);
         }
     });
 
@@ -80,17 +104,17 @@ function validarRegistro() {
             pass2.className = 'is-invalid';
             correcto = false;
         } else {
-            nombreError.textContent = 'Looks good!';
-            nombreError.className = 'valid-feedback';
-            nombre.className = 'is-valid';
             correcto = true;
+            pass2Error.textContent = 'Looks good!';
+            pass2Error.className = 'valid-feedback';
+            pass2.className = 'is-valid';
         }
     }
     function error(campo) {
         if (campo == nombre) {
             //Campo vacío
             if (nombre.validity.valueMissing) {
-                nombreError.textContent = 'Debe introducir un nombre.';
+                nombreError.textContent = 'Debe introducir su nombre.';
             } else if (nombre.validity.tooShort) {
                 nombreError.textContent = 'El nombre debe tener al menos ' + nombre.minLength + ' caracteres; ha introducido ' + nombre.value.length;
             } else if (nombre.validity.tooLong) {
@@ -99,6 +123,19 @@ function validarRegistro() {
             // Establece el estilo apropiado
             nombre.className = 'is-invalid';
             nombreError.className = 'invalid-feedback';
+        }
+        if (campo == apellidos) {
+            //Campo vacío
+            if (apellidos.validity.valueMissing) {
+                apellidosError.textContent = 'Debe introducir sus apellidos.';
+            } else if (apellidos.validity.tooShort) {
+                apellidosError.textContent = 'Debe tener al menos ' + apellidos.minLength + ' caracteres; ha introducido ' + apellidos.value.length;
+            } else if (apellidos.validity.tooLong) {
+                apellidosError.textContent = 'Debe tener como máximo ' + apellidos.maxLength + ' caracteres; ha introducido ' + apellidos.value.length;
+            }
+            // Establece el estilo apropiado
+            apellidos.className = 'is-invalid';
+            apellidosError.className = 'invalid-feedback';
         }
 
     }

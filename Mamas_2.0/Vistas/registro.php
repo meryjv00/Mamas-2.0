@@ -31,7 +31,7 @@ and open the template in the editor.
                                 <div class="card-body">
 
                                     <!-- Form -->
-                                    <form id="registro" class="text-center" style="color: #757575;" action="../Controlador/controlador.php">
+                                    <form id="registro" class="text-center" style="color: #757575;" action="../Controlador/controlador.php" novalidate>
 
                                         <h3 class="font-weight-bold my-4 pb-2 text-center  tit">Sign up</h3>
 
