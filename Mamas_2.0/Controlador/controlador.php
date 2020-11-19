@@ -38,11 +38,11 @@ if (isset($_REQUEST['login'])) {
 //---------------REGISTRO
 if (isset($_REQUEST['registro'])) {
     $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
-    $recaptcha_secret = '6LdU7-QZAAAAAChZ7pnDbgTL--nSmYG6aJxTMj2f';
+    $recaptcha_secret = '6LetBuUZAAAAACJbleMS9s-GX9s5jhcdRL4gtPP8';
     $recaptcha_response = $_POST['recaptcha_response'];
     $recaptcha = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $recaptcha_response);
     $recaptcha = json_decode($recaptcha);
-    if ($recaptcha->score >= 0.5) {
+    if ($recaptcha->score >= 0.7) {
         // REGISTRO SE ENVIA
         $email = $_REQUEST['email'];
         $dni = $_REQUEST['dni'];

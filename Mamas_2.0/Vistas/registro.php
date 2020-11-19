@@ -14,16 +14,16 @@ and open the template in the editor.
         <link rel="stylesheet" href="../css/mdb.min.css">
         <!-- Your custom styles (optional) -->
         <link rel="stylesheet" href="../css/style.css">
-        <script src='https://www.google.com/recaptcha/api.js?render=6LdU7-QZAAAAANmiNBKJU677B_eGaE-tJsZL0TMT'>
+        <script src='https://www.google.com/recaptcha/api.js?render=6LetBuUZAAAAAEShdy0B9r0JFMKbsKVrbGW2PbjT'>
         </script>
         <script>
-                    grecaptcha.ready(function () {
-                    grecaptcha.execute('6LdU7-QZAAAAANmiNBKJU677B_eGaE-tJsZL0TMT', {action: 'registro'})
-                            .then(function (token) {
+            grecaptcha.ready(function () {
+                grecaptcha.execute('6LetBuUZAAAAAEShdy0B9r0JFMKbsKVrbGW2PbjT', {action: 'registro'})
+                        .then(function (token) {
                             var recaptchaResponse = document.getElementById('recaptchaResponse');
                             recaptchaResponse.value = token;
-                            });
-                    });
+                        });
+            });
         </script>
     </head>
     <body onload="validarRegistro()">
@@ -42,7 +42,7 @@ and open the template in the editor.
                                 <div class="card-body">
 
                                     <!-- Form -->
-                                    <form id="registro" name="registro" class="text-left" style="color: #757575;" action="../Controlador/controlador.php" novalidate>
+                                    <form id="registro" name="registro" class="text-left" style="color: #757575;" action="../Controlador/controlador.php" method="POST" novalidate>
 
                                         <h3 class="font-weight-bold my-4 pb-2 text-center  tit">Sign up</h3>
 
