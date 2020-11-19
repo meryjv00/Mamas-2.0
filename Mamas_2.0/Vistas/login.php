@@ -43,64 +43,61 @@ and open the template in the editor.
                                 <!--Card content-->
                                 <div class="card-body">
                                     <!-- Form -->
-                                    <form name="login" class="text-center needs-validation" style="color: #757575;" action="../Controlador/controlador.php" method="POST" novalidate>
+                                    <form name="login" id="login" class="text-center needs-validation" style="color: #757575;" action="../Controlador/controlador.php" method="POST" novalidate>
 
                                         <h3 class="font-weight-bold my-4 pb-2 text-center tit">Log in</h3>
                                         <!-- e-mail -->
-                                        <div class="md-form form-group">
-                                            <input type="email" id="email" name="email" class="form-control mb-4" required  pattern="[a-z0-9!#$%&'+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'+/=?^_`{|}~-]+)@(?:[a-z0-9](?:[a-z0-9-][a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$">
-                                            <label class="form-control-label" for="email">E-mail</label>
-                                            <div class="valid-feedback">
-                                                Looks good!
-                                            </div>
+                                        <div class="md-form mt-0">
+                                            <input type="email" id="email" name="email" class="form-control mb-4" required>
+                                            <label for="email">E-mail </label>
+                                            <div name="emailError" class="" id="emailError"></div>
                                         </div>
-                                        <!-- password -->
-                                        <div class="md-form form-group">
-                                            <input type="password" id="password" name="password" class="form-control" required>
-                                            <label class="form-control-label"  for="password">Password</label>
-                                            <div name="mailError" class="valid-feedback">
-                                                Looks good!
-                                            </div>
-                                        </div>
-                                        <?php
-                                        session_start();
-                                        if (isset($_SESSION['mensaje'])) {
-                                            $mensaje = $_SESSION['mensaje'];
-                                            echo $mensaje . '<br>';
-                                            unset($_SESSION['mensaje']);
-                                        }
-                                        ?>
-
-                                        <div class="text-center mb-3 pl-5 pr-5">
-                                            <button type="submit" name="login"  class="btn mean-fruit-gradient text-white btn-block btn-rounded my-4 waves-effect z-depth-1a">Log in</button>
-                                        </div>
-
-                                        <div class="modal-footer mx-5 pt-3 mb-1">
-                                            <span>
-                                                <a href="registro.php" style="color: #D681E8">Don't have an account?</a>
-                                                or <a href="olvidado.php" style="color: #D681E8">Forgot password?</a>
-                                            </span>
-                                        </div>
-                                        <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
-                                    </form>
                                 </div>
+                                <!-- password -->
+                                <div class="md-form form-group">
+                                    <input type="password" id="password" name="password" class="form-control" required>
+                                    <label class="form-control-label"  for="password">Password</label>
+
+                                </div>
+                                <?php
+                                session_start();
+                                if (isset($_SESSION['mensaje'])) {
+                                    $mensaje = $_SESSION['mensaje'];
+                                    echo $mensaje . '<br>';
+                                    unset($_SESSION['mensaje']);
+                                }
+                                ?>
+
+                                <div class="text-center mb-3 pl-5 pr-5">
+                                    <button type="submit" name="login"  class="btn mean-fruit-gradient text-white btn-block btn-rounded my-4 waves-effect z-depth-1a">Log in</button>
+                                </div>
+
+                                <div class="modal-footer mx-5 pt-3 mb-1">
+                                    <span>
+                                        <a href="registro.php" style="color: #D681E8">Don't have an account?</a>
+                                        or <a href="olvidado.php" style="color: #D681E8">Forgot password?</a>
+                                    </span>
+                                </div>
+                                <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
         </div>
+    </section>
+</div>
 
-        <!-- jQuery -->
-        <script type="text/javascript" src="../js/jquery.min.js"></script>
-        <!-- Bootstrap tooltips -->
-        <script type="text/javascript" src="../js/popper.min.js"></script>
-        <!-- Bootstrap core JavaScript -->
-        <script type="text/javascript" src="../js/bootstrap.min.js"></script>
-        <!-- MDB core JavaScript -->
-        <script type="text/javascript" src="../js/mdb.min.js"></script>
-        <!-- Your custom scripts (optional) -->
-        <script type="text/javascript" src="../js/validar.js">
-        </script>
-    </body>
+<!-- jQuery -->
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="../js/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="../js/mdb.min.js"></script>
+<!-- Your custom scripts (optional) -->
+<script type="text/javascript" src="../js/validar.js">
+</script>
+</body>
 </html>
