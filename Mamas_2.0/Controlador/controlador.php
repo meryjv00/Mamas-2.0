@@ -42,9 +42,8 @@ if (isset($_REQUEST['registro'])) {
     $recaptcha_response = $_POST['recaptcha_response'];
     $recaptcha = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $recaptcha_response);
     $recaptcha = json_decode($recaptcha);
-
     if ($recaptcha->score >= 0.5) {
-        // REGISTRO SE ENVIA 
+        // REGISTRO SE ENVIA
         $email = $_REQUEST['email'];
         $dni = $_REQUEST['dni'];
         $nombre = $_REQUEST['nombre'];

@@ -14,15 +14,16 @@ and open the template in the editor.
         <link rel="stylesheet" href="../css/mdb.min.css">
         <!-- Your custom styles (optional) -->
         <link rel="stylesheet" href="../css/style.css">
-        <script src='https://www.google.com/recaptcha/api.js?render=6LdU7-QZAAAAANmiNBKJU677B_eGaE-tJsZL0TMT'></script>
+        <script src='https://www.google.com/recaptcha/api.js?render=6LdU7-QZAAAAANmiNBKJU677B_eGaE-tJsZL0TMT'>
+        </script>
         <script>
-            grecaptcha.ready(function () {
-                grecaptcha.execute('6LdU7-QZAAAAANmiNBKJU677B_eGaE-tJsZL0TMT', {action: 'registro'})
-                        .then(function (token) {
+                    grecaptcha.ready(function () {
+                    grecaptcha.execute('6LdU7-QZAAAAANmiNBKJU677B_eGaE-tJsZL0TMT', {action: 'registro'})
+                            .then(function (token) {
                             var recaptchaResponse = document.getElementById('recaptchaResponse');
                             recaptchaResponse.value = token;
-                        });
-            });
+                            });
+                    });
         </script>
     </head>
     <body onload="validarRegistro()">
