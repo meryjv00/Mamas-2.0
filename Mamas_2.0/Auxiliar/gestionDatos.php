@@ -80,6 +80,25 @@ class gestionDatos {
         }
     }
 
+    static function isDni($dni) {
+        self::conexion();
+        $stmt = self::$conexion->prepare("SELECT * FROM usuarios WHERE dni= ?");
+        $stmt->bind_param("s", $dni);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            var_dump($resultado);
+            if ($fila = $resultado->fetch_assoc()) {
+
+                $existe = true;
+            } else {
+                echo "Error al encontrar usuario: " . self::$conexion->error . '<br/>';
+                $existe = false;
+            }
+            return $existe;
+            mysqli_close(self::$conexion);
+        }
+    }
+
     static function insertUsuario($email, $dni, $nombre, $apellidos, $tfno, $pass) {
         self::conexion();
         $consulta = "INSERT INTO usuarios VALUES ('" . $email . "','" . $dni . "','" . $nombre . "','" . $apellidos . "','" . $pass . "','" . $tfno . "',0,0)";

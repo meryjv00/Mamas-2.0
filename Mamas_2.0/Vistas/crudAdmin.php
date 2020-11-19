@@ -26,7 +26,7 @@ and open the template in the editor.
         $usuarios = $_SESSION['usuarios'];
         ?>
         <header>
-            <nav class="row navbar navbar-expand-lg navbar-dark fixed-top">
+            <nav class="row navbar navbar-expand-lg navbar-dark fixed-top deg">
                 <div class="container">
                     <!--Left-->
                     <ul class="navbar-nav mr-auto smooth-scroll">
@@ -75,28 +75,35 @@ and open the template in the editor.
                                         <!--Card image-->
                                         <div class="view view-cascade gradient-card-header mean-fruit-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
                                             <div>
-                                                <button type="submit" name="cambiarRolAlumno" class="btn btn-outline-white btn-rounded btn-sm px-2">
+                                                <button type="submit" name="cambiarRolAlumno" class="btn btn-outline-white btn-rounded btn-sm px-2"
+                                                        data-toggle="tooltip" data-placement="top" title="Establecer como alumno">
                                                     <i class="fas fa-user" style="font-size: 20px"></i>
                                                 </button>
-                                                <button type="submit" name="cambiarRolProfesor" class="btn btn-outline-white btn-rounded btn-sm px-2">
+                                                <button type="submit" name="cambiarRolProfesor" class="btn btn-outline-white btn-rounded btn-sm px-2"
+                                                        data-toggle="tooltip" data-placement="top" title="Establecer como profesor">
                                                     <i class="fas fa-chalkboard-teacher" style="font-size: 20px"></i>
                                                 </button>
-                                                <button type="submit" name="cambiarRolAdmnistrador" class="btn btn-outline-white btn-rounded btn-sm px-2">
+                                                <button type="submit" name="cambiarRolAdmnistrador" class="btn btn-outline-white btn-rounded btn-sm px-2"
+                                                        data-toggle="tooltip" data-placement="top" title="Establecer como administrador">
                                                     <i class="fas fa-user-cog mt-0" style="font-size: 20px"></i>
                                                 </button>
                                             </div>
                                             <a href="" class="white-text ml-auto">Usuarios</a>
                                             <div class="ml-auto">
-                                                <button type="submit" name="activarUsuario" class="btn btn-outline-white btn-rounded btn-sm px-2">
+                                                <button type="submit" name="activarUsuario" class="btn btn-outline-white btn-rounded btn-sm px-2"
+                                                        data-toggle="tooltip" data-placement="top" title="Activar">
                                                     <i class="fas fa-check-circle" style="font-size: 20px"></i>
                                                 </button>
-                                                <button type="submit" name="desactivarUsuario" class="btn btn-outline-white btn-rounded btn-sm px-2">
+                                                <button type="submit" name="desactivarUsuario" class="btn btn-outline-white btn-rounded btn-sm px-2"
+                                                        data-toggle="tooltip" data-placement="top" title="Desactivar">
                                                     <i class="fas fa-times-circle" style="font-size: 20px"></i>
                                                 </button>
-                                                <button type="submit" name="editarUsuario" class="btn btn-outline-white btn-rounded btn-sm px-2">
+                                                <button type="submit" name="editarUsuario" class="btn btn-outline-white btn-rounded btn-sm px-2"
+                                                        data-toggle="tooltip" data-placement="top" title="Editar">
                                                     <i class="fas fa-pencil-alt mt-0" style="font-size: 20px"></i>
                                                 </button>
-                                                <button type="submit" name="borrarUsuario" class="btn btn-outline-white btn-rounded btn-sm px-2">
+                                                <button type="submit" name="borrarUsuario" class="btn btn-outline-white btn-rounded btn-sm px-2"
+                                                        data-toggle="tooltip" data-placement="top" title="Eliminar">
                                                     <i class="far fa-trash-alt mt-0" style="font-size: 20px"></i>
                                                 </button>
                                             </div>
@@ -106,7 +113,7 @@ and open the template in the editor.
 
                                         <div class="px-4">
 
-                                            <div class="table-wrapper">
+                                            <div class="table-responsive">
                                                 <!--Table-->
                                                 <table class="table table-hover mb-0">
 
@@ -116,23 +123,23 @@ and open the template in the editor.
                                                             <th></th>
                                                             <th></th>
                                                             <th class="th-lg">
-                                                                <i class="fas fa-envelope c1"></i>
+                                                                <i class="fas fa-envelope c1 pr-1"></i>
                                                                 <a>Mail</a>
                                                             </th>
                                                             <th class="th-lg">
-                                                                <i class="fas fa-id-card c1"></i>
+                                                                <i class="fas fa-id-card c1 pr-1"></i>
                                                                 <a>Dni</a>
                                                             </th>
                                                             <th class="th-lg">
-                                                                <i class="fas fa-address-book c1"></i>
+                                                                <i class="fas fa-address-book c1 pr-1"></i>
                                                                 <a>Nombre</a>
                                                             </th>
                                                             <th class="th-lg">
-                                                                <i class="fas fa-address-book c1"></i>                                                                
+                                                                <i class="fas fa-address-book c1 pr-1"></i>                                                                
                                                                 <a>Apellidos</a>
                                                             </th>
                                                             <th class="th-lg">
-                                                                <i class="fas fa-phone-alt c1"></i>
+                                                                <i class="fas fa-phone-alt c1 pr-1"></i>
                                                                 <a>Telefono</a>
                                                             </th>
                                                             <th></th>
@@ -172,22 +179,22 @@ and open the template in the editor.
                                                                 <td><?= $usuario->getDni() ?></td>
                                                                 <?php
                                                                 if ($usuario->getActivo() == 0) {
-                                                                    $color = "red";
+                                                                    $color = "#E25B64";
                                                                 } else {
-                                                                    $color = "green";
+                                                                    $color = "#5ACA91";
                                                                 }
                                                                 ?>
                                                                 <td>
                                                                     <input class="form-control" type="text" name="nombre[]" value="<?= $usuario->getNombre() ?>"
-                                                                           style="border: 1px solid <?= $color ?>" />
+                                                                           style="border-color: <?= $color ?>" />
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-control" type="text" name="apellidos[]" value="<?= $usuario->getApellidos() ?>"
-                                                                           style="border: 1px solid <?= $color ?>" />
+                                                                           style="border-color:<?= $color ?>" />
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-control" type="text" name="tfno[]" value="<?= $usuario->getTelefono() ?>"
-                                                                           style="border: 1px solid <?= $color ?>"/>  
+                                                                           style="border-color:<?= $color ?>"/>  
                                                                 </td>
                                                                 <td>
                                                                 </td>
@@ -224,7 +231,7 @@ and open the template in the editor.
         <!-- MDB core JavaScript -->
         <script type="text/javascript" src="../js/mdb.min.js"></script>
         <!-- Your custom scripts (optional) -->
-        <script type="text/javascript" src="../js/validar.js">
-        </script>
-    </body>
+        <script type="text/javascript" src="../js/validar.js"></script>
+        <script type="text/javascript" src="../js/diseño.js"></script>
+</body>
 </html>

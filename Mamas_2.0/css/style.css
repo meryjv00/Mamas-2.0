@@ -22,12 +22,12 @@ body{
     border-radius: 10em;
 }
 @font-face {
-  font-family: Pacifico;
-  src: url(Pacifico-Regular.ttf);
+    font-family: Pacifico;
+    src: url(Pacifico-Regular.ttf);
 }
 @font-face {
-  font-family: Rubik;
-  src: url(Rubik-Regular.ttf);
+    font-family: Rubik;
+    src: url(Rubik-Regular.ttf);
 }
 button, input[type=submit]{
     font-family: Rubik;
@@ -35,4 +35,7 @@ button, input[type=submit]{
 .c1{
     color:  #543b54; 
     font-size: 25px;
+}
+.altura{
+    height: 74vh;
 }

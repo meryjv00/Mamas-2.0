@@ -59,14 +59,14 @@ and open the template in the editor.
                     <!--Grid row-->
                     <div class="row row fadeIn">
                         <!--Grid column-->
-                        <div class="col-md-12 mb-4 white-text text-center wow fadeIn">
+                        <div class="col-md-12 mb-4 white-text text-center wow fadeIn altura d-flex flex-column justify-content-center align-items-center">
                             <!--IMG-->
                             <img src="img/log00.png" height="200px"/>
                             <h3 class="display-3 font-weight-bold white-text tit2">Mamás 2.0</h3>
                             <hr class="hr-light my-4 w-75">
                             <h4 class="subtext-header mt-2 mb-4">Hoy en día el aprendizaje no conoce barreras. Accede al aula virtual o haz un 
                                 recorrido para que conozcas su funcionamiento</h4>
-
+                            
                         </div>
                     </div>
                 </div>

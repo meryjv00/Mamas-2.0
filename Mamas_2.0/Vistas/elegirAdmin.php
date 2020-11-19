@@ -45,7 +45,7 @@ and open the template in the editor.
             <!--Section: Content-->
             <section class="pb-5 text-center ">
                 <div class="row">  
-                    <div class="col-md-8 mx-auto">
+                    <div class="col-md-8 mx-auto altura">
                         <img src="../img/log0.png" width="220px"/>
                         <!--BORDE-->
                         <div class="card mb-5" style="border: 2px solid antiquewhite">
@@ -74,7 +74,7 @@ and open the template in the editor.
             </section>
         </main>
 
-        <footer class="footer-copyright text-center text-white fixed-bottom py-3 z-depth-2">
+        <footer class="footer-copyright text-center text-white py-3 z-depth-2">
             <div> © 2020 Copyright: Israel y María</div>
         </footer>
         <!-- jQuery -->
