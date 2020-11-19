@@ -14,6 +14,16 @@ and open the template in the editor.
         <link rel="stylesheet" href="../css/mdb.min.css">
         <!-- Your custom styles (optional) -->
         <link rel="stylesheet" href="../css/style.css">
+        <script src='https://www.google.com/recaptcha/api.js?render=6LdU7-QZAAAAANmiNBKJU677B_eGaE-tJsZL0TMT'></script>
+        <script>
+            grecaptcha.ready(function () {
+                grecaptcha.execute('6LdU7-QZAAAAANmiNBKJU677B_eGaE-tJsZL0TMT', {action: 'registro'})
+                        .then(function (token) {
+                            var recaptchaResponse = document.getElementById('recaptchaResponse');
+                            recaptchaResponse.value = token;
+                        });
+            });
+        </script>
     </head>
     <body onload="validarRegistro()">
         <?php session_start(); ?>
@@ -31,7 +41,7 @@ and open the template in the editor.
                                 <div class="card-body">
 
                                     <!-- Form -->
-                                    <form id="registro" class="text-center" style="color: #757575;" action="../Controlador/controlador.php" novalidate>
+                                    <form id="registro" name="registro" class="text-left" style="color: #757575;" action="../Controlador/controlador.php" novalidate>
 
                                         <h3 class="font-weight-bold my-4 pb-2 text-center  tit">Sign up</h3>
 
@@ -55,12 +65,11 @@ and open the template in the editor.
                                                     <div id="apellidosError"></div>
                                                 </div>
                                             </div>
-                                        </div>
 
+                                        </div>
                                         <!-- Email -->
                                         <div class="md-form mt-0">
-                                            <input type="email" id="email" name="email" class="form-control mb-4" required
-                                                   pattern="^[a-z0-9!#$%&'+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'+/=?^_`{|}~-]+)@(?:[a-z0-9](?:[a-z0-9-][a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$">
+                                            <input type="email" id="email" name="email" class="form-control mb-4" required>
                                             <label for="email">E-mail </label>
                                             <div id="emailError"></div>
                                         </div>
@@ -68,7 +77,7 @@ and open the template in the editor.
                                         <!-- Dni -->
                                         <div class="md-form">
                                             <input type="text" id="dni" name="dni" class="form-control mb-4" 
-                                                   pattern="^[0-9]{8}[A-Za-z]{1}$" required>
+                                                   pattern="^[0-9]{8}[A-Z]{1}$" required>
                                             <label for="dni">Dni </label>
                                             <div id="dniError"></div>
                                         </div>
@@ -110,7 +119,7 @@ and open the template in the editor.
                                                 <a href="login.php" style="color: #D681E8">Sign in</a>
                                             </span>
                                         </div>
-
+                                        <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
                                     </form>
                                     <!-- Form -->
 
@@ -138,6 +147,6 @@ and open the template in the editor.
         <script type="text/javascript" src="../js/mdb.min.js"></script>
         <!-- Your custom scripts (optional) -->
         <script type="text/javascript" src="../js/validar.js"></script>
-
+        <script type="text/javascript" src="../js/diseño.js"></script>
     </body>
 </html>

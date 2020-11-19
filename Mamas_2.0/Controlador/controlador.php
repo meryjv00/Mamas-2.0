@@ -37,30 +37,43 @@ if (isset($_REQUEST['login'])) {
 
 //---------------REGISTRO
 if (isset($_REQUEST['registro'])) {
-    $email = $_REQUEST['email'];
-    $dni = $_REQUEST['dni'];
-    $nombre = $_REQUEST['nombre'];
-    $apellidos = $_REQUEST['apellidos'];
-    $tfno = $_REQUEST['tfno'];
-    $pass = md5($_REQUEST['pass']);
-    if (!gestionDatos::isUsuario($email)) {
-        if (!gestionDatos::isDni($dni)) {
-            if (!gestionDatos::insertUsuario($email, $dni, $nombre, $apellidos, $tfno, $pass)) {
-                $mensaje = "No se ha podido insertar el usuario";
+    $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
+    $recaptcha_secret = '6LdU7-QZAAAAAChZ7pnDbgTL--nSmYG6aJxTMj2f';
+    $recaptcha_response = $_POST['recaptcha_response'];
+    $recaptcha = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $recaptcha_response);
+    $recaptcha = json_decode($recaptcha);
+
+    if ($recaptcha->score >= 0.5) {
+        // REGISTRO SE ENVIA 
+        $email = $_REQUEST['email'];
+        $dni = $_REQUEST['dni'];
+        $nombre = $_REQUEST['nombre'];
+        $apellidos = $_REQUEST['apellidos'];
+        $tfno = $_REQUEST['tfno'];
+        $pass = md5($_REQUEST['pass']);
+        if (!gestionDatos::isUsuario($email)) {
+            if (!gestionDatos::isDni($dni)) {
+                if (!gestionDatos::insertUsuario($email, $dni, $nombre, $apellidos, $tfno, $pass)) {
+                    $mensaje = "No se ha podido insertar el usuario";
+                    $_SESSION['mensaje'] = $mensaje;
+                    header('Location: ../Vistas/registro.php');
+                } else {
+                    $mensaje = "¡Cuenta creada!";
+                    $_SESSION['mensaje'] = $mensaje;
+                    header('Location: ../Vistas/login.php');
+                }
+            } else {
+                $mensaje = "El dni introducido ya está registrado";
                 $_SESSION['mensaje'] = $mensaje;
                 header('Location: ../Vistas/registro.php');
-            } else {
-                $mensaje = "¡Cuenta creada!";
-                $_SESSION['mensaje'] = $mensaje;
-                header('Location: ../Vistas/login.php');
             }
         } else {
-            $mensaje = "El dni introducido ya está registrado";
+            $mensaje = "El email introducido ya está registrado";
             $_SESSION['mensaje'] = $mensaje;
             header('Location: ../Vistas/registro.php');
         }
     } else {
-        $mensaje = "El email introducido ya está registrado";
+        $mensaje = 'Error captcha no superado.';
         $_SESSION['mensaje'] = $mensaje;
         header('Location: ../Vistas/registro.php');
     }
