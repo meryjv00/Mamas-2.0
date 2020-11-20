@@ -42,8 +42,10 @@ and open the template in the editor.
                             <form name="cerrarSes" action="../Controlador/controladorCrud.php" method="post">
                                 <input type="submit" class="btn mean-fruit-gradient text-white
                                        btn-rounded waves-effect z-depth-1a" name="nuevoUsuario" value="Añadir usuario">
-                                <input type="submit" class="btn mean-fruit-gradient text-white
+                                <button type="submit" class="btn mean-fruit-gradient text-white
                                        btn-rounded waves-effect z-depth-1a" name="cerrarSesion" value="Cerrar sesión">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                </button>
                             </form>
                         </li> 
                     </ul>

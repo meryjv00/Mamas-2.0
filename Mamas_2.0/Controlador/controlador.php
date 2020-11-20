@@ -36,7 +36,7 @@ if (isset($_REQUEST['login'])) {
                 } else if ($usuario->getRol() == 0) {
                     header('Location: ../Vistas/inicio.php');
                 } else if ($usuario->getRol() == 1) {
-                    header('Location: ../Vistas/crudProfesor.php');
+                    header('Location: ../Vistas/inicioProfesor.php');
                 }
             }
         }
@@ -108,5 +108,5 @@ if (isset($_REQUEST['CRUDadmin'])) {
 }
 //-----------------IR A LA PÁGINA PRINCIPAL PROFESORADO
 if (isset($_REQUEST['CRUDprofesor'])) {
-    header('Location: ../Vistas/crudProfesor.php');
+    header('Location: ../Vistas/inicioProfesor.php');
 }

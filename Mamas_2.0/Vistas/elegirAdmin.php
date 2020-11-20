@@ -16,6 +16,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="../css/style.css">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
     </head>
     <body>
         <?php
@@ -32,8 +33,10 @@ and open the template in the editor.
                     <ul class="navbar-nav ">
                         <li class="nav-item">
                             <form name="cerrarSes" action="../Controlador/controlador.php" method="post">
-                                <input type="submit" class="btn mean-fruit-gradient text-white
-                                       btn-rounded waves-effect z-depth-1a" name="cerrarSesion" value="Cerrar sesión">
+                                <button type="submit" class="btn mean-fruit-gradient text-white
+                                        btn-rounded waves-effect z-depth-1a" name="cerrarSesion" value="Cerrar sesión">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                </button>
                             </form>
                         </li> 
                     </ul>

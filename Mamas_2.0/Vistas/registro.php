@@ -47,7 +47,7 @@ and open the template in the editor.
                                     <!-- Form -->
                                     <form id="registro" name="registro" class="text-left" style="color: #757575;" action="../Controlador/controlador.php" method="POST" novalidate>
 
-                                        <h3 class="font-weight-bold my-4 pb-2 text-center  tit">Sign up</h3>
+                                        <h3 class="font-weight-bold my-4 pb-2 text-center  tit">Regístrate</h3>
                                         <?php
                                         if (isset($_SESSION['usu'])) {
                                             $usu = $_SESSION['usu'];
@@ -63,7 +63,7 @@ and open the template in the editor.
                                                 <div class="md-form">
                                                     <input type="text" id="nombre" name="nombre" class="form-control" 
                                                            minlength="2" maxlength="25" required value="<?= $usu->getNombre() ?>">
-                                                    <label for="nombre">First name</label>
+                                                    <label for="nombre">Nombre</label>
                                                     <div id="nombreError"></div>
                                                 </div>
                                             </div>
@@ -72,7 +72,7 @@ and open the template in the editor.
                                                 <div class="md-form">
                                                     <input type="text" id="apellidos" name="apellidos" class="form-control" value="<?= $usu->getApellidos() ?>"
                                                            minlength="6" maxlength="25" required>
-                                                    <label for="apellidos">Last name</label>
+                                                    <label for="apellidos">Apellidos</label>
                                                     <div id="apellidosError"></div>
                                                 </div>
                                             </div>
@@ -97,20 +97,20 @@ and open the template in the editor.
                                         <div class="md-form">
                                             <input type="text" id="tfno" name="tfno" class="form-control mb-4" value="<?=$usu->getTelefono()?>"
                                                    pattern="^[0-9]{9}$" required>
-                                            <label for="tfno">Phone number</label>
+                                            <label for="tfno">Teléfono</label>
                                             <div id="tfnoError"></div>
                                         </div>
 
                                         <!-- Pass -->
                                         <div class="md-form">
                                             <input type="password" id="pass" name="pass" minlength="3" maxlength="15" class="form-control" required>
-                                            <label for="pass">Password </label>
+                                            <label for="pass">Contraseña </label>
                                             <div id="passError"></div>
                                         </div>
                                         <!-- Repeat password -->
                                         <div class="md-form">
                                             <input type="password" id="pass2" name="pass2" class="form-control" required>
-                                            <label for="pass2">Repeat password </label>
+                                            <label for="pass2">Repite tu contraseña </label>
                                             <div id="pass2Error"></div>
                                         </div>
                                         <?php
@@ -122,12 +122,12 @@ and open the template in the editor.
                                         ?>
                                         <div class="text-center mb-3 pl-5 pr-5">
                                             <button type="submit" name="registro" class="btn mean-fruit-gradient text-white btn-block 
-                                                    btn-rounded my-4 waves-effect z-depth-1a">Sign up</button>
+                                                    btn-rounded my-4 waves-effect z-depth-1a">Regístrate</button>
                                         </div>
 
                                         <div class="modal-footer mx-5 pt-3 mb-1">
-                                            <span>Already have an account?
-                                                <a href="login.php" style="color: #D681E8">Sign in</a>
+                                            <span>¿Ya tienes cuenta?
+                                                <a href="login.php" style="color: #D681E8">Inicia sesión</a>
                                             </span>
                                         </div>
                                         <input type="hidden" name="recaptcha_response" id="recaptchaResponse">

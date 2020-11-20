@@ -109,7 +109,7 @@ function validarRegistro() {
             nombreError.className = 'valid-feedback';
             nombre.classList.add('is-valid');
             nombre.classList.remove('is-invalid');
-            nombreError.textContent = 'Looks good!';
+            nombreError.textContent = '';
         } else {
             error(nombre);
         }
@@ -119,7 +119,7 @@ function validarRegistro() {
             apellidosError.className = 'valid-feedback';
             apellidos.classList.add('is-valid');
             apellidos.classList.remove('is-invalid');
-            apellidosError.textContent = 'Looks good!';
+            apellidosError.textContent = '';
         } else {
             error(apellidos);
         }
@@ -130,7 +130,7 @@ function validarRegistro() {
             emailError.className = 'valid-feedback';
             email.classList.add('is-valid');
             email.classList.remove('is-invalid');
-            emailError.textContent = 'Looks good!';
+            emailError.textContent = '';
         } else {
             error(email);
         }
@@ -141,7 +141,7 @@ function validarRegistro() {
             dniError.className = 'valid-feedback';
             dni.classList.add('is-valid');
             dni.classList.remove('is-invalid');
-            dniError.textContent = 'Looks good!';
+            dniError.textContent = '';
         } else {
             error(dni);
         }
@@ -152,7 +152,7 @@ function validarRegistro() {
             tfnoError.className = 'valid-feedback';
             tfno.classList.add('is-valid');
             tfno.classList.remove('is-invalid');
-            tfnoError.textContent = 'Looks good!';
+            tfnoError.textContent = '';
         } else {
             error(tfno);
         }
@@ -163,7 +163,7 @@ function validarRegistro() {
             passError.className = 'valid-feedback';
             pass.classList.add('is-valid');
             pass.classList.remove('is-invalid');
-            passError.textContent = 'Looks good!';
+            passError.textContent = '';
         } else {
             error(pass);
         }
@@ -185,7 +185,7 @@ function validarRegistro() {
         } else {
             correcto = true;
             if (!pass2.value.length == 0) {
-                pass2Error.textContent = 'Looks good!';
+                pass2Error.textContent = '';
                 pass2Error.className = 'valid-feedback';
                 pass2.classList.add('is-valid');
                 pass2.classList.remove('is-invalid');
