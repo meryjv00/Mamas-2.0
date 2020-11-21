@@ -20,8 +20,9 @@ class gestionDatos {
     static private $conexion;
 
     static function conexion() {
-        //self::$conexion = mysqli_connect('localhost', 'usuario', 'Chubaca2020', 'desafio2');
-        self::$conexion = mysqli_connect('localhost', 'Maria', 'Chubaca2020', 'desafio2');
+        //self::$conexion = mysqli_connect('localhost', 'maria', 'Chubaca2020', 'desafio2');
+        self::$conexion = mysqli_connect('localhost', 'usuario', 'Chubaca2020', 'desafio2');
+        //self::$conexion = mysqli_connect('localhost', 'Maria', 'Chubaca2020', 'desafio2');
         print "Conexión realizada de forma procedimental: " . mysqli_get_server_info(self::$conexion) . "<br/>";
         if (mysqli_connect_errno(self::$conexion)) {
             print "Fallo al conectar a MySQL: " . mysqli_connect_error();
@@ -35,10 +36,8 @@ class gestionDatos {
 
     //------------------------------------Consultas
     static function getUsuario($mail, $password) {
-
         self::conexion();
-
-        $stmt = self::$conexion->prepare("SELECT * FROM usuarios WHERE mail= ? AND contrasenia= ?");
+        $stmt = self::$conexion->prepare("SELECT * FROM usuarios WHERE email= ? AND contrasenia= ?");
         $stmt->bind_param("ss", $mail, $password);
         if ($stmt->execute()) {
             $resultado = $stmt->get_result();
@@ -46,18 +45,34 @@ class gestionDatos {
             if ($fila = $resultado->fetch_assoc()) {
                 var_dump($fila);
                 //obtenemos los datos  en variables individuales para la creacion del objeto usuario.
-                $email = $fila['mail'];
+                $id = $fila['idUsuario'];
+                $email = $fila['email'];
                 $nombre = $fila['nombre'];
                 $dni = $fila['dni'];
                 $apellidos = $fila['apellidos'];
                 $telefono = $fila['telefono'];
                 $activo = $fila['activo'];
-                $rol = $fila['rol'];
-                $p = new Usuario($email, $dni, $nombre, $apellidos, $telefono, $rol, $activo);
-                $_SESSION['usuario'] = $p;
+                $rol = $fila['imagen'];
+                $p = new Usuario($id, $email, $dni, $nombre, $apellidos, $telefono, $activo, $imagen);
+                return $p;
                 //almacenamos en sesion al usuario que ha realizado el Login.
             }
             mysqli_close(self::$conexion);
+        }
+    }
+
+    static function getRol($id) {
+        self::conexion();
+        $rol = -1;
+        $stmt = self::$conexion->prepare("SELECT * FROM asignacionrol WHERE idUsuario= ? ");
+        $stmt->bind_param("i", $id);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            var_dump($resultado);
+            if ($fila = $resultado->fetch_assoc()) {
+                $rol = $fila['idRol'];
+            }
+            return $rol;
         }
     }
 

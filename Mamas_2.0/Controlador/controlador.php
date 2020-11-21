@@ -18,8 +18,9 @@ if (isset($_REQUEST['login'])) {
     if ($recaptcha->score >= 0.7) {
         $email = $_REQUEST['email'];
         $password = md5($_REQUEST['password']);
-        gestionDatos::getUsuario($email, $password);
-
+        $usuario = gestionDatos::getUsuario($email, $password);
+        $usuario->setRol(gestionDatos::getRol($usuario->getId()));
+        $_SESSION['usuario'] = $usuario;
         if (!isset($_SESSION['usuario'])) {
             $mensaje = 'Error al realizar el Login.';
             $_SESSION['mensaje'] = $mensaje;

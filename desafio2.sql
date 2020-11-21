@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-11-2020 a las 16:45:50
+-- Tiempo de generación: 21-11-2020 a las 00:51:41
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.4.10
 
@@ -106,19 +106,20 @@ INSERT INTO `asignacionrol` (`idUsuario`, `idRol`) VALUES
 
 CREATE TABLE `asignatura` (
   `idAsignatura` int(10) NOT NULL COMMENT 'Id asignatura',
-  `nombre` varchar(40) NOT NULL COMMENT 'nombre asignatura'
+  `nombre` varchar(40) NOT NULL COMMENT 'nombre asignatura',
+  `imagen` longblob DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `asignatura`
 --
 
-INSERT INTO `asignatura` (`idAsignatura`, `nombre`) VALUES
-(1, 'Desarrollo Web Entorno Servidor'),
-(2, 'Desarrollo Web Entorno Cliente'),
-(3, 'Despliegue Aplicaciones Web'),
-(4, 'Diseño Interfaces Web'),
-(5, 'Empresa Iniciativa Emprendedora');
+INSERT INTO `asignatura` (`idAsignatura`, `nombre`, `imagen`) VALUES
+(1, 'Desarrollo Web Entorno Servidor', NULL),
+(2, 'Desarrollo Web Entorno Cliente', NULL),
+(3, 'Despliegue Aplicaciones Web', NULL),
+(4, 'Diseño Interfaces Web', NULL),
+(5, 'Empresa Iniciativa Emprendedora', NULL);
 
 -- --------------------------------------------------------
 
@@ -222,6 +223,7 @@ CREATE TABLE `usuarios` (
   `apellidos` varchar(40) NOT NULL,
   `contrasenia` varchar(32) NOT NULL COMMENT 'MD5',
   `telefono` int(11) NOT NULL,
+  `imagen` longblob DEFAULT NULL,
   `activo` int(1) NOT NULL DEFAULT 0 COMMENT '0- desactivado 1-activo'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -229,14 +231,14 @@ CREATE TABLE `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`idUsuario`, `email`, `dni`, `nombre`, `apellidos`, `contrasenia`, `telefono`, `activo`) VALUES
-(1, 'fernando@gmail.com', '11111111F', 'Fernando D.', 'Gomez Aranzabe', 'ec89208a20651307b38c51bd4797be60', 111111111, 0),
-(2, 'inmaculada@gmail.com', '22222222I', 'Inmaculada', 'Gijon Cardos', 'ec89208a20651307b38c51bd4797be60', 222222222, 0),
-(3, 'joseLuis@gmail.com', '33333333J', 'Jose Luis', 'Gonzalez Sanchez', 'ec89208a20651307b38c51bd4797be60', 333333333, 0),
-(4, 'diego@gmail.com', '44444444D', 'Diego', 'Cordoba Aguirre', 'ec89208a20651307b38c51bd4797be60', 444444444, 0),
-(5, 'empresas@gmail.com', '55555555E', 'Empresas', 'Iniciativa apellido', 'ec89208a20651307b38c51bd4797be60', 555555555, 0),
-(6, 'isra9movil@hotmail.com', '06280822M', 'Israel', 'Molina Pulpon', 'ec89208a20651307b38c51bd4797be60', 662141178, 0),
-(7, 'maria.juan.vi@gmail.com', '44123254M', 'Maria ', 'Juan Viñas', 'ec89208a20651307b38c51bd4797be60', 456789123, 0);
+INSERT INTO `usuarios` (`idUsuario`, `email`, `dni`, `nombre`, `apellidos`, `contrasenia`, `telefono`, `imagen`, `activo`) VALUES
+(1, 'fernando@gmail.com', '11111111F', 'Fernando D.', 'Gomez Aranzabe', 'ec89208a20651307b38c51bd4797be60', 111111111, NULL, 0),
+(2, 'inmaculada@gmail.com', '22222222I', 'Inmaculada', 'Gijon Cardos', 'ec89208a20651307b38c51bd4797be60', 222222222, NULL, 0),
+(3, 'joseLuis@gmail.com', '33333333J', 'Jose Luis', 'Gonzalez Sanchez', 'ec89208a20651307b38c51bd4797be60', 333333333, NULL, 0),
+(4, 'diego@gmail.com', '44444444D', 'Diego', 'Cordoba Aguirre', 'ec89208a20651307b38c51bd4797be60', 444444444, NULL, 0),
+(5, 'empresas@gmail.com', '55555555E', 'Empresas', 'Iniciativa apellido', 'ec89208a20651307b38c51bd4797be60', 555555555, NULL, 0),
+(6, 'isra9movil@hotmail.com', '06280822M', 'Israel', 'Molina Pulpon', 'ec89208a20651307b38c51bd4797be60', 662141178, NULL, 0),
+(7, 'maria.juan.vi@gmail.com', '44123254M', 'Maria ', 'Juan Viñas', 'ec89208a20651307b38c51bd4797be60', 456789123, NULL, 0);
 
 --
 -- Índices para tablas volcadas
