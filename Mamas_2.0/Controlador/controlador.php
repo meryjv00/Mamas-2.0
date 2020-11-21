@@ -20,31 +20,35 @@ if (isset($_REQUEST['login'])) {
         $email = $_REQUEST['email'];
         $password = md5($_REQUEST['password']);
         $usuario = gestionDatos::getUsuario($email, $password);
-        $nombre = $usuario->getTelefono();
-        echo $nombre;
-        $id = $usuario->getId();
-        $rol = gestionDatos::getRol($id);
-        $usuario->setRol($rol);
-        $_SESSION['usuario'] = $usuario;
-        if (!isset($_SESSION['usuario'])) {
-            $mensaje = 'Error al realizar el Login.';
-            $_SESSION['mensaje'] = $mensaje;
-            header('Location: ../Vistas/login.php');
-        } else {
-            $usuario = $_SESSION['usuario'];
-            if ($usuario->getActivo() == 0) {
-                $mensaje = 'Usuario desactivado , contacte con administrador';
+        if (isset($usuario)) {
+            $id = $usuario->getId();
+            $rol = gestionDatos::getRol($id);
+            $usuario->setRol($rol);
+            $_SESSION['usuario'] = $usuario;
+            if (!isset($_SESSION['usuario'])) {
+                $mensaje = 'Error al realizar el Login.';
                 $_SESSION['mensaje'] = $mensaje;
                 header('Location: ../Vistas/login.php');
-            } else if ($usuario->getActivo() == 1) {
-                if ($usuario->getRol() == 2) {
-                    header('Location: ../Vistas/elegirAdmin.php');
-                } else if ($usuario->getRol() == 0) {
-                    header('Location: ../Vistas/inicio.php');
-                } else if ($usuario->getRol() == 1) {
-                    header('Location: ../Vistas/inicioProfesor.php');
+            } else {
+                $usuario = $_SESSION['usuario'];
+                if ($usuario->getActivo() == 0) {
+                    $mensaje = 'Usuario desactivado , contacte con administrador';
+                    $_SESSION['mensaje'] = $mensaje;
+                    header('Location: ../Vistas/login.php');
+                } else if ($usuario->getActivo() == 1) {
+                    if ($usuario->getRol() == 2) {
+                        header('Location: ../Vistas/elegirAdmin.php');
+                    } else if ($usuario->getRol() == 0) {
+                        header('Location: ../Vistas/inicio.php');
+                    } else if ($usuario->getRol() == 1) {
+                        header('Location: ../Vistas/inicioProfesor.php');
+                    }
                 }
             }
+        } else {
+            $mensaje = 'Email o contraseña incorrectos.';
+            $_SESSION['mensaje'] = $mensaje;
+            header('Location: ../Vistas/login.php');
         }
     } else {
         $mensaje = 'Error captcha no superado.';
