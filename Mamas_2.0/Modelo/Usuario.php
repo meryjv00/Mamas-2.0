@@ -37,12 +37,9 @@ class Usuario {
     }
 
     //-----------------------GETTERS
-    function getRol() {
-        return $this->rol;
-    }
 
-    function getActivo() {
-        return $this->activo;
+    function getId() {
+        return $this->id;
     }
 
     function getEmail() {
@@ -51,14 +48,6 @@ class Usuario {
 
     function getDni() {
         return $this->dni;
-    }
-
-    function getId() {
-        return $this->id;
-    }
-
-    function getImagen() {
-        return $this->imagen;
     }
 
     function getNombre() {
@@ -73,14 +62,22 @@ class Usuario {
         return $this->telefono;
     }
 
+    function getRol() {
+        return $this->rol;
+    }
+
+    function getActivo() {
+        return $this->activo;
+    }
+
+    function getImagen() {
+        return $this->imagen;
+    }
+
     //------------------------SETTERS
 
     function setId($id): void {
         $this->id = $id;
-    }
-
-    function setImagen($imagen): void {
-        $this->imagen = $imagen;
     }
 
     function setEmail($email): void {
@@ -109,6 +106,10 @@ class Usuario {
 
     function setActivo($activo): void {
         $this->activo = $activo;
+    }
+
+    function setImagen($imagen): void {
+        $this->imagen = $imagen;
     }
 
     //---------------------------TO STRING

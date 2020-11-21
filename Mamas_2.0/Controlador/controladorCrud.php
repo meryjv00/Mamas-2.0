@@ -97,7 +97,7 @@ if (isset($_REQUEST['crearUsuario'])) {
                 header('Location: ../Vistas/registroAdmin.php');
             } else {
                 if ($rol == 'Alumno') {
-                    if (gestionDatos::insertUsuarioRol(gestionDatos::getIdUsuario($email, 0))) {
+                    if (gestionDatos::insertUsuarioRol(gestionDatos::getIdUsuario($email),0)) {
                         $mensaje = "¡Cuenta creada!";
                         $_SESSION['mensaje'] = $mensaje;
 
@@ -106,7 +106,7 @@ if (isset($_REQUEST['crearUsuario'])) {
                         header('Location: ../Vistas/crudAdmin.php');
                     }
                 } else if ($rol == 'Profesor') {
-                    if (gestionDatos::insertUsuarioRol(gestionDatos::getIdUsuario($email, 1))) {
+                    if (gestionDatos::insertUsuarioRol(gestionDatos::getIdUsuario($email),1)) {
                         $mensaje = "¡Cuenta creada!";
                         $_SESSION['mensaje'] = $mensaje;
 
@@ -115,7 +115,7 @@ if (isset($_REQUEST['crearUsuario'])) {
                         header('Location: ../Vistas/crudAdmin.php');
                     }
                 } else if ($rol == 'Administrador') {
-                    if (gestionDatos::insertUsuarioRol(gestionDatos::getIdUsuario($email, 2))) {
+                    if (gestionDatos::insertUsuarioRol(gestionDatos::getIdUsuario($email),2)) {
                         $mensaje = "¡Cuenta creada!";
                         $_SESSION['mensaje'] = $mensaje;
 
@@ -126,14 +126,14 @@ if (isset($_REQUEST['crearUsuario'])) {
                 }
             }
         } else {
-            $r_usu = new Usuario($email, "", $nombre, $apellidos, $tfno, 0, 0);
+            $r_usu = new Usuario(0,$email, "", $nombre, $apellidos, $tfno, 0, 0);
             $_SESSION['usu'] = $r_usu;
             $mensaje = "El dni introducido ya está registrado";
             $_SESSION['mensaje'] = $mensaje;
             header('Location: ../Vistas/registroAdmin.php');
         }
     } else {
-        $r_usu = new Usuario("", $dni, $nombre, $apellidos, $tfno, 0, 0);
+        $r_usu = new Usuario(0,"", $dni, $nombre, $apellidos, $tfno, 0, 0);
         $_SESSION['usu'] = $r_usu;
         $mensaje = "El email introducido ya está registrado";
         $_SESSION['mensaje'] = $mensaje;
@@ -193,7 +193,7 @@ if (isset($_REQUEST['cambiarRolAlumno'])) {
             if (isset($_REQUEST[$i])) {
                 $pulsado = true;
                 $usuario->setRol(0);
-                if (!gestionDatos::updateRol($usuario, 0)) {
+                if (!gestionDatos::updateRol($usuario)) {
                     $mensaje = 'No se ha podido cambiar el rol del usuario con mail: ' . $usuario->getEmail();
                     $_SESSION['mensaje'] = $mensaje;
                 }
@@ -217,7 +217,7 @@ if (isset($_REQUEST['cambiarRolProfesor'])) {
             if (isset($_REQUEST[$i])) {
                 $pulsado = true;
                 $usuario->setRol(1);
-                if (!gestionDatos::updateRol($usuario, 1)) {
+                if (!gestionDatos::updateRol($usuario)) {
                     $mensaje = 'No se ha podido cambiar el rol del usuario con mail: ' . $usuario->getEmail();
                     $_SESSION['mensaje'] = $mensaje;
                 }
@@ -241,7 +241,7 @@ if (isset($_REQUEST['cambiarRolAdmnistrador'])) {
             if (isset($_REQUEST[$i])) {
                 $pulsado = true;
                 $usuario->setRol(2);
-                if (!gestionDatos::updateRol($usuario, 2)) {
+                if (!gestionDatos::updateRol($usuario)) {
                     $mensaje = 'No se ha podido cambiar el rol del usuario con mail: ' . $usuario->getEmail();
                     $_SESSION['mensaje'] = $mensaje;
                 }

@@ -6,6 +6,7 @@
  * and open the template in the editor.
  */
 include_once '../Auxiliar/gestionDatos.php';
+include_once '../Modelo/Usuario.php';
 session_start();
 //---------------LOGIN
 if (isset($_REQUEST['login'])) {
@@ -19,7 +20,11 @@ if (isset($_REQUEST['login'])) {
         $email = $_REQUEST['email'];
         $password = md5($_REQUEST['password']);
         $usuario = gestionDatos::getUsuario($email, $password);
-        $usuario->setRol(gestionDatos::getRol($usuario->getId()));
+        $nombre = $usuario->getTelefono();
+        echo $nombre;
+        $id = $usuario->getId();
+        $rol = gestionDatos::getRol($id);
+        $usuario->setRol($rol);
         $_SESSION['usuario'] = $usuario;
         if (!isset($_SESSION['usuario'])) {
             $mensaje = 'Error al realizar el Login.';

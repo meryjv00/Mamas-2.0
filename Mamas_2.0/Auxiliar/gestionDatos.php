@@ -52,12 +52,13 @@ class gestionDatos {
                 $telefono = $fila['telefono'];
                 $activo = $fila['activo'];
                 $imagen = $fila['imagen'];
-                $p = new Usuario($id, $email, $dni, $nombre, $apellidos, $telefono, $activo, $imagen);
-                return $p;
+                $p = new Usuario($id, $email, $dni, $nombre, $apellidos, $telefono,$activo , $imagen);
+                
                 //almacenamos en sesion al usuario que ha realizado el Login.
             }
             mysqli_close(self::$conexion);
         }
+        return $p;
     }
 
     static function getRol($id) {
@@ -72,8 +73,8 @@ class gestionDatos {
                 //var_dump($fila);
                 $rol = $fila['idRol'];
             }
-            return $rol;
         }
+        return $rol;
     }
 
     static function isUsuario($email) {
@@ -237,9 +238,9 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
-    static function updateRol($usuario, $rol) {
+    static function updateRol($usuario) {
         self::conexion();
-        $consulta = "UPDATE asignacionrol SET idRol=" . $rol . " WHERE idUsuario ='" . $usuario->getId() . "'";
+        $consulta = "UPDATE asignacionrol SET idRol=" . $usuario->getRol() . " WHERE idUsuario =" . $usuario->getId();
         if (self::$conexion->query($consulta)) {
             $correcto = true;
         } else {

@@ -68,7 +68,7 @@ and open the template in the editor.
                                             $usu = $_SESSION['usu'];
                                             unset($_SESSION['usu']);
                                         } else {
-                                            $usu = new Usuario("", "", "", "", "", "", "");
+                                            $usu = new Usuario("", "", "", "", "", "", "", "");
                                         }
                                         ?>
                                         <!--Nombre y apellidos-->
