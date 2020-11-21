@@ -55,7 +55,7 @@ and open the template in the editor.
             </nav>
         </header>
         <main class="pb-5 pt-5 ml-4">
-            <div class="container-fluid row altura2">
+            <div class="container-fluid row ">
                 <div class="col-md-9 mt-5">
                     <div class="row">
                         <div class="col-md-10 mx-auto card card-cascade narrower pb-5 bg-transparent">
