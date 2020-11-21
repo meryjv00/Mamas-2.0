@@ -27,9 +27,9 @@ and open the template in the editor.
         </script>
     </head>
     <body onload="validarRegistro()">
-        <?php 
+        <?php
         require_once '../Modelo/Usuario.php';
-        session_start(); 
+        session_start();
         ?>
         <div class="container my-5 px-0 z-depth-1">
             <!--Section: Content-->
@@ -53,7 +53,7 @@ and open the template in the editor.
                                             $usu = $_SESSION['usu'];
                                             unset($_SESSION['usu']);
                                         } else {
-                                            $usu = new Usuario("", "", "", "", "", "", "");
+                                            $usu = new Usuario("", "", "", "", "", "", "", "");
                                         }
                                         ?>
                                         <!--Nombre y apellidos-->
@@ -80,7 +80,7 @@ and open the template in the editor.
                                         </div>
                                         <!-- Email -->
                                         <div class="md-form mt-0">
-                                            <input type="email" id="email" name="email" class="form-control mb-4" required value="<?=$usu->getEmail()?>">
+                                            <input type="email" id="email" name="email" class="form-control mb-4" required value="<?= $usu->getEmail() ?>">
                                             <label for="email">E-mail </label>
                                             <div id="emailError"></div>
                                         </div>
@@ -88,14 +88,14 @@ and open the template in the editor.
                                         <!-- Dni -->
                                         <div class="md-form">
                                             <input type="text" id="dni" name="dni" class="form-control mb-4" 
-                                                   pattern="^[0-9]{8}[A-Z]{1}$" required value="<?=$usu->getDni()?>">
+                                                   pattern="^[0-9]{8}[A-Z]{1}$" required value="<?= $usu->getDni() ?>">
                                             <label for="dni">Dni </label>
                                             <div id="dniError"></div>
                                         </div>
 
                                         <!-- Tfno -->
                                         <div class="md-form">
-                                            <input type="text" id="tfno" name="tfno" class="form-control mb-4" value="<?=$usu->getTelefono()?>"
+                                            <input type="text" id="tfno" name="tfno" class="form-control mb-4" value="<?= $usu->getTelefono() ?>"
                                                    pattern="^[0-9]{9}$" required>
                                             <label for="tfno">Teléfono</label>
                                             <div id="tfnoError"></div>

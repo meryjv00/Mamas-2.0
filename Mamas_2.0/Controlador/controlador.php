@@ -70,9 +70,15 @@ if (isset($_REQUEST['registro'])) {
                     $_SESSION['mensaje'] = $mensaje;
                     header('Location: ../Vistas/registro.php');
                 } else {
-                    $mensaje = "¡Cuenta creada!";
-                    $_SESSION['mensaje'] = $mensaje;
-                    header('Location: ../Vistas/login.php');
+                    if (gestionDatos::insertUsuarioRol(gestionDatos::getIdUsuario($email))) {
+                        $mensaje = "¡Cuenta creada!";
+                        $_SESSION['mensaje'] = $mensaje;
+                        header('Location: ../Vistas/login.php');
+                    } else {
+                        $mensaje = "No se ha podido insertar el rol";
+                        $_SESSION['mensaje'] = $mensaje;
+                        header('Location: ../Vistas/registro.php');
+                    }
                 }
             } else {
                 $r_usu = new Usuario($email, "", $nombre, $apellidos, $tfno, 0, 0);

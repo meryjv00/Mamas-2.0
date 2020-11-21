@@ -78,13 +78,12 @@ class gestionDatos {
 
     static function isUsuario($email) {
         self::conexion();
-        $stmt = self::$conexion->prepare("SELECT * FROM usuarios WHERE mail= ?");
+        $stmt = self::$conexion->prepare("SELECT * FROM usuarios WHERE email= ?");
         $stmt->bind_param("s", $email);
         if ($stmt->execute()) {
             $resultado = $stmt->get_result();
             var_dump($resultado);
             if ($fila = $resultado->fetch_assoc()) {
-
                 $existe = true;
             } else {
                 echo "Error al encontrar usuario: " . self::$conexion->error . '<br/>';
@@ -114,9 +113,40 @@ class gestionDatos {
         }
     }
 
+    static function getIdUsuario($email) {
+        self::conexion();
+        $stmt = self::$conexion->prepare("SELECT * FROM usuarios WHERE email= ?");
+        $stmt->bind_param("s", $email);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            var_dump($resultado);
+            if ($fila = $resultado->fetch_assoc()) {
+                $id = $fila['idUsuario'];
+            } else {
+                echo "Error al encontrar usuario: " . self::$conexion->error . '<br/>';
+            }
+            return $id;
+            mysqli_close(self::$conexion);
+        }
+    }
+
+    static function insertUsuarioRol($id) {
+        self::conexion();
+        $consulta = "INSERT INTO asignacionrol VALUES ('" . $id . "','0')";
+        if (self::$conexion->query($consulta)) {
+
+            $correcto = true;
+        } else {
+            $correcto = false;
+            echo "Error al insertar: " . self::$conexion->error . '<br/>';
+        }
+        return $correcto;
+        mysqli_close(self::$conexion);
+    }
+
     static function insertUsuario($email, $dni, $nombre, $apellidos, $tfno, $pass) {
         self::conexion();
-        $consulta = "INSERT INTO usuarios VALUES ('" . $email . "','" . $dni . "','" . $nombre . "','" . $apellidos . "','" . $pass . "','" . $tfno . "',0,0)";
+        $consulta = "INSERT INTO usuarios VALUES ('','" . $email . "','" . $dni . "','" . $nombre . "','" . $apellidos . "','" . $pass . "','" . $tfno . "',NULL,0)";
         if (self::$conexion->query($consulta)) {
 
             $correcto = true;
