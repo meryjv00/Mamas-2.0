@@ -1,11 +1,12 @@
 <?php
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 include_once '../Auxiliar/gestionDatos.php';
-
+session_start();
 //---------------LOGIN
 if (isset($_REQUEST['login'])) {
     $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
@@ -69,7 +70,7 @@ if (isset($_REQUEST['registro'])) {
                     $_SESSION['mensaje'] = $mensaje;
                     header('Location: ../Vistas/registro.php');
                 } else {
-                    if (gestionDatos::insertUsuarioRol(gestionDatos::getIdUsuario($email, 0))) {
+                    if (gestionDatos::insertUsuarioRol(gestionDatos::getIdUsuario($email), 0)) {
                         $mensaje = "¡Cuenta creada!";
                         $_SESSION['mensaje'] = $mensaje;
                         header('Location: ../Vistas/login.php');
@@ -80,14 +81,15 @@ if (isset($_REQUEST['registro'])) {
                     }
                 }
             } else {
-                $r_usu = new Usuario($email, "", $nombre, $apellidos, $tfno, 0, 0);
+
+                $r_usu = new Usuario(0, $email, "", $nombre, $apellidos, $tfno, 0, 0);
                 $_SESSION['usu'] = $r_usu;
                 $mensaje = "El dni introducido ya está registrado";
                 $_SESSION['mensaje'] = $mensaje;
                 header('Location: ../Vistas/registro.php');
             }
         } else {
-            $r_usu = new Usuario("", $dni, $nombre, $apellidos, $tfno, 0, 0);
+            $r_usu = new Usuario(0, "", $dni, $nombre, $apellidos, $tfno, 0, 0);
             $_SESSION['usu'] = $r_usu;
             $mensaje = "El email introducido ya está registrado";
             $_SESSION['mensaje'] = $mensaje;
@@ -109,8 +111,7 @@ if (isset($_REQUEST['cerrarSesion'])) {
 //-----------------IR AL CRUD DE USUARIOS
 if (isset($_REQUEST['CRUDadmin'])) {
     $usuarios = gestionDatos::getUsuarios();
-        $_SESSION['usuarios'] = $usuarios;
-        
+    $_SESSION['usuarios'] = $usuarios;
     header('Location: ../Vistas/crudAdmin.php');
 }
 //-----------------IR A LA PÁGINA PRINCIPAL PROFESORADO

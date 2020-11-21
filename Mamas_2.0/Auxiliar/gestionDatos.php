@@ -132,7 +132,7 @@ class gestionDatos {
 
     static function insertUsuarioRol($id, $rol) {
         self::conexion();
-        $consulta = "INSERT INTO asignacionrol VALUES ('" . $id . "','" . $rol . "')";
+        $consulta = "INSERT INTO asignacionrol VALUES (" . $id . "," . $rol . ")";
         if (self::$conexion->query($consulta)) {
 
             $correcto = true;
@@ -146,7 +146,7 @@ class gestionDatos {
 
     static function insertUsuario($email, $dni, $nombre, $apellidos, $tfno, $pass) {
         self::conexion();
-        $consulta = "INSERT INTO usuarios VALUES ('','" . $email . "','" . $dni . "','" . $nombre . "','" . $apellidos . "','" . $pass . "','" . $tfno . "',NULL,0)";
+        $consulta = "INSERT INTO usuarios VALUES (default,'" . $email . "','" . $dni . "','" . $nombre . "','" . $apellidos . "','" . $pass . "','" . $tfno . "',default,default)";
         if (self::$conexion->query($consulta)) {
 
             $correcto = true;
