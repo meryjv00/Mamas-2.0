@@ -74,7 +74,7 @@ and open the template in the editor.
         </main>
         <footer class="footer-copyright text-center text-white fixed-bottom py-3 z-depth-2">
             <a href="https://github.com/meryjv00/Mamas-2.0" class="text-white">
-                <button type="button" class="btn btn-git" style="background-color: #543b54"><i class="fab fa-github pr-1" ></i> Github</button>
+                <button type="button" class="btn btn-git btgit" style="background-color: #543b54"><i class="fab fa-github pr-1" ></i> Github</button>
             </a>
             <div class="mt-4"> © 2020 Copyright: Israel y María</div>
         </footer>

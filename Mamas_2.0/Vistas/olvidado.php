@@ -42,7 +42,9 @@ and open the template in the editor.
 
                                     <!-- Form -->
                                     <form id="login" class="text-left needs-validation" style="color: #757575;" action="../Controlador/enviar.php" method="POST" novalidate>
-                                        <h1 class="font-weight-bold my-4 pb-2 text-center tit">Forgot password?</h1>
+                                        <h1 class="font-weight-bold my-4 pb-2 text-center tit">¿Contraseña olvidada?</h1>
+                                        <p class="mx-5 letra">Introduce tu dirección de correo electrónico, te enviaremos un correo
+                                        con tu nueva contraseña.</p>
                                         <div class="md-form form-group ml-5 mr-5 ">
                                             <input type="email" id="email" name="email" class="form-control mb-4 " required>
                                             <label class="form-control-label" for="email">E-mail</label>
@@ -57,10 +59,10 @@ and open the template in the editor.
                                         }
                                         ?>
                                         <div class="text-center mb-3 pl-5 pr-5">
-                                            <button type="submit" name="olvidado"  class="btn mean-fruit-gradient text-white btn-block btn-rounded my-4 waves-effect z-depth-1a">Send</button>
+                                            <button type="submit" name="olvidado"  class="btn mean-fruit-gradient text-white btn-block btn-rounded my-4 waves-effect z-depth-1a">Enviar</button>
                                         </div>
                                         <div class="mx-5 pt-3 mb-1 text-right " >
-                                            <a href="login.php" style="color: #D681E8"> >> Back</a>
+                                            <a href="login.php" style="color: #D681E8"> >> Volver</a>
                                         </div>
 
                                         <input type="hidden" name="recaptcha_response" id="recaptchaResponse">

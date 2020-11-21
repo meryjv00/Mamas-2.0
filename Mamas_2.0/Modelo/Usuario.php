@@ -14,6 +14,7 @@
 class Usuario {
 
     //-----------------------ATRIBUTOS
+    private $id;
     private $email;
     private $dni;
     private $nombre;
@@ -21,25 +22,24 @@ class Usuario {
     private $telefono;
     private $rol;
     private $activo;
+    private $imagen;
 
     //-----------------------CONSTRUCTOR
-    function __construct($email, $dni, $nombre, $apellidos, $telefono, $rol, $activo) {
+    function __construct($id, $email, $dni, $nombre, $apellidos, $telefono, $activo, $imagen) {
+        $this->id = $id;
         $this->email = $email;
         $this->dni = $dni;
         $this->nombre = $nombre;
         $this->apellidos = $apellidos;
         $this->telefono = $telefono;
-        $this->rol = $rol;
         $this->activo = $activo;
+        $this->imagen = $imagen;
     }
 
     //-----------------------GETTERS
-    function getRol() {
-        return $this->rol;
-    }
 
-    function getActivo() {
-        return $this->activo;
+    function getId() {
+        return $this->id;
     }
 
     function getEmail() {
@@ -62,7 +62,24 @@ class Usuario {
         return $this->telefono;
     }
 
+    function getRol() {
+        return $this->rol;
+    }
+
+    function getActivo() {
+        return $this->activo;
+    }
+
+    function getImagen() {
+        return $this->imagen;
+    }
+
     //------------------------SETTERS
+
+    function setId($id): void {
+        $this->id = $id;
+    }
+
     function setEmail($email): void {
         $this->email = $email;
     }
@@ -89,6 +106,10 @@ class Usuario {
 
     function setActivo($activo): void {
         $this->activo = $activo;
+    }
+
+    function setImagen($imagen): void {
+        $this->imagen = $imagen;
     }
 
     //---------------------------TO STRING

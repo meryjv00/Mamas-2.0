@@ -45,7 +45,7 @@ and open the template in the editor.
                                     <!-- Form -->
                                     <form name="login" id="login" class="text-left needs-validation" style="color: #757575;" action="../Controlador/controlador.php" method="POST" novalidate>
 
-                                        <h3 class="font-weight-bold my-4 pb-2 text-center tit">Log in</h3>
+                                        <h3 class="font-weight-bold my-4 pb-2 text-center tit">Inicia sesión</h3>
                                         <!-- e-mail -->
                                         <div class="md-form mt-0">
                                             <input type="email" id="email" name="email" class="form-control mb-4" required>
@@ -54,9 +54,9 @@ and open the template in the editor.
                                         </div>
 
                                         <!-- password -->
-                                        <div class="md-form form-group mt-5 ">
+                                        <div class="md-form form-group ">
                                             <input type="password" id="password" name="password" class="form-control" required>
-                                            <label class="form-control-label"  for="password">Password</label>
+                                            <label class="form-control-label"  for="password">Contraseña</label>
 
                                         </div>
                                         <?php
@@ -69,13 +69,13 @@ and open the template in the editor.
                                         ?>
 
                                         <div class="text-center mb-3 pl-5 pr-5">
-                                            <button type="submit" name="login"  class="btn mean-fruit-gradient text-white btn-block btn-rounded my-4 waves-effect z-depth-1a">Log in</button>
+                                            <button type="submit" name="login"  class="btn mean-fruit-gradient text-white btn-block btn-rounded my-4 waves-effect z-depth-1a">Entrar</button>
                                         </div>
 
                                         <div class="modal-footer mx-5 pt-3 mb-1">
                                             <span>
-                                                <a href="registro.php" style="color: #D681E8">Don't have an account?</a>
-                                                or <a href="olvidado.php" style="color: #D681E8">Forgot password?</a>
+                                                <a href="registro.php" style="color: #D681E8">¿No tienes cuenta?</a>
+                                                o <a href="olvidado.php" style="color: #D681E8">¿Has olvidado la contraseña?</a>
                                             </span>
                                         </div>
                                 </div>
