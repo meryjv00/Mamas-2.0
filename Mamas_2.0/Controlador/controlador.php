@@ -70,7 +70,7 @@ if (isset($_REQUEST['registro'])) {
                     $_SESSION['mensaje'] = $mensaje;
                     header('Location: ../Vistas/registro.php');
                 } else {
-                    if (gestionDatos::insertUsuarioRol(gestionDatos::getIdUsuario($email))) {
+                    if (gestionDatos::insertUsuarioRol(gestionDatos::getIdUsuario($email,0))) {
                         $mensaje = "¡Cuenta creada!";
                         $_SESSION['mensaje'] = $mensaje;
                         header('Location: ../Vistas/login.php');

@@ -130,9 +130,9 @@ class gestionDatos {
         }
     }
 
-    static function insertUsuarioRol($id) {
+    static function insertUsuarioRol($id, $rol) {
         self::conexion();
-        $consulta = "INSERT INTO asignacionrol VALUES ('" . $id . "','0')";
+        $consulta = "INSERT INTO asignacionrol VALUES ('" . $id . "','" . $rol . "')";
         if (self::$conexion->query($consulta)) {
 
             $correcto = true;
@@ -147,34 +147,6 @@ class gestionDatos {
     static function insertUsuario($email, $dni, $nombre, $apellidos, $tfno, $pass) {
         self::conexion();
         $consulta = "INSERT INTO usuarios VALUES ('','" . $email . "','" . $dni . "','" . $nombre . "','" . $apellidos . "','" . $pass . "','" . $tfno . "',NULL,0)";
-        if (self::$conexion->query($consulta)) {
-
-            $correcto = true;
-        } else {
-            $correcto = false;
-            echo "Error al insertar: " . self::$conexion->error . '<br/>';
-        }
-        return $correcto;
-        mysqli_close(self::$conexion);
-    }
-
-    static function insertProfesor($email, $dni, $nombre, $apellidos, $tfno, $pass) {
-        self::conexion();
-        $consulta = "INSERT INTO usuarios VALUES ('" . $email . "','" . $dni . "','" . $nombre . "','" . $apellidos . "','" . $pass . "','" . $tfno . "',1,1)";
-        if (self::$conexion->query($consulta)) {
-
-            $correcto = true;
-        } else {
-            $correcto = false;
-            echo "Error al insertar: " . self::$conexion->error . '<br/>';
-        }
-        return $correcto;
-        mysqli_close(self::$conexion);
-    }
-
-    static function insertAdministrador($email, $dni, $nombre, $apellidos, $tfno, $pass) {
-        self::conexion();
-        $consulta = "INSERT INTO usuarios VALUES ('" . $email . "','" . $dni . "','" . $nombre . "','" . $apellidos . "','" . $pass . "','" . $tfno . "',2,1)";
         if (self::$conexion->query($consulta)) {
 
             $correcto = true;
@@ -206,15 +178,20 @@ class gestionDatos {
 
         if ($resultado = self::$conexion->query($consulta)) {
             while ($fila = $resultado->fetch_assoc()) {
-                $email = $fila['mail'];
+                var_dump($fila);
+                //obtenemos los datos  en variables individuales para la creacion del objeto usuario.
+                $id = $fila['idUsuario'];
+                $email = $fila['email'];
                 $nombre = $fila['nombre'];
                 $dni = $fila['dni'];
                 $apellidos = $fila['apellidos'];
                 $telefono = $fila['telefono'];
                 $activo = $fila['activo'];
-                $rol = $fila['rol'];
-                $usuario = new Usuario($email, $dni, $nombre, $apellidos, $telefono, $rol, $activo);
-                $usuarios[] = $usuario;
+                $imagen = $fila['imagen'];
+                $rol = self::getRol($id);
+                $p = new Usuario($id, $email, $dni, $nombre, $apellidos, $telefono, $activo, $imagen);
+                $p->setRol($rol);
+                $usuarios[] = $p;
             }
         }
         return $usuarios;
@@ -224,7 +201,7 @@ class gestionDatos {
     static function updateUsuario($usuario) {
         self::conexion();
         $consulta = "UPDATE usuarios SET nombre='" . $usuario->getNombre() . "', telefono = '" . $usuario->getTelefono() . "', apellidos = '" .
-                $usuario->getApellidos() . "' WHERE mail ='" . $usuario->getEmail() . "'";
+                $usuario->getApellidos() . "' WHERE email ='" . $usuario->getEmail() . "'";
         if (self::$conexion->query($consulta)) {
             $correcto = true;
         } else {
@@ -237,7 +214,7 @@ class gestionDatos {
 
     static function deleteUsuario($usuario) {
         self::conexion();
-        $consulta = "DELETE FROM usuarios WHERE mail ='" . $usuario->getEmail() . "'";
+        $consulta = "DELETE FROM usuarios WHERE email ='" . $usuario->getEmail() . "'";
         if (self::$conexion->query($consulta)) {
             $correcto = true;
         } else {
@@ -250,7 +227,7 @@ class gestionDatos {
 
     static function updateActivo($usuario) {
         self::conexion();
-        $consulta = "UPDATE usuarios SET activo=" . $usuario->getActivo() . " WHERE mail ='" . $usuario->getEmail() . "'";
+        $consulta = "UPDATE usuarios SET activo=" . $usuario->getActivo() . " WHERE email ='" . $usuario->getEmail() . "'";
         if (self::$conexion->query($consulta)) {
             $correcto = true;
         } else {
@@ -263,7 +240,7 @@ class gestionDatos {
 
     static function updateRol($usuario) {
         self::conexion();
-        $consulta = "UPDATE usuarios SET rol=" . $usuario->getRol() . " WHERE mail ='" . $usuario->getEmail() . "'";
+        $consulta = "UPDATE usuarios SET rol=" . $usuario->getRol() . " WHERE email ='" . $usuario->getEmail() . "'";
         if (self::$conexion->query($consulta)) {
             $correcto = true;
         } else {

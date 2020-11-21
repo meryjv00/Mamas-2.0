@@ -89,48 +89,40 @@ if (isset($_REQUEST['crearUsuario'])) {
     if (!gestionDatos::isUsuario($email)) {
         if (!gestionDatos::isDni($dni)) {
             //Crear alumno
-            if ($rol == 'Alumno') {
-                if (!gestionDatos::insertUsuario($email, $dni, $nombre, $apellidos, $tfno, $pass)) {
-                    $mensaje = "No se ha podido insertar el usuario";
-                    $_SESSION['mensaje'] = $mensaje;
-                    header('Location: ../Vistas/registroAdmin.php');
-                } else {
-                    $mensaje = "¡Cuenta creada!";
-                    $_SESSION['mensaje'] = $mensaje;
 
-                    $usuarios = gestionDatos::getUsuarios();
-                    $_SESSION['usuarios'] = $usuarios;
-                    header('Location: ../Vistas/crudAdmin.php');
-                }
-            }
-            //Crear profesor
-            if ($rol == 'Profesor') {
-                if (!gestionDatos::insertProfesor($email, $dni, $nombre, $apellidos, $tfno, $pass)) {
-                    $mensaje = "No se ha podido insertar el usuario";
-                    $_SESSION['mensaje'] = $mensaje;
-                    header('Location: ../Vistas/registroAdmin.php');
-                } else {
-                    $mensaje = "¡Cuenta creada!";
-                    $_SESSION['mensaje'] = $mensaje;
+            if (!gestionDatos::insertUsuario($email, $dni, $nombre, $apellidos, $tfno, $pass)) {
 
-                    $usuarios = gestionDatos::getUsuarios();
-                    $_SESSION['usuarios'] = $usuarios;
-                    header('Location: ../Vistas/crudAdmin.php');
-                }
-            }
-            //Crear administrador
-            if ($rol == 'Administrador') {
-                if (!gestionDatos::insertAdministrador($email, $dni, $nombre, $apellidos, $tfno, $pass)) {
-                    $mensaje = "No se ha podido insertar el usuario";
-                    $_SESSION['mensaje'] = $mensaje;
-                    header('Location: ../Vistas/registroAdmin.php');
-                } else {
-                    $mensaje = "¡Cuenta creada!";
-                    $_SESSION['mensaje'] = $mensaje;
+                $mensaje = "No se ha podido insertar el usuario";
+                $_SESSION['mensaje'] = $mensaje;
+                header('Location: ../Vistas/registroAdmin.php');
+            } else {
+                if ($rol == 'Alumno') {
+                    if (gestionDatos::insertUsuarioRol(gestionDatos::getIdUsuario($email, 0))) {
+                        $mensaje = "¡Cuenta creada!";
+                        $_SESSION['mensaje'] = $mensaje;
 
-                    $usuarios = gestionDatos::getUsuarios();
-                    $_SESSION['usuarios'] = $usuarios;
-                    header('Location: ../Vistas/crudAdmin.php');
+                        $usuarios = gestionDatos::getUsuarios();
+                        $_SESSION['usuarios'] = $usuarios;
+                        header('Location: ../Vistas/crudAdmin.php');
+                    }
+                } else if ($rol == 'Profesor') {
+                    if (gestionDatos::insertUsuarioRol(gestionDatos::getIdUsuario($email, 1))) {
+                        $mensaje = "¡Cuenta creada!";
+                        $_SESSION['mensaje'] = $mensaje;
+
+                        $usuarios = gestionDatos::getUsuarios();
+                        $_SESSION['usuarios'] = $usuarios;
+                        header('Location: ../Vistas/crudAdmin.php');
+                    }
+                } else if ($rol == 'Administrador') {
+                    if (gestionDatos::insertUsuarioRol(gestionDatos::getIdUsuario($email, 2))) {
+                        $mensaje = "¡Cuenta creada!";
+                        $_SESSION['mensaje'] = $mensaje;
+
+                        $usuarios = gestionDatos::getUsuarios();
+                        $_SESSION['usuarios'] = $usuarios;
+                        header('Location: ../Vistas/crudAdmin.php');
+                    }
                 }
             }
         } else {
