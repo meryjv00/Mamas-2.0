@@ -25,14 +25,11 @@ and open the template in the editor.
         $usu = $_SESSION['usuario'];
         ?>
         <header>
-            <nav class="row navbar navbar-expand-lg navbar-dark fixed-top">
-                <div class="container">
-                    <!--Left-->
-                    <ul class="navbar-nav mr-auto smooth-scroll"></ul>
-                    <!-- Right -->
-                    <ul class="navbar-nav ">
+            <nav class="row navbar navbar-expand-lg navbar-dark fixed-top deg">
+                <div class="container-fluid">
+                    <ul class="navbar-nav ml-auto mr-5">
                         <li class="nav-item">
-                            <form name="cerrarSes" action="../Controlador/controlador.php" method="post">
+                            <form name="cerrarSes" action="../Controlador/controladorCrud.php" method="post">
                                 <button type="submit" class="btn mean-fruit-gradient text-white
                                         btn-rounded waves-effect z-depth-1a" name="cerrarSesion" value="Cerrar sesión">
                                     <i class="fas fa-sign-out-alt"></i>

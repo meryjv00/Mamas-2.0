@@ -39,6 +39,8 @@ if (isset($_REQUEST['login'])) {
                     if ($usuario->getRol() == 2) {
                         header('Location: ../Vistas/elegirAdmin.php');
                     } else if ($usuario->getRol() == 0) {
+                        $asignaturas = gestionDatos::getAsignaturasUsu2($id);
+                        $_SESSION['asignaturas'] = $asignaturas;
                         header('Location: ../Vistas/inicio.php');
                     } else if ($usuario->getRol() == 1) {
                         header('Location: ../Vistas/inicioProfesor.php');
@@ -126,4 +128,7 @@ if (isset($_REQUEST['CRUDadmin'])) {
 //-----------------IR A LA PÁGINA PRINCIPAL PROFESORADO
 if (isset($_REQUEST['CRUDprofesor'])) {
     header('Location: ../Vistas/inicioProfesor.php');
+}
+if (isset($_REQUEST['home'])) {
+    header('Location: ../Vistas/inicio.php');
 }

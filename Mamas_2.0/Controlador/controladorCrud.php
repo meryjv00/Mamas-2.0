@@ -91,49 +91,39 @@ if (isset($_REQUEST['crearUsuario'])) {
             //Crear alumno
 
             if (!gestionDatos::insertUsuario($email, $dni, $nombre, $apellidos, $tfno, $pass)) {
-
                 $mensaje = "No se ha podido insertar el usuario";
                 $_SESSION['mensaje'] = $mensaje;
                 header('Location: ../Vistas/registroAdmin.php');
             } else {
                 if ($rol == 'Alumno') {
-                    if (gestionDatos::insertUsuarioRol(gestionDatos::getIdUsuario($email),0)) {
+                    if (gestionDatos::insertUsuarioRol(gestionDatos::getIdUsuario($email), 0)) {
                         $mensaje = "¡Cuenta creada!";
                         $_SESSION['mensaje'] = $mensaje;
-
-                        $usuarios = gestionDatos::getUsuarios();
-                        $_SESSION['usuarios'] = $usuarios;
-                        header('Location: ../Vistas/crudAdmin.php');
                     }
                 } else if ($rol == 'Profesor') {
-                    if (gestionDatos::insertUsuarioRol(gestionDatos::getIdUsuario($email),1)) {
+                    if (gestionDatos::insertUsuarioRol(gestionDatos::getIdUsuario($email), 1)) {
                         $mensaje = "¡Cuenta creada!";
                         $_SESSION['mensaje'] = $mensaje;
-
-                        $usuarios = gestionDatos::getUsuarios();
-                        $_SESSION['usuarios'] = $usuarios;
-                        header('Location: ../Vistas/crudAdmin.php');
                     }
                 } else if ($rol == 'Administrador') {
-                    if (gestionDatos::insertUsuarioRol(gestionDatos::getIdUsuario($email),2)) {
+                    if (gestionDatos::insertUsuarioRol(gestionDatos::getIdUsuario($email), 2)) {
                         $mensaje = "¡Cuenta creada!";
                         $_SESSION['mensaje'] = $mensaje;
-
-                        $usuarios = gestionDatos::getUsuarios();
-                        $_SESSION['usuarios'] = $usuarios;
-                        header('Location: ../Vistas/crudAdmin.php');
                     }
                 }
+                $usuarios = gestionDatos::getUsuarios();
+                $_SESSION['usuarios'] = $usuarios;
+                header('Location: ../Vistas/crudAdmin.php');
             }
         } else {
-            $r_usu = new Usuario(0,$email, "", $nombre, $apellidos, $tfno, 0, 0);
+            $r_usu = new Usuario(0, $email, "", $nombre, $apellidos, $tfno, 0, 0);
             $_SESSION['usu'] = $r_usu;
             $mensaje = "El dni introducido ya está registrado";
             $_SESSION['mensaje'] = $mensaje;
             header('Location: ../Vistas/registroAdmin.php');
         }
     } else {
-        $r_usu = new Usuario(0,"", $dni, $nombre, $apellidos, $tfno, 0, 0);
+        $r_usu = new Usuario(0, "", $dni, $nombre, $apellidos, $tfno, 0, 0);
         $_SESSION['usu'] = $r_usu;
         $mensaje = "El email introducido ya está registrado";
         $_SESSION['mensaje'] = $mensaje;

@@ -12,6 +12,7 @@
  * @author isra9
  */
 include_once '../Modelo/Usuario.php';
+include_once '../Modelo/Asignatura.php';
 
 class gestionDatos {
 
@@ -130,6 +131,7 @@ class gestionDatos {
             mysqli_close(self::$conexion);
         }
     }
+
     static function insertUsuarioRol($id, $rol) {
         self::conexion();
         $consulta = "INSERT INTO asignacionrol VALUES (" . $id . "," . $rol . ")";
@@ -148,14 +150,49 @@ class gestionDatos {
         self::conexion();
         $consulta = "INSERT INTO usuarios VALUES (default,'" . $email . "','" . $dni . "','" . $nombre . "','" . $apellidos . "','" . $pass . "','" . $tfno . "',default,default)";
         if (self::$conexion->query($consulta)) {
-
-            $correcto = true;
+            $id = self::getUltId();
+            $correcto = self::insertUsuarioAsignatura($id);
         } else {
             $correcto = false;
             echo "Error al insertar: " . self::$conexion->error . '<br/>';
         }
         return $correcto;
         mysqli_close(self::$conexion);
+    }
+
+    static function getUltId() {
+        $consulta = "SELECT max(idUsuario) FROM usuarios";
+        if ($resultado = self::$conexion->query($consulta)) {
+            if ($fila = $resultado->fetch_assoc()) {
+                $id = $fila['max(idUsuario)'];
+            }
+        }
+        return $id;
+    }
+
+    static function insertUsuarioAsignatura($id) {
+        $correcto = true;
+        $consulta = "INSERT INTO asignacionasignatura VALUES(" . $id . ",1)";
+        if (!self::$conexion->query($consulta)) {
+            $correcto = false;
+        }
+        $consulta = "INSERT INTO asignacionasignatura VALUES(" . $id . ",2)";
+        if (!self::$conexion->query($consulta)) {
+            $correcto = false;
+        }
+        $consulta = "INSERT INTO asignacionasignatura VALUES(" . $id . ",3)";
+        if (!self::$conexion->query($consulta)) {
+            $correcto = false;
+        }
+        $consulta = "INSERT INTO asignacionasignatura VALUES(" . $id . ",4)";
+        if (!self::$conexion->query($consulta)) {
+            $correcto = false;
+        }
+        $consulta = "INSERT INTO asignacionasignatura VALUES(" . $id . ",5)";
+        if (!self::$conexion->query($consulta)) {
+            $correcto = false;
+        }
+        return $correcto;
     }
 
     static function setPassword($email, $pass) {
@@ -247,6 +284,33 @@ class gestionDatos {
             echo "Error al actualizar: " . self::$conexion->error . '<br/>';
         }
         return $correcto;
+        mysqli_close(self::$conexion);
+    }
+
+    static function insertarFotoAsignatura() {
+        self::conexion();
+        $fotoBin = self::$conexion->real_escape_string(file_get_contents($_FILES["imagen"]["tmp_name"]));
+        $sentencia = "UPDATE asignatura SET imagen = ('$fotoBin') WHERE idAsignatura = 5";
+        self::$conexion->query($sentencia);
+        mysqli_close(self::$conexion);
+    }
+
+    static function getAsignaturasUsu2($id) {
+        $asignaturas = Array();
+        self::conexion();
+        $consulta = "SELECT * FROM asignatura,asignacionasignatura WHERE asignatura.idAsignatura = asignacionasignatura.idAsignatura "
+                . "and asignacionasignatura.idUsuario = " . $id;
+
+        if ($resultado = self::$conexion->query($consulta)) {
+            while ($fila = $resultado->fetch_assoc()) {
+                $idAsignatura = $fila['idAsignatura'];
+                $nombre = $fila['nombre'];
+                $imagen = $fila['imagen'];
+                $as = new Asignatura($idAsignatura, $nombre, $imagen);
+                $asignaturas[] = $as;
+            }
+        }
+        return $asignaturas;
         mysqli_close(self::$conexion);
     }
 

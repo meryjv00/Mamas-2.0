@@ -23,7 +23,7 @@ and open the template in the editor.
         ?>
         <header>
             <nav class="row navbar navbar-expand-lg navbar-dark fixed-top">
-                <div class="container">
+                <div class="container-fluid ml-5 mr-5">
                     <!--Left-->
                     <ul class="navbar-nav mr-auto smooth-scroll">
                         <li>
