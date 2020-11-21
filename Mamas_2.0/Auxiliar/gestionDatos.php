@@ -130,7 +130,6 @@ class gestionDatos {
             mysqli_close(self::$conexion);
         }
     }
-
     static function insertUsuarioRol($id, $rol) {
         self::conexion();
         $consulta = "INSERT INTO asignacionrol VALUES (" . $id . "," . $rol . ")";
