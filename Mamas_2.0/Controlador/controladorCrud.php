@@ -5,7 +5,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-//include_once '../Modelo/Usuario.php';
+include_once '../Modelo/Usuario.php';
 include_once '../Auxiliar/gestionDatos.php';
 session_start();
 
@@ -193,7 +193,7 @@ if (isset($_REQUEST['cambiarRolAlumno'])) {
             if (isset($_REQUEST[$i])) {
                 $pulsado = true;
                 $usuario->setRol(0);
-                if (!gestionDatos::updateRol($usuario)) {
+                if (!gestionDatos::updateRol($usuario, 0)) {
                     $mensaje = 'No se ha podido cambiar el rol del usuario con mail: ' . $usuario->getEmail();
                     $_SESSION['mensaje'] = $mensaje;
                 }
@@ -217,7 +217,7 @@ if (isset($_REQUEST['cambiarRolProfesor'])) {
             if (isset($_REQUEST[$i])) {
                 $pulsado = true;
                 $usuario->setRol(1);
-                if (!gestionDatos::updateRol($usuario)) {
+                if (!gestionDatos::updateRol($usuario, 1)) {
                     $mensaje = 'No se ha podido cambiar el rol del usuario con mail: ' . $usuario->getEmail();
                     $_SESSION['mensaje'] = $mensaje;
                 }
@@ -241,7 +241,7 @@ if (isset($_REQUEST['cambiarRolAdmnistrador'])) {
             if (isset($_REQUEST[$i])) {
                 $pulsado = true;
                 $usuario->setRol(2);
-                if (!gestionDatos::updateRol($usuario)) {
+                if (!gestionDatos::updateRol($usuario, 2)) {
                     $mensaje = 'No se ha podido cambiar el rol del usuario con mail: ' . $usuario->getEmail();
                     $_SESSION['mensaje'] = $mensaje;
                 }

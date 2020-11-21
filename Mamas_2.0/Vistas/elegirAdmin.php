@@ -55,7 +55,7 @@ and open the template in the editor.
 
                             <div class="card-body">
 
-                                <form class="text-center needs-validation" style="color: #757575;" action="../Controlador/controlador.php" method="POST" novalidate>
+                                <form class="text-center needs-validation" style="color: #757575;" action="../Controlador/controlador.php" method="POST">
 
                                     <h3 class="font-weight-bold my-4 pb-2 text-center tit">Bienvenido <?= $usu->getNombre() ?></h3>
 

@@ -1,5 +1,4 @@
 <?php
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -70,7 +69,7 @@ if (isset($_REQUEST['registro'])) {
                     $_SESSION['mensaje'] = $mensaje;
                     header('Location: ../Vistas/registro.php');
                 } else {
-                    if (gestionDatos::insertUsuarioRol(gestionDatos::getIdUsuario($email,0))) {
+                    if (gestionDatos::insertUsuarioRol(gestionDatos::getIdUsuario($email, 0))) {
                         $mensaje = "¡Cuenta creada!";
                         $_SESSION['mensaje'] = $mensaje;
                         header('Location: ../Vistas/login.php');
@@ -110,7 +109,8 @@ if (isset($_REQUEST['cerrarSesion'])) {
 //-----------------IR AL CRUD DE USUARIOS
 if (isset($_REQUEST['CRUDadmin'])) {
     $usuarios = gestionDatos::getUsuarios();
-    $_SESSION['usuarios'] = $usuarios;
+        $_SESSION['usuarios'] = $usuarios;
+        
     header('Location: ../Vistas/crudAdmin.php');
 }
 //-----------------IR A LA PÁGINA PRINCIPAL PROFESORADO

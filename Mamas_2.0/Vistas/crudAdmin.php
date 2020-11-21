@@ -22,6 +22,7 @@ and open the template in the editor.
     <body>
         <?php
         require_once '../Modelo/Usuario.php';
+        require_once '../Auxiliar/gestionDatos.php';
         session_start();
         $usuarios = $_SESSION['usuarios'];
         ?>

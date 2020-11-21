@@ -12,7 +12,6 @@
  * @author isra9
  */
 include_once '../Modelo/Usuario.php';
-session_start();
 
 class gestionDatos {
 
@@ -52,7 +51,7 @@ class gestionDatos {
                 $apellidos = $fila['apellidos'];
                 $telefono = $fila['telefono'];
                 $activo = $fila['activo'];
-                $rol = $fila['imagen'];
+                $imagen = $fila['imagen'];
                 $p = new Usuario($id, $email, $dni, $nombre, $apellidos, $telefono, $activo, $imagen);
                 return $p;
                 //almacenamos en sesion al usuario que ha realizado el Login.
@@ -68,8 +67,9 @@ class gestionDatos {
         $stmt->bind_param("i", $id);
         if ($stmt->execute()) {
             $resultado = $stmt->get_result();
-            var_dump($resultado);
+            //var_dump($resultado);
             if ($fila = $resultado->fetch_assoc()) {
+                //var_dump($fila);
                 $rol = $fila['idRol'];
             }
             return $rol;
@@ -178,7 +178,7 @@ class gestionDatos {
 
         if ($resultado = self::$conexion->query($consulta)) {
             while ($fila = $resultado->fetch_assoc()) {
-                var_dump($fila);
+
                 //obtenemos los datos  en variables individuales para la creacion del objeto usuario.
                 $id = $fila['idUsuario'];
                 $email = $fila['email'];
@@ -188,9 +188,8 @@ class gestionDatos {
                 $telefono = $fila['telefono'];
                 $activo = $fila['activo'];
                 $imagen = $fila['imagen'];
-                $rol = self::getRol($id);
                 $p = new Usuario($id, $email, $dni, $nombre, $apellidos, $telefono, $activo, $imagen);
-                $p->setRol($rol);
+                $p->setRol(self::getRol($id));
                 $usuarios[] = $p;
             }
         }
@@ -238,9 +237,9 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
-    static function updateRol($usuario) {
+    static function updateRol($usuario, $rol) {
         self::conexion();
-        $consulta = "UPDATE usuarios SET rol=" . $usuario->getRol() . " WHERE email ='" . $usuario->getEmail() . "'";
+        $consulta = "UPDATE asignacionrol SET idRol=" . $rol . " WHERE idUsuario ='" . $usuario->getId() . "'";
         if (self::$conexion->query($consulta)) {
             $correcto = true;
         } else {
