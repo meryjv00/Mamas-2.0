@@ -314,4 +314,65 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
+    static function updateFoto($id) {
+        self::conexion();
+        $fotoBin = self::$conexion->real_escape_string(file_get_contents($_FILES["imagen"]["tmp_name"]));
+        $sentencia = "UPDATE usuarios SET imagen = ('$fotoBin') WHERE idUsuario = " . $id;
+        self::$conexion->query($sentencia);
+        mysqli_close(self::$conexion);
+    }
+
+    static function getUsuarioId($id) {
+        self::conexion();
+        $stmt = self::$conexion->prepare("SELECT * FROM usuarios WHERE idUsuario =  ?");
+        $stmt->bind_param("i", $id);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            var_dump($resultado);
+            if ($fila = $resultado->fetch_assoc()) {
+                var_dump($fila);
+                //obtenemos los datos  en variables individuales para la creacion del objeto usuario.
+                $id = $fila['idUsuario'];
+                $email = $fila['email'];
+                $nombre = $fila['nombre'];
+                $dni = $fila['dni'];
+                $apellidos = $fila['apellidos'];
+                $telefono = $fila['telefono'];
+                $activo = $fila['activo'];
+                $imagen = $fila['imagen'];
+                $p = new Usuario($id, $email, $dni, $nombre, $apellidos, $telefono, $activo, $imagen);
+
+                //almacenamos en sesion al usuario que ha realizado el Login.
+            }
+            return $p;
+            mysqli_close(self::$conexion);
+        }
+    }
+
+    static function updateTfno($usuario) {
+        self::conexion();
+        $consulta = "UPDATE usuarios SET telefono='" . $usuario->getTelefono() . "' WHERE idUsuario =" . $usuario->getId();
+        if (self::$conexion->query($consulta)) {
+            $correcto = true;
+        } else {
+            $correcto = false;
+            echo "Error al actualizar: " . self::$conexion->error . '<br/>';
+        }
+        return $correcto;
+        mysqli_close(self::$conexion);
+    }
+
+    static function updatePass($usuario, $pass) {
+        self::conexion();
+        $consulta = "UPDATE usuarios SET contrasenia='" . $pass . "' WHERE idUsuario =" . $usuario->getId();
+        if (self::$conexion->query($consulta)) {
+            $correcto = true;
+        } else {
+            $correcto = false;
+            echo "Error al actualizar: " . self::$conexion->error . '<br/>';
+        }
+        return $correcto;
+        mysqli_close(self::$conexion);
+    }
+
 }

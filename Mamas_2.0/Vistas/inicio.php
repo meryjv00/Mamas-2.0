@@ -54,36 +54,45 @@ and open the template in the editor.
                 </div>
             </nav>
         </header>
-        <main class="pb-5 pt-5">
-            <div class="container-fluid row">
-                <div class="col-md-9 d-flex justify-content-center p1 p2">
+        <main class="pb-5 pt-5 ml-4">
+            <div class="container-fluid row altura2">
+                <div class="col-md-9 mt-5">
                     <div class="row">
-                        <h1 class="col-md-12 font-weight-bold text-center tit ml-5 mt-5">Mis asignaturas</h1>
-                        <?php
-                        foreach ($asignaturas as $i => $asignatura) {
-                            ?>
-                            <div class="col-md-3 card card-cascade narrower card-ecommerce mt-3 ml-3 mr-3 " style="height: 280px" >
-                                <!-- Card image -->
-                                <div class="view overlay zoom" style="height: 200px">
-                                    <img src="data:image/png;base64,<?php echo base64_encode($asignatura->getImagen()); ?>" alt="titulo foto" class="img-fluid"
-                                         />
-                                    <div class="mask flex-center">
-                                        <p class="white-text"><i class="fas fa-arrow-right" style="color:#543b54;font-size: 40px"></i></p>
-                                    </div>
-                                </div>
-                                <!-- Card image -->
-                                <!-- Card content -->
-                                <div class="card-body card-body-cascade text-center">
-                                    <!-- Category & Title -->
-                                    <a href="" class="text-muted">
-                                        <h5><?= $asignatura->getNombre() ?></h5>
-                                    </a>
-                                    <!-- Card content -->
-                                </div>
+                        <div class="col-md-10 mx-auto card card-cascade narrower pb-5 bg-transparent">
+                            <div class="view view-cascade gradient-card-header">
+                                <!-- Title -->
+                                <h2 class="card-header-title font-weight-bold text-center letra display-4 titulo2 pt-2 pb-2">Mis asignaturas</h2>
                             </div>
-                            <?php
-                        }
-                        ?>
+                            <div class="row justify-content-center">
+                                <?php
+                                foreach ($asignaturas as $i => $asignatura) {
+                                    ?>
+                                    <div class="col-md-3 card card-cascade narrower card-ecommerce mt-3 ml-3 mr-3" style="height: 280px" >
+                                        <!-- Card image -->
+                                        <div class="view overlay zoom" style="height: 200px">
+                                            <img src="data:image/png;base64,<?php echo base64_encode($asignatura->getImagen()); ?>" alt="titulo foto" class="img-fluid"
+                                                 />
+                                            <div class="mask flex-center">
+                                                <p class="white-text"><i class="fas fa-arrow-right" style="color:#543b54;font-size: 40px"></i></p>
+                                            </div>
+                                        </div>
+                                        <!-- Card image -->
+                                        <!-- Card content -->
+                                        <div class="card-body card-body-cascade text-center">
+                                            <!-- Category & Title -->
+                                            <a href="" class="text-muted">
+                                                <h5><?= $asignatura->getNombre() ?></h5>
+                                            </a>
+                                            <!-- Card content -->
+                                        </div>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
+                            </div>
+
+                        </div>
+
                     </div>
 
                 </div>
@@ -92,21 +101,19 @@ and open the template in the editor.
                     <!-- Card image -->
                     <div class="view view-cascade gradient-card-header mean-fruit-gradient">
                         <!-- Title -->
-                        <h2 class="card-header-title text-center titulo">Exámenes sin realizar</h2>
+                        <h2 class="card-header-title text-center titulo text-white pt-1">EXÁMENES SIN REALIZAR</h2>
                     </div>
                     <!-- Card content -->
                     <div class="card-body card-body-cascade">
                         <!-- Text -->
                         <form name="cerrarSes" action="../Controlador/controlador.php" method="post">
-                            <p  style="font-size: 25px"><i class="fas fa-angle-right pr-2" ></i>Exámen 1</p>
+                            <p  style="font-size: 25px;color: #4D2034"><i class="fas fa-angle-right pr-2" ></i>Exámen 1</p>
                             <p class="card-text">Tema 4 - GUIT: Exámen tipo test u4</p>
                             <input type="submit" class="btn mean-fruit-gradient text-white
-                                    btn-rounded waves-effect z-depth-1a" name="cerrarSesion" value="Realizar exámen"/>
+                                   btn-rounded waves-effect z-depth-1a" name="cerrarSesion" value="Realizar exámen"/>
                         </form>
-
                         <hr>
                     </div>
-
                 </div>
 
         </main>

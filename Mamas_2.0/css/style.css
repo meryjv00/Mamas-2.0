@@ -44,20 +44,16 @@ button, input[type=submit]{
 .altura{
     height: 74vh;
 }
-
-
-@media (min-width: 1450px) {
-    .p1{
-        padding-left: 150px;
-    }
-}
-@media (min-width: 730px ) and (max-width:1450px){
-    .p1{
-        padding-left: 90px;
-    }
+.altura2{
+    height: 84vh;
 }
 .titulo{
-    font-family: Pacifico;
-    font-size: 25px;
+    font-family: Rubik;
+    font-size: 22px;
     color:  #543b54; 
+}
+.titulo2{
+    font-family: cursive;
+    font-size: 50px;
+    color:  #4D2034; 
 }
