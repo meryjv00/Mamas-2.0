@@ -36,8 +36,10 @@ and open the template in the editor.
                     <ul class="navbar-nav ">
                         <li class="nav-item">
                             <form name="cerrarSes" action="../Controlador/controladorCrud.php" method="post">
-                                <input type="submit" class="btn mean-fruit-gradient text-white
-                                       btn-rounded waves-effect z-depth-1a" name="cerrarSesion" value="Cerrar sesión">
+                                <button type="submit" class="btn mean-fruit-gradient text-white
+                                        btn-rounded waves-effect z-depth-1a" name="cerrarSesion" value="Cerrar sesión">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                </button>
                             </form>
                         </li> 
                     </ul>
@@ -60,13 +62,13 @@ and open the template in the editor.
                                     <!-- Form -->
                                     <form id="registro" class="text-left" style="color: #757575;" action="../Controlador/controladorCrud.php" novalidate>
 
-                                        <h3 class="font-weight-bold my-4 pb-2 text-center  tit">Sign up</h3>
+                                        <h3 class="font-weight-bold my-4 pb-2 text-center  tit">Registrar usuario</h3>
                                         <?php
                                         if (isset($_SESSION['usu'])) {
                                             $usu = $_SESSION['usu'];
                                             unset($_SESSION['usu']);
                                         } else {
-                                            $usu = new Usuario("", "", "", "", "", "", "");
+                                            $usu = new Usuario("", "", "", "", "", "", "", "");
                                         }
                                         ?>
                                         <!--Nombre y apellidos-->
@@ -74,18 +76,18 @@ and open the template in the editor.
                                             <div class="col">
                                                 <!-- First name -->
                                                 <div class="md-form">
-                                                    <input type="text" id="nombre" name="nombre" class="form-control"  value="<?=$usu->getNombre()?>"
+                                                    <input type="text" id="nombre" name="nombre" class="form-control"  value="<?= $usu->getNombre() ?>"
                                                            minlength="2" maxlength="25" required>
-                                                    <label for="nombre">First name</label>
+                                                    <label for="nombre">Nombre</label>
                                                     <div id="nombreError"></div>
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <!-- Last name -->
                                                 <div class="md-form">
-                                                    <input type="text" id="apellidos" name="apellidos" class="form-control" value="<?=$usu->getApellidos()?>"
+                                                    <input type="text" id="apellidos" name="apellidos" class="form-control" value="<?= $usu->getApellidos() ?>"
                                                            minlength="6" maxlength="25" required>
-                                                    <label for="apellidos">Last name</label>
+                                                    <label for="apellidos">Apellidos</label>
                                                     <div id="apellidosError"></div>
                                                 </div>
                                             </div>
@@ -93,14 +95,14 @@ and open the template in the editor.
                                         </div>
                                         <!-- Email -->
                                         <div class="md-form mt-0">
-                                            <input type="email" id="email" name="email" class="form-control mb-4" required value="<?=$usu->getEmail()?>">
+                                            <input type="email" id="email" name="email" class="form-control mb-4" required value="<?= $usu->getEmail() ?>">
                                             <label for="email">E-mail </label>
                                             <div id="emailError"></div>
                                         </div>
 
                                         <!-- Dni -->
                                         <div class="md-form">
-                                            <input type="text" id="dni" name="dni" class="form-control mb-4" value="<?=$usu->getDni()?>"
+                                            <input type="text" id="dni" name="dni" class="form-control mb-4" value="<?= $usu->getDni() ?>"
                                                    pattern="^[0-9]{8}[A-Z]{1}$" required>
                                             <label for="dni">Dni </label>
                                             <div id="dniError"></div>
@@ -108,22 +110,22 @@ and open the template in the editor.
 
                                         <!-- Tfno -->
                                         <div class="md-form">
-                                            <input type="text" id="tfno" name="tfno" class="form-control mb-4" value="<?=$usu->getTelefono()?>"
+                                            <input type="text" id="tfno" name="tfno" class="form-control mb-4" value="<?= $usu->getTelefono() ?>"
                                                    pattern="^[0-9]{9}$" required>
-                                            <label for="tfno">Phone number</label>
+                                            <label for="tfno">Teléfono</label>
                                             <div id="tfnoError"></div>
                                         </div>
 
                                         <!-- Pass -->
                                         <div class="md-form">
                                             <input type="password" id="pass" name="pass" minlength="3" maxlength="15" class="form-control" required>
-                                            <label for="pass">Password </label>
+                                            <label for="pass">Contraseña </label>
                                             <div id="passError"></div>
                                         </div>
                                         <!-- Repeat password -->
                                         <div class="md-form">
                                             <input type="password" id="pass2" name="pass2" class="form-control" required>
-                                            <label for="pass2">Repeat password </label>
+                                            <label for="pass2">Repite la contraseña </label>
                                             <div id="pass2Error"></div>
                                         </div>
                                         <!--Rol-->
@@ -153,7 +155,7 @@ and open the template in the editor.
                                         ?>
                                         <div class="text-center mb-3 pl-5 pr-5">
                                             <button type="submit" name="crearUsuario" class="btn mean-fruit-gradient text-white btn-block 
-                                                    btn-rounded my-4 waves-effect z-depth-1a">Sign up</button>
+                                                    btn-rounded my-4 waves-effect z-depth-1a">Registrar</button>
                                         </div>
 
                                     </form>

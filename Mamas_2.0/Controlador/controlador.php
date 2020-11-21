@@ -6,7 +6,8 @@
  * and open the template in the editor.
  */
 include_once '../Auxiliar/gestionDatos.php';
-
+include_once '../Modelo/Usuario.php';
+session_start();
 //---------------LOGIN
 if (isset($_REQUEST['login'])) {
     $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
@@ -18,27 +19,36 @@ if (isset($_REQUEST['login'])) {
     if ($recaptcha->score >= 0.7) {
         $email = $_REQUEST['email'];
         $password = md5($_REQUEST['password']);
-        gestionDatos::getUsuario($email, $password);
-
-        if (!isset($_SESSION['usuario'])) {
-            $mensaje = 'Error al realizar el Login.';
-            $_SESSION['mensaje'] = $mensaje;
-            header('Location: ../Vistas/login.php');
-        } else {
-            $usuario = $_SESSION['usuario'];
-            if ($usuario->getActivo() == 0) {
-                $mensaje = 'Usuario desactivado , contacte con administrador';
+        $usuario = gestionDatos::getUsuario($email, $password);
+        if (isset($usuario)) {
+            $id = $usuario->getId();
+            $rol = gestionDatos::getRol($id);
+            $usuario->setRol($rol);
+            $_SESSION['usuario'] = $usuario;
+            if (!isset($_SESSION['usuario'])) {
+                $mensaje = 'Error al realizar el Login.';
                 $_SESSION['mensaje'] = $mensaje;
                 header('Location: ../Vistas/login.php');
-            } else if ($usuario->getActivo() == 1) {
-                if ($usuario->getRol() == 2) {
-                    header('Location: ../Vistas/elegirAdmin.php');
-                } else if ($usuario->getRol() == 0) {
-                    header('Location: ../Vistas/inicio.php');
-                } else if ($usuario->getRol() == 1) {
-                    header('Location: ../Vistas/crudProfesor.php');
+            } else {
+                $usuario = $_SESSION['usuario'];
+                if ($usuario->getActivo() == 0) {
+                    $mensaje = 'Usuario desactivado , contacte con administrador';
+                    $_SESSION['mensaje'] = $mensaje;
+                    header('Location: ../Vistas/login.php');
+                } else if ($usuario->getActivo() == 1) {
+                    if ($usuario->getRol() == 2) {
+                        header('Location: ../Vistas/elegirAdmin.php');
+                    } else if ($usuario->getRol() == 0) {
+                        header('Location: ../Vistas/inicio.php');
+                    } else if ($usuario->getRol() == 1) {
+                        header('Location: ../Vistas/inicioProfesor.php');
+                    }
                 }
             }
+        } else {
+            $mensaje = 'Email o contraseña incorrectos.';
+            $_SESSION['mensaje'] = $mensaje;
+            header('Location: ../Vistas/login.php');
         }
     } else {
         $mensaje = 'Error captcha no superado.';
@@ -69,19 +79,26 @@ if (isset($_REQUEST['registro'])) {
                     $_SESSION['mensaje'] = $mensaje;
                     header('Location: ../Vistas/registro.php');
                 } else {
-                    $mensaje = "¡Cuenta creada!";
-                    $_SESSION['mensaje'] = $mensaje;
-                    header('Location: ../Vistas/login.php');
+                    if (gestionDatos::insertUsuarioRol(gestionDatos::getIdUsuario($email), 0)) {
+                        $mensaje = "¡Cuenta creada!";
+                        $_SESSION['mensaje'] = $mensaje;
+                        header('Location: ../Vistas/login.php');
+                    } else {
+                        $mensaje = "No se ha podido insertar el rol";
+                        $_SESSION['mensaje'] = $mensaje;
+                        header('Location: ../Vistas/registro.php');
+                    }
                 }
             } else {
-                $r_usu = new Usuario($email, "", $nombre, $apellidos, $tfno, 0, 0);
+
+                $r_usu = new Usuario(0, $email, "", $nombre, $apellidos, $tfno, 0, 0);
                 $_SESSION['usu'] = $r_usu;
                 $mensaje = "El dni introducido ya está registrado";
                 $_SESSION['mensaje'] = $mensaje;
                 header('Location: ../Vistas/registro.php');
             }
         } else {
-            $r_usu = new Usuario("", $dni, $nombre, $apellidos, $tfno, 0, 0);
+            $r_usu = new Usuario(0, "", $dni, $nombre, $apellidos, $tfno, 0, 0);
             $_SESSION['usu'] = $r_usu;
             $mensaje = "El email introducido ya está registrado";
             $_SESSION['mensaje'] = $mensaje;
@@ -108,5 +125,5 @@ if (isset($_REQUEST['CRUDadmin'])) {
 }
 //-----------------IR A LA PÁGINA PRINCIPAL PROFESORADO
 if (isset($_REQUEST['CRUDprofesor'])) {
-    header('Location: ../Vistas/crudProfesor.php');
+    header('Location: ../Vistas/inicioProfesor.php');
 }

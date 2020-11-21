@@ -22,6 +22,7 @@ and open the template in the editor.
     <body>
         <?php
         require_once '../Modelo/Usuario.php';
+        require_once '../Auxiliar/gestionDatos.php';
         session_start();
         $usuarios = $_SESSION['usuarios'];
         ?>
@@ -40,10 +41,14 @@ and open the template in the editor.
                     <ul class="navbar-nav ">
                         <li class="nav-item">
                             <form name="cerrarSes" action="../Controlador/controladorCrud.php" method="post">
-                                <input type="submit" class="btn mean-fruit-gradient text-white
-                                       btn-rounded waves-effect z-depth-1a" name="nuevoUsuario" value="Añadir usuario">
-                                <input type="submit" class="btn mean-fruit-gradient text-white
-                                       btn-rounded waves-effect z-depth-1a" name="cerrarSesion" value="Cerrar sesión">
+                                <button type="submit" class="btn mean-fruit-gradient text-white
+                                        btn-rounded waves-effect z-depth-1a" name="nuevoUsuario" value="Añadir usuario">
+                                    <i class="fas fa-user-plus"></i>
+                                </button>
+                                <button type="submit" class="btn mean-fruit-gradient text-white
+                                        btn-rounded waves-effect z-depth-1a" name="cerrarSesion" value="Cerrar sesión">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                </button>
                             </form>
                         </li> 
                     </ul>
@@ -233,5 +238,5 @@ and open the template in the editor.
         <!-- Your custom scripts (optional) -->
         <script type="text/javascript" src="../js/validar.js"></script>
         <script type="text/javascript" src="../js/diseño.js"></script>
-</body>
+    </body>
 </html>
