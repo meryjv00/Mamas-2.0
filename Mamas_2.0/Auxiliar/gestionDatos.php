@@ -113,7 +113,6 @@ class gestionDatos {
             mysqli_close(self::$conexion);
         }
     }
-
     static function getIdUsuario($email) {
         self::conexion();
         $stmt = self::$conexion->prepare("SELECT * FROM usuarios WHERE email= ?");
