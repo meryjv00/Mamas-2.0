@@ -348,7 +348,7 @@ function validacionTfnoPass() {
             pass.classList.remove('is-invalid');
             passError.textContent = '';
         } else {
-            error(pass);
+            error2(pass);
         }
     });
     pass2.addEventListener('input', function (event) {
@@ -374,7 +374,8 @@ function validacionTfnoPass() {
             }
         }
     }
-    function error(campo) {
+
+    function error2(){
         if (campo == pass) {
             if (pass.validity.valueMissing) {
                 passError.textContent = 'Debe introducir su contraseña.';
@@ -390,6 +391,5 @@ function validacionTfnoPass() {
             passError.className = 'invalid-feedback';
         }
     }
-
 
 }
