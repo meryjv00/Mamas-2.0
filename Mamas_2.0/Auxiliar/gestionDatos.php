@@ -12,6 +12,12 @@
  * @author isra9
  */
 include_once '../Modelo/Usuario.php';
+include_once '../Modelo/Asignatura.php';
+include_once '../Modelo/Examen.php';
+include_once '../Modelo/Pregunta.php';
+include_once '../Modelo/Respuesta.php';
+include_once '../Modelo/Alumno.php';
+include_once '../Modelo/Profesor.php';
 
 class gestionDatos {
 
@@ -130,6 +136,7 @@ class gestionDatos {
             mysqli_close(self::$conexion);
         }
     }
+
     static function insertUsuarioRol($id, $rol) {
         self::conexion();
         $consulta = "INSERT INTO asignacionrol VALUES (" . $id . "," . $rol . ")";
@@ -247,6 +254,117 @@ class gestionDatos {
             echo "Error al actualizar: " . self::$conexion->error . '<br/>';
         }
         return $correcto;
+        mysqli_close(self::$conexion);
+    }
+
+    static function getIdAsig($idUsuario) {
+        self::conexion();
+        $stmt = self::$conexion->prepare("SELECT * FROM asignacionasignatura WHERE idUsuario= ?");
+        $stmt->bind_param("i", $idUsuario);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            var_dump($resultado);
+            while ($fila = $resultado->fetch_assoc()) {
+                $id[] = $fila['idAsignatura'];
+            }
+            return $id;
+        }
+    }
+
+    static function getIdAsignatura($idUsuario) {
+        self::conexion();
+        $stmt = self::$conexion->prepare("SELECT * FROM asignacionasignatura WHERE idUsuario= ?");
+        $stmt->bind_param("i", $idUsuario);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            var_dump($resultado);
+            while ($fila = $resultado->fetch_assoc()) {
+                $id[] = $fila['idAsignatura'];
+            }
+            return $id;
+        }
+    }
+
+    static function getIdUsu($id) {
+        self::conexion();
+        $stmt = self::$conexion->prepare("SELECT * FROM asignatura WHERE idAsignatura= ?");
+        $stmt->bind_param("i", $id);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            var_dump($resultado);
+            if ($fila = $resultado->fetch_assoc()) {
+                $id = $fila['idUsuario'];
+            }
+            //almacenamos en sesion al usuario que ha realizado el Login.
+        }
+        return $id;
+        mysqli_close(self::$conexion);
+    }
+
+    static function getExamenes($id) {
+        self::conexion();
+        $examenes = array();
+        $stmt = self::$conexion->prepare("SELECT * FROM examen WHERE idAsignatura= ?");
+        $stmt->bind_param("i", $id);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            var_dump($resultado);
+            while ($fila = $resultado->fetch_assoc()) {
+                $idE = $fila['idExamen'];
+                $profesor = $fila['idUsuario'];
+                $contenido = $fila['contenido'];
+                $descripcion = $fila['descripcion'];
+                $activo = $fila['activo'];
+                $e = new Examen($idE, $profesor, $contenido, $descripcion, $activo);
+                $examenes[] = $e;
+            }
+            return $examenes;
+        }
+
+        mysqli_close(self::$conexion);
+    }
+
+    static function getPreguntas($id) {
+        self::conexion();
+        $preguntas = array();
+        $stmt = self::$conexion->prepare("SELECT * FROM pregunta WHERE idAsignatura= ?");
+        $stmt->bind_param("i", $id);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            var_dump($resultado);
+            while ($fila = $resultado->fetch_assoc()) {
+                $idP = $fila['idPregunta'];
+                $profesor = $fila['idUsuario'];
+                $enunciado = $fila['enunciado'];
+                $tipo = $fila['tipo'];
+                $puntuacion = $fila['ponderacion'];
+                $p = new Pregunta($id, $profesor, $enunciado, $tipo, $puntuacion);
+                $preguntas[] = $p;
+            }
+            return $preguntas;
+        }
+        mysqli_close(self::$conexion);
+    }
+
+    static function getAlumnos($id) {
+        self::conexion();
+        $preguntas = array();
+        $stmt = self::$conexion->prepare("SELECT * FROM asignacionasignatura WHERE idAsignatura= ?");
+        $stmt->bind_param("i", $id);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            var_dump($resultado);
+            while ($fila = $resultado->fetch_assoc()) {
+                $idP = $fila['idPregunta'];
+                $profesor = $fila['idUsuario'];
+                $enunciado = $fila['enunciado'];
+                $tipo = $fila['tipo'];
+                $puntuacion = $fila['ponderacion'];
+                $p = new Pregunta($id, $profesor, $enunciado, $tipo, $puntuacion);
+                $preguntas[] = $p;
+            }
+            return $preguntas;
+        }
         mysqli_close(self::$conexion);
     }
 
