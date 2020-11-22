@@ -81,11 +81,7 @@ and open the template in the editor.
                                             <!--Card image-->
                                             <div class="view view-cascade gradient-card-header mean-fruit-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
                                                 <div>
-                                                    <button type="submit" name="cambiarRolAlumno" class="btn btn-outline-white btn-rounded btn-sm px-2"
-                                                            data-toggle="tooltip" data-placement="top" title="Establecer como alumno">
-                                                        <i class="fas fa-user" style="font-size: 20px"></i>
-                                                    </button>
-                                                    <button type="submit" name="cambiarRolProfesor" class="btn btn-outline-white btn-rounded btn-sm px-2"
+                                                    <button type="submit" name="cambiarRolProfesor" class="ml-3 btn btn-outline-white btn-rounded btn-sm px-2"
                                                             data-toggle="tooltip" data-placement="top" title="Establecer como profesor">
                                                         <i class="fas fa-chalkboard-teacher" style="font-size: 20px"></i>
                                                     </button>

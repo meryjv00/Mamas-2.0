@@ -175,16 +175,22 @@ if (isset($_REQUEST['desactivarUsuario'])) {
     }
 }
 
-//--------------------CAMBIAR ROL ALUMNO
-if (isset($_REQUEST['cambiarRolAlumno'])) {
+//--------------------CAMBIAR ROL ADMINISTRADOR
+if (isset($_REQUEST['cambiarRolAdmnistrador'])) {
     $usuarios = $_SESSION['usuarios'];
     if (count($usuarios) > 0) {
         foreach ($usuarios as $i => $usuario) {
             if (isset($_REQUEST[$i])) {
                 $pulsado = true;
-                $usuario->setRol(0);
-                if (!gestionDatos::updateRol($usuario)) {
-                    $mensaje = 'No se ha podido cambiar el rol del usuario con mail: ' . $usuario->getEmail();
+                $idRol = gestionDatos::checkRol($usuario);
+                if ($idRol == 1) {
+                    $usuario->setRol(2);
+                    if (!gestionDatos::updateRol($usuario)) {
+                        $mensaje = 'No se ha podido cambiar el rol del usuario con mail: ' . $usuario->getEmail();
+                        $_SESSION['mensaje'] = $mensaje;
+                    }
+                } else {
+                    $mensaje = 'El usuario con mail: ' .$usuario->getEmail() . ' no es profesor';
                     $_SESSION['mensaje'] = $mensaje;
                 }
             }
@@ -206,33 +212,15 @@ if (isset($_REQUEST['cambiarRolProfesor'])) {
         foreach ($usuarios as $i => $usuario) {
             if (isset($_REQUEST[$i])) {
                 $pulsado = true;
-                $usuario->setRol(1);
-                if (!gestionDatos::updateRol($usuario)) {
-                    $mensaje = 'No se ha podido cambiar el rol del usuario con mail: ' . $usuario->getEmail();
-                    $_SESSION['mensaje'] = $mensaje;
-                }
-            }
-        }
-    }
-    if (!$pulsado) {
-        header('Location: ../Vistas/crudAdmin.php');
-    } else {
-        $usuarios = gestionDatos::getUsuarios();
-        $_SESSION['usuarios'] = $usuarios;
-        header('Location: ../Vistas/crudAdmin.php');
-    }
-}
-
-//--------------------CAMBIAR ROL ADMINISTRADOR
-if (isset($_REQUEST['cambiarRolAdmnistrador'])) {
-    $usuarios = $_SESSION['usuarios'];
-    if (count($usuarios) > 0) {
-        foreach ($usuarios as $i => $usuario) {
-            if (isset($_REQUEST[$i])) {
-                $pulsado = true;
-                $usuario->setRol(2);
-                if (!gestionDatos::updateRol($usuario)) {
-                    $mensaje = 'No se ha podido cambiar el rol del usuario con mail: ' . $usuario->getEmail();
+                $idRol = gestionDatos::checkRol($usuario);
+                if ($idRol == 2) {
+                    $usuario->setRol(1);
+                    if (!gestionDatos::updateRol($usuario)) {
+                        $mensaje = 'No se ha podido cambiar el rol del usuario con mail: ' . $usuario->getEmail();
+                        $_SESSION['mensaje'] = $mensaje;
+                    }
+                } else {
+                    $mensaje = 'El usuario con mail: ' .$usuario->getEmail() . ' no es administrador';
                     $_SESSION['mensaje'] = $mensaje;
                 }
             }

@@ -274,6 +274,23 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
+    static function checkRol($usuario) {
+        self::conexion();
+        $stmt = self::$conexion->prepare("SELECT idRol from asignacionrol where idUsuario = ?");
+        $stmt->bind_param("i", $usuario->getId());
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            var_dump($resultado);
+            if ($fila = $resultado->fetch_assoc()) {
+                $idRol = $fila['idRol'];
+            } else {
+                $idRol = false;
+            }
+        }
+        return $idRol;
+        mysqli_close(self::$conexion);
+    }
+
     static function updateRol($usuario) {
         self::conexion();
         $consulta = "UPDATE asignacionrol SET idRol=" . $usuario->getRol() . " WHERE idUsuario =" . $usuario->getId();
