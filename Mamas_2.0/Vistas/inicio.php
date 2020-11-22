@@ -21,7 +21,9 @@ and open the template in the editor.
     <body>
         <?php
         include_once '../Modelo/Asignatura.php';
+        include_once '../Modelo/Usuario.php';
         session_start();
+        $usuario = $_SESSION['usuario'];
         $asignaturas = $_SESSION['todasAsignaturas'];
         ?>
         <header>
@@ -34,6 +36,16 @@ and open the template in the editor.
                                         btn-rounded waves-effect z-depth-1a" name="home" value="home">
                                     <i class="fas fa-home"></i>
                                 </button>
+                                <?php
+                                if ($usuario->getRol() == 1 || $usuario->getRol() == 2) {
+                                    ?>
+                                    <a href="inicioProfesor.php" class="btn mean-fruit-gradient btn-rounded text-white">
+                                        <i class="fas fa-arrow-left"></i>
+                                    </a>
+                                    <?php
+                                }
+                                ?>
+
                             </form>
                         </li> 
                     </ul>
@@ -110,7 +122,7 @@ and open the template in the editor.
                             <p  style="font-size: 25px;color: #4D2034"><i class="fas fa-angle-right pr-2" ></i>Exámen 1</p>
                             <p class="card-text">Tema 4 - GUIT: Exámen tipo test u4</p>
                             <input type="submit" class="btn mean-fruit-gradient text-white
-                                   btn-rounded waves-effect z-depth-1a" name="cerrarSesion" value="Realizar exámen"/>
+                                   btn-rounded waves-effect z-depth-1a" name="realizarExamen" value="Realizar exámen"/>
                         </form>
                         <hr>
                     </div>

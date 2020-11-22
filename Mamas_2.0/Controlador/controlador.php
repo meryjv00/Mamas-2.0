@@ -37,7 +37,7 @@ if (isset($_REQUEST['login'])) {
                     header('Location: ../Vistas/login.php');
                 } else if ($usuario->getActivo() == 1) {
                     if ($usuario->getRol() == 2) {
-                        header('Location: ../Vistas/elegirAdmin.php');
+                        header('Location: ../Vistas/inicioProfesor.php');
                     } else if ($usuario->getRol() == 0) {
                         header('Location: ../Vistas/inicio.php');
                     } else if ($usuario->getRol() == 1) {
@@ -123,16 +123,6 @@ if (isset($_REQUEST['cerrarSesion'])) {
     header('Location: ../index.php');
 }
 
-//-----------------IR AL CRUD DE USUARIOS
-if (isset($_REQUEST['CRUDadmin'])) {
-    $usuarios = gestionDatos::getUsuarios();
-    $_SESSION['usuarios'] = $usuarios;
-    header('Location: ../Vistas/crudAdmin.php');
-}
-//-----------------IR A LA PÁGINA PRINCIPAL PROFESORADO
-if (isset($_REQUEST['CRUDprofesor'])) {
-    header('Location: ../Vistas/inicioProfesor.php');
-}
 if (isset($_REQUEST['home'])) {
     header('Location: ../Vistas/inicio.php');
 }

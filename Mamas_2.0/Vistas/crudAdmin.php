@@ -32,7 +32,7 @@ and open the template in the editor.
                     <!--Left-->
                     <ul class="navbar-nav mr-auto smooth-scroll">
                         <li>
-                            <a href="elegirAdmin.php" class="btn mean-fruit-gradient btn-rounded text-white">
+                            <a href="inicioProfesor.php" class="btn mean-fruit-gradient btn-rounded text-white">
                                 <i class="fas fa-arrow-left"></i>
                             </a>
                         </li>
