@@ -39,12 +39,20 @@ if (isset($_REQUEST['login'])) {
                     if ($usuario->getRol() == 2) {
                         header('Location: ../Vistas/elegirAdmin.php');
                     } else if ($usuario->getRol() == 0) {
+                        //Obtiene las asignaturas que está matriculado
                         $asignaturas = gestionDatos::getAsignaturasUsu2($id);
                         $_SESSION['asignaturas'] = $asignaturas;
+                        //Se obtienen todas las asignaturas para mostrarlas al inicio
+                        $todasAsignaturas = gestionDatos::getAsignaturas();
+                        $_SESSION['todasAsignaturas'] = $todasAsignaturas;
                         header('Location: ../Vistas/inicio.php');
                     } else if ($usuario->getRol() == 1) {
+                        //Obtiene las asignaturas que imparte
                         $asignaturas = gestionDatos::getAsignaturasUsu2($id);
                         $_SESSION['asignaturas'] = $asignaturas;
+                        //Se obtienen todas las asignaturas para mostrarlas al inicio
+                        $todasAsignaturas = gestionDatos::getAsignaturas();
+                        $_SESSION['todasAsignaturas'] = $todasAsignaturas;
                         header('Location: ../Vistas/inicioProfesor.php');
                     }
                 }

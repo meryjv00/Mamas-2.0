@@ -114,6 +114,7 @@ class gestionDatos {
             mysqli_close(self::$conexion);
         }
     }
+
     static function getIdUsuario($email) {
         self::conexion();
         $stmt = self::$conexion->prepare("SELECT * FROM usuarios WHERE email= ?");
@@ -291,6 +292,24 @@ class gestionDatos {
         $fotoBin = self::$conexion->real_escape_string(file_get_contents($_FILES["imagen"]["tmp_name"]));
         $sentencia = "UPDATE asignatura SET imagen = ('$fotoBin') WHERE idAsignatura = 5";
         self::$conexion->query($sentencia);
+        mysqli_close(self::$conexion);
+    }
+
+    static function getAsignaturas() {
+        $asignaturas = Array();
+        self::conexion();
+        $consulta = "SELECT * FROM asignatura";
+
+        if ($resultado = self::$conexion->query($consulta)) {
+            while ($fila = $resultado->fetch_assoc()) {
+                $idAsignatura = $fila['idAsignatura'];
+                $nombre = $fila['nombre'];
+                $imagen = $fila['imagen'];
+                $as = new Asignatura($idAsignatura, $nombre, $imagen);
+                $asignaturas[] = $as;
+            }
+        }
+        return $asignaturas;
         mysqli_close(self::$conexion);
     }
 

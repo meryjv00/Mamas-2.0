@@ -22,7 +22,7 @@ and open the template in the editor.
         <?php
         include_once '../Modelo/Asignatura.php';
         session_start();
-        $asignaturas = $_SESSION['asignaturas'];
+        $asignaturas = $_SESSION['todasAsignaturas'];
         ?>
         <header>
             <nav class="row navbar navbar-expand-lg navbar-dark fixed-top deg">
