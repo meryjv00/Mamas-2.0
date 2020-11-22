@@ -346,26 +346,63 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
-    static function getAlumnos($id) {
+    static function getUsuarioRol($rol) {
         self::conexion();
-        $preguntas = array();
-        $stmt = self::$conexion->prepare("SELECT * FROM asignacionasignatura WHERE idAsignatura= ?");
-        $stmt->bind_param("i", $id);
+        $idAlumnos = array();
+        $stmt = self::$conexion->prepare("SELECT * FROM usuarios WHERE idRol= ?");
+        $stmt->bind_param("i", $rol);
         if ($stmt->execute()) {
             $resultado = $stmt->get_result();
             var_dump($resultado);
             while ($fila = $resultado->fetch_assoc()) {
-                $idP = $fila['idPregunta'];
-                $profesor = $fila['idUsuario'];
-                $enunciado = $fila['enunciado'];
-                $tipo = $fila['tipo'];
-                $puntuacion = $fila['ponderacion'];
-                $p = new Pregunta($id, $profesor, $enunciado, $tipo, $puntuacion);
-                $preguntas[] = $p;
+                $idAlumnos[] = $fila['idUsuario'];
             }
-            return $preguntas;
         }
+        return $idAlumnos;
+    }
+
+    static function getAlumnosMatriculados($idA, $idU) {
+        self::conexion();
+        $alumnos = array();
+        foreach ($idU as $value) {
+            $stmt = self::$conexion->prepare("SELECT * FROM asignacionAsignatura WHERE idAsignatura= ? AND idUsuario= ?");
+            $stmt->bind_param("ii", $idA, $value);
+            if ($stmt->execute()) {
+                $resultado = $stmt->get_result();
+                var_dump($resultado);
+                if ($fila = $resultado->fetch_assoc()) {
+                    $alumnos[] = $fila['idUsuario'];
+                }
+            }
+        }
+        return $alumnos;
+
         mysqli_close(self::$conexion);
+    }
+
+    static function cargarUsuario($idUsuario) {
+        self::conexion();
+        $stmt = self::$conexion->prepare("SELECT * FROM usuarios WHERE idUsuario= ?");
+        $stmt->bind_param("i", $idUsuario);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            var_dump($resultado);
+            if ($fila = $resultado->fetch_assoc()) {
+                var_dump($fila);
+                //obtenemos los datos  en variables individuales para la creacion del objeto usuario.
+                $email = $fila['email'];
+                $nombre = $fila['nombre'];
+                $dni = $fila['dni'];
+                $apellidos = $fila['apellidos'];
+                $telefono = $fila['telefono'];
+                $activo = $fila['activo'];
+                $imagen = $fila['imagen'];
+                $p = new Usuario($idUsuario, $email, $dni, $nombre, $apellidos, $telefono, $activo, $imagen);
+                //almacenamos en sesion al usuario que ha realizado el Login.
+            }
+            return $p;
+            mysqli_close(self::$conexion);
+        }
     }
 
 }
