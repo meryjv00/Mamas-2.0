@@ -39,8 +39,12 @@ if (isset($_REQUEST['login'])) {
                     if ($usuario->getRol() == 2) {
                         header('Location: ../Vistas/elegirAdmin.php');
                     } else if ($usuario->getRol() == 0) {
+                        $asignaturas = gestionDatos::getAsignaturasUsu2($id);
+                        $_SESSION['asignaturas'] = $asignaturas;
                         header('Location: ../Vistas/inicio.php');
                     } else if ($usuario->getRol() == 1) {
+                        $asignaturas = gestionDatos::getAsignaturasUsu2($id);
+                        $_SESSION['asignaturas'] = $asignaturas;
                         header('Location: ../Vistas/inicioProfesor.php');
                     }
                 }
@@ -126,4 +130,44 @@ if (isset($_REQUEST['CRUDadmin'])) {
 //-----------------IR A LA PÁGINA PRINCIPAL PROFESORADO
 if (isset($_REQUEST['CRUDprofesor'])) {
     header('Location: ../Vistas/inicioProfesor.php');
+}
+if (isset($_REQUEST['home'])) {
+    header('Location: ../Vistas/inicio.php');
+}
+//-----------------VER PERFIL
+if (isset($_REQUEST['perfil'])) {
+    header('Location: ../Vistas/perfil.php');
+}
+
+//-----------------EDITAR FOTO PERFIL
+if (isset($_REQUEST['editarFotoPerfil'])) {
+    $usu = $_SESSION['usuario'];
+    gestionDatos::updateFoto($usu->getId());
+    //Obtiene el usuario con la foto actualizada y lo guarda en sesión
+    $usuario = gestionDatos::getUsuarioId($usu->getId());
+    $_SESSION['usuario'] = $usuario;
+    header('Location: ../Vistas/perfil.php');
+}
+
+//-----------------EDITAR NUMERO TELEFONO
+if (isset($_REQUEST['editarTfno'])) {
+    $usu = $_SESSION['usuario'];
+    $tfno = $_REQUEST['tfno'];
+    $usu->setTelefono($tfno);
+    if (!gestionDatos::updateTfno($usu)) {
+        $mensaje = 'No se ha podido cambiar número de teléfono';
+        $_SESSION['mensaje'] = $mensaje;
+    }
+    header('Location: ../Vistas/perfil.php');
+}
+
+//-----------------EDITAR CONTRASEÑA
+if (isset($_REQUEST['nuevaPass'])) {
+    $usu = $_SESSION['usuario'];
+    $pass = md5($_REQUEST['pass']);
+    if (!gestionDatos::updatePass($usu, $pass)) {
+        $mensaje = 'No se ha podido cambiar la contraseña';
+        $_SESSION['mensaje'] = $mensaje;
+    }
+    header('Location: ../Vistas/perfil.php');
 }

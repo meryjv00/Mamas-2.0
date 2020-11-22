@@ -11,7 +11,8 @@ and open the template in the editor.
     </head>
     <body>
         <?php
-        // put your code here
+        
         ?>
+        <a href="../Vistas/perfil.php"/>Perfil</a>
     </body>
 </html>
