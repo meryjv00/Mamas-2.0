@@ -77,7 +77,7 @@ and open the template in the editor.
                                      ?>
                             </div>
 
-                            <h2 class="font-weight-bold my-4 text-center letra"><?= $usuario->getNombre() ?><?= $usuario->getApellidos() ?></h2>
+                            <h2 class="font-weight-bold my-4 text-center letra"><?= $usuario->getNombre() .' '?><?= $usuario->getApellidos() ?></h2>
                             <p class="grey-text font-weight-bold">
                                 <?php
                                 if ($usuario->getRol() == 0) {
@@ -125,7 +125,7 @@ and open the template in the editor.
                             </form>
                             <p class="grey-text font-weight-bold">Datos personales:</p>
                             <ul class="grey-text">
-                                <li>Nombre completo: <?= $usuario->getNombre() ?><?= $usuario->getApellidos() ?></li>
+                                <li>Nombre completo: <?= $usuario->getNombre(). ' '?><?= $usuario->getApellidos() ?></li>
                                 <li>Email: <?= $usuario->getEmail() ?></li>
                                 <li>Dni: <?= $usuario->getDni() ?></li>
                                 <li>

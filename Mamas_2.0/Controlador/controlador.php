@@ -43,6 +43,8 @@ if (isset($_REQUEST['login'])) {
                         $_SESSION['asignaturas'] = $asignaturas;
                         header('Location: ../Vistas/inicio.php');
                     } else if ($usuario->getRol() == 1) {
+                        $asignaturas = gestionDatos::getAsignaturasUsu2($id);
+                        $_SESSION['asignaturas'] = $asignaturas;
                         header('Location: ../Vistas/inicioProfesor.php');
                     }
                 }
@@ -163,7 +165,7 @@ if (isset($_REQUEST['editarTfno'])) {
 if (isset($_REQUEST['nuevaPass'])) {
     $usu = $_SESSION['usuario'];
     $pass = md5($_REQUEST['pass']);
-    if (!gestionDatos::updatePass($usu,$pass)) {
+    if (!gestionDatos::updatePass($usu, $pass)) {
         $mensaje = 'No se ha podido cambiar la contraseña';
         $_SESSION['mensaje'] = $mensaje;
     }
