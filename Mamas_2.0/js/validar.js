@@ -53,6 +53,25 @@ function validacionLogin() {
 //--------------------------VALIDACIÓN FORMULARIO REGISTRO----------------------
 //******************************************************************************
 function validarRegistro() {
+    //--------------------------ROLES
+    const admin = document.getElementById("admin");
+    const asignaturas = document.getElementById("asignaturas");
+    var radio = document.getElementById('profesor');
+
+    radio.addEventListener("change", validaRadio, false);
+    function validaRadio()
+    {
+        var checked = radio.checked;
+        if (checked) {
+            admin.classList.remove('invisible');
+            admin.classList.add('visible');
+            asignaturas.classList.remove('invisible');
+            asignaturas.classList.add('visible');
+            
+        }
+
+    }
+
     //---------------------------VARIABLES
     const form = document.getElementById("registro");
 
@@ -375,7 +394,7 @@ function validacionTfnoPass() {
         }
     }
 
-    function error2(){
+    function error2() {
         if (campo == pass) {
             if (pass.validity.valueMissing) {
                 passError.textContent = 'Debe introducir su contraseña.';

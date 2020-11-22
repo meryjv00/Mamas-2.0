@@ -89,32 +89,52 @@ if (isset($_REQUEST['crearUsuario'])) {
     if (!gestionDatos::isUsuario($email)) {
         if (!gestionDatos::isDni($dni)) {
             //Crear alumno
-
-            if (!gestionDatos::insertUsuario($email, $dni, $nombre, $apellidos, $tfno, $pass)) {
-                $mensaje = "No se ha podido insertar el usuario";
-                $_SESSION['mensaje'] = $mensaje;
-                header('Location: ../Vistas/registroAdmin.php');
-            } else {
-                if ($rol == 'Alumno') {
+            if ($rol == 'Alumno') {
+                if (!gestionDatos::insertUsuario($email, $dni, $nombre, $apellidos, $tfno, $pass)) {
+                    $mensaje = "No se ha podido insertar el usuario";
+                    $_SESSION['mensaje'] = $mensaje;
+                } else {
                     if (gestionDatos::insertUsuarioRol(gestionDatos::getIdUsuario($email), 0)) {
                         $mensaje = "¡Cuenta creada!";
                         $_SESSION['mensaje'] = $mensaje;
                     }
-                } else if ($rol == 'Profesor') {
-                    if (gestionDatos::insertUsuarioRol(gestionDatos::getIdUsuario($email), 1)) {
-                        $mensaje = "¡Cuenta creada!";
-                        $_SESSION['mensaje'] = $mensaje;
-                    }
-                } else if ($rol == 'Administrador') {
-                    if (gestionDatos::insertUsuarioRol(gestionDatos::getIdUsuario($email), 2)) {
-                        $mensaje = "¡Cuenta creada!";
-                        $_SESSION['mensaje'] = $mensaje;
+                }
+            } else if ($rol == 'Profesor') {
+                $asignatura = $_REQUEST['asig'];
+                if ($asignatura == 'DWES') {
+                    $idAsig = 1;
+                } else if ($asignatura == 'DWEC') {
+                    $idAsig = 2;
+                } else if ($asignatura == 'DAW') {
+                    $idAsig = 3;
+                } else if ($asignatura == 'DI') {
+                    $idAsig = 4;
+                } else if ($asignatura == 'EIE') {
+                    $idAsig = 5;
+                }
+                //Creamos profesor de la asignatura
+                if (!gestionDatos::insertProfesor($email, $dni, $nombre, $apellidos, $tfno, $pass, $idAsig)) {
+                    $mensaje = "No se ha podido insertar el usuario";
+                    $_SESSION['mensaje'] = $mensaje;
+                } else {
+                    //Profesor administrador
+                    if (isset($_REQUEST['adminis'])) {
+                        if (gestionDatos::insertUsuarioRol(gestionDatos::getIdUsuario($email), 2)) {
+                            $mensaje = "¡Cuenta creada!";
+                            $_SESSION['mensaje'] = $mensaje;
+                        }
+                    } else {
+                        //Profesor
+                        if (gestionDatos::insertUsuarioRol(gestionDatos::getIdUsuario($email), 1)) {
+                            $mensaje = "¡Cuenta creada!";
+                            $_SESSION['mensaje'] = $mensaje;
+                        }
                     }
                 }
-                $usuarios = gestionDatos::getUsuarios();
-                $_SESSION['usuarios'] = $usuarios;
-                header('Location: ../Vistas/crudAdmin.php');
             }
+            $usuarios = gestionDatos::getUsuarios();
+            $_SESSION['usuarios'] = $usuarios;
+            header('Location: ../Vistas/crudAdmin.php');
         } else {
             $r_usu = new Usuario(0, $email, "", $nombre, $apellidos, $tfno, 0, 0);
             $_SESSION['usu'] = $r_usu;
@@ -190,7 +210,7 @@ if (isset($_REQUEST['cambiarRolAdmnistrador'])) {
                         $_SESSION['mensaje'] = $mensaje;
                     }
                 } else {
-                    $mensaje = 'El usuario con mail: ' .$usuario->getEmail() . ' no es profesor';
+                    $mensaje = 'El usuario con mail: ' . $usuario->getEmail() . ' no es profesor';
                     $_SESSION['mensaje'] = $mensaje;
                 }
             }
@@ -220,7 +240,7 @@ if (isset($_REQUEST['cambiarRolProfesor'])) {
                         $_SESSION['mensaje'] = $mensaje;
                     }
                 } else {
-                    $mensaje = 'El usuario con mail: ' .$usuario->getEmail() . ' no es administrador';
+                    $mensaje = 'El usuario con mail: ' . $usuario->getEmail() . ' no es administrador';
                     $_SESSION['mensaje'] = $mensaje;
                 }
             }

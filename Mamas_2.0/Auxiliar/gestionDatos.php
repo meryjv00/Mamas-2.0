@@ -195,6 +195,29 @@ class gestionDatos {
         return $correcto;
     }
 
+    static function insertProfesor($email, $dni, $nombre, $apellidos, $tfno, $pass, $idAsig) {
+        self::conexion();
+        $consulta = "INSERT INTO usuarios VALUES (default,'" . $email . "','" . $dni . "','" . $nombre . "','" . $apellidos . "','" . $pass . "','" . $tfno . "',default,default)";
+        if (self::$conexion->query($consulta)) {
+            $id = self::getUltId();
+            $correcto = self::insertProfesorAsignatura($id, $idAsig);
+        } else {
+            $correcto = false;
+            echo "Error al insertar: " . self::$conexion->error . '<br/>';
+        }
+        return $correcto;
+        mysqli_close(self::$conexion);
+    }
+
+    static function insertProfesorAsignatura($id, $idAsig) {
+        $correcto = true;
+        $consulta = "INSERT INTO asignacionasignatura VALUES(" . $id . "," . $idAsig . ")";
+        if (!self::$conexion->query($consulta)) {
+            $correcto = false;
+        }
+        return $correcto;
+    }
+
     static function setPassword($email, $pass) {
         self::conexion();
         $consulta = "UPDATE usuarios SET contrasenia ='" . $pass . "' WHERE mail='" . $email . "'";

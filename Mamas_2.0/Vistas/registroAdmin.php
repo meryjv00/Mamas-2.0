@@ -60,7 +60,7 @@ and open the template in the editor.
                                 <div class="card-body">
 
                                     <!-- Form -->
-                                    <form id="registro" class="text-left" style="color: #757575;" action="../Controlador/controladorCrud.php" novalidate>
+                                    <form id="registro" class="text-left" style="color: #757575;" method="POST" action="../Controlador/controladorCrud.php" novalidate>
 
                                         <h3 class="font-weight-bold my-4 pb-2 text-center  tit">Registrar usuario</h3>
                                         <?php
@@ -129,22 +129,64 @@ and open the template in the editor.
                                             <div id="pass2Error"></div>
                                         </div>
                                         <!--Rol-->
-                                        <div class="md-form ml-4 mb-5">
-                                            <!--ALUMNO-->
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" class="custom-control-input" id="defaultGroupExample1" name="rol" value="Alumno" checked>
-                                                <label class="custom-control-label" for="defaultGroupExample1">Alumno</label>
+                                        <div class="md-form ml-4">
+                                            <div class="container-fluid">
+                                                <!--ALUMNO-->
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" class="custom-control-input" id="alumno" name="rol" value="Alumno" checked>
+                                                    <label class="custom-control-label" for="alumno">Alumno</label>
+                                                </div>
+                                                <!--PROFESOR-->
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <div class="custom-control custom-radio" id="prof">
+                                                            <input type="radio" class="custom-control-input" id="profesor" name="rol"value="Profesor" >
+                                                            <label class="custom-control-label" for="profesor">Profesor</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div id="admin" class="custom-control custom-checkbox invisible" >
+                                                            <input type="checkbox" class="custom-control-input" id="adminis" name="adminis">
+                                                            <label class="custom-control-label" for="adminis">¿Administrador?</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--ASIGNATURAS-->
+                                                <div id="asignaturas" class="row invisible pt-2">
+                                                    <div class="col">
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" class="custom-control-input" id="DWES" name="asig" value="DWES" checked>
+                                                            <label class="custom-control-label" for="DWES">DWES</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" class="custom-control-input" id="DWEC" name="asig" value="DWEC" >
+                                                            <label class="custom-control-label" for="DWEC">DWEC</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" class="custom-control-input" id="DAW" name="asig" value="DAW" >
+                                                            <label class="custom-control-label" for="DAW">DAW</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" class="custom-control-input" id="DI" name="asig" value="DI" >
+                                                            <label class="custom-control-label" for="DI">DI</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" class="custom-control-input" id="EIE" name="asig" value="EIE"  >
+                                                            <label class="custom-control-label" for="EIE">EIE</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             </div>
-                                            <!--PROFESOR-->
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" class="custom-control-input" id="defaultGroupExample2" name="rol" value="Profesor" >
-                                                <label class="custom-control-label" for="defaultGroupExample2">Profesor</label>
-                                            </div>
-                                            <!--ADMIN-->
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" class="custom-control-input" id="defaultGroupExample3" name="rol" value="Administrador">
-                                                <label class="custom-control-label" for="defaultGroupExample3">Administrador</label>
-                                            </div>
+
                                         </div>
                                         <?php
                                         if (isset($_SESSION['mensaje'])) {
