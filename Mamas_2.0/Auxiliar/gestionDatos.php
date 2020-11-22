@@ -297,10 +297,10 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
-    static function checkRol($usuario) {
+    static function checkRol($id) {
         self::conexion();
         $stmt = self::$conexion->prepare("SELECT idRol from asignacionrol where idUsuario = ?");
-        $stmt->bind_param("i", $usuario->getId());
+        $stmt->bind_param("i", $id);
         if ($stmt->execute()) {
             $resultado = $stmt->get_result();
             var_dump($resultado);

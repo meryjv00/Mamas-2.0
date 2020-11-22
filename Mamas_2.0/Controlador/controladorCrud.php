@@ -202,7 +202,7 @@ if (isset($_REQUEST['cambiarRolAdmnistrador'])) {
         foreach ($usuarios as $i => $usuario) {
             if (isset($_REQUEST[$i])) {
                 $pulsado = true;
-                $idRol = gestionDatos::checkRol($usuario);
+                $idRol = gestionDatos::checkRol($usuario->getId());
                 if ($idRol == 1) {
                     $usuario->setRol(2);
                     if (!gestionDatos::updateRol($usuario)) {
@@ -232,7 +232,7 @@ if (isset($_REQUEST['cambiarRolProfesor'])) {
         foreach ($usuarios as $i => $usuario) {
             if (isset($_REQUEST[$i])) {
                 $pulsado = true;
-                $idRol = gestionDatos::checkRol($usuario);
+                $idRol = gestionDatos::checkRol($usuario->getId());
                 if ($idRol == 2) {
                     $usuario->setRol(1);
                     if (!gestionDatos::updateRol($usuario)) {
