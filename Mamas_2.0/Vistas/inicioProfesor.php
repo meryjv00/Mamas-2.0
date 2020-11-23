@@ -23,6 +23,7 @@ and open the template in the editor.
         include_once '../Modelo/Usuario.php';
         session_start();
         $usuario = $_SESSION['usuario'];
+        $asignaturas = $_SESSION['asignaturas']
         ?>
         <header>
             <nav class="row navbar navbar-expand-lg navbar-dark fixed-top deg">
@@ -99,20 +100,28 @@ and open the template in the editor.
                                         }
                                         ?>
                                         <div class="d-flex flex-column pl-3">
-                                            <p class="font-weight-normal mb-0">Elisa McRayan</p>
-                                            <p class="small mb-0">Web Designer</p>
+                                            <p class="font-weight-normal mb-0"> <?php $usuario->getNombre(); ?></p>
+                                            <?php
+                                            foreach ($asignaturas as $i => $asignatura) {
+                                                ?>
+                                                <p class="small mb-0"><?= $asignatura->getNombre() ?></p>
+                                                <?php
+                                            }
+                                            ?>
+
                                         </div>
                                     </div>
-                                    <a href="#!" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Examenes Creados
-                                        <span class="badge badge-info badge-pill">5</span>
-                                    </a>
-                                    <a href="#!" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Examenes Corregidos
-                                        <span class="badge badge-success badge-pill">10</span>
-                                    </a>
-                                    <button name="examenPendiente" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Examenes Pendientes</button>
+                                    <button name="examenCreado" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Examenes Creados
+                                        <span class="badge badge-info badge-pill"><?php $_SESSION['exCreados']; ?></span>
+                                    </button>
 
-                                    <span class="badge badge-warning badge-pill">728</span>
-                                    </a>
+                                    <button name="examenCorregido" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Examenes Corregidos
+                                        <span class="badge badge-success badge-pill"><?php $_SESSION['exCorregidos']; ?></span>
+                                    </button>
+                                    <button name="examenPendiente" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Examenes Pendientes
+                                        <span class="badge badge-warning badge-pill"><?php $_SESSION['exPendientes']; ?></span>
+                                    </button>
+
                                 </div>
                             </form>
 
