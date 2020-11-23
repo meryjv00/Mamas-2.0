@@ -134,7 +134,6 @@ if (isset($_REQUEST['CRUDprofesor'])) {
     $asig = gestionDatos::inicializarProfesor($usuario->getId());
     $_SESSION['asignaturas'] = $asig;
     gestionDatos::cargarExamenes($usuario->getId());
-
     header('Location: ../Vistas/inicioProfesor.php');
 }
 //-----------------VER PERFIL
@@ -144,18 +143,14 @@ if (isset($_REQUEST['perfil'])) {
 
 //-----------------EDITAR FOTO PERFIL
 if (isset($_REQUEST['editarFotoPerfil'])) {
-
     gestionDatos::updateFoto($usuario->getId());
-    //Obtiene el usuario con la foto actualizada y lo guarda en sesión
-    $usunuevo = gestionDatos::getUsuarioId($usuario->getId());
-    $usunuevo->setRol(gestionDatos::getRol($usunuevo->getId()));
-    $_SESSION['usuario'] = $usunuevo;
+    //Obtiene el usuario con la foto actualizada y lo guarda en sesión  
+    $_SESSION['usuario'] = gestionDatos::getUsuarioId($usuario->getId());
     header('Location: ../Vistas/perfil.php');
 }
 
 //-----------------EDITAR NUMERO TELEFONO
 if (isset($_REQUEST['editarTfno'])) {
-
     $tfno = $_REQUEST['tfno'];
     $usuario->setTelefono($tfno);
     if (!gestionDatos::updateTfno($usuario)) {
@@ -167,7 +162,6 @@ if (isset($_REQUEST['editarTfno'])) {
 
 //-----------------EDITAR CONTRASEÑA
 if (isset($_REQUEST['nuevaPass'])) {
-
     $pass = md5($_REQUEST['pass']);
     if (!gestionDatos::updatePass($usuario, $pass)) {
         $mensaje = 'No se ha podido cambiar la contraseña';

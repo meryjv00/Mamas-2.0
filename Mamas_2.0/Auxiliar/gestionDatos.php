@@ -614,8 +614,9 @@ class gestionDatos {
                 $telefono = $fila['telefono'];
                 $activo = $fila['activo'];
                 $imagen = $fila['imagen'];
-                $p = new Usuario($id, $email, $dni, $nombre, $apellidos, $telefono, $activo, $imagen);
 
+                $p = new Usuario($id, $email, $dni, $nombre, $apellidos, $telefono, $activo, $imagen);
+                $p->setRol(gestionDatos::getRol($id));
                 //almacenamos en sesion al usuario que ha realizado el Login.
             }
             return $p;
