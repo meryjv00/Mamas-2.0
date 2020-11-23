@@ -198,6 +198,9 @@ and open the template in the editor.
                 </div>
             </div>
         </main>
+        <footer class="footer-copyright text-center text-white py-3 z-depth-2">
+            <div> © 2020 Copyright: Israel y María</div>
+        </footer>
         <!-- jQuery -->
         <script type="text/javascript" src="../js/jquery.min.js"></script>
         <!-- Bootstrap tooltips -->
