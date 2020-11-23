@@ -8,6 +8,9 @@
 include_once '../Auxiliar/gestionDatos.php';
 include_once '../Modelo/Usuario.php';
 session_start();
+if (isset($_SESSION['usuario'])) {
+    $usuario = $_SESSION['usuario'];
+}
 //---------------LOGIN
 if (isset($_REQUEST['login'])) {
     $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
@@ -21,28 +24,34 @@ if (isset($_REQUEST['login'])) {
         $password = md5($_REQUEST['password']);
         $usuario = gestionDatos::getUsuario($email, $password);
         if (isset($usuario)) {
-            $id = $usuario->getId();
-            $rol = gestionDatos::getRol($id);
-            $usuario->setRol($rol);
+            $usuario->setRol(gestionDatos::getRol($usuario->getId()));
             $_SESSION['usuario'] = $usuario;
             if (!isset($_SESSION['usuario'])) {
                 $mensaje = 'Error al realizar el Login.';
                 $_SESSION['mensaje'] = $mensaje;
                 header('Location: ../Vistas/login.php');
             } else {
-                $usuario = $_SESSION['usuario'];
                 if ($usuario->getActivo() == 0) {
                     $mensaje = 'Usuario desactivado , contacte con administrador';
                     $_SESSION['mensaje'] = $mensaje;
                     header('Location: ../Vistas/login.php');
                 } else if ($usuario->getActivo() == 1) {
-                    if ($usuario->getRol() == 2) {
-                        header('Location: ../Vistas/elegirAdmin.php');
-                    } else if ($usuario->getRol() == 0) {
+                    if ($usuario->getRol() == 0) {
                         header('Location: ../Vistas/inicio.php');
-                    } else if ($usuario->getRol() == 1) {
+                    } else if ($usuario->getRol() == 1 || $usuario->getRol() == 2) {
+                        $asig = gestionDatos::inicializarProfesor($usuario->getId());
+                        $_SESSION['asignaturasImpartidas'] = $asig;
+                        $_SESSION['examenes'] = $asig[0]->getExamenes();
+                        $_SESSION['exCorregidos'] = 0;
+                        $_SESSION['exPendientes'] = $_SESSION['examenes'];
                         header('Location: ../Vistas/inicioProfesor.php');
                     }
+                    //Obtiene las asignaturas que imparte
+                    $asignaturas = gestionDatos::getAsignaturasUsu2($usuario->getId());
+                    $_SESSION['asignaturas'] = $asignaturas;
+                    //Se obtienen todas las asignaturas para mostrarlas al inicio
+                    $todasAsignaturas = gestionDatos::getAsignaturas();
+                    $_SESSION['todasAsignaturas'] = $todasAsignaturas;
                 }
             }
         } else {
@@ -117,13 +126,43 @@ if (isset($_REQUEST['cerrarSesion'])) {
     header('Location: ../index.php');
 }
 
-//-----------------IR AL CRUD DE USUARIOS
-if (isset($_REQUEST['CRUDadmin'])) {
-    $usuarios = gestionDatos::getUsuarios();
-    $_SESSION['usuarios'] = $usuarios;
-    header('Location: ../Vistas/crudAdmin.php');
+if (isset($_REQUEST['home'])) {
+    header('Location: ../Vistas/inicio.php');
 }
 //-----------------IR A LA PÁGINA PRINCIPAL PROFESORADO
-if (isset($_REQUEST['CRUDprofesor'])) {
+if (isset($_REQUEST['salirVista'])) {
     header('Location: ../Vistas/inicioProfesor.php');
+}
+//-----------------VER PERFIL
+if (isset($_REQUEST['perfil'])) {
+    header('Location: ../Vistas/perfil.php');
+}
+
+//-----------------EDITAR FOTO PERFIL
+if (isset($_REQUEST['editarFotoPerfil'])) {
+    gestionDatos::updateFoto($usuario->getId());
+    //Obtiene el usuario con la foto actualizada y lo guarda en sesión  
+    $_SESSION['usuario'] = gestionDatos::getUsuarioId($usuario->getId());
+    header('Location: ../Vistas/perfil.php');
+}
+
+//-----------------EDITAR NUMERO TELEFONO
+if (isset($_REQUEST['editarTfno'])) {
+    $tfno = $_REQUEST['tfno'];
+    $usuario->setTelefono($tfno);
+    if (!gestionDatos::updateTfno($usuario)) {
+        $mensaje = 'No se ha podido cambiar número de teléfono';
+        $_SESSION['mensaje'] = $mensaje;
+    }
+    header('Location: ../Vistas/perfil.php');
+}
+
+//-----------------EDITAR CONTRASEÑA
+if (isset($_REQUEST['nuevaPass'])) {
+    $pass = md5($_REQUEST['pass']);
+    if (!gestionDatos::updatePass($usuario, $pass)) {
+        $mensaje = 'No se ha podido cambiar la contraseña';
+        $_SESSION['mensaje'] = $mensaje;
+    }
+    header('Location: ../Vistas/perfil.php');
 }
