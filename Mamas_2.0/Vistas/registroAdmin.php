@@ -145,14 +145,14 @@ and open the template in the editor.
                                                         </div>
                                                     </div>
                                                     <div class="col">
-                                                        <div id="admin" class="custom-control custom-checkbox invisible" >
+                                                        <div id="admin" class="custom-control custom-checkbox d-none" >
                                                             <input type="checkbox" class="custom-control-input" id="adminis" name="adminis">
                                                             <label class="custom-control-label" for="adminis">¿Administrador?</label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <!--ASIGNATURAS-->
-                                                <div id="asignaturas" class="row invisible pt-2">
+                                                <div id="asignaturas" class="row d-none pt-2">
                                                     <div class="col">
                                                         <div class="custom-control custom-radio">
                                                             <input type="radio" class="custom-control-input" id="DWES" name="asig" value="DWES" checked>

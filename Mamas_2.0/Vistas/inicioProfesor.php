@@ -78,7 +78,11 @@ and open the template in the editor.
         </header>
         <main class="pb-5 pt-5 ml-4">
             <p class="mt-5">Inicio profesor</p>
+            <a href="crearPregunta.php">Crear pregunta</a>
         </main>
+        <footer class="footer-copyright text-center text-white py-3 z-depth-2">
+            <div> © 2020 Copyright: Israel y María</div>
+        </footer>
         <!-- jQuery -->
         <script type="text/javascript" src="../js/jquery.min.js"></script>
         <!-- Bootstrap tooltips -->

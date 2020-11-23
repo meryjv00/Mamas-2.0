@@ -55,21 +55,35 @@ function validacionLogin() {
 function validarRegistro() {
     //--------------------------ROLES
     if (document.getElementById("profesor") != null) {
+
         const admin = document.getElementById("admin");
         const asignaturas = document.getElementById("asignaturas");
         var radio = document.getElementById('profesor');
+        var radio2 = document.getElementById('alumno');
 
         radio.addEventListener("change", validaRadio, false);
         function validaRadio()
         {
             var checked = radio.checked;
             if (checked) {
-                admin.classList.remove('invisible');
-                admin.classList.add('visible');
-                asignaturas.classList.remove('invisible');
-                asignaturas.classList.add('visible');
+                admin.classList.remove('d-none');
+                admin.classList.add('d-block');
+                asignaturas.classList.remove('d-none');
+                asignaturas.classList.add('d-block');
             }
         }
+        radio2.addEventListener("change", validaRadio2, false);
+        function validaRadio2()
+        {
+            var checked = radio2.checked;
+            if (checked) {
+                admin.classList.remove('d-block');
+                admin.classList.add('d-none');
+                asignaturas.classList.remove('d-block');
+                asignaturas.classList.add('d-none');
+            }
+        }
+
     }
 
 
