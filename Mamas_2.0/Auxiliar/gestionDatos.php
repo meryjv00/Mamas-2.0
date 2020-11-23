@@ -425,4 +425,46 @@ class gestionDatos {
         }
     }
 
+    static function insertPregunta($pregunta, $idasignatura) {
+        self::conexion();
+        $consulta = "INSERT INTO pregunta VALUES (" . $pregunta->getId() . "," . $idasignatura . ",'" . $pregunta->getProfesor() . "','" . $pregunta->getEnunciado() . "','" . $pregunta->getTipo() . "','" . $pregunta->getPuntuacion() . "')";
+        if (self::$conexion->query($consulta)) {
+
+            $correcto = true;
+        } else {
+            $correcto = false;
+            echo "Error al insertar: " . self::$conexion->error . '<br/>';
+        }
+        return $correcto;
+        mysqli_close(self::$conexion);
+    }
+
+    static function asignarPregunta($pregunta, $examen) {
+        self::conexion();
+        $consulta = "INSERT INTO asignacionPregunta VALUES (" . $examen->getId() . "," . $pregunta->getId() . ")";
+        if (self::$conexion->query($consulta)) {
+
+            $correcto = true;
+        } else {
+            $correcto = false;
+            echo "Error al insertar: " . self::$conexion->error . '<br/>';
+        }
+        return $correcto;
+        mysqli_close(self::$conexion);
+    }
+
+    static function insertExamen($examen, $idasignatura) {
+        self::conexion();
+        $consulta = "INSERT INTO examen VALUES (" . $pregunta->getId() . "," . $idasignatura . ",'" . $pregunta->getProfesor() . "','" . $pregunta->getContenido() . "','" . $pregunta->getDescripcion() . "','" . $pregunta->getActivo() . "')";
+        if (self::$conexion->query($consulta)) {
+
+            $correcto = true;
+        } else {
+            $correcto = false;
+            echo "Error al insertar: " . self::$conexion->error . '<br/>';
+        }
+        return $correcto;
+        mysqli_close(self::$conexion);
+    }
+
 }
