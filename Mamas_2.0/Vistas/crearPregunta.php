@@ -18,7 +18,7 @@ and open the template in the editor.
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
     </head>
-    <body>
+    <body onload="validarPregunta()">
         <?php
         include_once '../Modelo/Usuario.php';
         session_start();
@@ -73,7 +73,7 @@ and open the template in the editor.
                                 <h2 class="card-header-title font-weight-bold text-center letra display-4 titulo2 pt-2 pb-2 ">Crear pregunta</h2>
                             </div>
                             <div class="justify-content-center">
-                                <form name="formPreg" action="../Controlador/controladorProfesor.php" method="post">
+                                <form name="formPreg" action="../Controlador/controladorProfesor.php" method="post" novalidate>
 
                                     <!--Section: Content-->
                                     <section class="px-md-5 mx-md-5 text-center text-lg-left dark-grey-text mt-3">
@@ -100,12 +100,29 @@ and open the template in the editor.
                                                     <!--Enunciado-->
                                                     <input type="text" id="enunciado" class="form-control mb-4" placeholder="Enunciado">
                                                     <!--Tipo test-->
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input" id="test" name="test">
+                                                    <div id="ptest" class="custom-control custom-checkbox mx-auto font-weight-bold letra">
+                                                        <input type="checkbox" class="custom-control-input" id="test" name="test" >
                                                         <label class="custom-control-label" for="test">¿Pregunta tipo test?</label>
                                                     </div>
-                                                    <!--Añadir solucion-->
-                                                    <div class="mt-3 col-md-12 card card-cascade narrower">
+                                                    <!--ACORDEON-->
+                                                    <div class="col-md-12 mt-3 d-none" id="accordion">
+                                                        <div class="card">
+                                                            <div class="card-header text-center" id="headingOne">
+                                                                <h5 class="mb-0">
+                                                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                                        Opciones creadas
+                                                                    </button>
+                                                                </h5>
+                                                            </div>
+                                                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                                                                <div class="card-body">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--AÑADIR OPCION-->
+                                                    <div id="addOpcion" class="mt-3 col-md-12 card card-cascade narrower d-none">
                                                         <!-- Card image -->
                                                         <div class="view view-cascade gradient-card-header mean-fruit-gradient">
                                                             <!-- Title -->
@@ -117,7 +134,7 @@ and open the template in the editor.
                                                             <p style="font-size: 25px;color: #4D2034"><i class="fas fa-angle-right pr-2" ></i>Introducir opción</p>
                                                             <div class="row">
                                                                 <div class="col-md-10">
-                                                                    <input type="text" id="opcion" class="form-control mb-4" placeholder="Opción:">
+                                                                    <input type="text" id="opcion" name="opcion" class="form-control mb-4" placeholder="Escribe aquí la opción, si es correcta marca el checkbox >>>">
                                                                 </div>
                                                                 <div class="col-md-2">
                                                                     <div class="custom-control custom-checkbox mt-2" >
@@ -127,13 +144,18 @@ and open the template in the editor.
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="text-center ">
-                                                                <input type="submit" class="btn mean-fruit-gradient text-white
-                                                                       btn-rounded waves-effect z-depth-1a" name="aniadirPregunta" value="Añadir opción"/>
+                                                            <div class="col-md-8 text-center mx-auto">
+                                                                <button type="submit" name="aniadirOpcion"  class="btn mean-fruit-gradient text-white 
+                                                                        btn-block btn-rounded my-4 waves-effect z-depth-1a">Añadir opción</button>
                                                             </div>
-
                                                             <hr>
                                                         </div>
+                                                    </div>
+                                                    <!--BOTON AÑADIR PREGUNTA-->
+                                                    <div class="col-md-12"></div>
+                                                    <div class="col-md-8 text-center mx-auto">
+                                                        <button type="submit" name="aniadirPregunta"  class="btn mean-fruit-gradient text-white 
+                                                                btn-block btn-rounded my-4 waves-effect z-depth-1a">Añadir pregunta</button>
                                                     </div>
                                                 </div>
                                                 <!--Grid column-->
@@ -162,7 +184,7 @@ and open the template in the editor.
                         <form name="formPregunta" action="../Controlador/controladorProfesor.php" method="post">
                             <div class="text-center mb-3 pl-5 pr-5">
                                 <button type="submit" name="aniadirPreguntas"  class="btn mean-fruit-gradient text-white 
-                                        btn-block btn-rounded my-4 waves-effect z-depth-1a">Añadir preguntas</button>
+                                        btn-block btn-rounded my-4 waves-effect z-depth-1a">Añadir preguntas al exámen</button>
                             </div>
                         </form>
                         <hr>
@@ -181,5 +203,6 @@ and open the template in the editor.
         <script type="text/javascript" src="../js/bootstrap.min.js"></script>
         <!-- MDB core JavaScript -->
         <script type="text/javascript" src="../js/mdb.min.js"></script>
+        <script type="text/javascript" src="../js/validar.js"></script>
     </body>
 </html>

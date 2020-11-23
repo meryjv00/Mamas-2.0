@@ -427,3 +427,25 @@ function validacionTfnoPass() {
     }
 
 }
+function validarPregunta() {
+    var check = document.getElementById('test');
+    const accordion = document.getElementById("accordion");
+    const addOpcion = document.getElementById("addOpcion");
+
+    check.addEventListener("change", validaCheck, false);
+    function validaCheck()
+    {
+        var checked = check.checked;
+        if (checked) {
+            accordion.classList.remove('d-none');
+            accordion.classList.add('d-block');
+            addOpcion.classList.remove('d-none');
+            addOpcion.classList.add('d-block');
+        } else {
+            accordion.classList.remove('d-block');
+            accordion.classList.add('d-none');
+            addOpcion.classList.remove('d-block');
+            addOpcion.classList.add('d-none');
+        }
+    }
+}
