@@ -49,8 +49,44 @@ function validacionLogin() {
         }
     }
 }
-
+//******************************************************************************
+//--------------------------VALIDACIÓN FORMULARIO REGISTRO----------------------
+//******************************************************************************
 function validarRegistro() {
+    //--------------------------ROLES
+    if (document.getElementById("profesor") != null) {
+
+        const admin = document.getElementById("admin");
+        const asignaturas = document.getElementById("asignaturas");
+        var radio = document.getElementById('profesor');
+        var radio2 = document.getElementById('alumno');
+
+        radio.addEventListener("change", validaRadio, false);
+        function validaRadio()
+        {
+            var checked = radio.checked;
+            if (checked) {
+                admin.classList.remove('d-none');
+                admin.classList.add('d-block');
+                asignaturas.classList.remove('d-none');
+                asignaturas.classList.add('d-block');
+            }
+        }
+        radio2.addEventListener("change", validaRadio2, false);
+        function validaRadio2()
+        {
+            var checked = radio2.checked;
+            if (checked) {
+                admin.classList.remove('d-block');
+                admin.classList.add('d-none');
+                asignaturas.classList.remove('d-block');
+                asignaturas.classList.add('d-none');
+            }
+        }
+
+    }
+
+
     //---------------------------VARIABLES
     const form = document.getElementById("registro");
 
@@ -279,4 +315,137 @@ function validarRegistro() {
         }
     }
 
+}
+//******************************************************************************
+//--------------------------VALIDACIÓN FORMULARIOS PERFIL-----------------------
+//******************************************************************************
+function validacionTfnoPass() {
+    //TELEFONO
+    const form = document.getElementById("editarTfno");
+    const tfno = document.getElementById("tfno");
+    const tfnoError = document.getElementById("tfnoError");
+    //CONTRASEÑA
+    const form2 = document.getElementById("editarPass");
+    const pass = document.getElementById("pass");
+    const passError = document.getElementById("passError");
+    const pass2 = document.getElementById("pass2");
+    const pass2Error = document.getElementById("pass2Error");
+    var correcto;
+    //----------------------TELEFONO---------------------------
+    form.addEventListener('submit', function (event) {
+        if (!tfno.validity.valid) {
+            error(tfno);
+            event.preventDefault();
+        }
+    });
+    tfno.addEventListener('blur', function (event) {
+        if (tfno.validity.valid) {
+            tfnoError.className = 'valid-feedback';
+            tfno.classList.add('is-valid');
+            tfno.classList.remove('is-invalid');
+            tfnoError.textContent = '';
+        } else {
+            error(tfno);
+        }
+    });
+    function error(campo) {
+        if (campo == tfno) {
+            if (tfno.validity.valueMissing) {
+                tfnoError.textContent = 'Debe introducir su teléfono.';
+            }
+            //No cumple con el pattern
+            else if (tfno.validity.patternMismatch) {
+                tfnoError.textContent = 'El valor introducido debe tener 9 números';
+            }
+            // Establece el estilo apropiado
+            tfno.classList.remove('is-valid');
+            tfno.classList.add('is-invalid');
+            tfnoError.className = 'invalid-feedback';
+        }
+    }
+
+    //--------------------CONTRASEÑA-------------------------
+    form2.addEventListener('submit', function (event) {
+        if (!pass.validity.valid) {
+            error(pass);
+            event.preventDefault();
+        }
+        comprobarContras();
+        if (!correcto) {
+            event.preventDefault();
+        }
+    });
+    pass.addEventListener('blur', function (event) {
+        if (pass.validity.valid) {
+            passError.className = 'valid-feedback';
+            pass.classList.add('is-valid');
+            pass.classList.remove('is-invalid');
+            passError.textContent = '';
+        } else {
+            error2(pass);
+        }
+    });
+    pass2.addEventListener('input', function (event) {
+        comprobarContras();
+    });
+
+    function comprobarContras() {
+        var c1 = pass.value;
+        var c2 = pass2.value;
+        if (c1 != c2) {
+            pass2Error.textContent = 'Las contraseñas no coinciden.';
+            pass2Error.className = 'invalid-feedback';
+            pass2.classList.remove('is-valid');
+            pass2.classList.add('is-invalid');
+            correcto = false;
+        } else {
+            correcto = true;
+            if (!pass2.value.length == 0) {
+                pass2Error.textContent = '';
+                pass2Error.className = 'valid-feedback';
+                pass2.classList.add('is-valid');
+                pass2.classList.remove('is-invalid');
+            }
+        }
+    }
+
+    function error2() {
+        if (campo == pass) {
+            if (pass.validity.valueMissing) {
+                passError.textContent = 'Debe introducir su contraseña.';
+            } else if (pass.validity.tooShort) {
+                passError.textContent = 'Debe tener al menos ' + pass.minLength + ' caracteres; ha introducido ' + pass.value.length;
+                //Dato demasiado largo
+            } else if (pass.validity.tooLong) {
+                passError.textContent = 'Debe tener como máximo ' + pass.maxLength + ' caracteres; ha introducido ' + pass.value.length;
+            }
+            // Establece el estilo apropiado
+            pass.classList.remove('is-valid');
+            pass.classList.add('is-invalid');
+            passError.className = 'invalid-feedback';
+        }
+    }
+
+}
+function validarPregunta() {
+    var check = document.getElementById('test');
+    const accordion = document.getElementById("accordion");
+    const addOpcion = document.getElementById("addOpcion");
+
+    check.addEventListener("change", validaCheck, false);
+    function validaCheck()
+    {
+        var checked = check.checked;
+        if (checked) {
+            accordion.classList.remove('d-none');
+            accordion.classList.add('d-block');
+            addOpcion.classList.remove('d-none');
+            addOpcion.classList.add('d-block');
+        } else {
+            accordion.classList.remove('d-block');
+            accordion.classList.add('d-none');
+            addOpcion.classList.remove('d-block');
+            addOpcion.classList.add('d-none');
+        }
+    }
 }

@@ -44,3 +44,20 @@ button, input[type=submit]{
 .altura{
     height: 74vh;
 }
+.altura2{
+    height: 84vh;
+}
+.titulo{
+    font-family: Rubik;
+    font-size: 22px;
+    color:  #543b54; 
+}
+.titulo2{
+    /*font-family: cursive;*/
+    font-size: 50px;
+    color:  #3C1F34; 
+}
+
+.t1{
+    font-size: 30px;
+}

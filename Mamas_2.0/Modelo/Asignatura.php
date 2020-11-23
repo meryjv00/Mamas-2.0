@@ -13,22 +13,25 @@
  */
 class Asignatura {
 
-    private $id;
+    private $idAsignatura;
     private $nombre;
     private $imagen;
-    private $examenes = array();
-    private $preguntas = array();
-    private $alumnos = array();
+    private $examenes;
+    private $preguntas;
+    private $alumnos;
 
-    function __construct($id, $nombre, $imagen) {
-        $this->id = $id;
+    function __construct($idAsignatura, $nombre, $imagen) {
+        $this->idAsignatura = $idAsignatura;
         $this->nombre = $nombre;
         $this->imagen = $imagen;
+        $this->examenes = array();
+        $this->preguntas = array();
+        $this->alumnos = array();
     }
 
     //GET
-    function getId() {
-        return $this->id;
+    function getIdAsignatura() {
+        return $this->idAsignatura;
     }
 
     function getNombre() {
@@ -52,7 +55,7 @@ class Asignatura {
     }
 
 // SET
-    function setId($id): void {
+    function setIdAsignatura($id): void {
         $this->id = $id;
     }
 
