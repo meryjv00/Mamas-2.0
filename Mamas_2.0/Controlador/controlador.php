@@ -24,30 +24,30 @@ if (isset($_REQUEST['login'])) {
         $password = md5($_REQUEST['password']);
         $usuario = gestionDatos::getUsuario($email, $password);
         if (isset($usuario)) {
-            $id = $usuario->getId();
-            $rol = gestionDatos::getRol($id);
-            $usuario->setRol($rol);
+            $usuario->setRol(gestionDatos::getRol($usuario->getId()));
             $_SESSION['usuario'] = $usuario;
             if (!isset($_SESSION['usuario'])) {
                 $mensaje = 'Error al realizar el Login.';
                 $_SESSION['mensaje'] = $mensaje;
                 header('Location: ../Vistas/login.php');
             } else {
-                $usuario = $_SESSION['usuario'];
                 if ($usuario->getActivo() == 0) {
                     $mensaje = 'Usuario desactivado , contacte con administrador';
                     $_SESSION['mensaje'] = $mensaje;
                     header('Location: ../Vistas/login.php');
                 } else if ($usuario->getActivo() == 1) {
-                    if ($usuario->getRol() == 2) {
-                        header('Location: ../Vistas/inicioProfesor.php');
-                    } else if ($usuario->getRol() == 0) {
+                    if ($usuario->getRol() == 0) {
                         header('Location: ../Vistas/inicio.php');
-                    } else if ($usuario->getRol() == 1) {
+                    } else if ($usuario->getRol() == 1 || $usuario->getRol() == 2) {
+                        $asig = gestionDatos::inicializarProfesor($usuario->getId());
+                        $_SESSION['asignaturasImpartidas'] = $asig;
+                        $_SESSION['examenes'] = $asig[0]->getExamenes();
+                        $_SESSION['exCorregidos'] = 0;
+                        $_SESSION['exPendientes'] = $_SESSION['examenes'];
                         header('Location: ../Vistas/inicioProfesor.php');
                     }
                     //Obtiene las asignaturas que imparte
-                    $asignaturas = gestionDatos::getAsignaturasUsu2($id);
+                    $asignaturas = gestionDatos::getAsignaturasUsu2($usuario->getId());
                     $_SESSION['asignaturas'] = $asignaturas;
                     //Se obtienen todas las asignaturas para mostrarlas al inicio
                     $todasAsignaturas = gestionDatos::getAsignaturas();
@@ -130,10 +130,7 @@ if (isset($_REQUEST['home'])) {
     header('Location: ../Vistas/inicio.php');
 }
 //-----------------IR A LA PÁGINA PRINCIPAL PROFESORADO
-if (isset($_REQUEST['CRUDprofesor'])) {
-    $asig = gestionDatos::inicializarProfesor($usuario->getId());
-    $_SESSION['asignaturas'] = $asig;
-    gestionDatos::cargarExamenes($usuario->getId());
+if (isset($_REQUEST['salirVista'])) {
     header('Location: ../Vistas/inicioProfesor.php');
 }
 //-----------------VER PERFIL

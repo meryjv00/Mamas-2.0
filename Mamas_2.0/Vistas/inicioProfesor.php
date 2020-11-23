@@ -21,9 +21,16 @@ and open the template in the editor.
     <body>
         <?php
         include_once '../Modelo/Usuario.php';
+        include_once '../Modelo/Asignatura.php';
+        include_once '../Modelo/Examen.php';
+        include_once '../Modelo/Pregunta.php';
+        include_once '../Modelo/Respuesta.php';
+        include_once '../Modelo/Alumno.php';
+        include_once '../Modelo/Profesor.php';
+        include_once '../Modelo/Asignatura.php';
         session_start();
         $usuario = $_SESSION['usuario'];
-        $asignaturas = $_SESSION['asignaturas']
+        $asignaturas = $_SESSION['asignaturasImpartidas'];
         ?>
         <header>
             <nav class="row navbar navbar-expand-lg navbar-dark fixed-top deg">
@@ -59,14 +66,15 @@ and open the template in the editor.
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <form name="formu" action="../Controlador/controladorProfesor.php" method="post">
-                                <button type="submit" class="btn mean-fruit-gradient text-white
+                                <button type="submit" class="btn mean-fruit-gradient text-white disabled
                                         btn-rounded waves-effect z-depth-1a" name="verExamenes" value="Ver exámenes">
                                     Ver exámenes
                                 </button>
-                                <button type="submit" class="btn mean-fruit-gradient text-white
+                                <button type="submit" class="btn mean-fruit-gradient text-white disabled
                                         btn-rounded waves-effect z-depth-1a" name="crearExamenes" value="Crear exámenes">
                                     Crear exámenes
                                 </button>
+
                                 <button type="submit" class="btn mean-fruit-gradient text-white
                                         btn-rounded waves-effect z-depth-1a" name="cerrarSesion" value="Cerrar sesión">
                                     <i class="fas fa-sign-out-alt"></i>
@@ -82,12 +90,11 @@ and open the template in the editor.
                 <div class="row">
                     <div class="col-md-8 col-lg-6 mx-auto">
 
-
                         <!-- Section: Block Content -->
                         <section>
                             <form action="../Controlador/controladorProfesor.php">
-                                <div class="list-group list-group-flush z-depth-1 rounded">
-                                    <div class="list-group-item active d-flex justify-content-start align-items-center py-3">
+                                <div class="list-group list-group-flush z-depth-1 rounded ">
+                                    <div class="list-group-item active d-flex justify-content-start align-items-center py-3 mean-fruit-gradient">
                                         <?php
                                         if ($usuario->getImagen() == "") {
                                             ?>
@@ -99,33 +106,91 @@ and open the template in the editor.
                                             <?php
                                         }
                                         ?>
-                                        <div class="d-flex flex-column pl-3">
-                                            <p class="font-weight-normal mb-0"> <?php $usuario->getNombre(); ?></p>
+                                        <div class="d-flex flex-column pl-3 ">
+                                            <p class="font-weight-bold letra titulo mb-0"> <?php echo $usuario->getNombre(); ?></p>
                                             <?php
-                                            foreach ($asignaturas as $i => $asignatura) {
+                                            foreach ($asignaturas as $asignatura) {
                                                 ?>
-                                                <p class="small mb-0"><?= $asignatura->getNombre() ?></p>
+                                                <p class="small mb-0 letra"><?php echo $asignatura->getNombre(); ?></p>
                                                 <?php
                                             }
                                             ?>
-
                                         </div>
                                     </div>
-                                    <button name="examenCreado" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Examenes Creados
-                                        <span class="badge badge-info badge-pill"><?php $_SESSION['exCreados']; ?></span>
+                                    <button name="examenCreado" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center disabled">Ex. Creados
+                                        <span class="badge badge-info badge-pill"><?php echo count($_SESSION['examenes']); ?></span>
+                                    </button>   
+                                    <button name="examenCorregido" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center disabled">Ex. Corregidos
+                                        <span class="badge badge-success badge-pill"><?php echo $_SESSION['exCorregidos']; ?></span>
                                     </button>
-
-                                    <button name="examenCorregido" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Examenes Corregidos
-                                        <span class="badge badge-success badge-pill"><?php $_SESSION['exCorregidos']; ?></span>
+                                    <button name="examenPendiente" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center disabled">Ex. Pendientes
+                                        <span class="badge badge-warning badge-pill"><?php echo count($_SESSION['exPendientes']); ?></span>
                                     </button>
-                                    <button name="examenPendiente" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Examenes Pendientes
-                                        <span class="badge badge-warning badge-pill"><?php $_SESSION['exPendientes']; ?></span>
-                                    </button>
-
                                 </div>
                             </form>
 
                         </section>
+                        <aside>
+                            <div class="accordion mt-3 " id="accordionExample">
+                                <div class="card z-depth-0 bordered">
+                                    <div class="card-header mean-fruit-gradient text-center  " id="headingOne">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link titulo font-weight-bold " type="button" data-toggle="collapse" data-target="#collapseOne"
+                                                    aria-expanded="true" aria-controls="collapseOne">
+                                                Mis alumnos
+                                            </button>
+                                        </h5>
+                                    </div>
+                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                         data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <?php
+                                            for ($i = 0; $i < count($asignaturas); $i++) {
+                                                $alumnos = array();
+                                                $alumnos = $asignaturas[$i]->getAlumnos();
+
+                                                for ($j = 0; $j < count($alumnos); $j++) {
+                                                    ?>
+                                                    <div class="accordion mt-3" id="accordion<?= $j ?>">
+                                                        <div class="card z-depth-0 bordered">
+                                                            <div class="card-header" id="heading<?= $j ?>">
+                                                                <h5 class="mb-0">
+                                                                    <button class="btn btn-link " type="button" data-toggle="collapse" data-target="#collapse<?= $j ?>"
+                                                                            aria-expanded="false" aria-controls="collapse<?= $j ?>">
+                                                                                <?php
+                                                                                if ($alumnos[$j]->getImagen() == "") {
+                                                                                    ?>
+                                                                            <img class="rounded-circle" src="../img/defectousu.png" height="50px"/>
+                                                                            <?php
+                                                                        } else {
+                                                                            ?>
+                                                                            <img src="data:image/png;base64,<?php echo base64_encode($alumnos[$j]->getImagen()); ?>" class="rounded-circle z-depth-0 " width="50" alt="avatar image">
+                                                                        <?php } ?>
+
+                                                                        <span class="pl-3"> <?php echo $alumnos[$j]->getNombre() . ' ' . $alumnos[$j]->getApellidos(); ?></span> 
+                                                                    </button>
+                                                                </h5>
+                                                            </div>
+                                                            <div id="collapse<?= $j ?>" class="collapse" aria-labelledby="heading<?= $j ?>"
+                                                                 data-parent="#accordion<?= $j ?>">
+                                                                <div class="card-body">
+                                                                    <p><i class="fas fa-angle-right pr-2"></i> E-mail: <?php echo $alumnos[$j]->getEmail(); ?></p>
+                                                                    <p><i class="fas fa-angle-right pr-2"></i> Dni: <?php echo $alumnos[$j]->getDni(); ?></p>
+                                                                    <p><i class="fas fa-angle-right pr-2"></i> Telefono: <?php echo $alumnos[$j]->getTelefono(); ?></p>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <?php
+                                                }
+                                            }
+                                            ?> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
                         <!-- Section: Block Content -->
 
 

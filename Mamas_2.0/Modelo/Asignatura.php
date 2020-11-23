@@ -16,14 +16,17 @@ class Asignatura {
     private $idAsignatura;
     private $nombre;
     private $imagen;
-    private $examenes = array();
-    private $preguntas = array();
-    private $alumnos = array();
+    private $examenes;
+    private $preguntas;
+    private $alumnos;
 
     function __construct($idAsignatura, $nombre, $imagen) {
         $this->idAsignatura = $idAsignatura;
         $this->nombre = $nombre;
         $this->imagen = $imagen;
+        $this->examenes = array();
+        $this->preguntas = array();
+        $this->alumnos = array();
     }
 
     //GET

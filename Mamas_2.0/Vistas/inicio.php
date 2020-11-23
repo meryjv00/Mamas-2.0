@@ -40,7 +40,7 @@ and open the template in the editor.
                                 if ($usuario->getRol() == 1 || $usuario->getRol() == 2) {
                                     ?>
                                     <a href="inicioProfesor.php" class="btn mean-fruit-gradient btn-rounded text-white">
-                                        <i class="fas fa-arrow-left"></i>
+                                        <i class="fas fa-times"></i>
                                     </a>
                                     <?php
                                 }
