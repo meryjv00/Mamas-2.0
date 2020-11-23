@@ -8,6 +8,9 @@
 include_once '../Auxiliar/gestionDatos.php';
 include_once '../Modelo/Usuario.php';
 session_start();
+if (isset($_SESSION['usuario'])) {
+    $usuario = $_SESSION['usuario'];
+}
 //---------------LOGIN
 if (isset($_REQUEST['login'])) {
     $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
@@ -126,6 +129,11 @@ if (isset($_REQUEST['cerrarSesion'])) {
 if (isset($_REQUEST['home'])) {
     header('Location: ../Vistas/inicio.php');
 }
+//-----------------IR A LA PÁGINA PRINCIPAL PROFESORADO
+if (isset($_REQUEST['CRUDprofesor'])) {
+
+    $_SESSION['asignaturas'] = gestionDatos::inicializarProfesor($usuario->getId());
+    header('Location: ../Vistas/inicioProfesor.php');
 //-----------------VER PERFIL
 if (isset($_REQUEST['perfil'])) {
     header('Location: ../Vistas/perfil.php');

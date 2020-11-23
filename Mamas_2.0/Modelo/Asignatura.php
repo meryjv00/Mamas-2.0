@@ -9,19 +9,24 @@
 /**
  * Description of Asignatura
  *
- * @author Mery
+ * @author isra9
  */
 class Asignatura {
+
     private $idAsignatura;
     private $nombre;
     private $imagen;
-    
+    private $examenes = array();
+    private $preguntas = array();
+    private $alumnos = array();
+
     function __construct($idAsignatura, $nombre, $imagen) {
         $this->idAsignatura = $idAsignatura;
         $this->nombre = $nombre;
         $this->imagen = $imagen;
     }
-    
+
+    //GET
     function getIdAsignatura() {
         return $this->idAsignatura;
     }
@@ -34,8 +39,21 @@ class Asignatura {
         return $this->imagen;
     }
 
-    function setIdAsignatura($idAsignatura): void {
-        $this->idAsignatura = $idAsignatura;
+    function getExamenes() {
+        return $this->examenes;
+    }
+
+    function getPreguntas() {
+        return $this->preguntas;
+    }
+
+    function getAlumnos() {
+        return $this->alumnos;
+    }
+
+// SET
+    function setIdAsignatura($id): void {
+        $this->id = $id;
     }
 
     function setNombre($nombre): void {
@@ -46,6 +64,28 @@ class Asignatura {
         $this->imagen = $imagen;
     }
 
+    function setExamenes($examenes): void {
+        $this->examenes = $examenes;
+    }
 
+    function setPreguntas($preguntas): void {
+        $this->preguntas = $preguntas;
+    }
+
+    function setAlumnos($alumnos): void {
+        $this->alumnos = $alumnos;
+    }
+
+    function addExamen($examen) {
+        $this->examenes[] = $examen;
+    }
+
+    function addPregunta($pregunta) {
+        $this->preguntas[] = $pregunta;
+    }
+
+    function addAlumno($alumno) {
+        $this->alumnos[] = $alumno;
+    }
 
 }
