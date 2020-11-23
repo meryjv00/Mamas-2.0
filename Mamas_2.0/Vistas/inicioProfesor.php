@@ -77,7 +77,52 @@ and open the template in the editor.
             </nav>
         </header>
         <main class="pb-5 pt-5 ml-4">
-            <p class="mt-5">Inicio profesor</p>
+            <div class="container my-5">
+                <div class="row">
+                    <div class="col-md-8 col-lg-6 mx-auto">
+
+
+                        <!-- Section: Block Content -->
+                        <section>
+                            <form action="../Controlador/controladorProfesor.php">
+                                <div class="list-group list-group-flush z-depth-1 rounded">
+                                    <div class="list-group-item active d-flex justify-content-start align-items-center py-3">
+                                        <?php
+                                        if ($usuario->getImagen() == "") {
+                                            ?>
+                                            <img class="rounded-circle" src="../img/defectousu.png" height="50"/>
+                                            <?php
+                                        } else {
+                                            ?>
+                                            <img src="data:image/png;base64,<?php echo base64_encode($usuario->getImagen()); ?>" class="rounded-circle z-depth-0" width="50" alt="avatar image">
+                                            <?php
+                                        }
+                                        ?>
+                                        <div class="d-flex flex-column pl-3">
+                                            <p class="font-weight-normal mb-0">Elisa McRayan</p>
+                                            <p class="small mb-0">Web Designer</p>
+                                        </div>
+                                    </div>
+                                    <a href="#!" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Examenes Creados
+                                        <span class="badge badge-info badge-pill">5</span>
+                                    </a>
+                                    <a href="#!" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Examenes Corregidos
+                                        <span class="badge badge-success badge-pill">10</span>
+                                    </a>
+                                    <button name="examenPendiente" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Examenes Pendientes</button>
+
+                                    <span class="badge badge-warning badge-pill">728</span>
+                                    </a>
+                                </div>
+                            </form>
+
+                        </section>
+                        <!-- Section: Block Content -->
+
+
+                    </div>
+                </div>
+            </div>
         </main>
         <!-- jQuery -->
         <script type="text/javascript" src="../js/jquery.min.js"></script>

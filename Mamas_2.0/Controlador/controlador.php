@@ -134,6 +134,7 @@ if (isset($_REQUEST['CRUDprofesor'])) {
 
     $_SESSION['asignaturas'] = gestionDatos::inicializarProfesor($usuario->getId());
     header('Location: ../Vistas/inicioProfesor.php');
+}
 //-----------------VER PERFIL
 if (isset($_REQUEST['perfil'])) {
     header('Location: ../Vistas/perfil.php');
@@ -144,8 +145,9 @@ if (isset($_REQUEST['editarFotoPerfil'])) {
     $usu = $_SESSION['usuario'];
     gestionDatos::updateFoto($usu->getId());
     //Obtiene el usuario con la foto actualizada y lo guarda en sesión
-    $usuario = gestionDatos::getUsuarioId($usu->getId());
-    $_SESSION['usuario'] = $usuario;
+    $usunuevo = gestionDatos::getUsuarioId($usu->getId());
+    $usunuevo->setRol(gestionDatos::getRol($usunuevo->getId()));
+    $_SESSION['usuario'] = $usunuevo;
     header('Location: ../Vistas/perfil.php');
 }
 
