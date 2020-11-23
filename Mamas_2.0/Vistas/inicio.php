@@ -122,7 +122,7 @@ and open the template in the editor.
                             <p  style="font-size: 25px;color: #4D2034"><i class="fas fa-angle-right pr-2" ></i>Exámen 1</p>
                             <p class="card-text">Tema 4 - GUIT: Exámen tipo test u4</p>
                             <input type="submit" class="btn mean-fruit-gradient text-white
-                                   btn-rounded waves-effect z-depth-1a" name="realizarExamen" value="Realizar exámen"/>
+                                   btn-rounded waves-effect z-depth-1a disabled" name="realizarExamen" value="Realizar exámen"/>
                         </form>
                         <hr>
                     </div>
