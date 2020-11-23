@@ -1,0 +1,63 @@
+body{
+    min-height: 100%;
+    background: rgba(35, 7, 77, 0.6);
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, rgba(204, 83, 51, 0.6), rgba(35, 7, 77, 0.6));
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, rgba(204, 83, 51, 0.6), rgba(35, 7, 77, 0.6));
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.tit{
+    font-family: Pacifico;
+    font-size: 50px;
+    color:  #543b54; 
+}
+.tit2{
+    font-family: Pacifico;
+    font-size: 90px;
+    color:  #543b54; 
+}
+.letra{
+    color:  #543b54; 
+}
+.btgit:hover{
+    color: white;   
+}
+.btn-rounded{
+    border-radius: 10em;
+}
+@font-face {
+    font-family: Pacifico;
+    src: url(Pacifico-Regular.ttf);
+}
+@font-face {
+    font-family: Rubik;
+    src: url(Rubik-Regular.ttf);
+}
+button, input[type=submit]{
+    font-family: Rubik;
+}
+.c1{
+    color:  #543b54; 
+    font-size: 25px;
+}
+.altura{
+    height: 74vh;
+}
+.altura2{
+    height: 84vh;
+}
+.titulo{
+    font-family: Rubik;
+    font-size: 22px;
+    color:  #543b54; 
+}
+.titulo2{
+    /*font-family: cursive;*/
+    font-size: 50px;
+    color:  #3C1F34; 
+}
+
+.t1{
+    font-size: 30px;
+}
