@@ -15,10 +15,10 @@ include_once 'Usuario.php';
 
 class Alumno extends Usuario {
 
-    private $soluciones=array();
+    private $soluciones = array();
 
-    public function __construct($id, $email, $dni, $nombre, $apellidos, $telefono, $activo, $imagen, $soluciones) {
-         $this->soluciones=$soluciones;
+    public function __construct($id, $email, $dni, $nombre, $apellidos, $telefono, $activo, $imagen) {
+
         parent::__construct($id, $email, $dni, $nombre, $apellidos, $telefono, $activo, $imagen);
     }
 

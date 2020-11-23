@@ -361,11 +361,11 @@ class gestionDatos {
         return $idAlumnos;
     }
 
-    static function getAlumnosMatriculados($idA, $idU) {
+    static function getAlumnosMatriculados($idA, $idR) {
         self::conexion();
         $alumnos = array();
         foreach ($idU as $value) {
-            $stmt = self::$conexion->prepare("SELECT * FROM asignacionAsignatura WHERE idAsignatura= ? AND idUsuario= ?");
+            $stmt = self::$conexion->prepare("SELECT * FROM usuarios,asignacionasignatura,asignacionrol WHERE asignacionasignatura.idAsignatura= ? AND asignacionrol.idRol= ?");
             $stmt->bind_param("ii", $idA, $value);
             if ($stmt->execute()) {
                 $resultado = $stmt->get_result();
@@ -380,7 +380,27 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
-    static function cargarUsuario($idUsuario) {
+    static function inicializarProfesor($idU) {
+        $id = self::getIdAsignatura($idU);
+        $asignaturas = array();
+        $alumnos = array();
+        for ($i = 0; $i < count($id); $i++) {
+            $a = self::getAsignaturas($id[$i]);
+            $examenes = self::getExamenes($id[$i]);
+            $preguntas = self::getPreguntas($id[$i]);
+            $alumnosMatriculados = self::getAlumnosMatriculados($id[$i], 0);
+            foreach ($alumnosMatriculados as $value) {
+                $alumnos[] = self::cargarUsuario($value);
+            }
+            $a->setExamenes($examenes);
+            $a->setPreguntas($preguntas);
+            $a->setAlumnos($alumnos);
+            $asignaturas[] = $a;
+        }
+        return $asignaturas;
+    }
+
+    static function cargarAlumno($idUsuario) {
         self::conexion();
         $stmt = self::$conexion->prepare("SELECT * FROM usuarios WHERE idUsuario= ?");
         $stmt->bind_param("i", $idUsuario);
@@ -397,7 +417,7 @@ class gestionDatos {
                 $telefono = $fila['telefono'];
                 $activo = $fila['activo'];
                 $imagen = $fila['imagen'];
-                $p = new Usuario($idUsuario, $email, $dni, $nombre, $apellidos, $telefono, $activo, $imagen);
+                $p = new Alumno($idUsuario, $email, $dni, $nombre, $apellidos, $telefono, $activo, $imagen);
                 //almacenamos en sesion al usuario que ha realizado el Login.
             }
             return $p;

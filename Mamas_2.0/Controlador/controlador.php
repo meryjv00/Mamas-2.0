@@ -128,26 +128,7 @@ if (isset($_REQUEST['CRUDadmin'])) {
 }
 //-----------------IR A LA PÁGINA PRINCIPAL PROFESORADO
 if (isset($_REQUEST['CRUDprofesor'])) {
-    //carga de asignaturas
-    $id = gestionDatos::getIdAsignatura($usuario->getId());
-    $asignaturas = array();
-    $alumnos = array();
-    for ($i = 0; $i < count($id); $i++) {
-        $a = gestionDatos::getAsignaturas($id[$i]);
-        $examenes = gestionDatos::getExamenes($id[$i]);
-        $preguntas = gestionDatos::getPreguntas($id[$i]);
-        $alumnosTotales = gestionDatos::getUsuarioRol(0);
-        $alumnosMatriculados = gestionDatos::getAlumnosMatriculados($id[$i], $alumnosTotales);
-        foreach ($alumnosMatriculados as $value) {
-            $alumnos[] = gestionDatos::cargarUsuario($value);
-        }
-        $a->setExamenes($examenes);
-        $a->setPreguntas($preguntas);
-        $a->setAlumnos($alumnos);
-        $asignaturas[] = $a;
-    }
-    $_SESSION['asignaturas'] = $asignaturas;
-    //carga de Examenes
 
+    $_SESSION['asignaturas'] = gestionDatos::inicializarProfesor($usuario->getId());
     header('Location: ../Vistas/inicioProfesor.php');
 }
