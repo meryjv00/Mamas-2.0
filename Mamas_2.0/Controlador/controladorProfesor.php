@@ -61,3 +61,15 @@ if (isset($_REQUEST['nuevaPass'])) {
     }
     header('Location: ../Vistas/perfil.php');
 }
+
+//------------------VER EXAMENES
+if (isset($_REQUEST['verExamenes'])) {
+
+    header('Location: ../Vistas/crudExamenes.php');
+}
+
+//------------------CREAR EXAMENES
+if (isset($_REQUEST['crearExamenes'])) {
+
+    header('Location: ../Vistas/crearExamen.php');
+}

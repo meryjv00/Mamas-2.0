@@ -27,7 +27,6 @@ and open the template in the editor.
         include_once '../Modelo/Respuesta.php';
         include_once '../Modelo/Alumno.php';
         include_once '../Modelo/Profesor.php';
-        include_once '../Modelo/Asignatura.php';
         session_start();
         $usuario = $_SESSION['usuario'];
         $asignaturas = $_SESSION['asignaturasImpartidas'];
