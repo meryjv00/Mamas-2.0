@@ -89,7 +89,6 @@ and open the template in the editor.
             <div class="container my-5">
                 <div class="row">
                     <div class="col-md-8 col-lg-6 mx-auto">
-
                         <!-- Section: Block Content -->
                         <section>
                             <form action="../Controlador/controladorProfesor.php">
