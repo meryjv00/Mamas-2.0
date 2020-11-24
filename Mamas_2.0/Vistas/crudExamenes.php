@@ -138,7 +138,9 @@ and open the template in the editor.
             </section>
             <!-- Section: Block Content -->
         </div>
-
+        <footer class="footer-copyright text-center text-white py-3 z-depth-2">
+            <div> © 2020 Copyright: Israel y María</div>
+        </footer>
         <!-- jQuery -->
         <script type="text/javascript" src="../js/jquery.min.js"></script>
         <!-- Bootstrap tooltips -->
@@ -150,5 +152,6 @@ and open the template in the editor.
         <!-- Your custom scripts (optional) -->
         <script type="text/javascript" src="../js/validar.js"></script>
         <script type="text/javascript" src="../js/diseño.js"></script>
+
     </body>
 </html>
