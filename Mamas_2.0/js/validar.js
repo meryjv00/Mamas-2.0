@@ -428,24 +428,39 @@ function validacionTfnoPass() {
 
 }
 function validarPregunta() {
-    var check = document.getElementById('test');
-    const accordion = document.getElementById("accordion");
+    var tipoPregunta = document.getElementById('tipoPregunta');
+    const opciones = document.getElementById("accordion1");
+    const claves = document.getElementById("accordion2");
     const addOpcion = document.getElementById("addOpcion");
-
-    check.addEventListener("change", validaCheck, false);
-    function validaCheck()
+    const addClave = document.getElementById("addClave");
+    
+    
+    tipoPregunta.addEventListener("change", compruebaPregunta, false);
+    function compruebaPregunta()
     {
-        var checked = check.checked;
-        if (checked) {
-            accordion.classList.remove('d-none');
-            accordion.classList.add('d-block');
-            addOpcion.classList.remove('d-none');
-            addOpcion.classList.add('d-block');
-        } else {
-            accordion.classList.remove('d-block');
-            accordion.classList.add('d-none');
-            addOpcion.classList.remove('d-block');
-            addOpcion.classList.add('d-none');
+        var pro = tipoPregunta.options[tipoPregunta.selectedIndex].value;
+        if(pro == 'Test'){
+             claves.classList.remove("d-block");
+            addClave.classList.remove("d-block");
+            opciones.classList.remove("d-none");
+            addOpcion.classList.remove("d-none");
+            
+            claves.classList.add("d-none");
+            addClave.classList.add("d-none");
+            opciones.classList.add("d-block");
+            addOpcion.classList.add("d-block");
+        }else{
+            claves.classList.remove("d-none");
+            addClave.classList.remove("d-none");
+            opciones.classList.remove("d-block");
+            addOpcion.classList.remove("d-block");
+            
+            claves.classList.add("d-block");
+            addClave.classList.add("d-block");
+            opciones.classList.add("d-none");
+            addOpcion.classList.add("d-none");
+            
         }
     }
+    
 }

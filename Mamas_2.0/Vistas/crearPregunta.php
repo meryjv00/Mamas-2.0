@@ -68,9 +68,14 @@ and open the template in the editor.
                 <div class="col-md-9 mt-5">
                     <div class="row">
                         <div class="col-md-10 mx-auto card card-cascade narrower pb-5 bg-transparent">
-                            <div class="view view-cascade gradient-card-header">
+                            <div class="row view view-cascade gradient-card-header">
                                 <!-- Title -->
-                                <h2 class="card-header-title font-weight-bold text-center letra display-4 titulo2 pt-2 pb-2 ">Crear pregunta</h2>
+                                <div class="col-md-9"></div>
+                                <select id="tipoPregunta" class="col-md-3 mx-auto browser-default custom-select">
+                                    <option  value="PreguntaCorta" selected>Pregunta corta</option>
+                                    <option  value="Test">Test</option>
+                                </select>
+                                <h2 class="col-md-12 card-header-title font-weight-bold text-center letra display-4 titulo2 pt-2 pb-2 ">Crear pregunta</h2>
                             </div>
                             <div class="justify-content-center">
                                 <form name="formPreg" action="../Controlador/controladorProfesor.php" method="post" novalidate>
@@ -95,26 +100,43 @@ and open the template in the editor.
                                                     </div>
                                                     <!--Puntuacion-->
                                                     <div class="col">
-                                                        <input type="number" id="puntuacion" class="form-control mb-4" placeholder="Puntuación" min="1" max="100">
+                                                        <input type="number" id="puntuacion" class="form-control mb-4" placeholder="Puntuación" min="1" max="100" value="10">
                                                     </div>
                                                     <!--Enunciado-->
                                                     <input type="text" id="enunciado" class="form-control mb-4" placeholder="Enunciado">
-                                                    <!--Tipo test-->
-                                                    <div id="ptest" class="custom-control custom-checkbox mx-auto font-weight-bold letra">
-                                                        <input type="checkbox" class="custom-control-input" id="test" name="test" >
-                                                        <label class="custom-control-label" for="test">¿Pregunta tipo test?</label>
-                                                    </div>
-                                                    <!--ACORDEON-->
-                                                    <div class="col-md-12 mt-3 d-none" id="accordion">
-                                                        <div class="card">
-                                                            <div class="card-header text-center" id="headingOne">
+
+                                                    <!--MOSTRAR OPCIONES EXAMEN-->
+                                                    <div class="accordion text-center d-none" id="accordion1" style="width: 620px">
+                                                        <div class="card z-depth-0 bordered">
+                                                            <div class="card-header" id="heading1">
                                                                 <h5 class="mb-0">
-                                                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                                        Opciones creadas
+                                                                    <button class="btn btn-link " type="button" data-toggle="collapse" data-target="#collapse1"
+                                                                            aria-expanded="false" aria-controls="collapse1">
+                                                                        Opciones añadidas
                                                                     </button>
                                                                 </h5>
                                                             </div>
-                                                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                                                            <div id="collapse1" class="collapse" aria-labelledby="heading1"
+                                                                 data-parent="#accordion1">
+                                                                <div class="card-body">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--MOSTRAR PALABRAS CLAVE-->
+                                                    <div class="accordion text-center " id="accordion2" style="width: 620px">
+                                                        <div class="card z-depth-0 bordered">
+                                                            <div class="card-header" id="heading2">
+                                                                <h5 class="mb-0">
+                                                                    <button class="btn btn-link " type="button" data-toggle="collapse" data-target="#collapse2"
+                                                                            aria-expanded="false" aria-controls="collapse2">
+                                                                        Palabras clave añadidas
+                                                                    </button>
+                                                                </h5>
+                                                            </div>
+                                                            <div id="collapse2" class="collapse" aria-labelledby="heading2"
+                                                                 data-parent="#accordion2">
                                                                 <div class="card-body">
 
                                                                 </div>
@@ -123,18 +145,14 @@ and open the template in the editor.
                                                     </div>
                                                     <!--AÑADIR OPCION-->
                                                     <div id="addOpcion" class="mt-3 col-md-12 card card-cascade narrower d-none">
-                                                        <!-- Card image -->
                                                         <div class="view view-cascade gradient-card-header mean-fruit-gradient">
-                                                            <!-- Title -->
                                                             <h2 class="card-header-title text-center titulo text-white pt-1">Añadir opción</h2>
                                                         </div>
-                                                        <!-- Card content -->
                                                         <div class="card-body card-body-cascade">
-                                                            <!-- Text -->
                                                             <p style="font-size: 25px;color: #4D2034"><i class="fas fa-angle-right pr-2" ></i>Introducir opción</p>
                                                             <div class="row">
                                                                 <div class="col-md-10">
-                                                                    <input type="text" id="opcion" name="opcion" class="form-control mb-4" placeholder="Escribe aquí la opción, si es correcta marca el checkbox >>>">
+                                                                    <input type="text" required id="opcion" name="opcion" class="form-control mb-4" placeholder="Escribe aquí la opción, si es correcta marca el checkbox >>">
                                                                 </div>
                                                                 <div class="col-md-2">
                                                                     <div class="custom-control custom-checkbox mt-2" >
@@ -147,6 +165,24 @@ and open the template in the editor.
                                                             <div class="col-md-8 text-center mx-auto">
                                                                 <button type="submit" name="aniadirOpcion"  class="btn mean-fruit-gradient text-white 
                                                                         btn-block btn-rounded my-4 waves-effect z-depth-1a">Añadir opción</button>
+                                                            </div>
+                                                            <hr>
+                                                        </div>
+                                                    </div>
+                                                    <!--AÑADIR PALABRAS CLAVE-->
+                                                    <div id="addClave" class="mt-3 col-md-12 card card-cascade narrower ">
+                                                        <div class="view view-cascade gradient-card-header mean-fruit-gradient">
+                                                            <h2 class="card-header-title text-center titulo text-white pt-1">Añadir palabra clave</h2>
+                                                        </div>
+                                                        <div class="card-body card-body-cascade">
+                                                            <p style="font-size: 25px;color: #4D2034"><i class="fas fa-angle-right pr-2" ></i>Introducir palabra clave</p>
+
+                                                            <input type="text" id="palabraClave" name="palabraClave" class="form-control mb-4" 
+                                                                   placeholder="Escribe aquí la palabra clave" required>
+
+                                                            <div class="col-md-8 text-center mx-auto">
+                                                                <button type="submit" name="aniadirPalabraClave"  class="btn mean-fruit-gradient text-white 
+                                                                        btn-block btn-rounded my-4 waves-effect z-depth-1a">Añadir palabra clave</button>
                                                             </div>
                                                             <hr>
                                                         </div>
@@ -181,8 +217,8 @@ and open the template in the editor.
                     <!-- Card content -->
                     <div class="card-body card-body-cascade">
                         <!-- Text -->
-                        <form name="formPregunta" action="../Controlador/controladorProfesor.php" method="post">
-                            <div class="text-center mb-3 pl-5 pr-5">
+                        <form name="formPregunta" action="../Controlador/controladorProfesor.php" class="row" method="post">
+                            <div class="col-md-12 text-center">
                                 <button type="submit" name="aniadirPreguntas"  class="btn mean-fruit-gradient text-white 
                                         btn-block btn-rounded my-4 waves-effect z-depth-1a">Añadir preguntas al exámen</button>
                             </div>
