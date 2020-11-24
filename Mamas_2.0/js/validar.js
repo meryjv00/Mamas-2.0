@@ -433,34 +433,202 @@ function validarPregunta() {
     const claves = document.getElementById("accordion2");
     const addOpcion = document.getElementById("addOpcion");
     const addClave = document.getElementById("addClave");
-    
-    
+
+
     tipoPregunta.addEventListener("change", compruebaPregunta, false);
     function compruebaPregunta()
     {
         var pro = tipoPregunta.options[tipoPregunta.selectedIndex].value;
-        if(pro == 'Test'){
-             claves.classList.remove("d-block");
+        if (pro == 'Test') {
+            claves.classList.remove("d-block");
             addClave.classList.remove("d-block");
             opciones.classList.remove("d-none");
             addOpcion.classList.remove("d-none");
-            
+
             claves.classList.add("d-none");
             addClave.classList.add("d-none");
             opciones.classList.add("d-block");
             addOpcion.classList.add("d-block");
-        }else{
+        } else {
             claves.classList.remove("d-none");
             addClave.classList.remove("d-none");
             opciones.classList.remove("d-block");
             addOpcion.classList.remove("d-block");
-            
+
             claves.classList.add("d-block");
             addClave.classList.add("d-block");
             opciones.classList.add("d-none");
             addOpcion.classList.add("d-none");
-            
+
         }
     }
-    
+
+}
+
+//---------------------CLASES
+var idClave = 0;
+var idOpcion = 0;
+var idPregunta = 0;
+var palabrasClaves = [];
+var opcionesTest = [];
+var preguntas = [];
+//OBJETO PALABRA CLAVE
+var PalabraClave = function (id, nombre) {
+    this.id = id;
+    this.nombre = nombre;
+    this.getId = function () {
+        return this.id;
+    };
+    this.getNombre = function () {
+        return this.nombre;
+    };
+};
+//OBJETO OPCION TEST
+var Opcion = function (id, opcion, correcto) {
+    this.id = id;
+    this.opcion = opcion;
+    this.correcto = correcto;
+    this.getId = function () {
+        return this.id;
+    };
+    this.getOpcion = function () {
+        return this.opcion;
+    };
+    this.getCorrecto = function () {
+        return this.correcto;
+    };
+};
+//OBJETO PREGUNTA
+var Pregunta = function (id, tipo, asignatura, puntuacion, enunciado, datos) {
+    this.id = id;
+    this.tipo = tipo;
+    this.asignatura = asignatura;
+    this.puntuacion = puntuacion;
+    this.enunciado = enunciado;
+    this.datos = datos;
+    this.getId = function () {
+        return this.id;
+    };
+    this.getTipo = function () {
+        return this.tipo;
+    };
+    this.getAsignatura = function () {
+        return this.asignatura;
+    };
+    this.getPuntuacion = function () {
+        return this.puntuacion;
+    };
+    this.getEnunciado = function () {
+        return this.enunciado;
+    };
+    this.getDatos = function () {
+        return this.datos;
+    };
+};
+
+//AÑADIR PALABRA CLAVE A LA TABLA
+function addPalabraClave() {
+    const nombre = document.getElementById("palabraClave").value;
+    if (nombre != "") {
+        idClave++;
+        var clave = new PalabraClave(idClave, nombre);
+        palabrasClaves.push(clave);
+
+        var cuerpoTabla = document.getElementById("bodyPalabrasClave");
+        var fila = document.createElement("tr");
+
+        var col1 = document.createElement("td");
+        var id = document.createTextNode(clave.getId());
+        col1.appendChild(id);
+
+        var col2 = document.createElement("td");
+        var nomb = document.createTextNode(clave.getNombre());
+        col2.appendChild(nomb);
+
+        fila.appendChild(col1);
+        fila.appendChild(col2);
+        cuerpoTabla.appendChild(fila);
+    } else {
+        alert('Escribe una palabra clave');
+    }
+    document.getElementById("palabraClave").value = "";
+
+}
+
+
+//AÑADIR OPCION A LA TABLA
+function addOpcionT() {
+    var opcion = document.getElementById("opcion").value;
+    if (opcion != "") {
+        var correcto = document.getElementById("correcto").checked;
+        idOpcion++;
+        var opcionTest = new Opcion(idOpcion, opcion, correcto);
+        opcionesTest.push(opcionTest);
+
+        var cuerpoTabla = document.getElementById("bodyOpciones");
+        var fila = document.createElement("tr");
+
+        var col1 = document.createElement("td");
+        var id = document.createTextNode(opcionTest.getId());
+        col1.appendChild(id);
+
+        var col2 = document.createElement("td");
+        var opciont = document.createTextNode(opcionTest.getOpcion());
+        col2.appendChild(opciont);
+
+        var col3 = document.createElement("td");
+        var correc = document.createTextNode(opcionTest.getCorrecto());
+        col3.appendChild(correc);
+
+        fila.appendChild(col1);
+        fila.appendChild(col2);
+        fila.appendChild(col3);
+        cuerpoTabla.appendChild(fila);
+    } else {
+        alert('Escribe una opción');
+    }
+    document.getElementById("opcion").value = "";
+}
+
+//AÑADIR PREGUNTAS
+function addPregunta() {
+    var enunciado = document.getElementById("enunciado").value;
+    var puntuacion = document.getElementById("puntuacion").value;
+    var asignatura = document.getElementById("asignaturas");
+    var asignaturaSeleccionada = asignatura.options[asignatura.selectedIndex].value;
+    var tipoPregunta = document.getElementById('tipoPregunta');
+    var preguntaSeleccionada = tipoPregunta.options[tipoPregunta.selectedIndex].value;
+
+    if (enunciado != "") {
+        if (puntuacion < 0 || puntuacion > 100) {
+            alert("Escribe una puntuación válida (0-100)");
+        } else {
+            if (preguntaSeleccionada == 'Test') {
+                //alert('Crear pregunta tipo test');
+                if (opcionesTest.length >= 2) {
+                    idPregunta++;
+                    var preguntaTest = new Pregunta(idPregunta, 1, asignaturaSeleccionada, puntuacion, enunciado, opcionesTest);
+                    preguntas.push(preguntaTest);
+                } else {
+                    alert("Es necesario crear 2 opciones como mínimo");
+                }
+            } else {
+                //alert('Crear pregunta corta');
+                if (palabrasClaves.length >= 1) {
+                    idPregunta++;
+                    var preguntaTXT = new Pregunta(idPregunta, 0, asignaturaSeleccionada, puntuacion, enunciado, palabrasClaves);
+                    preguntas.push(preguntaTXT);
+                } else {
+                    alert("Es necesario establecer una palabra clave como mínimo");
+                }
+
+            }
+            //Vacía acordeones
+            
+        }
+    } else {
+        alert("Escribe un enunciado para la pregunta");
+    }
+
+
 }

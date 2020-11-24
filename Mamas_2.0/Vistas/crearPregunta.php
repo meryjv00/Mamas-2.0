@@ -21,8 +21,10 @@ and open the template in the editor.
     <body onload="validarPregunta()">
         <?php
         include_once '../Modelo/Usuario.php';
+        include_once '../Modelo/Asignatura.php';
         session_start();
         $usuario = $_SESSION['usuario'];
+        $asignatura = $_SESSION['asignaturasImpartidas'];
         ?>
         <header>
             <nav class="row navbar navbar-expand-lg navbar-dark fixed-top deg">
@@ -75,131 +77,153 @@ and open the template in the editor.
                                     <option  value="PreguntaCorta" selected>Pregunta corta</option>
                                     <option  value="Test">Test</option>
                                 </select>
-                                <h2 class="col-md-12 card-header-title font-weight-bold text-center letra display-4 titulo2 pt-2 pb-2 ">Crear pregunta</h2>
+                                <h2 class="col-md-12 card-header-title font-weight-bold text-center letra display-4 tit pt-2 pb-2 ">Crear pregunta</h2>
                             </div>
                             <div class="justify-content-center">
-                                <form name="formPreg" action="../Controlador/controladorProfesor.php" method="post" novalidate>
 
-                                    <!--Section: Content-->
-                                    <section class="px-md-5 mx-md-5 text-center text-lg-left dark-grey-text mt-3">
-                                        <!--Grid row-->
-                                        <div class="row d-flex justify-content-center">
-                                            <!--Grid column-->
-                                            <div class="col-md-10">
-                                                <div class="form-row mb-4">
-                                                    <!--Asignatura-->
-                                                    <div class="col">
-                                                        <select class="browser-default custom-select" id="asignaturas">
-                                                            <option value="0" selected>Seleccione una asignatura</option>
-                                                            <option value="1">DWES</option>
-                                                            <option value="2">DWEC</option>
-                                                            <option value="3">DAW</option>
-                                                            <option value="3">DI</option>
-                                                            <option value="3">EIE</option>
-                                                        </select>
-                                                    </div>
-                                                    <!--Puntuacion-->
-                                                    <div class="col">
-                                                        <input type="number" id="puntuacion" class="form-control mb-4" placeholder="Puntuación" min="1" max="100" value="10">
-                                                    </div>
-                                                    <!--Enunciado-->
-                                                    <input type="text" id="enunciado" class="form-control mb-4" placeholder="Enunciado">
 
-                                                    <!--MOSTRAR OPCIONES EXAMEN-->
-                                                    <div class="accordion text-center d-none" id="accordion1" style="width: 620px">
-                                                        <div class="card z-depth-0 bordered">
-                                                            <div class="card-header" id="heading1">
-                                                                <h5 class="mb-0">
-                                                                    <button class="btn btn-link " type="button" data-toggle="collapse" data-target="#collapse1"
-                                                                            aria-expanded="false" aria-controls="collapse1">
-                                                                        Opciones añadidas
-                                                                    </button>
-                                                                </h5>
-                                                            </div>
-                                                            <div id="collapse1" class="collapse" aria-labelledby="heading1"
-                                                                 data-parent="#accordion1">
-                                                                <div class="card-body">
+                                <!--Section: Content-->
+                                <section class="px-md-5 mx-md-5 text-center text-lg-left dark-grey-text mt-3">
 
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!--MOSTRAR PALABRAS CLAVE-->
-                                                    <div class="accordion text-center " id="accordion2" style="width: 620px">
-                                                        <div class="card z-depth-0 bordered">
-                                                            <div class="card-header" id="heading2">
-                                                                <h5 class="mb-0">
-                                                                    <button class="btn btn-link " type="button" data-toggle="collapse" data-target="#collapse2"
-                                                                            aria-expanded="false" aria-controls="collapse2">
-                                                                        Palabras clave añadidas
-                                                                    </button>
-                                                                </h5>
-                                                            </div>
-                                                            <div id="collapse2" class="collapse" aria-labelledby="heading2"
-                                                                 data-parent="#accordion2">
-                                                                <div class="card-body">
+                                    <!--Grid row-->
+                                    <div class="row d-flex justify-content-center">
+                                        <!--Grid column-->
+                                        <div class="col-md-10">
+                                            <div class="form-row">
+                                                <!--Asignatura-->
+                                                <div class="col">
+                                                    <select class="browser-default custom-select " id="asignaturas">
+                                                        <?php for ($i = 0; $i < count($asignatura); $i++) { ?>
+                                                            <option value="<?=$asignatura[$i]->getNombre()?>" ><?php echo $asignatura[$i]->getNombre(); ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+                                                <!--Puntuacion-->
+                                                <div class="col">
+                                                    <input type="number" id="puntuacion" class="form-control mb-4" placeholder="Puntuación" min="1" max="100" value="10">
+                                                </div>
+                                                <!--Enunciado-->
+                                                <input type="text" id="enunciado" class="form-control mb-4" placeholder="Enunciado">
+                                                <!--BOTON AÑADIR PREGUNTA-->
+                                                <button name="aniadirPregunta"  class="btn mean-fruit-gradient text-white 
+                                                        btn-block btn-rounded waves-effect z-depth-1a" onclick="addPregunta()">Añadir pregunta</button>
+                                            </div>  
 
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                            <div class="mt-3 accordion text-center d-none" id="accordion1" >
+                                                <div class="card z-depth-0 bordered">
+                                                    <div class="card-header" id="heading1">
+                                                        <h5 class="mb-0">
+                                                            <button class="btn btn-link " type="button" data-toggle="collapse" data-target="#collapse1"
+                                                                    aria-expanded="false" aria-controls="collapse1">
+                                                                Opciones añadidas
+                                                            </button>
+                                                        </h5>
                                                     </div>
-                                                    <!--AÑADIR OPCION-->
-                                                    <div id="addOpcion" class="mt-3 col-md-12 card card-cascade narrower d-none">
-                                                        <div class="view view-cascade gradient-card-header mean-fruit-gradient">
-                                                            <h2 class="card-header-title text-center titulo text-white pt-1">Añadir opción</h2>
-                                                        </div>
-                                                        <div class="card-body card-body-cascade">
-                                                            <p style="font-size: 25px;color: #4D2034"><i class="fas fa-angle-right pr-2" ></i>Introducir opción</p>
-                                                            <div class="row">
-                                                                <div class="col-md-10">
-                                                                    <input type="text" required id="opcion" name="opcion" class="form-control mb-4" placeholder="Escribe aquí la opción, si es correcta marca el checkbox >>">
-                                                                </div>
-                                                                <div class="col-md-2">
-                                                                    <div class="custom-control custom-checkbox mt-2" >
-                                                                        <input type="checkbox" class="custom-control-input" id="correcto" name="correcto" 
-                                                                               style="width: 200px; height: 200px">
-                                                                        <label class="custom-control-label" for="correcto"></label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-8 text-center mx-auto">
-                                                                <button type="submit" name="aniadirOpcion"  class="btn mean-fruit-gradient text-white 
-                                                                        btn-block btn-rounded my-4 waves-effect z-depth-1a">Añadir opción</button>
-                                                            </div>
-                                                            <hr>
-                                                        </div>
-                                                    </div>
-                                                    <!--AÑADIR PALABRAS CLAVE-->
-                                                    <div id="addClave" class="mt-3 col-md-12 card card-cascade narrower ">
-                                                        <div class="view view-cascade gradient-card-header mean-fruit-gradient">
-                                                            <h2 class="card-header-title text-center titulo text-white pt-1">Añadir palabra clave</h2>
-                                                        </div>
-                                                        <div class="card-body card-body-cascade">
-                                                            <p style="font-size: 25px;color: #4D2034"><i class="fas fa-angle-right pr-2" ></i>Introducir palabra clave</p>
+                                                    <div id="collapse1" class="collapse" aria-labelledby="heading1"
+                                                         data-parent="#accordion1">
+                                                        <div class="card-body">
+                                                            <table class="table table-hover mb-0">
+                                                                <!--Table head-->
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="th-lg"><a>Id <i class="fas fa-sort ml-1"></i></a></th>
+                                                                        <th class="th-lg"><a>Opción <i class="fas fa-sort ml-1"></i></a></th>
+                                                                        <th class="th-lg"><a>Correcto <i class="fas fa-sort ml-1"></i></a></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <!--Table head-->
 
-                                                            <input type="text" id="palabraClave" name="palabraClave" class="form-control mb-4" 
-                                                                   placeholder="Escribe aquí la palabra clave" required>
-
-                                                            <div class="col-md-8 text-center mx-auto">
-                                                                <button type="submit" name="aniadirPalabraClave"  class="btn mean-fruit-gradient text-white 
-                                                                        btn-block btn-rounded my-4 waves-effect z-depth-1a">Añadir palabra clave</button>
-                                                            </div>
-                                                            <hr>
+                                                                <!--Table body-->
+                                                                <tbody id="bodyOpciones">
+                                                                </tbody>
+                                                                <!--Table body-->
+                                                            </table>
                                                         </div>
-                                                    </div>
-                                                    <!--BOTON AÑADIR PREGUNTA-->
-                                                    <div class="col-md-12"></div>
-                                                    <div class="col-md-8 text-center mx-auto">
-                                                        <button type="submit" name="aniadirPregunta"  class="btn mean-fruit-gradient text-white 
-                                                                btn-block btn-rounded my-4 waves-effect z-depth-1a">Añadir pregunta</button>
                                                     </div>
                                                 </div>
-                                                <!--Grid column-->
                                             </div>
-                                            <!--Grid row-->
-                                    </section>
-                                    <!--Section: Content-->
-                                </form>
+                                            <!--MOSTRAR PALABRAS CLAVE-->
+                                            <div class="mt-3 accordion text-center " id="accordion2" >
+                                                <div class="card z-depth-0 bordered">
+                                                    <div class="card-header" id="heading2">
+                                                        <h5 class="mb-0">
+                                                            <button class="btn btn-link " type="button" data-toggle="collapse" data-target="#collapse2"
+                                                                    aria-expanded="false" aria-controls="collapse2">
+                                                                Palabras clave añadidas
+                                                            </button>
+                                                        </h5>
+                                                    </div>
+                                                    <div id="collapse2" class="collapse" aria-labelledby="heading2" data-parent="#accordion2">
+                                                        <div class="card-body">
+                                                            <table class="table table-hover mb-0">
+                                                                <!--Table head-->
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="th-lg"><a>Id <i class="fas fa-sort ml-1"></i></a></th>
+                                                                        <th class="th-lg"><a>Palabra clave <i class="fas fa-sort ml-1"></i></a></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <!--Table head-->
+                                                                <!--Table body-->
+                                                                <tbody id="bodyPalabrasClave">
+                                                                </tbody>
+                                                                <!--Table body-->
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--AÑADIR OPCION-->
+                                            <div id="addOpcion" class=" mt-3 col-md-12 card card-cascade narrower d-none">
+                                                <div class="view view-cascade gradient-card-header mean-fruit-gradient">
+                                                    <h2 class="card-header-title text-center titulo text-white pt-1">Añadir opción</h2>
+                                                </div>
+                                                <div class="card-body card-body-cascade">
+                                                    <p style="font-size: 25px;color: #4D2034"><i class="fas fa-angle-right pr-2" ></i>Introducir opción</p>
+                                                    <div class="row">
+                                                        <div class="col-md-11">
+                                                            <input type="text" required id="opcion" name="opcion" class="form-control mb-4" placeholder="Escribe aquí la opción, si es correcta marca el checkbox >>" required>
+                                                        </div>
+                                                        <div class="col-md-1">
+                                                            <div class="custom-control custom-checkbox mt-2" >
+                                                                <input type="checkbox" class="custom-control-input" id="correcto" name="correcto">
+                                                                <label class="custom-control-label" for="correcto"></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 text-center mx-auto">
+                                                        <button name="aniadirOpcion"  class="btn mean-fruit-gradient text-white 
+                                                                btn-block btn-rounded my-4 waves-effect z-depth-1a" onclick="addOpcionT()">Añadir opción</button>
+                                                    </div>
+                                                    <hr>
+                                                </div>
+                                            </div>
+                                            <!--AÑADIR PALABRAS CLAVE-->
+                                            <div id="addClave" class="mt-3 col-md-12 card card-cascade narrower ">
+                                                <div class="view view-cascade gradient-card-header mean-fruit-gradient">
+                                                    <h2 class="card-header-title text-center titulo text-white pt-1">Añadir palabra clave</h2>
+                                                </div>
+                                                <div class="card-body card-body-cascade">
+                                                    <p style="font-size: 25px;color: #4D2034"><i class="fas fa-angle-right pr-2" ></i>Introducir palabra clave</p>
+
+                                                    <input type="text" id="palabraClave" name="palabraClave" class="form-control mb-4" 
+                                                           placeholder="Escribe aquí la palabra clave" required>
+
+                                                    <div class="col-md-12 text-center mx-auto">
+                                                        <button  name="aniadirPalabraClave"  class="btn mean-fruit-gradient text-white 
+                                                                 btn-block btn-rounded my-4 waves-effect z-depth-1a" onclick="addPalabraClave()">Añadir palabra clave</button>
+                                                    </div>
+                                                    <hr>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!--Grid column-->
+                                    </div>
+                                    <!--Grid row-->
+                                </section>
+                                <!--Section: Content-->
+
                             </div>
 
                         </div>
@@ -240,5 +264,6 @@ and open the template in the editor.
         <!-- MDB core JavaScript -->
         <script type="text/javascript" src="../js/mdb.min.js"></script>
         <script type="text/javascript" src="../js/validar.js"></script>
+        <!--<script type="text/javascript" src="../js/obj.js"></script>-->
     </body>
 </html>
