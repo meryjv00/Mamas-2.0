@@ -429,41 +429,36 @@ function validacionTfnoPass() {
 }
 function validarPregunta() {
     var tipoPregunta = document.getElementById('tipoPregunta');
-    const opciones = document.getElementById("accordion1");
-    const claves = document.getElementById("accordion2");
     const addOpcion = document.getElementById("addOpcion");
     const addClave = document.getElementById("addClave");
-
 
     tipoPregunta.addEventListener("change", compruebaPregunta, false);
     function compruebaPregunta()
     {
-        var pro = tipoPregunta.options[tipoPregunta.selectedIndex].value;
-        if (pro == 'Test') {
-            claves.classList.remove("d-block");
-            addClave.classList.remove("d-block");
-            opciones.classList.remove("d-none");
-            addOpcion.classList.remove("d-none");
-
-            claves.classList.add("d-none");
+        var opSelecc = tipoPregunta.options[tipoPregunta.selectedIndex].value;
+        if (opSelecc == "SeleccionePregunta") {
             addClave.classList.add("d-none");
-            opciones.classList.add("d-block");
-            addOpcion.classList.add("d-block");
-        } else {
-            claves.classList.remove("d-none");
-            addClave.classList.remove("d-none");
-            opciones.classList.remove("d-block");
-            addOpcion.classList.remove("d-block");
-
-            claves.classList.add("d-block");
-            addClave.classList.add("d-block");
-            opciones.classList.add("d-none");
+            addClave.classList.remove("d-block");
             addOpcion.classList.add("d-none");
-
+            addOpcion.classList.remove("d-block");
+        }
+        if (opSelecc === "PreguntaCorta") {
+            addClave.classList.add("d-block");
+            addClave.classList.remove("d-none");
+            addOpcion.classList.add("d-none");
+            addOpcion.classList.remove("d-block");
+        }
+        if (opSelecc == "Test") {
+            addClave.classList.add("d-none");
+            addClave.classList.remove("d-block");
+            addOpcion.classList.add("d-block");
+            addOpcion.classList.remove("d-none");
         }
     }
 
 }
+
+
 
 //---------------------CLASES
 var idClave = 0;
@@ -599,36 +594,108 @@ function addPregunta() {
     var tipoPregunta = document.getElementById('tipoPregunta');
     var preguntaSeleccionada = tipoPregunta.options[tipoPregunta.selectedIndex].value;
 
-    if (enunciado != "") {
-        if (puntuacion < 0 || puntuacion > 100) {
-            alert("Escribe una puntuación válida (0-100)");
-        } else {
-            if (preguntaSeleccionada == 'Test') {
-                //alert('Crear pregunta tipo test');
-                if (opcionesTest.length >= 2) {
-                    idPregunta++;
-                    var preguntaTest = new Pregunta(idPregunta, 1, asignaturaSeleccionada, puntuacion, enunciado, opcionesTest);
-                    preguntas.push(preguntaTest);
-                } else {
-                    alert("Es necesario crear 2 opciones como mínimo");
-                }
+    if (asignaturaSeleccionada != "Seleccione una asignatura") {
+        if (enunciado != "") {
+            if (puntuacion < 0 || puntuacion > 100) {
+                alert("Escribe una puntuación válida (0-100)");
             } else {
-                //alert('Crear pregunta corta');
-                if (palabrasClaves.length >= 1) {
-                    idPregunta++;
-                    var preguntaTXT = new Pregunta(idPregunta, 0, asignaturaSeleccionada, puntuacion, enunciado, palabrasClaves);
-                    preguntas.push(preguntaTXT);
+                if (preguntaSeleccionada == 'Test') {
+                    //alert('Crear pregunta tipo test');
+                    if (opcionesTest.length >= 2) {
+                        idPregunta++;
+                        var preguntaTest = new Pregunta(idPregunta, 1, asignaturaSeleccionada, puntuacion, enunciado, opcionesTest);
+                        preguntas.push(preguntaTest);
+                        //Añadir vista previa
+                        addVistaPrevia(preguntaTest);
+                        //Vacíar todo
+                        limpiarCampos();
+                    } else {
+                        alert("Es necesario crear 2 opciones como mínimo; has creado " + opcionesTest.length + " opcion(es)");
+                    }
+                } else if (preguntaSeleccionada == 'PreguntaCorta') {
+                    //alert('Crear pregunta corta');
+                    if (palabrasClaves.length >= 1) {
+                        idPregunta++;
+                        var preguntaTXT = new Pregunta(idPregunta, 0, asignaturaSeleccionada, puntuacion, enunciado, palabrasClaves);
+                        preguntas.push(preguntaTXT);
+                        //Añadir vista previa
+                        addVistaPrevia(preguntaTXT);
+                        //Vacíar todo
+                        limpiarCampos();
+                    } else {
+                        alert("Es necesario establecer una palabra clave como mínimo");
+                    }
                 } else {
-                    alert("Es necesario establecer una palabra clave como mínimo");
+                    alert("Seleccione un tipo de pregunta");
                 }
-
             }
-            //Vacía acordeones
-            
+        } else {
+            alert("Escribe un enunciado para la pregunta");
         }
     } else {
-        alert("Escribe un enunciado para la pregunta");
+        alert("Seleccione una asignatura para la pregunta");
+    }
+}
+
+function limpiarCampos() {
+    var tablaClaves = document.getElementById("bodyPalabrasClave");
+    var tablaOpciones = document.getElementById("bodyOpciones");
+    document.getElementById("enunciado").value = "";
+    //VACIAR VECTORES
+    while (palabrasClaves.length) {
+        palabrasClaves.pop();
+    }
+    while (opcionesTest.length) {
+        opcionesTest.pop();
+    }
+    //VACIAR ACORDEONES
+    if (tablaOpciones.hasChildNodes()) {
+        while (tablaOpciones.childNodes.length >= 1) {
+            tablaOpciones.removeChild(tablaOpciones.firstChild);
+        }
+    }
+    if (tablaClaves.hasChildNodes()) {
+        while (tablaClaves.childNodes.length >= 1) {
+            tablaClaves.removeChild(tablaClaves.firstChild);
+        }
     }
 
+}
+
+function addVistaPrevia(pregunta) {
+    var lista = document.getElementById("preguntasCreadas");
+    var listali = document.createElement("li");
+    listali.classList.add('list-group-item');
+    var parr = document.createElement("p");
+
+    var p = document.createTextNode(pregunta.getId() + ". " + pregunta.getEnunciado() + " - " + pregunta.getPuntuacion() + " (pnt)");
+    parr.appendChild(p);
+    listali.appendChild(parr);
+
+    //Pregunta texto
+    if (pregunta.getTipo() == 0) {
+        var palabrasClave = pregunta.getDatos();
+        var parr2 = document.createElement("p");
+        var p2 = document.createTextNode("Palabras clave: ");
+        parr2.appendChild(p2);
+        for (var i = 0; i < palabrasClave.length; i++) {
+            var palabra = palabrasClave[i];
+            p2 = document.createTextNode(palabra.getNombre() + " ");
+            parr2.appendChild(p2);
+            listali.appendChild(parr2);
+        }
+        //Pregunta tipo test
+    } else {
+        var opciones = pregunta.getDatos();
+        for (var i = 0; i < opciones.length; i++) {
+            var parr2 = document.createElement("p");
+            var opcion = opciones[i];
+            var p3 = document.createTextNode(opcion.getId() + ") " + opcion.getOpcion() + " " + opcion.getCorrecto());
+            parr2.appendChild(p3);
+            listali.appendChild(parr2);
+        }
+    }
+
+    lista.appendChild(listali);
 
 }
