@@ -604,16 +604,17 @@ class gestionDatos {
         return $idPregunta;
         mysqli_close(self::$conexion);
     }
+
     static function insertRespuesta($respuesta, $idPregunta) {
         self::conexion();
-        $consulta = "INSERT INTO respuesta VALUES (" . $respuesta->getId() . ",'" . $respuesta->getProfesor() . "'," . $idPregunta . ",'" .
-                $respuesta->getRespuesta() . "'," . $pregunta->getCorrecta() . ")";
+        $consulta = "INSERT INTO respuesta VALUES (" . $respuesta->getId() . ",'" . $respuesta->getCreador() . "'," . $idPregunta . ",'" .
+                $respuesta->getRespuesta() . "'," . $respuesta->getCorrecta() . ")";
         if (self::$conexion->query($consulta)) {
             $correcto = false;
         }
         mysqli_close(self::$conexion);
     }
-    
+
     static function getIdPregunta() {
         $consulta = "SELECT max(idPregunta) FROM pregunta";
         if ($resultado = self::$conexion->query($consulta)) {
@@ -651,7 +652,7 @@ class gestionDatos {
         return $correcto;
         mysqli_close(self::$conexion);
     }
-     
+
     static function insertarFotoAsignatura() {
         self::conexion();
         $fotoBin = self::$conexion->real_escape_string(file_get_contents($_FILES["imagen"]["tmp_name"]));

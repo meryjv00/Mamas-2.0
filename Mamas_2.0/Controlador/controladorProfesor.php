@@ -9,6 +9,7 @@ include_once '../Auxiliar/gestionDatos.php';
 include_once '../Modelo/Usuario.php';
 include_once '../Modelo/Pregunta.php';
 include_once '../Modelo/Asignatura.php';
+include_once '../Modelo/Respuesta.php';
 session_start();
 if (isset($_SESSION['usuario'])) {
     $usuario = $_SESSION['usuario'];
@@ -80,28 +81,30 @@ if (isset($_REQUEST['aniadirPreguntas'])) {
         $tipo = $preguntas[$i]->tipo;
         $puntuacion = $preguntas[$i]->puntuacion;
         $asignatura = $preguntas[$i]->asignatura;
+
         $idAsig = gestionDatos::getIdAsignaturaN($asignatura);
+        $numero = count($preguntas);
         $p = new Pregunta(0, $profesor, $enunciado, $tipo, $puntuacion);
-        foreach ($asignaturas as $i => $asignatura) {
+        foreach ($asignaturas as $q => $asignatura) {
             if ($idAsig == $asignatura->getIdAsignatura()) {
                 $idPregunta = gestionDatos::insertPregunta($p, $idAsig);
                 //INSERTAR OPCIONES O PALABRAS CLAVE
                 $datos = $preguntas[$i]->datos;
-                foreach ($datos as $i => $dato) {
-                    if($tipo == 0){
-                       $nombre = $dato->nombre;
-                       $respuesta = new Respuesta(0, $profesor, $nombre, 0);
-                    }else{
+                foreach ($datos as $j => $dato) {
+                    if ($tipo == 0) {
+                        $nombre = $dato->nombre;
+                        $respuesta = new Respuesta(0, $profesor, $nombre, 0);
+                    } else {
                         $opcion = $dato->opcion;
-                        if($dato->correcto){
+                        if ($dato->correcto) {
                             $correcto = 1;
-                        }else{
+                        } else {
                             $correcto = 0;
                         }
                         $respuesta = new Respuesta(0, $profesor, $opcion, $correcto);
                     }
                     $p->addRespuesta($respuesta);
-                    gestionDatos::insertRespuesta($respuesta,$idPregunta);
+                    gestionDatos::insertRespuesta($respuesta, $idPregunta);
                 }
                 $asignatura->addPregunta($p);
             }
