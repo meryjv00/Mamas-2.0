@@ -699,3 +699,13 @@ function addVistaPrevia(pregunta) {
     lista.appendChild(listali);
 
 }
+
+//AÑADIR TODAS LAS PREGUNTAS 
+function addPreguntas(){
+    for (var i = 0; i < preguntas.length; i++) {
+        var pregunta = preguntas[i];
+        var datos = pregunta.getDatos();
+        console.log(datos.length);
+    }
+    console.log(JSON.stringify(preguntas));
+}

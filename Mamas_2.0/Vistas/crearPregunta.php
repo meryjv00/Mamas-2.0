@@ -250,12 +250,12 @@ and open the template in the editor.
                         <ul id="preguntasCreadas" class="list-group list-group-flush">
                         </ul>
                         <!-- Text -->
-                        <form name="formPregunta" action="../Controlador/controladorProfesor.php" class="row" method="post">
                             <div class="col-md-9 mx-auto text-center">
-                                <button type="submit" name="aniadirPreguntas"  class="btn purple lighten-3 text-white 
-                                        btn-block btn-rounded my-4 waves-effect z-depth-1a">Añadir preguntas al exámen</button>
+                                <button type="button" name="aniadirPreguntas" class="btn purple lighten-3 text-white 
+                                        btn-block btn-rounded my-4 waves-effect z-depth-1a" onclick="addPreguntas()">Añadir preguntas al exámen
+                                </button>
+                                <input type="hidden" id="json"/>
                             </div>
-                        </form>
                     </div>
                 </div>
 
