@@ -110,9 +110,9 @@ and open the template in the editor.
                                                 </div>
 
                                                 <!--Enunciado-->
-                                                <div class="col-md-12 md-form">
-                                                    <textarea id="enunciado" class="md-textarea form-control" rows="3"></textarea>
-                                                    <label for="enunciado">Enunciado de la pregunta</label>
+                                                <div class="col-md-12 mt-3 form-group shadow-textarea">
+                                                    <label for="enunciado">Enunciado: </label>
+                                                    <textarea class="form-control z-depth-1" id="enunciado" rows="3" placeholder="Escribe el enunciado aquí..."></textarea>
                                                 </div>
                                                 <!--BOTON AÑADIR PREGUNTA-->
                                                 <button name="aniadirPregunta"  class="col-md-4  mb-2 mx-auto btn purple lighten-3 text-white 
@@ -172,9 +172,9 @@ and open the template in the editor.
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-4 text-center mx-auto">
+                                                    <div class="col-md-5 text-center mx-auto">
                                                         <button name="aniadirOpcion"  class="btn purple lighten-3 text-white 
-                                                                btn-block btn-rounded my-4 waves-effect z-depth-1a" onclick="addOpcionT()">Añadir opción</button>
+                                                                btn-block btn-rounded waves-effect z-depth-1a" onclick="addOpcionT()">Añadir opción</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -219,12 +219,11 @@ and open the template in the editor.
                                                     <span>Palabra clave:</span>
                                                     <input type="text" id="palabraClave" name="palabraClave" class="form-control mb-4" 
                                                            placeholder="Escribe aquí la palabra clave" required>
-                                                    
+
                                                     <div class="col-md-5 text-center mx-auto">
                                                         <button  name="aniadirPalabraClave"  class="btn purple lighten-3 text-white 
-                                                                 btn-block btn-rounded my-4 waves-effect z-depth-1a" onclick="addPalabraClave()">Añadir palabra clave</button>
+                                                                 btn-block btn-rounded  waves-effect z-depth-1a" onclick="addPalabraClave()">Añadir palabra clave</button>
                                                     </div>
-                                                    <hr>
                                                 </div>
                                             </div>
                                         </div>
