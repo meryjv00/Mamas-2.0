@@ -114,43 +114,43 @@ and open the template in the editor.
                                                         </div>
                                                         <!--BOTON CREAR EXAMEN-->
                                                         <div class="col-md-12"></div>
-                                                        <div class="col-md-8 text-center mx-auto">
-                                                            <button type="submit" name="crearExamen"  class="btn mean-fruit-gradient text-white 
-                                                                    btn-block btn-rounded my-4 waves-effect z-depth-1a">Crear Examen</button>
-                                                        </div>
+
+                                                        <button type="submit" name="crearExamen"  class="btn mean-fruit-gradient text-white 
+                                                                btn-block btn-rounded my-4 waves-effect z-depth-1a">Crear Examen</button>
                                                     </div>
-                                                    <!--Grid column-->
                                                 </div>
-                                                <!--Grid row-->
-                                                </section>
-                                                <!--Section: Content-->
-                                                </form>
+                                                <!--Grid column-->
                                             </div>
+                                            <!--Grid row-->
+                                    </section>
+                                    <!--Section: Content-->
+                                </form>
+                            </div>
 
-                                        </div>
+                        </div>
 
-                                        </div>
+                    </div>
 
-                                        </div>
-
-
-
-                                        </main>
-                                        <footer class="footer-copyright text-center text-white py-3 z-depth-2">
-                                            <div> © 2020 Copyright: Israel y María</div>
-                                        </footer>
+                </div>
 
 
-                                        <!-- jQuery -->
-                                        <script type="text/javascript" src="../js/jquery.min.js"></script>
-                                        <!-- Bootstrap tooltips -->
-                                        <script type="text/javascript" src="../js/popper.min.js"></script>
-                                        <!-- Bootstrap core JavaScript -->
-                                        <script type="text/javascript" src="../js/bootstrap.min.js"></script>
-                                        <!-- MDB core JavaScript -->
-                                        <script type="text/javascript" src="../js/mdb.min.js"></script>
-                                        <!-- Your custom scripts (optional) -->
-                                        <script type="text/javascript" src="../js/validar.js"></script>
-                                        <script type="text/javascript" src="../js/diseño.js"></script>
-                                        </body>
-                                        </html>
+
+        </main>
+        <footer class="footer-copyright text-center text-white py-3 z-depth-2">
+            <div> © 2020 Copyright: Israel y María</div>
+        </footer>
+
+
+        <!-- jQuery -->
+        <script type="text/javascript" src="../js/jquery.min.js"></script>
+        <!-- Bootstrap tooltips -->
+        <script type="text/javascript" src="../js/popper.min.js"></script>
+        <!-- Bootstrap core JavaScript -->
+        <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+        <!-- MDB core JavaScript -->
+        <script type="text/javascript" src="../js/mdb.min.js"></script>
+        <!-- Your custom scripts (optional) -->
+        <script type="text/javascript" src="../js/validar.js"></script>
+        <script type="text/javascript" src="../js/diseño.js"></script>
+    </body>
+</html>
