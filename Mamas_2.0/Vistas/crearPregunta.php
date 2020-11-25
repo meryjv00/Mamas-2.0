@@ -219,7 +219,7 @@ and open the template in the editor.
                                                     <span>Palabra clave:</span>
                                                     <input type="text" id="palabraClave" name="palabraClave" class="form-control mb-4" 
                                                            placeholder="Escribe aquí la palabra clave" required>
-
+                                                    
                                                     <div class="col-md-5 text-center mx-auto">
                                                         <button  name="aniadirPalabraClave"  class="btn purple lighten-3 text-white 
                                                                  btn-block btn-rounded my-4 waves-effect z-depth-1a" onclick="addPalabraClave()">Añadir palabra clave</button>
@@ -250,12 +250,14 @@ and open the template in the editor.
                         <ul id="preguntasCreadas" class="list-group list-group-flush">
                         </ul>
                         <!-- Text -->
-                            <div class="col-md-9 mx-auto text-center">
-                                <button type="button" name="aniadirPreguntas" class="btn purple lighten-3 text-white 
+                        <form id="formuAddPreguntas" action="../Controlador/controladorProfesor.php" method="post" novalidate>
+                            <div class="col-md-10 mx-auto text-center">
+                                <button type="submit" name="aniadirPreguntas" class="btn purple lighten-3 text-white 
                                         btn-block btn-rounded my-4 waves-effect z-depth-1a" onclick="addPreguntas()">Añadir preguntas al exámen
                                 </button>
-                                <input type="hidden" id="json"/>
+                                <input type="hidden" name="json" id="json"/>
                             </div>
+                        </form>
                     </div>
                 </div>
 

@@ -500,7 +500,10 @@ var Pregunta = function (id, tipo, asignatura, puntuacion, enunciado, datos) {
     this.asignatura = asignatura;
     this.puntuacion = puntuacion;
     this.enunciado = enunciado;
-    this.datos = datos;
+    this.datos = [];
+    for (var i = 0; i < datos.length; i++) {
+        this.datos.push(datos[i]);
+    }
     this.getId = function () {
         return this.id;
     };
@@ -602,13 +605,23 @@ function addPregunta() {
                 if (preguntaSeleccionada == 'Test') {
                     //alert('Crear pregunta tipo test');
                     if (opcionesTest.length >= 2) {
-                        idPregunta++;
-                        var preguntaTest = new Pregunta(idPregunta, 1, asignaturaSeleccionada, puntuacion, enunciado, opcionesTest);
-                        preguntas.push(preguntaTest);
-                        //Añadir vista previa
-                        addVistaPrevia(preguntaTest);
-                        //Vacíar todo
-                        limpiarCampos();
+                        var correcto = false;
+                        for (var i = 0; i < opcionesTest.length; i++) {
+                            if (opcionesTest[i].getCorrecto()) {
+                                correcto = true;
+                            }
+                        }
+                        if (correcto) {
+                            idPregunta++;
+                            var preguntaTest = new Pregunta(idPregunta, 1, asignaturaSeleccionada, puntuacion, enunciado, opcionesTest);
+                            preguntas.push(preguntaTest);
+                            //Añadir vista previa
+                            addVistaPrevia(preguntaTest);
+                            //Vacíar todo
+                            limpiarCampos();
+                        } else {
+                            alert("Debes marcar al menos una opción como correcta");
+                        }
                     } else {
                         alert("Es necesario crear 2 opciones como mínimo; has creado " + opcionesTest.length + " opcion(es)");
                     }
@@ -701,11 +714,15 @@ function addVistaPrevia(pregunta) {
 }
 
 //AÑADIR TODAS LAS PREGUNTAS 
-function addPreguntas(){
-    for (var i = 0; i < preguntas.length; i++) {
-        var pregunta = preguntas[i];
-        var datos = pregunta.getDatos();
-        console.log(datos.length);
-    }
-    console.log(JSON.stringify(preguntas));
+function addPreguntas() {
+    var formuAddPreguntas = document.getElementById("formuAddPreguntas");
+    var json = document.getElementById("json");
+    formuAddPreguntas.addEventListener('submit', function (event) {
+        if (preguntas.length == 0) {
+            event.preventDefault();
+            alert('Añade al menos una pregunta');
+        }else{
+            json.value = JSON.stringify(preguntas);
+        }
+    });
 }
