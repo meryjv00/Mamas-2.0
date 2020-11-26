@@ -260,7 +260,7 @@ and open the template in the editor.
                         <form id="formuAddPreguntas" action="../Controlador/controladorProfesor.php" method="post" novalidate>
                             <div class="col-md-12 mx-auto text-center">
                                 <button type="submit" name="aniadirPreguntas" class="btn purple lighten-3 text-white 
-                                        btn-block btn-rounded my-4 waves-effect z-depth-1a" onclick="addPreguntas()">Añadir preguntas al exámen
+                                        btn-block btn-rounded my-4 waves-effect z-depth-1a" onclick="addPreguntas()">Crear preguntas
                                 </button>
                                 <input type="hidden" name="json" id="json"/>
                             </div>

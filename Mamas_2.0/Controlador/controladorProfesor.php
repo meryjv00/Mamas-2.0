@@ -27,7 +27,11 @@ if (isset($_REQUEST['home'])) {
     header('Location: ../Vistas/inicioProfesor.php');
 }
 if (isset($_REQUEST['homeInicio'])) {
-    header('Location: ../Vistas/inicio.php');
+    if ($_SESSION['origen'] = 'alumno') {
+        header('Location: ../Vistas/inicio.php');
+    } else {
+        header('Location: ../Vistas/inicioProfesor.php');
+    }
 }
 
 //-----------------CERRAR SESIÓN
@@ -37,7 +41,7 @@ if (isset($_REQUEST['cerrarSesion'])) {
 }
 
 //-----------------VER PERFIL
-if (isset($_REQUEST['perfilP'])) {
+if (isset($_REQUEST['perfil'])) {
     header('Location: ../Vistas/perfil.php');
 }
 
@@ -141,4 +145,5 @@ if (isset($_REQUEST['aniadirPreguntas'])) {
         }
         $_SESSION['asignaturasImpartidas'] = $asignaturas;
     }
+    header('Location: ../Vistas/crudExamenes.php');
 }

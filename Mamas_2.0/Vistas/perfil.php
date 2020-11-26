@@ -42,11 +42,11 @@ and open the template in the editor.
                                         <a href="inicioProfesor.php" class="btn mean-fruit-gradient btn-rounded text-white">
                                             <i class="fas fa-times"></i>
                                         </a>
-                                    </form>
-                                    <?php
-                                } else if ($usuario->getRol() == 1) {
-                                    ?>
-                                    <form action="../Controlador/controladorProfesor.php">
+
+                                        <?php
+                                    } else if ($usuario->getRol() == 1) {
+                                        ?>
+
                                         <button type="submit" class="btn mean-fruit-gradient text-white
                                                 btn-rounded waves-effect z-depth-1a" name="CRUDadmin" value="CRUDadmin">
                                             <i class="fas fa-cog"></i>
@@ -57,12 +57,11 @@ and open the template in the editor.
 
                                         <?php
                                     }
-                                    ?></form><?php
-                            }
-                            ?>
-                            <form name="home" action="../Controlador/controlador.php" method="post">
+                                }else{}
+                                ?>
+
                                 <button type="submit" class="btn mean-fruit-gradient text-white
-                                        btn-rounded waves-effect z-depth-1a" name="home" value="home">
+                                        btn-rounded waves-effect z-depth-1a" name="homeInicio" value="home">
                                     <i class="fas fa-home"></i>
                                 </button>
 
