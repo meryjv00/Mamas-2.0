@@ -65,11 +65,11 @@ and open the template in the editor.
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <form name="formu" action="../Controlador/controladorProfesor.php" method="post">
-                                <button type="submit" class="btn mean-fruit-gradient text-white disabled
+                                <button type="submit" class="btn mean-fruit-gradient text-white 
                                         btn-rounded waves-effect z-depth-1a" name="verExamenes" value="Ver exámenes">
                                     Ver exámenes
                                 </button>
-                                <button type="submit" class="btn mean-fruit-gradient text-white disabled
+                                <button type="submit" class="btn mean-fruit-gradient text-white 
                                         btn-rounded waves-effect z-depth-1a" name="crearExamenes" value="Crear exámenes">
                                     Crear exámenes
                                 </button>

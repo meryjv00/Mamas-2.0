@@ -34,16 +34,24 @@ and open the template in the editor.
                 <div class="container-fluid ml-5 mr-5">
                     <!--Left-->
                     <ul class="navbar-nav mr-auto smooth-scroll">
-                        <form name="formu" action="../Controlador/controladorProfesor.php" method="post">                            
+                        <form name="formu" action="../Controlador/controladorProfesor.php" method="post">   
+                            <!--CRUD ADMINISTRADOR-->
+                            <?php
+                            if ($usuario->getRol() == 2) {
+                                ?>
+                                <button type="submit" class="btn mean-fruit-gradient text-white
+                                        btn-rounded waves-effect z-depth-1a" name="CRUDadmin" value="CRUDadmin">
+                                    <i class="fas fa-cog"></i>
+                                </button>
+                                <?php
+                            }
+                            ?>
                             <!--HOME PAGINA INICIO-->
                             <button type="submit" class="btn mean-fruit-gradient text-white
                                     btn-rounded waves-effect z-depth-1a" name="home" value="home">
                                 <i class="fas fa-home"></i>
                             </button>
-                            <!--HOME PAGINA INICIO-->
-                            <a href="crearExamen.php" class="btn mean-fruit-gradient btn-rounded text-white">
-                                <i class="fas fa-arrow-left"></i>
-                            </a>
+
                         </form>
                     </ul>
                     <!-- Right -->
@@ -66,12 +74,13 @@ and open the template in the editor.
             </nav>
         </header>
 
-        <main class="pb-5 pt-5 ml-4">
+        <main class="pt-5 pb-5 ml-4 align-content-center">
             <div class="container-fluid row ">
-                <div class="col-md-9 mt-5">
+                <div class="col-md-2 "></div> 
+                <div class=" col-md-8 mt-5">
                     <div class="row">
-                        <div class="col-md-10 mx-auto card card-cascade narrower pb-5 bg-transparent">
-                            <div class="view view-cascade gradient-card-header">
+                        <div class="col-md-10 mx-auto card card-cascade narrower pb-5 bg-white">
+                            <div class="view view-cascade gradient-card-header mean-fruit-gradient">
                                 <!-- Title -->
                                 <h2 class="card-header-title font-weight-bold text-center letra display-4 titulo2 pt-2 pb-2 ">Nuevo Examen</h2>
                             </div>
@@ -86,40 +95,46 @@ and open the template in the editor.
                                             <div class="col-md-10">
                                                 <div class="form-row mb-4">
                                                     <!--Asignatura-->
-                                                    <div class="col pr-3">
-                                                        <label for="asignaturas">Asignatura</label>
+                                                    <div class="form-row col-12">
+                                                        <div class="col-md-6 col-s-12">
+                                                            <label  for="asignaturas">Asignatura</label>
 
-                                                        <select class="browser-default custom-select " name="asignaturas" id="asignaturas">
-                                                            <option value="0" selected>Seleccione una asignatura</option>
-                                                            <?php for ($i = 0; $i < count($asignatura); $i++) { ?>
-                                                                <option value="<?php echo $asignatura[$i]->getIdAsignatura(); ?>" name="<?php echo $asignatura[$i]->getNombre(); ?>"><?php echo $asignatura[$i]->getNombre(); ?></option>
-                                                            <?php } ?>
-                                                        </select>
-
-                                                        <div class="pt-5">
+                                                            <select class="browser-default custom-select " name="asignaturas" id="asignaturas">
+                                                                <option value="0" selected>Seleccione una asignatura</option>
+                                                                <?php for ($i = 0; $i < count($asignatura); $i++) { ?>
+                                                                    <option value="<?php echo $asignatura[$i]->getIdAsignatura(); ?>" name="<?php echo $asignatura[$i]->getNombre(); ?>"><?php echo $asignatura[$i]->getNombre(); ?></option>
+                                                                <?php } ?>
+                                                            </select>
+                                                        </div>
+                                                        <div class="pl-3 col-md-6 col-s-12">
+                                                            <label for="contenido">Contenido</label>
+                                                            <input type="text" id="contenido" name="contenido" class="form-control mb-4" >
+                                                        </div>
+                                                    </div>
+                                                    <div class="pt-2 form-row col-12">
+                                                        <div class=" col-md-6 col-s-12">
                                                             <label for="descripcion">Descripcion</label>
                                                             <textarea style="resize: none"  rows="5" cols="10" id="descripcion" name="descripcion" class="form-control mb-4" placeholder="Descripcion"></textarea>
                                                         </div>
-                                                    </div>
-                                                    <!--Contenido-->
-                                                    <div class="col">
-                                                        <label for="contenido">Contenido</label>
-                                                        <input type="text" id="contenido" name="contenido" class="form-control mb-4" >
-                                                        <div class=" pt-3">
-                                                            <label for="contenido">Fecha inicio</label>
+                                                        <!--Contenido-->
+                                                        <div class="pl-3 col-md-5 col-s-12">
+
+                                                            <label for="fechai">Fecha inicio</label>
                                                             <input type="date" name="fechainicio" id="fechainicio" class="form-control mb-4" placeholder="Enunciado">
-                                                            <label for="contenido">Fecha Fin</label>
+                                                            <label for="fechaf">Fecha Fin</label>
                                                             <input type="date" name="fechafin" id="fechafin" class="form-control mb-4" placeholder="Enunciado">
                                                         </div>
                                                         <!--BOTON CREAR EXAMEN-->
-                                                        <div class="col-md-12"></div>
-                                                        <button type="submit" name="crearExamen"  class="btn mean-fruit-gradient text-white 
-                                                                btn-block btn-rounded my-4 waves-effect z-depth-1a">Crear Examen</button>
+                                                        <div class="col-md-10 col-s-12">
+                                                            <button type="submit" name="crearExamen"  class="btn mean-fruit-gradient text-white 
+                                                                    btn-block btn-rounded my-4 waves-effect z-depth-1a">Crear Examen</button>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <!--Grid column-->
                                             </div>
-                                            <!--Grid row-->
+                                            <!--Grid column-->
+                                        </div>
+                                        <!--Grid row-->
                                     </section>
                                     <!--Section: Content-->
                                 </form>
@@ -129,7 +144,7 @@ and open the template in the editor.
 
                     </div>
 
-                </div>
+                </div><div class="col-md-2 "></div> 
 
 
 

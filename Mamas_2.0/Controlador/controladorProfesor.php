@@ -94,5 +94,5 @@ if (isset($_REQUEST['crearExamen'])) {
     }
     $_SESSION['asignaturasImpartidas'] = $asignaturas;
     gestionDatos::insertExamen($ex, $idAsignatura);
-    header('Location: ../Vistas/verExamen.php');
+    header('Location: ../Vistas/crudExamenes.php');
 }

@@ -31,6 +31,35 @@ and open the template in the editor.
                 <div class="container-fluid">
                     <ul class="navbar-nav mr-auto ml-5">
                         <li class="nav-item">
+
+                            <!--CRUD ADMINISTRADOR-->
+                            <?php if ($usuario->getRol() != 0) { ?> 
+                                <form action="../Controlador/controladorProfesor.php"><?php
+                                    if ($usuario->getRol() == 2) {
+                                        ?>
+
+
+                                        <a href="inicioProfesor.php" class="btn mean-fruit-gradient btn-rounded text-white">
+                                            <i class="fas fa-times"></i>
+                                        </a>
+                                    </form>
+                                    <?php
+                                } else if ($usuario->getRol() == 1) {
+                                    ?>
+                                    <form action="../Controlador/controladorProfesor.php">
+                                        <button type="submit" class="btn mean-fruit-gradient text-white
+                                                btn-rounded waves-effect z-depth-1a" name="CRUDadmin" value="CRUDadmin">
+                                            <i class="fas fa-cog"></i>
+                                        </button>
+                                        <a href="inicioProfesor.php" class="btn mean-fruit-gradient btn-rounded text-white">
+                                            <i class="fas fa-times"></i>
+                                        </a>
+
+                                        <?php
+                                    }
+                                    ?></form><?php
+                            }
+                            ?>
                             <form name="home" action="../Controlador/controlador.php" method="post">
                                 <button type="submit" class="btn mean-fruit-gradient text-white
                                         btn-rounded waves-effect z-depth-1a" name="home" value="home">
