@@ -153,6 +153,22 @@ class gestionDatos {
         }
     }
 
+    static function getIdAsignaturaN($nombre) {
+        self::conexion();
+        $stmt = self::$conexion->prepare("SELECT * FROM asignatura WHERE nombre= ? ");
+        $stmt->bind_param("s", $nombre);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            //var_dump($resultado);
+            if ($fila = $resultado->fetch_assoc()) {
+                //var_dump($fila);
+                $id = $fila['idAsignatura'];
+            }
+        }
+        return $id;
+        mysqli_close(self::$conexion);
+    }
+
     static function getRol($id) {
         self::conexion();
         $rol = -1;
@@ -239,20 +255,6 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
-//        static function getIdAsig($idUsuario) {
-//            self::conexion();
-//            $stmt = self::$conexion->prepare("SELECT * FROM asignacionasignatura WHERE idUsuario= ?");
-//            $stmt->bind_param("i", $idUsuario);
-//            if ($stmt->execute()) {
-//                $resultado = $stmt->get_result();
-//                var_dump($resultado);
-//                while ($fila = $resultado->fetch_assoc()) {
-//                    $id[] = $fila['idAsignatura'];
-//                }
-//                return $id;
-//            }
-//        }
-
     static function getIdAsignatura($idUsuario) {
         self::conexion();
         $stmt = self::$conexion->prepare("SELECT * FROM asignacionasignatura WHERE idUsuario= ?");
@@ -266,22 +268,6 @@ class gestionDatos {
             return $id;
         }
     }
-
-//    static function getIdUsu($idAsignatura) {
-//        self::conexion();
-//        $stmt = self::$conexion->prepare("SELECT * FROM asignatura WHERE idAsignatura= ?");
-//        $stmt->bind_param("i", $idAsignatura);
-//        if ($stmt->execute()) {
-//            $resultado = $stmt->get_result();
-//            var_dump($resultado);
-//            if ($fila = $resultado->fetch_assoc()) {
-//                $id = $fila['idUsuario'];
-//            }
-//            //almacenamos en sesion al usuario que ha realizado el Login.
-//        }
-//        return $id;
-//        mysqli_close(self::$conexion);
-//    }
 
     static function cargarExamenes($idUsuario) {
         self::conexion();
@@ -613,14 +599,30 @@ class gestionDatos {
         self::conexion();
         $consulta = "INSERT INTO pregunta VALUES (" . $pregunta->getId() . "," . $idasignatura . ",'" . $pregunta->getProfesor() . "','" . $pregunta->getEnunciado() . "','" . $pregunta->getTipo() . "','" . $pregunta->getPuntuacion() . "')";
         if (self::$conexion->query($consulta)) {
-
-            $correcto = true;
-        } else {
-            $correcto = false;
-            echo "Error al insertar: " . self::$conexion->error . '<br/>';
+            $idPregunta = self::getIdPregunta();
         }
-        return $correcto;
+        return $idPregunta;
         mysqli_close(self::$conexion);
+    }
+
+    static function insertRespuesta($respuesta, $idPregunta) {
+        self::conexion();
+        $consulta = "INSERT INTO respuesta VALUES (" . $respuesta->getId() . ",'" . $respuesta->getCreador() . "'," . $idPregunta . ",'" .
+                $respuesta->getRespuesta() . "'," . $respuesta->getCorrecta() . ")";
+        if (self::$conexion->query($consulta)) {
+            $correcto = false;
+        }
+        mysqli_close(self::$conexion);
+    }
+
+    static function getIdPregunta() {
+        $consulta = "SELECT max(idPregunta) FROM pregunta";
+        if ($resultado = self::$conexion->query($consulta)) {
+            if ($fila = $resultado->fetch_assoc()) {
+                $id = $fila['max(idPregunta)'];
+            }
+        }
+        return $id;
     }
 
     static function asignarPregunta($pregunta, $examen) {
@@ -639,7 +641,7 @@ class gestionDatos {
 
     static function insertExamen($examen, $idasignatura) {
         self::conexion();
-        $consulta = "INSERT INTO examen VALUES (" . $pregunta->getId() . "," . $idasignatura . ",'" . $pregunta->getProfesor() . "','" . $pregunta->getContenido() . "','" . $pregunta->getDescripcion() . "','" . $pregunta->getActivo() . "')";
+        $consulta = "INSERT INTO examen VALUES (" . $examen->getId() . "," . $idasignatura . ",'" . $examen->getProfesor() . "','" . $examen->getContenido() . "','" . $examen->getDescripcion() . "','" . $examen->getActivo() . "')";
         if (self::$conexion->query($consulta)) {
 
             $correcto = true;

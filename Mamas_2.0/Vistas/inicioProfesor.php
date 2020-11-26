@@ -27,7 +27,6 @@ and open the template in the editor.
         include_once '../Modelo/Respuesta.php';
         include_once '../Modelo/Alumno.php';
         include_once '../Modelo/Profesor.php';
-        include_once '../Modelo/Asignatura.php';
         session_start();
         $usuario = $_SESSION['usuario'];
         $asignaturas = $_SESSION['asignaturasImpartidas'];
@@ -66,15 +65,18 @@ and open the template in the editor.
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <form name="formu" action="../Controlador/controladorProfesor.php" method="post">
-                                <button type="submit" class="btn mean-fruit-gradient text-white disabled
+                                <button type="submit" class="btn mean-fruit-gradient text-white 
                                         btn-rounded waves-effect z-depth-1a" name="verExamenes" value="Ver exámenes">
                                     Ver exámenes
                                 </button>
-                                <button type="submit" class="btn mean-fruit-gradient text-white disabled
+                                <button type="submit" class="btn mean-fruit-gradient text-white 
                                         btn-rounded waves-effect z-depth-1a" name="crearExamenes" value="Crear exámenes">
                                     Crear exámenes
                                 </button>
-
+                                <button type="submit" class="btn mean-fruit-gradient text-white
+                                        btn-rounded waves-effect z-depth-1a" name="perfil" value="Ver perfil">
+                                    <i class="fas fa-user"></i>
+                                </button>
                                 <button type="submit" class="btn mean-fruit-gradient text-white
                                         btn-rounded waves-effect z-depth-1a" name="cerrarSesion" value="Cerrar sesión">
                                     <i class="fas fa-sign-out-alt"></i>
@@ -89,7 +91,6 @@ and open the template in the editor.
             <div class="container my-5">
                 <div class="row">
                     <div class="col-md-8 col-lg-6 mx-auto">
-
                         <!-- Section: Block Content -->
                         <section>
                             <form action="../Controlador/controladorProfesor.php">

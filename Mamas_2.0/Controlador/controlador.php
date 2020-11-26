@@ -44,6 +44,7 @@ if (isset($_REQUEST['login'])) {
                         $_SESSION['examenes'] = $asig[0]->getExamenes();
                         $_SESSION['exCorregidos'] = 0;
                         $_SESSION['exPendientes'] = $_SESSION['examenes'];
+                        $_SESSION['origen'] = 'profesor';
                         header('Location: ../Vistas/inicioProfesor.php');
                     }
                     //Obtiene las asignaturas que imparte
@@ -135,6 +136,9 @@ if (isset($_REQUEST['salirVista'])) {
 }
 //-----------------VER PERFIL
 if (isset($_REQUEST['perfil'])) {
+    if ($usuario->getRol() != 0) {
+        $_SESSION['origen'] = 'alumno';
+    }
     header('Location: ../Vistas/perfil.php');
 }
 
