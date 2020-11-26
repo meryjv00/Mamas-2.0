@@ -106,7 +106,14 @@ and open the template in the editor.
 
                                         <h4 class="ml-auto white-text text-center ">Mis exámenes</h4>
                                         <div class="ml-auto pr-3">
-
+                                            <button type="submit" name="activarExamen" class="btn btn-outline-white btn-rounded btn-sm px-2"
+                                                    data-toggle="tooltip" data-placement="top" title="Activar">
+                                                <i class="fas fa-check-circle" style="font-size: 20px"></i>
+                                            </button>
+                                            <button type="submit" name="desactivarExamen" class="btn btn-outline-white btn-rounded btn-sm px-2"
+                                                    data-toggle="tooltip" data-placement="top" title="Desactivar">
+                                                <i class="fas fa-times-circle" style="font-size: 20px"></i>
+                                            </button>
                                             <button type="submit" name="verExamen" class="btn btn-outline-white btn-rounded btn-sm px-2"
                                                     data-toggle="tooltip" data-placement="top" title="Ver en detalle">
                                                 <i class="far fa-eye " style="font-size: 20px"></i>

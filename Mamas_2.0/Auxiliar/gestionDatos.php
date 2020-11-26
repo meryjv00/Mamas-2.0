@@ -454,6 +454,18 @@ class gestionDatos {
 // UPDATE
 //======================================================================
 
+    static function updateExamenEstado($examen, $activo) {
+        self::conexion();
+        $consulta = "UPDATE examen SET activo=" . $activo . " WHERE idExamen ='" . $examen->getId() . "'";
+        if (self::$conexion->query($consulta)) {
+            $correcto = true;
+        } else {
+            $correcto = false;
+            echo "Error al actualizar: " . self::$conexion->error . '<br/>';
+        }
+        return $correcto;
+        mysqli_close(self::$conexion);
+    }
 
     static function updateFoto($id) {
         self::conexion();

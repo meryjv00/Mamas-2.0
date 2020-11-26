@@ -170,7 +170,7 @@ if (isset($_REQUEST['verExamen'])) {
         header('Location: ../Vistas/verExamen.php');
     }
 }
-
+//----------------ASIGNAR PREGUNTAS
 if (isset($_REQUEST['asignarPreguntas'])) {
 
     $examenes = $asignaturas[0]->getExamenes();
@@ -189,5 +189,55 @@ if (isset($_REQUEST['asignarPreguntas'])) {
     } else {
         $_SESSION['examenS'] = $examenes[$pos];
         header('Location: ../Vistas/asignarPreguntas.php');
+    }
+}
+//-----------------------ACTIVAR EXAMEN
+if (isset($_REQUEST['activarExamen'])) {
+    $pulsado = false;
+    $examenes = $asignaturas[0]->getExamenes();
+    if (count($examenes) > 0) {
+        $cont = 0;
+        foreach ($examenes as $i => $examen) {
+            if (isset($_REQUEST[$i])) {
+                $pulsado = true;
+                $examen->setActivo(1);
+                if (!gestionDatos::updateExamenEstado($examen, 1)) {
+                    $mensaje = 'No se ha podido activar el examen';
+                    $_SESSION['mensaje'] = $mensaje;
+                }
+            }
+        }
+    }
+    if (!$pulsado) {
+        $asignaturas[0]->setExamenes($examenes);
+        header('Location: ../Vistas/crudExamenes.php');
+    } else {
+        $_SESSION['examenS'] = $examenes[$pos];
+        header('Location: ../Vistas/crudExamenes.php');
+    }
+}
+//----------------------DESACTIVAR EXAMEN
+if (isset($_REQUEST['desactivarExamen'])) {
+    $pulsado = false;
+    $examenes = $asignaturas[0]->getExamenes();
+    if (count($examenes) > 0) {
+        $cont = 0;
+        foreach ($examenes as $i => $examen) {
+            if (isset($_REQUEST[$i])) {
+                $pulsado = true;
+                $examen->setActivo(0);
+                if (!gestionDatos::updateExamenEstado($examen, 0)) {
+                    $mensaje = 'No se ha podido activar el examen';
+                    $_SESSION['mensaje'] = $mensaje;
+                }
+            }
+        }
+    }
+    if (!$pulsado) {
+        $asignaturas[0]->setExamenes($examenes);
+        header('Location: ../Vistas/crudExamenes.php');
+    } else {
+        $_SESSION['examenS'] = $examenes[$pos];
+        header('Location: ../Vistas/crudExamenes.php');
     }
 }    
