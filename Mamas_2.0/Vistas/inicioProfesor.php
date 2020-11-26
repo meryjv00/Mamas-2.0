@@ -88,14 +88,14 @@ and open the template in the editor.
             </nav>
         </header>
         <main class="pb-5 pt-5 ml-4">
-            <div class="container my-5">
+            <div class="container-fluid my-5">
                 <div class="row">
                     <div class="col-md-8 col-lg-6 mx-auto">
                         <!-- Section: Block Content -->
                         <section>
                             <form action="../Controlador/controladorProfesor.php">
                                 <div class="list-group list-group-flush z-depth-1 rounded ">
-                                    <div class="list-group-item active d-flex justify-content-start align-items-center py-3 mean-fruit-gradient">
+                                    <div class="list-group-item active d-flex justify-content-start align-items-center py-3 purple lighten-3">
                                         <?php
                                         if ($usuario->getImagen() == "") {
                                             ?>
@@ -132,68 +132,89 @@ and open the template in the editor.
 
                         </section>
                         <aside>
-                            <div class="accordion mt-3 " id="accordionExample">
-                                <div class="card z-depth-0 bordered">
-                                    <div class="card-header mean-fruit-gradient text-center  " id="headingOne">
-                                        <h5 class="mb-0">
-                                            <button class="btn btn-link titulo font-weight-bold " type="button" data-toggle="collapse" data-target="#collapseOne"
-                                                    aria-expanded="true" aria-controls="collapseOne">
-                                                Mis alumnos
-                                            </button>
-                                        </h5>
-                                    </div>
-                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                                         data-parent="#accordionExample">
-                                        <div class="card-body">
+
+                        </aside>
+                        <!-- Section: Block Content -->
+
+
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-lg-6 mx-auto">
+                        <div class="card card-cascade narrower">
+                            <!--Card image-->
+                            <div class="view view-cascade gradient-card-header mean-fruit-gradient narrower pt-2 mx-4  justify-content-between align-items-center">
+                                <h4 class="white-text text-center">Mis alumnos</h4>
+                            </div>
+                            <!--/Card image-->
+                            <div class="px-4">
+                                <div class="table-responsive">
+                                    <!--Table-->
+                                    <table class="table table-hover mb-0">
+                                        <!--Table head-->
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th class="th-lg">
+                                                    <i class="fas fa-envelope c1 pr-1"></i>
+                                                    <a>Mail</a>
+                                                </th>
+                                                <th class="th-lg">
+                                                    <i class="fas fa-id-card c1 pr-1"></i>
+                                                    <a>Dni</a>
+                                                </th>
+                                                <th class="th-lg">
+                                                    <i class="fas fa-address-book c1 pr-1"></i>
+                                                    <a>Nombre completo</a>
+                                                </th>
+                                                <th class="th-lg">
+                                                    <i class="fas fa-phone-alt c1 pr-1"></i>
+                                                    <a>Telefono</a>
+                                                </th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <!--Table head-->
+
+                                        <!--Table body-->
+                                        <tbody>
                                             <?php
                                             for ($i = 0; $i < count($asignaturas); $i++) {
-                                                $alumnos = array();
                                                 $alumnos = $asignaturas[$i]->getAlumnos();
 
                                                 for ($j = 0; $j < count($alumnos); $j++) {
                                                     ?>
-                                                    <div class="accordion mt-3" id="accordion<?= $j ?>">
-                                                        <div class="card z-depth-0 bordered">
-                                                            <div class="card-header" id="heading<?= $j ?>">
-                                                                <h5 class="mb-0">
-                                                                    <button class="btn btn-link " type="button" data-toggle="collapse" data-target="#collapse<?= $j ?>"
-                                                                            aria-expanded="false" aria-controls="collapse<?= $j ?>">
-                                                                                <?php
-                                                                                if ($alumnos[$j]->getImagen() == "") {
-                                                                                    ?>
-                                                                            <img class="rounded-circle" src="../img/defectousu.png" height="50px"/>
-                                                                            <?php
-                                                                        } else {
-                                                                            ?>
-                                                                            <img src="data:image/png;base64,<?php echo base64_encode($alumnos[$j]->getImagen()); ?>" class="rounded-circle z-depth-0 " width="50" alt="avatar image">
-                                                                        <?php } ?>
-
-                                                                        <span class="pl-3"> <?php echo $alumnos[$j]->getNombre() . ' ' . $alumnos[$j]->getApellidos(); ?></span> 
-                                                                    </button>
-                                                                </h5>
-                                                            </div>
-                                                            <div id="collapse<?= $j ?>" class="collapse" aria-labelledby="heading<?= $j ?>"
-                                                                 data-parent="#accordion<?= $j ?>">
-                                                                <div class="card-body">
-                                                                    <p><i class="fas fa-angle-right pr-2"></i> E-mail: <?php echo $alumnos[$j]->getEmail(); ?></p>
-                                                                    <p><i class="fas fa-angle-right pr-2"></i> Dni: <?php echo $alumnos[$j]->getDni(); ?></p>
-                                                                    <p><i class="fas fa-angle-right pr-2"></i> Telefono: <?php echo $alumnos[$j]->getTelefono(); ?></p>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    <tr>
+                                                        <td>
+                                                            <?php
+                                                            if ($alumnos[$j]->getImagen() == "") {
+                                                                ?>
+                                                                <img class="rounded-circle" src="../img/defectousu.png" height="35px"/>
+                                                                <?php
+                                                            } else {
+                                                                ?>
+                                                                <img class="rounded-circle" src="data:image/png;base64,<?php echo base64_encode($alumnos[$j]->getImagen()); ?>" 
+                                                                     alt="titulo foto" class="img-fluid" height="35px"  width="35px"/>
+                                                                     <?php
+                                                                 }
+                                                                 ?>
+                                                        </td>
+                                                        <td><?= $alumnos[$j]->getEmail() ?></td>
+                                                        <td><?= $alumnos[$j]->getDni() ?></td>
+                                                        <td><?= $alumnos[$j]->getNombre() . ' ' ?><?= $alumnos[$j]->getApellidos() ?></td>
+                                                        <td><?= $alumnos[$j]->getTelefono() ?></td>
+                                                    </tr>
                                                     <?php
                                                 }
                                             }
-                                            ?> 
-                                        </div>
-                                    </div>
+                                            ?>
+                                        </tbody>
+                                        <!--Table body-->
+                                    </table>
+                                    <!--Table-->
                                 </div>
                             </div>
-                        </aside>
-                        <!-- Section: Block Content -->
-
+                        </div>
 
                     </div>
                 </div>
