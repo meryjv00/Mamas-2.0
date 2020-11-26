@@ -56,7 +56,7 @@ and open the template in the editor.
 
                             <button type="submit" class="btn mean-fruit-gradient text-white
                                     btn-rounded waves-effect z-depth-1a" name="homeInicio" value="homeInicio">
-                                Vista alumno
+                                <i class="far fa-eye pr-1"></i> alumno
                             </button>
 
                         </form>
@@ -67,11 +67,15 @@ and open the template in the editor.
                             <form name="formu" action="../Controlador/controladorProfesor.php" method="post">
                                 <button type="submit" class="btn mean-fruit-gradient text-white 
                                         btn-rounded waves-effect z-depth-1a" name="verExamenes" value="Ver exámenes">
-                                    Ver exámenes
+                                    <i class="far fa-eye pr-1"></i> exámenes
                                 </button>
                                 <button type="submit" class="btn mean-fruit-gradient text-white 
                                         btn-rounded waves-effect z-depth-1a" name="crearExamenes" value="Crear exámenes">
-                                    Crear exámenes
+                                    <i class="fas fa-plus pr-1"></i> exámenes
+                                </button>
+                                <button type="submit" class="btn mean-fruit-gradient text-white 
+                                        btn-rounded waves-effect z-depth-1a" name="crearPreguntas" value="Crear preguntas">
+                                    <i class="fas fa-plus pr-1"></i>  preguntas
                                 </button>
                                 <button type="submit" class="btn mean-fruit-gradient text-white
                                         btn-rounded waves-effect z-depth-1a" name="perfil" value="Ver perfil">

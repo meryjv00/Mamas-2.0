@@ -33,7 +33,17 @@ and open the template in the editor.
 
                             <!--CRUD ADMINISTRADOR-->
 
-                            <form name="home" action="../Controlador/controlador.php" method="post">
+                            <form name="home" action="../Controlador/controladorProfesor.php" method="post">
+                                <?php
+                                if ($usuario->getRol() == 2) {
+                                    ?>
+                                    <button type="submit" class="btn mean-fruit-gradient text-white
+                                            btn-rounded waves-effect z-depth-1a" name="CRUDadmin" value="CRUDadmin">
+                                        <i class="fas fa-cog"></i>
+                                    </button>
+                                    <?php
+                                }
+                                ?>
                                 <button type="submit" class="btn mean-fruit-gradient text-white
                                         btn-rounded waves-effect z-depth-1a" name="home" value="home">
                                     <i class="fas fa-home"></i>

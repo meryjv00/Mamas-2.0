@@ -19,6 +19,7 @@ include_once '../Modelo/Respuesta.php';
 include_once '../Modelo/Alumno.php';
 include_once '../Modelo/Profesor.php';
 include_once '../Modelo/Asignatura.php';
+include_once '../Auxiliar/constantes.php';
 
 class gestionDatos {
 
@@ -26,7 +27,7 @@ class gestionDatos {
 
     static function conexion() {
         //self::$conexion = mysqli_connect('localhost', 'maria', 'Chubaca2020', 'desafio2');
-        self::$conexion = mysqli_connect('localhost', 'usuario', 'Chubaca2020', 'desafio2');
+        self::$conexion = mysqli_connect('localhost', constantes::$usuarioBD, constantes::$passBD, constantes::$bd);
         //self::$conexion = mysqli_connect('localhost', 'Maria', 'Chubaca2020', 'desafio2');
         print "Conexión realizada de forma procedimental: " . mysqli_get_server_info(self::$conexion) . "<br/>";
         if (mysqli_connect_errno(self::$conexion)) {

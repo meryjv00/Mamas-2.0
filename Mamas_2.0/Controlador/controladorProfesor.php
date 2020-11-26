@@ -42,7 +42,7 @@ if (isset($_REQUEST['cerrarSesion'])) {
 
 //-----------------VER PERFIL
 if (isset($_REQUEST['perfil'])) {
-    header('Location: ../Vistas/perfil.php');
+    header('Location: ../Vistas/perfilP.php');
 }
 
 //-----------------EDITAR FOTO PERFIL
