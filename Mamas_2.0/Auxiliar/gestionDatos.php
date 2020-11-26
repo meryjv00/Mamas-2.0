@@ -641,7 +641,7 @@ class gestionDatos {
 
     static function insertExamen($examen, $idasignatura) {
         self::conexion();
-        $consulta = "INSERT INTO examen VALUES (" . $pregunta->getId() . "," . $idasignatura . ",'" . $pregunta->getProfesor() . "','" . $pregunta->getContenido() . "','" . $pregunta->getDescripcion() . "','" . $pregunta->getActivo() . "')";
+        $consulta = "INSERT INTO examen VALUES (" . $examen->getId() . "," . $idasignatura . ",'" . $examen->getProfesor() . "','" . $examen->getContenido() . "','" . $examen->getDescripcion() . "','" . $examen->getActivo() . "')";
         if (self::$conexion->query($consulta)) {
 
             $correcto = true;

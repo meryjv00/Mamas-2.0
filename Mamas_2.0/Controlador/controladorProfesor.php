@@ -7,6 +7,7 @@
  */
 include_once '../Auxiliar/gestionDatos.php';
 include_once '../Modelo/Usuario.php';
+include_once '../Modelo/Asignatura.php';
 include_once '../Modelo/Pregunta.php';
 include_once '../Modelo/Asignatura.php';
 include_once '../Modelo/Respuesta.php';
@@ -69,6 +70,35 @@ if (isset($_REQUEST['nuevaPass'])) {
     header('Location: ../Vistas/perfil.php');
 }
 
+//------------------VER EXAMENES
+if (isset($_REQUEST['verExamenes'])) {
+
+    header('Location: ../Vistas/crudExamenes.php');
+}
+
+//------------------CREAR EXAMENES
+if (isset($_REQUEST['crearExamenes'])) {
+
+    header('Location: ../Vistas/crearExamen.php');
+}
+if (isset($_REQUEST['crearExamen'])) {
+    $idAsignatura = $_REQUEST['asignaturas'];
+    $descripcion = $_REQUEST['descripcion'];
+    $contenido = $_REQUEST['contenido'];
+    $fechai = $_REQUEST['fechainicio'];
+    $fechaf = $_REQUEST['fechafin'];
+    $idP = $usuario->getId();
+
+    $ex = new Examen(0, $idP, $contenido, $descripcion, 0);
+    for ($i = 0; $i < count($asignaturas); $i++) {
+        if ($asignaturas[$i]->getIdAsignatura() == $idAsignatura) {
+            $asignaturas[$i]->addExamen($ex);
+        }
+    }
+    $_SESSION['asignaturasImpartidas'] = $asignaturas;
+    gestionDatos::insertExamen($ex, $idAsignatura);
+    header('Location: ../Vistas/crudExamenes.php');
+}
 if (isset($_REQUEST['aniadirPreguntas'])) {
     $datos = $_REQUEST['json'];
     $preguntas = json_decode($datos, false); // Array asociativo los datos van por referencia
