@@ -7,6 +7,7 @@
  */
 include_once '../Auxiliar/gestionDatos.php';
 include_once '../Modelo/Usuario.php';
+include_once '../Modelo/Asignatura.php';
 session_start();
 if (isset($_SESSION['usuario'])) {
     $usuario = $_SESSION['usuario'];
@@ -78,14 +79,19 @@ if (isset($_REQUEST['crearExamenes'])) {
     header('Location: ../Vistas/crearExamen.php');
 }
 if (isset($_REQUEST['crearExamen'])) {
-    $descripcion = $_SESSION['descripcion'];
-    $contenido = $_SESSION['contenido'];
-    $fechai = $_SESSION['fechainicio'];
-    $fechaf = $_SESSION['fechafin'];
+    $idAsignatura = $_REQUEST['asignaturas'];
+    $descripcion = $_REQUEST['descripcion'];
+    $contenido = $_REQUEST['contenido'];
+    $fechai = $_REQUEST['fechainicio'];
+    $fechaf = $_REQUEST['fechafin'];
     $idP = $usuario->getId();
-    
 
     $ex = new Examen(0, $idP, $contenido, $descripcion, 0);
-    gestionDatos::insertExamen($ex, $idasignatura);
+    for ($i = 0; $i < count($asignaturas); $i++) {
+        if ($asignaturas[$i]->getIdAsignatura() == $idAsignatura) {
+            $asignaturas[$i]->addExamen($ex);
+        }
+    }
+    gestionDatos::insertExamen($ex, $idAsignatura);
     header('Location: ../Vistas/verExamen.php');
 }

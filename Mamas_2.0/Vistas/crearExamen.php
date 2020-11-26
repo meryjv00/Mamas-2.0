@@ -89,10 +89,10 @@ and open the template in the editor.
                                                     <div class="col pr-3">
                                                         <label for="asignaturas">Asignatura</label>
 
-                                                        <select class="browser-default custom-select " id="asignaturas">
+                                                        <select class="browser-default custom-select " name="asignaturas" id="asignaturas">
                                                             <option value="0" selected>Seleccione una asignatura</option>
                                                             <?php for ($i = 0; $i < count($asignatura); $i++) { ?>
-                                                                <option value="<?php echo $i + 1; ?>" ><?php echo $asignatura[$i]->getNombre(); ?></option>
+                                                                <option value="<?php echo $asignatura[$i]->getIdAsignatura(); ?>" name="<?php echo $asignatura[$i]->getNombre(); ?>"><?php echo $asignatura[$i]->getNombre(); ?></option>
                                                             <?php } ?>
                                                         </select>
 
