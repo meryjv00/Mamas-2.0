@@ -679,6 +679,7 @@ function addVistaPrevia(pregunta) {
     var lista = document.getElementById("preguntasCreadas");
     var listali = document.createElement("li");
     listali.classList.add('list-group-item');
+    listali.classList.add('border');
     var parr = document.createElement("p");
 
     var p = document.createTextNode(pregunta.getId() + ". " + pregunta.getEnunciado() + " - " + pregunta.getPuntuacion() + " (pnt)");
@@ -703,7 +704,13 @@ function addVistaPrevia(pregunta) {
         for (var i = 0; i < opciones.length; i++) {
             var parr2 = document.createElement("p");
             var opcion = opciones[i];
-            var p3 = document.createTextNode(opcion.getId() + ") " + opcion.getOpcion() + " " + opcion.getCorrecto());
+            var texto;
+            if(opcion.getCorrecto()){
+                texto = "Correcta";
+            }else{
+                texto = "Incorrecta";
+            }
+            var p3 = document.createTextNode(opcion.getId() + ") " + opcion.getOpcion() + " >>" + texto);
             parr2.appendChild(p3);
             listali.appendChild(parr2);
         }
@@ -721,7 +728,7 @@ function addPreguntas() {
         if (preguntas.length == 0) {
             event.preventDefault();
             alert('Añade al menos una pregunta');
-        }else{
+        } else {
             json.value = JSON.stringify(preguntas);
         }
     });
