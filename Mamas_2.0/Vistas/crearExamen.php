@@ -54,10 +54,7 @@ and open the template in the editor.
                                         btn-rounded waves-effect z-depth-1a" name="verExamenes" value="Ver exámenes">
                                     Ver exámenes
                                 </button>
-                                <button type="submit" class="btn mean-fruit-gradient text-white
-                                        btn-rounded waves-effect z-depth-1a" name="crearExamenes" value="Crear exámenes">
-                                    Crear exámenes
-                                </button>
+
                                 <button type="submit" class="btn mean-fruit-gradient text-white
                                         btn-rounded waves-effect z-depth-1a" name="cerrarSesion" value="Cerrar sesión">
                                     <i class="fas fa-sign-out-alt"></i>
@@ -91,30 +88,31 @@ and open the template in the editor.
                                                     <!--Asignatura-->
                                                     <div class="col pr-3">
                                                         <label for="asignaturas">Asignatura</label>
+
                                                         <select class="browser-default custom-select " id="asignaturas">
                                                             <option value="0" selected>Seleccione una asignatura</option>
                                                             <?php for ($i = 0; $i < count($asignatura); $i++) { ?>
                                                                 <option value="<?php echo $i + 1; ?>" ><?php echo $asignatura[$i]->getNombre(); ?></option>
                                                             <?php } ?>
                                                         </select>
+
                                                         <div class="pt-5">
                                                             <label for="descripcion">Descripcion</label>
-                                                            <textarea style="resize: none"  rows="5" cols="10" id="descripcion" class="form-control mb-4" placeholder="Descripcion"></textarea>
+                                                            <textarea style="resize: none"  rows="5" cols="10" id="descripcion" name="descripcion" class="form-control mb-4" placeholder="Descripcion"></textarea>
                                                         </div>
                                                     </div>
                                                     <!--Contenido-->
                                                     <div class="col">
                                                         <label for="contenido">Contenido</label>
-                                                        <input type="text" id="contenido" class="form-control mb-4" >
+                                                        <input type="text" id="contenido" name="contenido" class="form-control mb-4" >
                                                         <div class=" pt-3">
                                                             <label for="contenido">Fecha inicio</label>
-                                                            <input type="date" id="fechainicio" class="form-control mb-4" placeholder="Enunciado">
+                                                            <input type="date" name="fechainicio" id="fechainicio" class="form-control mb-4" placeholder="Enunciado">
                                                             <label for="contenido">Fecha Fin</label>
-                                                            <input type="date" id="fechafin" class="form-control mb-4" placeholder="Enunciado">
+                                                            <input type="date" name="fechafin" id="fechafin" class="form-control mb-4" placeholder="Enunciado">
                                                         </div>
                                                         <!--BOTON CREAR EXAMEN-->
                                                         <div class="col-md-12"></div>
-
                                                         <button type="submit" name="crearExamen"  class="btn mean-fruit-gradient text-white 
                                                                 btn-block btn-rounded my-4 waves-effect z-depth-1a">Crear Examen</button>
                                                     </div>

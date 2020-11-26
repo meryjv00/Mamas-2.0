@@ -8,6 +8,10 @@
 include_once '../Auxiliar/gestionDatos.php';
 include_once '../Modelo/Usuario.php';
 session_start();
+if (isset($_SESSION['usuario'])) {
+    $usuario = $_SESSION['usuario'];
+    $asignaturas = $_SESSION['asignaturasImpartidas'];
+}
 //-----------------IR AL CRUD DE USUARIOS
 if (isset($_REQUEST['CRUDadmin'])) {
     $usuarios = gestionDatos::getUsuarios();
@@ -72,4 +76,16 @@ if (isset($_REQUEST['verExamenes'])) {
 if (isset($_REQUEST['crearExamenes'])) {
 
     header('Location: ../Vistas/crearExamen.php');
+}
+if (isset($_REQUEST['crearExamen'])) {
+    $descripcion = $_SESSION['descripcion'];
+    $contenido = $_SESSION['contenido'];
+    $fechai = $_SESSION['fechainicio'];
+    $fechaf = $_SESSION['fechafin'];
+    $idP = $usuario->getId();
+    
+
+    $ex = new Examen(0, $idP, $contenido, $descripcion, 0);
+    gestionDatos::insertExamen($ex, $idasignatura);
+    header('Location: ../Vistas/verExamen.php');
 }
