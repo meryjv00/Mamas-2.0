@@ -58,15 +58,27 @@ and open the template in the editor.
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <form name="formu" action="../Controlador/controladorProfesor.php" method="post">
-                                <button type="submit" class="btn mean-fruit-gradient text-white
+                                <button type="submit" class="btn mean-fruit-gradient text-white 
                                         btn-rounded waves-effect z-depth-1a" name="verExamenes" value="Ver exámenes">
-                                    Ver exámenes
+                                    <i class="far fa-eye pr-1"></i> exámenes
                                 </button>
-
+                                <button type="submit" class="btn mean-fruit-gradient text-white 
+                                        btn-rounded waves-effect z-depth-1a" name="crearExamenes" value="Crear exámenes">
+                                    <i class="fas fa-plus pr-1"></i> exámenes
+                                </button>
+                                <button type="submit" class="btn mean-fruit-gradient text-white 
+                                        btn-rounded waves-effect z-depth-1a" name="crearPreguntas" value="Crear preguntas">
+                                    <i class="fas fa-plus pr-1"></i>  preguntas
+                                </button>
+                                <button type="submit" class="btn mean-fruit-gradient text-white
+                                        btn-rounded waves-effect z-depth-1a" name="perfil" value="Ver perfil">
+                                    <i class="fas fa-user"></i>
+                                </button>
                                 <button type="submit" class="btn mean-fruit-gradient text-white
                                         btn-rounded waves-effect z-depth-1a" name="cerrarSesion" value="Cerrar sesión">
                                     <i class="fas fa-sign-out-alt"></i>
                                 </button>
+
                             </form>
                         </li> 
                     </ul>
@@ -82,7 +94,7 @@ and open the template in the editor.
                         <div class="col-md-10 mx-auto card card-cascade narrower pb-5 bg-white">
                             <div class="view view-cascade gradient-card-header mean-fruit-gradient">
                                 <!-- Title -->
-                                <h2 class="card-header-title font-weight-bold text-center letra display-4 titulo2 pt-2 pb-2 ">Nuevo Examen</h2>
+                                <h2 class="card-header-title  text-center titulo text-white pt-2 pb-2  ">Nuevo exámen</h2>
                             </div>
                             <div class="justify-content-center">
                                 <form name="formPreg" action="../Controlador/controladorProfesor.php" method="post" novalidate>
@@ -93,7 +105,7 @@ and open the template in the editor.
                                         <div class="row d-flex justify-content-center">
                                             <!--Grid column-->
                                             <div class="col-md-10">
-                                                <div class="form-row mb-4">
+                                                <div class="form-row">
                                                     <!--Asignatura-->
                                                     <div class="form-row col-12">
                                                         <div class="col-md-6 col-s-12">
@@ -117,16 +129,16 @@ and open the template in the editor.
                                                             <textarea style="resize: none"  rows="5" cols="10" id="descripcion" name="descripcion" class="form-control mb-4" placeholder="Descripcion"></textarea>
                                                         </div>
                                                         <!--Contenido-->
-                                                        <div class="pl-3 col-md-5 col-s-12">
+                                                        <div class="pl-3 col-md-6 col-s-12">
 
                                                             <label for="fechai">Fecha inicio</label>
                                                             <input type="date" name="fechainicio" id="fechainicio" class="form-control mb-4" placeholder="Enunciado">
                                                             <label for="fechaf">Fecha Fin</label>
-                                                            <input type="date" name="fechafin" id="fechafin" class="form-control mb-4" placeholder="Enunciado">
+                                                            <input type="date" name="fechafin" id="fechafin" class="form-control" placeholder="Enunciado">
                                                         </div>
                                                         <!--BOTON CREAR EXAMEN-->
-                                                        <div class="col-md-10 col-s-12">
-                                                            <button type="submit" name="crearExamen"  class="btn mean-fruit-gradient text-white 
+                                                        <div class="col-md-6 col-s-12 mx-auto">
+                                                            <button type="submit" name="crearExamen"  class="btn purple lighten-3 text-white 
                                                                     btn-block btn-rounded my-4 waves-effect z-depth-1a">Crear Examen</button>
                                                         </div>
                                                     </div>

@@ -55,7 +55,19 @@ and open the template in the editor.
                     <ul class="navbar-nav ml-auto mr-5">
                         <li class="nav-item">
 
-                            <form name="cerrarSes" action="../Controlador/controlador.php" method="post">
+                            <form name="cerrarSes" action="../Controlador/controladorProfesor.php" method="post">
+                                <button type="submit" class="btn mean-fruit-gradient text-white 
+                                        btn-rounded waves-effect z-depth-1a" name="verExamenes" value="Ver exámenes">
+                                    <i class="far fa-eye pr-1"></i> exámenes
+                                </button>
+                                <button type="submit" class="btn mean-fruit-gradient text-white 
+                                        btn-rounded waves-effect z-depth-1a" name="crearExamenes" value="Crear exámenes">
+                                    <i class="fas fa-plus pr-1"></i> exámenes
+                                </button>
+                                <button type="submit" class="btn mean-fruit-gradient text-white 
+                                        btn-rounded waves-effect z-depth-1a" name="crearPreguntas" value="Crear preguntas">
+                                    <i class="fas fa-plus pr-1"></i>  preguntas
+                                </button>
                                 <button type="submit" class="btn mean-fruit-gradient text-white
                                         btn-rounded waves-effect z-depth-1a" name="perfil" value="Ver perfil">
                                     <i class="fas fa-user"></i>

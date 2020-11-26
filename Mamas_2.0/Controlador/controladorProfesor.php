@@ -147,3 +147,47 @@ if (isset($_REQUEST['aniadirPreguntas'])) {
     }
     header('Location: ../Vistas/crudExamenes.php');
 }
+//--------CREAR PREGUNTAS
+if (isset($_REQUEST['crearPreguntas'])) {
+    header('Location: ../Vistas/crearPregunta.php');
+}
+if (isset($_REQUEST['verExamen'])) {
+    $examenes = $asignaturas[0]->getExamenes();
+    if (count($examenes) > 0) {
+        $cont = 0;
+        foreach ($examenes as $i => $examen) {
+            if (isset($_REQUEST[$i])) {
+                $pulsado = true;
+                $cont++;
+                $pos = $i;
+            }
+        }
+    }
+    if (!$pulsado || $cont >= 2) {
+        header('Location: ../Vistas/crudExamenes.php');
+    } else {
+        $_SESSION['examenS'] = $examenes[$pos];
+        header('Location: ../Vistas/verExamen.php');
+    }
+}
+
+if (isset($_REQUEST['asignarPreguntas'])) {
+
+    $examenes = $asignaturas[0]->getExamenes();
+    if (count($examenes) > 0) {
+        $cont = 0;
+        foreach ($examenes as $i => $examen) {
+            if (isset($_REQUEST[$i])) {
+                $pulsado = true;
+                $cont++;
+                $pos = $i;
+            }
+        }
+    }
+    if (!$pulsado || $cont >= 2) {
+        header('Location: ../Vistas/crudExamenes.php');
+    } else {
+        $_SESSION['examenS'] = $examenes[$pos];
+        header('Location: ../Vistas/asignarPreguntas.php');
+    }
+}    

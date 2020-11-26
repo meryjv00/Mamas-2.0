@@ -54,7 +54,7 @@ and open the template in the editor.
 
                             <button type="submit" class="btn mean-fruit-gradient text-white
                                     btn-rounded waves-effect z-depth-1a" name="homeInicio" value="homeInicio">
-                                Vista alumno
+                                <i class="far fa-eye pr-1"></i> alumno
                             </button>
 
                         </form>
@@ -63,7 +63,22 @@ and open the template in the editor.
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <form name="formu" action="../Controlador/controladorProfesor.php" method="post">
-
+                                <button type="submit" class="btn mean-fruit-gradient text-white 
+                                        btn-rounded waves-effect z-depth-1a" name="verExamenes" value="Ver exámenes">
+                                    <i class="far fa-eye pr-1"></i> exámenes
+                                </button>
+                                <button type="submit" class="btn mean-fruit-gradient text-white 
+                                        btn-rounded waves-effect z-depth-1a" name="crearExamenes" value="Crear exámenes">
+                                    <i class="fas fa-plus pr-1"></i> exámenes
+                                </button>
+                                <button type="submit" class="btn mean-fruit-gradient text-white 
+                                        btn-rounded waves-effect z-depth-1a" name="crearPreguntas" value="Crear preguntas">
+                                    <i class="fas fa-plus pr-1"></i>  preguntas
+                                </button>
+                                <button type="submit" class="btn mean-fruit-gradient text-white
+                                        btn-rounded waves-effect z-depth-1a" name="perfil" value="Ver perfil">
+                                    <i class="fas fa-user"></i>
+                                </button>
                                 <button type="submit" class="btn mean-fruit-gradient text-white
                                         btn-rounded waves-effect z-depth-1a" name="cerrarSesion" value="Cerrar sesión">
                                     <i class="fas fa-sign-out-alt"></i>
@@ -82,55 +97,71 @@ and open the template in the editor.
                     <div class="col-12">
                         <div class="card card-list">
                             <div class="card-header white d-flex justify-content-between align-items-center py-3">
-                                <h3 class="h5-responsive font-weight-bold mb-0">Examenes</h3>
-                                <h5 class="h5-responsive font-weight-bold mb-0"><?php echo $asignatura[0]->getNombre(); ?></h5>
+
+                                <h5 class="h5-responsive font-weight-bold ml-auto letra mb-0"><?php echo $asignatura[0]->getNombre(); ?></h5>
                             </div>
                             <div class="card-body">
-                                <table class="table text-center">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">ID</th>
-                                            <th scope="col">Contenido</th>
-                                            <th scope="col">Activo</th>
-                                            <th scope="col">Preguntas</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="">
-                                        <?php
-                                        foreach ($examenes as $i => $examen) { // crea una fila para cada examen
-                                            ?>
-                                            <tr>
-                                                <th scope="row"><a class="text-primary"><?php echo $examen->getId(); ?></a></th>
-                                                <td><?php echo $examen->getContenido(); ?></td>
-                                                <td><span class="badge badge-<?php
-                                                    if ($examen->getActivo() == 0) {
-                                                        //Cambia el color de verde en activado y rojo en desactivado
-                                                        echo'danger';
-                                                    } else {
-                                                        echo'success';
-                                                    }
-                                                    ?>"><?php
-                                                              if ($examen->getActivo() == 0) {
-                                                                  //Cambia el color de verde en activado y rojo en desactivado
-                                                                  echo'Desactivado';
-                                                              } else {
-                                                                  echo'Activado';
-                                                              }
-                                                              ?></span></td>
-                                                <td class="pt-2 pb-0"><?php echo count($examen->getPreguntas()); ?></td>
-                                            </tr>
-                                            <?php
-                                        }
-                                        ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <form name="crudExamenes" action="../Controlador/controladorProfesor.php" method="post">
-                                <div class="card-footer white py-3 d-flex justify-content-between">
-                                    <button type="submit" name="crearExamenes" class="btn btn-secondary btn-md px-3 my-0 mr-0">Crear nuevo examen</button>
+                                <form name="formExamenes" action="../Controlador/controladorProfesor.php" method="post">
+                                    <div class="view view-cascade gradient-card-header mean-fruit-gradient narrower d-flex py-2 mx-4 mb-3 justify-content-between align-items-center">
 
-                                </div>
-                            </form>
+                                        <h4 class="ml-auto white-text text-center ">Mis exámenes</h4>
+                                        <div class="ml-auto pr-3">
+
+                                            <button type="submit" name="verExamen" class="btn btn-outline-white btn-rounded btn-sm px-2"
+                                                    data-toggle="tooltip" data-placement="top" title="Ver en detalle">
+                                                <i class="far fa-eye " style="font-size: 20px"></i>
+                                            </button>
+                                            <button type="submit" name="asignarPreguntas" class="btn btn-outline-white btn-rounded btn-sm px-2"
+                                                    data-toggle="tooltip" data-placement="top" title="Asignar preguntas">
+                                                <i class="fas fa-question" style="font-size: 20px"></i>
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+                                    <table class="table text-center">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"></th>
+                                                <th scope="col">Contenido</th>
+                                                <th scope="col">Activo</th>
+                                                <th scope="col">Preguntas</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="">
+                                            <?php
+                                            foreach ($examenes as $i => $examen) { // crea una fila para cada examen
+                                                ?>
+                                                <tr>
+
+                                                    <th scope="row"> <input class="form-check-input" type="checkbox" id="checkbox1" name="<?= $i ?>">
+                                                    </th>
+                                                    <td><?php echo $examen->getContenido(); ?></td>
+                                                    <td><span class="badge badge-<?php
+                                                        if ($examen->getActivo() == 0) {
+                                                            //Cambia el color de verde en activado y rojo en desactivado
+                                                            echo'danger';
+                                                        } else {
+                                                            echo'success';
+                                                        }
+                                                        ?>"><?php
+                                                                  if ($examen->getActivo() == 0) {
+                                                                      //Cambia el color de verde en activado y rojo en desactivado
+                                                                      echo'Desactivado';
+                                                                  } else {
+                                                                      echo'Activado';
+                                                                  }
+                                                                  ?></span></td>
+                                                    <td class="pt-2 pb-0"><?php echo count($examen->getPreguntas()); ?></td>
+                                                </tr>
+                                                <?php
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+
                         </div>
                     </div>
                 </div>

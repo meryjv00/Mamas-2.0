@@ -31,29 +31,45 @@ and open the template in the editor.
                 <div class="container-fluid ml-5 mr-5">
                     <!--Left-->
                     <ul class="navbar-nav mr-auto smooth-scroll">
-                        <form name="formu" action="../Controlador/controladorProfesor.php" method="post">                            
+                        <form name="formu" action="../Controlador/controladorProfesor.php" method="post"> 
+                            <!--CRUD ADMINISTRADOR-->
+                            <?php
+                            if ($usuario->getRol() == 2) {
+                                ?>
+                                <button type="submit" class="btn mean-fruit-gradient text-white
+                                        btn-rounded waves-effect z-depth-1a" name="CRUDadmin" value="CRUDadmin">
+                                    <i class="fas fa-cog"></i>
+                                </button>
+                                <?php
+                            }
+                            ?>
                             <!--HOME PAGINA INICIO-->
                             <button type="submit" class="btn mean-fruit-gradient text-white
                                     btn-rounded waves-effect z-depth-1a" name="home" value="home">
                                 <i class="fas fa-home"></i>
                             </button>
-                            <!--HOME PAGINA INICIO-->
-                            <a href="crearExamen.php" class="btn mean-fruit-gradient btn-rounded text-white">
-                                <i class="fas fa-arrow-left"></i>
-                            </a>
+
                         </form>
                     </ul>
                     <!-- Right -->
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <form name="formu" action="../Controlador/controladorProfesor.php" method="post">
-                                <button type="submit" class="btn mean-fruit-gradient text-white
+                                <button type="submit" class="btn mean-fruit-gradient text-white 
                                         btn-rounded waves-effect z-depth-1a" name="verExamenes" value="Ver exámenes">
-                                    Ver exámenes
+                                    <i class="far fa-eye pr-1"></i> exámenes
+                                </button>
+                                <button type="submit" class="btn mean-fruit-gradient text-white 
+                                        btn-rounded waves-effect z-depth-1a" name="crearExamenes" value="Crear exámenes">
+                                    <i class="fas fa-plus pr-1"></i> exámenes
+                                </button>
+                                <button type="submit" class="btn mean-fruit-gradient text-white 
+                                        btn-rounded waves-effect z-depth-1a" name="crearPreguntas" value="Crear preguntas">
+                                    <i class="fas fa-plus pr-1"></i>  preguntas
                                 </button>
                                 <button type="submit" class="btn mean-fruit-gradient text-white
-                                        btn-rounded waves-effect z-depth-1a" name="crearExamenes" value="Crear exámenes">
-                                    Crear exámenes
+                                        btn-rounded waves-effect z-depth-1a" name="perfil" value="Ver perfil">
+                                    <i class="fas fa-user"></i>
                                 </button>
                                 <button type="submit" class="btn mean-fruit-gradient text-white
                                         btn-rounded waves-effect z-depth-1a" name="cerrarSesion" value="Cerrar sesión">
