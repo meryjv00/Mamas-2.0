@@ -104,6 +104,11 @@ if (isset($_REQUEST['crearExamen'])) {
     header('Location: ../Vistas/crudExamenes.php');
 }
 if (isset($_REQUEST['aniadirPreguntas'])) {
+    if (isset($_SESSION['preguntasCreadas'])) {
+        $preguntasEx = $_SESSION['preguntasCreadas'];
+    } else {
+        $preguntasEx = Array();
+    }
     $datos = $_REQUEST['json'];
     $preguntas = json_decode($datos, false); // Array asociativo los datos van por referencia
     var_dump($preguntas);
@@ -118,7 +123,8 @@ if (isset($_REQUEST['aniadirPreguntas'])) {
 
         $idAsig = gestionDatos::getIdAsignaturaN($asignatura);
         $numero = count($preguntas);
-        $p = new Pregunta(0, $profesor, $enunciado, $tipo, $puntuacion);
+        $idPregunta = gestionDatos::getIdPregunta();
+        $p = new Pregunta($idPregunta + 1, $profesor, $enunciado, $tipo, $puntuacion);
         foreach ($asignaturas as $q => $asignatura) {
             if ($idAsig == $asignatura->getIdAsignatura()) {
                 $idPregunta = gestionDatos::insertPregunta($p, $idAsig);
@@ -127,7 +133,8 @@ if (isset($_REQUEST['aniadirPreguntas'])) {
                 foreach ($datos as $j => $dato) {
                     if ($tipo == 0) {
                         $nombre = $dato->nombre;
-                        $respuesta = new Respuesta(0, $profesor, $nombre, 0);
+                        $idRespuesta = gestionDatos::getIdRespuesta();
+                        $respuesta = new Respuesta($idRespuesta + 1, $profesor, $nombre, 0);
                     } else {
                         $opcion = $dato->opcion;
                         if ($dato->correcto) {
@@ -135,22 +142,39 @@ if (isset($_REQUEST['aniadirPreguntas'])) {
                         } else {
                             $correcto = 0;
                         }
-                        $respuesta = new Respuesta(0, $profesor, $opcion, $correcto);
+                        $idRespuesta = gestionDatos::getIdRespuesta();
+                        $respuesta = new Respuesta($idRespuesta + 1, $profesor, $opcion, $correcto);
                     }
                     $p->addRespuesta($respuesta);
                     gestionDatos::insertRespuesta($respuesta, $idPregunta);
                 }
+                $preguntasEx[] = $p;
                 $asignatura->addPregunta($p);
             }
         }
         $_SESSION['asignaturasImpartidas'] = $asignaturas;
     }
-    header('Location: ../Vistas/crudExamenes.php');
+    if (isset($_SESSION['vienesEx'])) {
+        $_SESSION['preguntasCreadas'] = $preguntasEx;
+        unset($_SESSION['vienesEx']);
+        header('Location: ../Vistas/asignarPreguntas.php');
+    } else {
+        $_SESSION['mensaje'] = 'Preguntas creadas! Para ver todas tus preguntas accede a "Asignar preguntas"';
+        header('Location: ../Vistas/crudExamenes.php');
+    }
 }
 //--------CREAR PREGUNTAS
 if (isset($_REQUEST['crearPreguntas'])) {
     header('Location: ../Vistas/crearPregunta.php');
 }
+if (isset($_REQUEST['crearPreguntasEx'])) {
+    $_SESSION['vienesEx'] = true;
+    header('Location: ../Vistas/crearPregunta.php');
+}
+if (isset($_REQUEST['verPreguntasCreadas'])) {
+    header('Location: ../Vistas/verPreguntas.php');
+}
+
 if (isset($_REQUEST['verExamen'])) {
     $examenes = $asignaturas[0]->getExamenes();
     if (count($examenes) > 0) {
@@ -164,6 +188,7 @@ if (isset($_REQUEST['verExamen'])) {
         }
     }
     if (!$pulsado || $cont >= 2) {
+        $_SESSION['mensaje'] = "Marca el checkbox del exámen a realizar acción";
         header('Location: ../Vistas/crudExamenes.php');
     } else {
         $_SESSION['examenS'] = $examenes[$pos];
@@ -185,9 +210,33 @@ if (isset($_REQUEST['asignarPreguntas'])) {
         }
     }
     if (!$pulsado || $cont >= 2) {
+        $_SESSION['mensaje'] = "Marca el checkbox del exámen a realizar acción";
         header('Location: ../Vistas/crudExamenes.php');
     } else {
         $_SESSION['examenS'] = $examenes[$pos];
         header('Location: ../Vistas/asignarPreguntas.php');
     }
-}    
+}
+
+//---------------------ASIGNAR PREGUNTAS A UN EXÁMEN
+if (isset($_REQUEST['aniadirPreguntasExamen'])) {
+    $preguntasCreadas = $_SESSION['preguntasCreadas'];
+    $examenS = $_SESSION['examenS'];
+
+    $asignatura = $_SESSION['asignaturasImpartidas'];
+    $examenes = $asignatura[0]->getExamenes();
+    foreach ($examenes as $j => $examen) {
+        if ($examen->getId() == $examenS->getId()) {
+            
+            foreach ($preguntasCreadas as $i => $pregunta) {
+                gestionDatos::asignarPregunta($preguntasCreadas[$i], $examenS);
+                //Add pregunta al exámen
+                $examen->addPregunta($pregunta);
+            }
+        }
+    }
+    $asignatura[0]->setExamenes($examenes);
+    $_SESSION['asignaturasImpartidas'] = $asignatura;
+    unset($_SESSION['preguntasCreadas']);
+    header('Location: ../Vistas/crudExamenes.php');
+}
