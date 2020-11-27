@@ -105,8 +105,23 @@ and open the template in the editor.
                             <!-- Card -->
                             <div class="card card-cascade wider reverse">
                                 <div class="view view-cascade gradient-card-header mean-fruit-gradient">
-                                    <!-- Title -->
-                                    <h2 class="card-header-title  text-center titulo text-white pt-2 pb-2  ">Examen</h2>
+                                    <div class="row  ">
+                                        <!-- Title -->
+                                        <div class="col-md-4"></div>
+                                        <h2 class="mx-auto card-header-title  text-center titulo text-white pt-2 pb-2  ">Examen</h2>
+                                        <div class="ml-auto mr-5 pb-2">
+                                            <!-- Facebook -->
+                                            <button name="corregirA" title="Corregir auto" class=" btn btn-outline-secondary btn-rounded btn-sm px-2 purple lighten-3" ">
+                                                <i class="fas fa-magic " style="font-size: 20px ;color: white" ></i>
+                                            </button>
+                                            <button name="corregirM" title="Corregir manual" class=" btn btn-outline-secondary btn-rounded btn-sm px-2 purple lighten-3" ">
+                                                <i class="fas fa-file-signature" style="font-size: 20px ;color: white"></i>
+                                            </button>
+                                            <button name="asignarP" title="Asignar preguntas"  class=" btn btn-outline-secondary btn-rounded btn-sm px-2 purple lighten-3" ">
+                                                <i class="far fa-file-powerpoint" style="font-size: 20px ;color: white"></i>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                                 <!-- Card image -->
                                 <div class="view view-cascade overlay pt-4">
@@ -130,19 +145,7 @@ and open the template in the editor.
 
                                 </div>
                                 <!-- Card content -->
-                                <div class="col-md-12 pb-2">
-                                    <!-- Facebook -->
-                                    <button name="corregirA" title="corregir auto" class="btn btn-outline-secondary btn-rounded btn-sm px-2 purple lighten-3" ">
-                                        <i class="fas fa-magic" style="font-size: 20px" ></i>
-                                    </button>
-                                    <button name="corregirM" title="corregir manual" class="btn btn-outline-secondary btn-rounded btn-sm px-2 purple lighten-3" ">
-                                        <i class="fas fa-file-signature" style="font-size: 20px"></i>
-                                    </button>
-                                    <button name="asignarP" title="asignar Preguntas"  class="btn btn-outline-secondary btn-rounded btn-sm px-2 purple lighten-3" ">
-                                        <i class="far fa-file-powerpoint" style="font-size: 20px"></i>
-                                    </button>
 
-                                </div>
                             </div>
                             <!-- Card -->
 
