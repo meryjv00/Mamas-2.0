@@ -167,6 +167,7 @@ if (isset($_REQUEST['verExamen'])) {
         header('Location: ../Vistas/crudExamenes.php');
     } else {
         $_SESSION['examenS'] = $examenes[$pos];
+        $_SESSION['creadorEx'] = gestionDatos::getUsuarioId($examenes[$pos]->getProfesor());
         header('Location: ../Vistas/verExamen.php');
     }
 }
@@ -240,4 +241,24 @@ if (isset($_REQUEST['desactivarExamen'])) {
         $_SESSION['examenS'] = $examenes[$pos];
         header('Location: ../Vistas/crudExamenes.php');
     }
-}    
+}
+//------------------CORREGIR MANUALMENTE
+if (isset($_REQUEST['correccionM'])) {
+    $_SESSION['corregir'] = 'manual';
+    header('Location: ../Vistas/correccion.php');
+}
+
+//------------------CORREGIR AUTO
+if (isset($_REQUEST['correcionA'])) {
+    $_SESSION['corregir'] = 'auto';
+    header('Location: ../Vistas/correccion.php');
+}
+
+//------------------ASIGNAR PREGUNTAS
+if (isset($_REQUEST['asignarP'])) {
+    header('Location: ../Vistas/asignarPreguntas.php');
+}
+//------------------CRUD PREGUNTAS
+if (isset($_REQUEST['crudP'])) {
+    header('Location: ../Vistas/crudPreguntas.php');
+}
