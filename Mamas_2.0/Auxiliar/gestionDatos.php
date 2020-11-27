@@ -310,7 +310,6 @@ class gestionDatos {
                 $preguntas = self::getPreguntasExamen($idE);
                 $e->setPreguntas($preguntas);
                 $examenes[] = $e;
-                
             }
             return $examenes;
         }
@@ -356,8 +355,7 @@ class gestionDatos {
                 $p = new Pregunta($idP, $profesor, $enunciado, $tipo, $puntuacion);
                 $respuestas = self::getRespuestasPregunta($idP);
                 $p->setRespuestas($respuestas);
-                $preguntas[] = $p; 
-                
+                $preguntas[] = $p;
             }
             return $preguntas;
         }
@@ -382,7 +380,7 @@ class gestionDatos {
             return $respuestas;
         }
     }
-    
+
     static function getUsuarioRol($rol) {
         self::conexion();
         $idAlumnos = array();
@@ -508,6 +506,19 @@ class gestionDatos {
         } else {
             $correcto = false;
             echo "Error al borrar usuario: " . self::$conexion->error . '<br/>';
+        }
+        return $correcto;
+        mysqli_close(self::$conexion);
+    }
+
+    static function deleteAsignacionPreguntaExamen($idEx, $idP) {
+        self::conexion();
+        $consulta = "DELETE FROM asignacionpregunta WHERE idExamen =" . $idEx . " and idPregunta =" . $idP;
+        if (self::$conexion->query($consulta)) {
+            $correcto = true;
+        } else {
+            $correcto = false;
+            echo "Error al borrar la asignacion: " . self::$conexion->error . '<br/>';
         }
         return $correcto;
         mysqli_close(self::$conexion);

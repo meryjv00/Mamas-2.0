@@ -97,7 +97,7 @@ and open the template in the editor.
                                     <div class="mx-auto"></div>
                                     <h2 class="card-header-title  mx-auto text-center titulo text-white pt-2 pb-2 ">Añadir preguntas a exámen</h2>
                                     <button type="submit" name="verExamenS" class="ml-auto mr-3 btn btn-outline-white btn-rounded btn-sm px-2"
-                                            data-toggle="tooltip" data-placement="top" title="Ver en detalle">
+                                            data-toggle="tooltip" data-placement="top" title="Ver exámen en detalle">
                                         <i class="far fa-eye " style="font-size: 20px"></i>
                                     </button>
 
@@ -123,12 +123,12 @@ and open the template in the editor.
                                                 <div class="form-row">
                                                     <!--Asignatura-->
                                                     <div class="form-row col-12">
-                                                        <div class="col-md-6 col-s-12 mx-auto">
+                                                        <div class="col-md-6">
                                                             <button type="submit" name="crearPreguntasEx"  class="btn purple lighten-3 text-white 
                                                                     btn-block btn-rounded my-4 waves-effect z-depth-1a">Crear preguntas
                                                             </button>
                                                         </div>
-                                                        <div class="col-md-6 col-s-12 mx-auto">
+                                                        <div class="col-md-6">
                                                             <button type="submit" name="verPreguntasCreadas"  class="btn purple lighten-3 text-white 
                                                                     btn-block btn-rounded my-4 waves-effect z-depth-1a">Ver preguntas creadas
                                                             </button>
@@ -154,12 +154,11 @@ and open the template in the editor.
                                                                     <!--Section: Content-->
                                                                     <section class="white-dark purple lighten-4 pt-1 rounded">
                                                                         <div class="row px-4">
-                                                                            <div class="col-md-12 ">
+                                                                            <div class="col-md-12">
                                                                                 <h5><?= $contPregunta . '. ' ?><?= $pregunta->getEnunciado() ?></h5>
                                                                             </div>
 
                                                                             <?php
-                                                                            echo $pregunta->getId(); //!!!
                                                                             $respuestas = $pregunta->getRespuestas();
                                                                             if ($pregunta->getTipo() == 0) {
                                                                                 $txt = "Palabras claves:";
@@ -168,10 +167,9 @@ and open the template in the editor.
                                                                             }
                                                                             ?>
                                                                             <span class="col-md-12 mt-1"><?= $txt ?></span>
-                                                                            <div class="col-md-12 mb-2">
+                                                                            <div class="col-md-12">
                                                                                 <?php
                                                                                 foreach ($respuestas as $j => $respuesta) {
-                                                                                    echo $respuesta->getId();//!!
                                                                                     $contOpciones++;
                                                                                     ?>
                                                                                     <span><?= $contOpciones . ') ' . $respuesta->getRespuesta() ?> </span><br>
@@ -179,6 +177,13 @@ and open the template in the editor.
                                                                                 }
                                                                                 $contOpciones = 0;
                                                                                 ?>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3 ml-auto">
+                                                                                <button type="submit" name="<?= $i ?>" value="Quitar" class="btn purple lighten-2 text-white 
+                                                                                        btn-block waves-effect z-depth-1a">Quitar
+                                                                                </button>
                                                                             </div>
                                                                         </div>
                                                                     </section>

@@ -242,7 +242,7 @@ if (isset($_REQUEST['aniadirPreguntasExamen'])) {
     $asignatura[0]->setExamenes($examenes);
     $_SESSION['asignaturasImpartidas'] = $asignatura;
     unset($_SESSION['preguntasCreadas']);
-    header('Location: ../Vistas/crudExamenes.php');
+    header('Location: ../Vistas/verExamen.php');
 }
 
 //-----------------------ACTIVAR EXAMEN
@@ -390,3 +390,56 @@ if (isset($_REQUEST['asignarPregunta'])) {
 if (isset($_REQUEST['verExamenP'])) {
     header('Location: ../Vistas/verExamen.php');
 }
+
+//-----------------------QUITAR PREGUNTA (DESDE ASIGNACION PREGUNTA, NO AÑADIDA TODAVIA)
+if (isset($_SESSION['preguntasCreadas'])) {
+    $preguntasCreadas = $_SESSION['preguntasCreadas'];
+    foreach ($preguntasCreadas as $i => $pregunta) {
+        if (isset($_REQUEST[$i])) {
+            $accion = $_REQUEST[$i];
+            $pos = $i;
+        }
+    }
+    if ($accion == 'Quitar') {
+        $preguntaSeleccionada = $preguntasCreadas[$pos];
+        foreach ($preguntasCreadas as $j => $pregunta) {
+            if ($preguntaSeleccionada->getId() == $pregunta->getId()) {
+                unset($preguntasCreadas[$j]);
+            }
+        }
+        $_SESSION['preguntasCreadas'] = $preguntasCreadas;
+        header('Location: ../Vistas/asignarPreguntas.php');
+    }
+}
+
+//------------------------QUITAR PREGUNTA YA AÑADIDA A UN EXAMEN
+if (isset($_SESSION['examenS'])) {
+    $examen = $_SESSION['examenS'];
+    $preguntas = $examen->getPreguntas();
+    foreach ($preguntas as $i => $pregunta) {
+        if (isset($_REQUEST[$i])) {
+            $accion = $_REQUEST[$i];
+            $pos = $i;
+        }
+    }
+    if ($accion == 'Borrar') {
+        $preguntaSeleccionada = $preguntas[$pos];
+        //Borrar en bd
+        gestionDatos::deleteAsignacionPreguntaExamen($examen->getId(), $preguntaSeleccionada->getId());
+        //Borrar en el objeto
+        unset($preguntas[$pos]);
+        $examen->setPreguntas($preguntas);
+
+        $asignatura = $_SESSION['asignaturasImpartidas'];
+        $examenes = $asignatura[0]->getExamenes();
+        foreach ($examenes as $j => $examen2) {
+            if ($examen2->getId() == $examen->getId()) {
+                $examenes[$j] = $examen;
+                $asignatura[0]->setExamenes($examenes);
+                $_SESSION['asignaturasImpartidas'] = $asignatura;
+            }
+        }
+        header('Location: ../Vistas/verExamen.php');
+    }
+}
+

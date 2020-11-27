@@ -97,68 +97,66 @@ and open the template in the editor.
             <!-- Section: Block Content -->
             <section>
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col">
                         <div class="card card-list">
                             <div class="card-header white d-flex justify-content-between align-items-center py-3">
 
                                 <h5 class="h5-responsive font-weight-bold ml-auto letra mb-0"><?php echo $asignatura[0]->getNombre(); ?></h5>
                             </div>
+
                             <div class="card-body">
                                 <form name="formExamenes" action="../Controlador/controladorProfesor.php" method="post">
-                                    <div class="row view view-cascade gradient-card-header mean-fruit-gradient narrower d-flex py-2 mx-4 mb-3">
-
-
-                                        <div class="col-md-7 ml-auto">
-                                            <div class="row">
-                                                <div>
-                                                    <button type="submit" name="filtrar" class="btn btn-outline-white btn-rounded btn-sm px-2"
-                                                            data-toggle="tooltip" data-placement="top" title="Filtrar preguntas">
-                                                        <i class="fas fa-filter" style="font-size: 15px"></i>
-                                                    </button>
-                                                    <button type="submit" name="limpiar" class="btn btn-outline-white btn-rounded btn-sm px-2"
-                                                            data-toggle="tooltip" data-placement="top" title="Limpiar filtros">
-                                                        <i class="fas fa-sync-alt" style="font-size: 15px"></i>
-                                                    </button>
-                                                </div>
-
-                                                <input class=" col mr-3" type="text" name="autor" placeholder="Autor">
-                                                <div class"">
-                                                    <div id="admin" class="custom-control custom-checkbox mr-3" >
-                                                        <input type="checkbox" class="custom-control-input" id="misPreguntas" name="misPreguntas" >
-                                                        <label class="custom-control-label" for="misPreguntas">Mis preguntas</label>
-                                                    </div>
-                                                </div>
-                                                <div class=" custom-control custom-radio ml-auto mr-3">
-                                                    <input type="radio" class="custom-control-input" id="texto" name="tipoPregunta" value="0" >
-                                                    <label class="custom-control-label" for="texto">Texto</label>
-                                                </div>
-                                                <div class=" custom-control custom-radio ml-auto mr-3">
-                                                    <input type="radio" class="custom-control-input" id="test" name="tipoPregunta" value="1" >
-                                                    <label class="custom-control-label" for="test">Test</label>
-                                                </div>
-
-                                            </div>
-                                            <div class="row ml-auto">
-                                                <div class="col-md-3 ml-auto">
-                                                    <button type="submit" name="verExamenP" class="btn btn-outline-white btn-rounded btn-sm px-2"
-                                                            data-toggle="tooltip" data-placement="top" title="Volver al exámen">
-                                                        <i class="fas fa-file-import" style="font-size: 20px"></i>
-                                                    </button>
-                                                    <button type="submit" name="asignarPregunta" class="btn btn-outline-white btn-rounded btn-sm px-2"
-                                                            data-toggle="tooltip" data-placement="top" title="Añadir preguntas">
-                                                        <i class="far fa-file-powerpoint px-1" style="font-size: 20px"></i>
-                                                    </button>
-                                                </div>
+                                <div class="row mb-4 mx-3">
+                                    <div class="col-md-4 mx-auto">
+                                        <div class="row purple lighten-3">
+                                            <div class="ml-auto col-md-5 text-center">
+                                                <button type="submit" name="filtrar" class="btn btn-outline-white btn-rounded btn-sm px-2"
+                                                        data-toggle="tooltip" data-placement="top" title="Filtrar preguntas">
+                                                    <i class="fas fa-filter" style="font-size: 10px"></i>
+                                                </button>
+                                                <button type="submit" name="limpiar" class="btn btn-outline-white btn-rounded btn-sm px-2"
+                                                        data-toggle="tooltip" data-placement="top" title="Limpiar filtros">
+                                                    <i class="fas fa-sync-alt" style="font-size: 10px"></i>
+                                                </button>
                                             </div>
                                         </div>
-
+                                        <div class="row purple lighten-2 pl-3 pb-2">
+                                            <div id="admin" class="col-12 custom-control custom-checkbox " >
+                                                <input type="checkbox" class="custom-control-input" id="misPreguntas" name="misPreguntas" >
+                                                <label class="custom-control-label" for="misPreguntas">Mis preguntas</label>
+                                            </div>
+                                            <div class="col-12 custom-control custom-radio ml-auto ">
+                                                <input type="radio" class="custom-control-input" id="texto" name="tipoPregunta" value="0" >
+                                                <label class="custom-control-label" for="texto">Texto</label>
+                                            </div>
+                                            <div class="col-12 custom-control custom-radio ml-auto ">
+                                                <input type="radio" class="custom-control-input" id="test" name="tipoPregunta" value="1" >
+                                                <label class="custom-control-label" for="test">Test</label>
+                                            </div>
+                                            <input class="col-5 mr-3" type="text" name="autor" placeholder="Autor">
+                                        </div>
+                                    </div>
+                                </div>
+                                    <div class="row view view-cascade gradient-card-header mean-fruit-gradient narrower d-flex mx-4 mb-3">
+                                        <div class="mx-auto"></div>
+                                        <h4 class="card-header-title  text-center titulo text-white pt-2 pb-2 ">Preguntas</h4>
+                                        <div class="ml-auto mr-5 pb-2">
+                                            <button type="submit" name="verExamenP" class="btn btn-outline-white btn-rounded btn-sm px-2"
+                                                    data-toggle="tooltip" data-placement="top" title="Volver al exámen">
+                                                <i class="fas fa-file-import" style="font-size: 20px"></i>
+                                            </button>
+                                            <button type="submit" name="asignarPregunta" class="btn btn-outline-white btn-rounded btn-sm px-2"
+                                                    data-toggle="tooltip" data-placement="top" title="Añadir preguntas">
+                                                <i class="far fa-file-powerpoint px-1" style="font-size: 20px"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                     <?php
                                     if (isset($_SESSION['mensaje'])) {
                                         $mensaje = $_SESSION['mensaje'];
                                         ?>
                                         <div class="row">
-                                        <div class="mx-auto text-center text-white badge badge-secondary"><?= $mensaje ?></div>
+                                            <div class="mx-auto text-center text-white badge badge-secondary"><?= $mensaje ?></div>
                                         </div>
                                         <?php
                                         unset($_SESSION['mensaje']);
@@ -169,7 +167,7 @@ and open the template in the editor.
                                             <tr>
                                                 <th scope="col"></th>
                                                 <th scope="col">Enunciado</th>
-                                                <th scope="col">Activo</th>
+                                                <th scope="col">Tipo</th>
                                                 <th scope="col">Opciones</th>
                                             </tr>
                                         </thead>

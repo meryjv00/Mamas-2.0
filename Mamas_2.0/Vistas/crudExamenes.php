@@ -103,7 +103,8 @@ and open the template in the editor.
                             <div class="card-body">
                                 <form name="formExamenes" action="../Controlador/controladorProfesor.php" method="post">
                                     <div class="view view-cascade gradient-card-header mean-fruit-gradient narrower d-flex py-2 mx-4 mb-3 justify-content-between align-items-center">
-                                        <h4 class="ml-auto white-text text-center ">Mis exámenes</h4>
+                                        <div class="mx-auto"></div>
+                                        <h4 class="white-text text-center ">Mis exámenes</h4>
                                         <div class="ml-auto pr-3">
                                             <button type="submit" name="activarExamen" class="btn btn-outline-white btn-rounded btn-sm px-2"
                                                     data-toggle="tooltip" data-placement="top" title="Activar">
