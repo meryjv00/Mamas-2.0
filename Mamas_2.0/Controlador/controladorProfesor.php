@@ -174,8 +174,11 @@ if (isset($_REQUEST['crearPreguntasEx'])) {
 if (isset($_REQUEST['verPreguntasCreadas'])) {
     header('Location: ../Vistas/verPreguntas.php');
 }
-
+if (isset($_REQUEST['verExamenS'])) {
+    header('Location: ../Vistas/verExamen.php');
+}
 if (isset($_REQUEST['verExamen'])) {
+
     $examenes = $asignaturas[0]->getExamenes();
     if (count($examenes) > 0) {
         $cont = 0;
@@ -192,10 +195,11 @@ if (isset($_REQUEST['verExamen'])) {
         header('Location: ../Vistas/crudExamenes.php');
     } else {
         $_SESSION['examenS'] = $examenes[$pos];
+        $_SESSION['creadorEx'] = gestionDatos::getUsuarioId($examenes[$pos]->getProfesor());
         header('Location: ../Vistas/verExamen.php');
     }
 }
-
+//----------------ASIGNAR PREGUNTAS
 if (isset($_REQUEST['asignarPreguntas'])) {
 
     $examenes = $asignaturas[0]->getExamenes();
@@ -227,7 +231,7 @@ if (isset($_REQUEST['aniadirPreguntasExamen'])) {
     $examenes = $asignatura[0]->getExamenes();
     foreach ($examenes as $j => $examen) {
         if ($examen->getId() == $examenS->getId()) {
-            
+
             foreach ($preguntasCreadas as $i => $pregunta) {
                 gestionDatos::asignarPregunta($preguntasCreadas[$i], $examenS);
                 //Add pregunta al exámen
@@ -239,4 +243,143 @@ if (isset($_REQUEST['aniadirPreguntasExamen'])) {
     $_SESSION['asignaturasImpartidas'] = $asignatura;
     unset($_SESSION['preguntasCreadas']);
     header('Location: ../Vistas/crudExamenes.php');
+}
+
+//-----------------------ACTIVAR EXAMEN
+if (isset($_REQUEST['activarExamen'])) {
+    $pulsado = false;
+    $examenes = $asignaturas[0]->getExamenes();
+    if (count($examenes) > 0) {
+        $cont = 0;
+        foreach ($examenes as $i => $examen) {
+            if (isset($_REQUEST[$i])) {
+                $pulsado = true;
+                $examen->setActivo(1);
+                if (!gestionDatos::updateExamenEstado($examen, 1)) {
+                    $mensaje = 'No se ha podido activar el examen';
+                    $_SESSION['mensaje'] = $mensaje;
+                }
+            }
+        }
+    }
+    if (!$pulsado) {
+        $asignaturas[0]->setExamenes($examenes);
+        header('Location: ../Vistas/crudExamenes.php');
+    } else {
+        $_SESSION['examenS'] = $examenes[$pos];
+        header('Location: ../Vistas/crudExamenes.php');
+    }
+}
+//----------------------DESACTIVAR EXAMEN
+if (isset($_REQUEST['desactivarExamen'])) {
+    $pulsado = false;
+    $examenes = $asignaturas[0]->getExamenes();
+    if (count($examenes) > 0) {
+        $cont = 0;
+        foreach ($examenes as $i => $examen) {
+            if (isset($_REQUEST[$i])) {
+                $pulsado = true;
+                $examen->setActivo(0);
+                if (!gestionDatos::updateExamenEstado($examen, 0)) {
+                    $mensaje = 'No se ha podido activar el examen';
+                    $_SESSION['mensaje'] = $mensaje;
+                }
+            }
+        }
+    }
+    if (!$pulsado) {
+        $asignaturas[0]->setExamenes($examenes);
+        header('Location: ../Vistas/crudExamenes.php');
+    } else {
+        $_SESSION['examenS'] = $examenes[$pos];
+        header('Location: ../Vistas/crudExamenes.php');
+    }
+}
+//------------------CORREGIR MANUALMENTE
+if (isset($_REQUEST['correccionM'])) {
+    $_SESSION['corregir'] = 'manual';
+    header('Location: ../Vistas/correccion.php');
+}
+
+//------------------CORREGIR AUTO
+if (isset($_REQUEST['correcionA'])) {
+    $_SESSION['corregir'] = 'auto';
+    header('Location: ../Vistas/correccion.php');
+}
+
+//------------------ASIGNAR PREGUNTAS
+if (isset($_REQUEST['asignarP'])) {
+    header('Location: ../Vistas/asignarPreguntas.php');
+}
+//------------------CRUD PREGUNTAS
+if (isset($_REQUEST['crudP'])) {
+    header('Location: ../Vistas/crudPreguntas.php');
+}
+if (isset($_REQUEST['limpiar'])) {
+    unset($_SESSION['preguntasF']);
+    header('Location: ../Vistas/crudPreguntas.php');
+}
+
+//------------------CRUD PREGUNTAS
+if (isset($_REQUEST['filtrar'])) {
+    if (isset($_REQUEST['tipoPregunta'])) {
+        $tip = $_REQUEST['tipoPregunta'];
+    } else {
+        $tip = -1;
+    }
+    $misPreguntas;
+    if (isset($_REQUEST['misPreguntas'])) {
+        $misPreguntas = true;
+    } else {
+        $misPreguntas = false;
+    };
+    $autor = $_REQUEST['autor'];
+    $preguntas = $asignaturas[0]->getPreguntas();
+    $preguntasF = array();
+
+    foreach ($preguntas as $i => $pregunta) {
+        $guardada = false;
+        if ($pregunta->getTipo() == $tip) {
+            $preguntasF[] = $pregunta;
+            $guardada = true;
+        }
+        if ($misPreguntas && $pregunta->getProfesor() == $usuario->getId() && !$guardada) {
+            $preguntasF[] = $pregunta;
+            $guardada = true;
+        }
+        if (!$guardada && $autor == gestionDatos::getUsuarioNombre($pregunta->getProfesor())) {
+            $preguntasF[] = $pregunta;
+            $guardada = true;
+        }
+    }
+    $_SESSION['preguntasF'] = $preguntasF;
+
+    header('Location: ../Vistas/crudPreguntas.php');
+}
+
+//----------------ASIGNAR PREGUNTAS
+if (isset($_REQUEST['asignarPregunta'])) {
+    if (isset($_SESSION['preguntasF'])) {
+        $preguntas = $_SESSION['preguntasF'];
+    } else {
+        $preguntas = $asignaturas[0]->getPreguntas();
+    }
+    if (isset($_SESSION['preguntasCreadas'])) {
+        $datos = $_SESSION['preguntasCreadas'];
+    } else {
+        $datos = array();
+    }
+    $cont = 0;
+    foreach ($preguntas as $i => $pregunta) {
+        if (isset($_REQUEST[$i])) {
+            $pulsado = true;
+            $datos[] = $pregunta;
+        }
+    }
+    if (!$pulsado) {
+        header('Location: ../Vistas/crudPreguntas.php');
+    } else {
+        $_SESSION['preguntasCreadas'] = $datos;
+        header('Location: ../Vistas/asignarPreguntas.php');
+    }
 }

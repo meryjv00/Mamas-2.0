@@ -94,7 +94,7 @@ and open the template in the editor.
         <main class="pb-5 pt-5 ml-4">
             <div class="container-fluid my-5">
                 <div class="row">
-                    <div class="col-md-8 col-lg-6 mx-auto">
+                    <div class="col-md-8 col-lg-7 mx-auto">
                         <!-- Section: Block Content -->
                         <section>
                             <form action="../Controlador/controladorProfesor.php">
@@ -144,7 +144,7 @@ and open the template in the editor.
                     </div>
                 </div>
                 <div class="row mt-4">
-                    <div class="col-lg-6 mx-auto">
+                    <div class="col-lg-7 mx-auto">
                         <div class="card card-cascade narrower">
                             <!--Card image-->
                             <div class="view view-cascade gradient-card-header mean-fruit-gradient narrower pt-2 mx-4  justify-content-between align-items-center">

@@ -91,15 +91,18 @@ and open the template in the editor.
                 <div class=" col-md-8 mx-auto mt-5">
                     <div class="row">
                         <div class="col-md-10 mx-auto card card-cascade narrower pb-2 bg-white">
-                            <div class="row view view-cascade gradient-card-header mean-fruit-gradient">
-                                <!-- Title -->
-                                <div class="mx-auto"></div>
-                                <h2 class="card-header-title  mx-auto text-center titulo text-white pt-2 pb-2 ">Añadir preguntas a exámen</h2>
-                                <button type="submit" name="verExamen" class="ml-auto mr-3 btn btn-outline-white btn-rounded btn-sm px-2"
-                                        data-toggle="tooltip" data-placement="top" title="Ver en detalle">
-                                    <i class="far fa-eye " style="font-size: 20px"></i>
-                                </button>
-                            </div>
+                            <form name="formPreg" action="../Controlador/controladorProfesor.php" method="post">
+                                <div class="row view view-cascade gradient-card-header mean-fruit-gradient">
+
+                                    <div class="mx-auto"></div>
+                                    <h2 class="card-header-title  mx-auto text-center titulo text-white pt-2 pb-2 ">Añadir preguntas a exámen</h2>
+                                    <button type="submit" name="verExamenS" class="ml-auto mr-3 btn btn-outline-white btn-rounded btn-sm px-2"
+                                            data-toggle="tooltip" data-placement="top" title="Ver en detalle">
+                                        <i class="far fa-eye " style="font-size: 20px"></i>
+                                    </button>
+
+                                </div>
+                            </form>
                             <div class="justify-content-center">
                                 <form name="formPreg" action="../Controlador/controladorProfesor.php" method="post">
                                     <!--Section: Content-->
@@ -134,13 +137,16 @@ and open the template in the editor.
                                                 </div>
                                                 <div class="form-row mt-2">
                                                     <div class="border w-100">
-                                                        <h3 class="text-center">Preguntas a añadir 
-                                                            <span class="badge badge-secondary"><?= count($preguntasCreadas) ?></span>
-                                                        </h3>
+
                                                         <?php
                                                         if (isset($preguntasCreadas)) {
-                                                            $contOpciones;
-                                                            $contOpciones;
+                                                            ?>
+                                                            <h3 class="text-center">Preguntas a añadir 
+                                                                <span class="badge badge-secondary"><?= count($preguntasCreadas) ?></span>
+                                                            </h3>
+                                                            <?php
+                                                            $contOpciones = 0;
+                                                            $contPregunta = 0;
                                                             foreach ($preguntasCreadas as $i => $pregunta) {
                                                                 $contPregunta++;
                                                                 ?>

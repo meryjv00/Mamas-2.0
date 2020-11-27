@@ -430,6 +430,23 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
+    static function getUsuarioNombre($idUsuario) {
+        self::conexion();
+        $stmt = self::$conexion->prepare("SELECT * FROM usuarios WHERE idUsuario =  ?");
+        $stmt->bind_param("i", $idUsuario);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+
+            if ($fila = $resultado->fetch_assoc()) {
+
+                //obtenemos los datos  en variables individuales para la creacion del objeto usuario.
+                $nombre = $fila['nombre'];
+            }
+            return $nombre;
+            mysqli_close(self::$conexion);
+        }
+    }
+
     static function getUsuarioId($id) {
         self::conexion();
         $stmt = self::$conexion->prepare("SELECT * FROM usuarios WHERE idUsuario =  ?");
@@ -478,6 +495,18 @@ class gestionDatos {
 // UPDATE
 //======================================================================
 
+    static function updateExamenEstado($examen, $activo) {
+        self::conexion();
+        $consulta = "UPDATE examen SET activo=" . $activo . " WHERE idExamen ='" . $examen->getId() . "'";
+        if (self::$conexion->query($consulta)) {
+            $correcto = true;
+        } else {
+            $correcto = false;
+            echo "Error al actualizar: " . self::$conexion->error . '<br/>';
+        }
+        return $correcto;
+        mysqli_close(self::$conexion);
+    }
 
     static function updateFoto($id) {
         self::conexion();

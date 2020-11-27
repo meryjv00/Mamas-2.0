@@ -7,7 +7,7 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Examenes CRUD</title>
+        <title>Preguntas CRUD</title>
         <!-- Bootstrap core CSS -->
         <link rel="stylesheet" href="../css/bootstrap.min.css">
         <!-- Material Design Bootstrap -->
@@ -27,7 +27,11 @@ and open the template in the editor.
         session_start();
         $usuario = $_SESSION['usuario'];
         $asignatura = $_SESSION['asignaturasImpartidas'];
-        $examenes = $asignatura[0]->getExamenes();
+        if (isset($_SESSION['preguntasF'])) {
+            $preguntas = $_SESSION['preguntasF'];
+        } else {
+            $preguntas = $asignatura[0]->getPreguntas();
+        }
         ?>
         <header>
             <nav class="row navbar navbar-expand-lg navbar-dark fixed-top deg">
@@ -92,7 +96,6 @@ and open the template in the editor.
         <div class="container my-5 pt-5">
             <!-- Section: Block Content -->
             <section>
-
                 <div class="row">
                     <div class="col-12">
                         <div class="card card-list">
@@ -102,72 +105,88 @@ and open the template in the editor.
                             </div>
                             <div class="card-body">
                                 <form name="formExamenes" action="../Controlador/controladorProfesor.php" method="post">
-                                    <div class="view view-cascade gradient-card-header mean-fruit-gradient narrower d-flex py-2 mx-4 mb-3 justify-content-between align-items-center">
-                                        <h4 class="ml-auto white-text text-center ">Mis exámenes</h4>
-                                        <div class="ml-auto pr-3">
-                                            <button type="submit" name="activarExamen" class="btn btn-outline-white btn-rounded btn-sm px-2"
-                                                    data-toggle="tooltip" data-placement="top" title="Activar">
-                                                <i class="fas fa-check-circle" style="font-size: 20px"></i>
-                                            </button>
-                                            <button type="submit" name="desactivarExamen" class="btn btn-outline-white btn-rounded btn-sm px-2"
-                                                    data-toggle="tooltip" data-placement="top" title="Desactivar">
-                                                <i class="fas fa-times-circle" style="font-size: 20px"></i>
-                                            </button>
-                                            <button type="submit" name="verExamen" class="btn btn-outline-white btn-rounded btn-sm px-2"
-                                                    data-toggle="tooltip" data-placement="top" title="Ver en detalle">
-                                                <i class="far fa-eye " style="font-size: 20px"></i>
-                                            </button>
-                                            <button type="submit" name="asignarPreguntas" class="btn btn-outline-white btn-rounded btn-sm px-2"
-                                                    data-toggle="tooltip" data-placement="top" title="Asignar preguntas">
-                                                <i class="fas fa-plus pr-1"style="font-size: 20px"></i><i class="fas fa-question" style="font-size: 20px"></i>
-                                            </button>
+                                    <div class="row view view-cascade gradient-card-header mean-fruit-gradient narrower d-flex py-2 mx-4 mb-3">
 
+
+                                        <div class="col-md-7 ml-auto">
+                                            <div class="row">
+                                                <div>
+                                                    <button type="submit" name="filtrar" class="btn btn-outline-white btn-rounded btn-sm px-2"
+                                                            data-toggle="tooltip" data-placement="top" title="Filtrar preguntas">
+                                                        <i class="fas fa-filter" style="font-size: 15px"></i>
+                                                    </button>
+                                                    <button type="submit" name="limpiar" class="btn btn-outline-white btn-rounded btn-sm px-2"
+                                                            data-toggle="tooltip" data-placement="top" title="Limpiar filtros">
+                                                        <i class="fas fa-sync-alt" style="font-size: 15px"></i>
+                                                    </button>
+                                                </div>
+
+                                                <input class=" col mr-3" type="text" name="autor" placeholder="Autor">
+                                                <div class"">
+                                                    <div id="admin" class="custom-control custom-checkbox mr-3" >
+                                                        <input type="checkbox" class="custom-control-input" id="misPreguntas" name="misPreguntas" >
+                                                        <label class="custom-control-label" for="misPreguntas">Mis preguntas</label>
+                                                    </div>
+                                                </div>
+                                                <div class=" custom-control custom-radio ml-auto mr-3">
+                                                    <input type="radio" class="custom-control-input" id="texto" name="tipoPregunta" value="0" >
+                                                    <label class="custom-control-label" for="texto">Texto</label>
+                                                </div>
+                                                <div class=" custom-control custom-radio ml-auto mr-3">
+                                                    <input type="radio" class="custom-control-input" id="test" name="tipoPregunta" value="1" >
+                                                    <label class="custom-control-label" for="test">Test</label>
+                                                </div>
+
+                                            </div>
+                                            <div class="row ml-auto">
+                                                <div class="col-md-3 ml-auto  ">
+                                                    <button type="submit" name="verExamen" class="btn btn-outline-white btn-rounded btn-sm px-2"
+                                                            data-toggle="tooltip" data-placement="top" title="Ver en detalle">
+                                                        <i class="far fa-eye " style="font-size: 15px"></i>
+                                                    </button>
+                                                    <button type="submit" name="asignarPregunta" class="btn btn-outline-white btn-rounded btn-sm px-2"
+                                                            data-toggle="tooltip" data-placement="top" title="Asignar preguntas">
+                                                        <i class="fas fa-question" style="font-size: 15px"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
 
                                     </div>
                                     <table class="table text-center">
-                                        <?php
-                                        if (isset($_SESSION['mensaje'])) {
-                                            $mensaje = $_SESSION['mensaje'];
-                                            ?>
-                                            <p class="text-center"><?= $mensaje ?></p>
-                                            <?php
-                                            unset($_SESSION['mensaje']);
-                                        }
-                                        ?>
                                         <thead>
                                             <tr>
                                                 <th scope="col"></th>
-                                                <th scope="col">Contenido</th>
+                                                <th scope="col">Enunciado</th>
                                                 <th scope="col">Activo</th>
-                                                <th scope="col">Preguntas</th>
+                                                <th scope="col">Opciones</th>
                                             </tr>
                                         </thead>
                                         <tbody class="">
                                             <?php
-                                            foreach ($examenes as $i => $examen) { // crea una fila para cada examen
+                                            foreach ($preguntas as $i => $pregunta) { // crea una fila para cada examen
                                                 ?>
                                                 <tr>
 
                                                     <th scope="row"> <input class="form-check-input" type="checkbox" id="checkbox1" name="<?= $i ?>">
                                                     </th>
-                                                    <td><?php echo $examen->getContenido(); ?></td>
+                                                    <td><?php echo $pregunta->getEnunciado(); ?></td>
                                                     <td><span class="badge badge-<?php
-                                                        if ($examen->getActivo() == 0) {
+                                                        if ($pregunta->getTipo() == 0) {
                                                             //Cambia el color de verde en activado y rojo en desactivado
                                                             echo'danger';
                                                         } else {
-                                                            echo'success';
+                                                            echo'warning';
                                                         }
                                                         ?>"><?php
-                                                                  if ($examen->getActivo() == 0) {
+                                                                  if ($pregunta->getTipo() == 0) {
                                                                       //Cambia el color de verde en activado y rojo en desactivado
-                                                                      echo'Desactivado';
+                                                                      echo'Texto';
                                                                   } else {
-                                                                      echo'Activado';
+                                                                      echo'Test';
                                                                   }
                                                                   ?></span></td>
-                                                    <td class="pt-2 pb-0"><?php echo count($examen->getPreguntas()); ?></td>
+                                                    <td class="pt-2 pb-0"><?php echo count($pregunta->getRespuestas()); ?></td>
                                                 </tr>
                                                 <?php
                                             }
