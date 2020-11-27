@@ -307,12 +307,36 @@ class gestionDatos {
                 $descripcion = $fila['descripcion'];
                 $activo = $fila['activo'];
                 $e = new Examen($idE, $profesor, $contenido, $descripcion, $activo);
+                $preguntas = self::getPreguntasExamen($idE);
+                $e->setPreguntas($preguntas);
                 $examenes[] = $e;
+                
             }
             return $examenes;
         }
 
         mysqli_close(self::$conexion);
+    }
+
+    static function getPreguntasExamen($idE) {
+        $preguntas = array();
+        $stmt = self::$conexion->prepare("SELECT * FROM asignacionpregunta,pregunta where pregunta.idPregunta = asignacionpregunta.idPregunta "
+                . "and asignacionpregunta.idExamen = ?");
+        $stmt->bind_param("i", $idE);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            //var_dump($resultado);
+            while ($fila = $resultado->fetch_assoc()) {
+                $idP = $fila['idPregunta'];
+                $profesor = $fila['idUsuario'];
+                $enunciado = $fila['enunciado'];
+                $tipo = $fila['tipo'];
+                $ponderacion = $fila['ponderacion'];
+                $p = new Pregunta($idP, $profesor, $enunciado, $tipo, $ponderacion);
+                $preguntas[] = $p;
+            }
+            return $preguntas;
+        }
     }
 
     static function getPreguntas($idAsignatura) {
@@ -646,6 +670,7 @@ class gestionDatos {
     }
 
     static function getIdPregunta() {
+        self::conexion();
         $consulta = "SELECT max(idPregunta) FROM pregunta";
         if ($resultado = self::$conexion->query($consulta)) {
             if ($fila = $resultado->fetch_assoc()) {
@@ -653,6 +678,19 @@ class gestionDatos {
             }
         }
         return $id;
+        mysqli_close(self::$conexion);
+    }
+
+    static function getIdRespuesta() {
+        self::conexion();
+        $consulta = "SELECT max(idRespuesta) FROM respuesta";
+        if ($resultado = self::$conexion->query($consulta)) {
+            if ($fila = $resultado->fetch_assoc()) {
+                $id = $fila['max(idRespuesta)'];
+            }
+        }
+        return $id;
+        mysqli_close(self::$conexion);
     }
 
     static function asignarPregunta($pregunta, $examen) {

@@ -70,6 +70,6 @@ button, input[type=submit]{
 #preguntasCreadas li{
     margin-top: 10px;
 }
-#preguntasCreadas li p:nth-child(1){
+#preguntasCreadas li p:nth-child(1), .enunciadoPregunta{
     background-color: #d5e1df;
 }

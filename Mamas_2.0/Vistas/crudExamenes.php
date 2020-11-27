@@ -103,7 +103,6 @@ and open the template in the editor.
                             <div class="card-body">
                                 <form name="formExamenes" action="../Controlador/controladorProfesor.php" method="post">
                                     <div class="view view-cascade gradient-card-header mean-fruit-gradient narrower d-flex py-2 mx-4 mb-3 justify-content-between align-items-center">
-
                                         <h4 class="ml-auto white-text text-center ">Mis exámenes</h4>
                                         <div class="ml-auto pr-3">
                                             <button type="submit" name="activarExamen" class="btn btn-outline-white btn-rounded btn-sm px-2"
@@ -120,13 +119,22 @@ and open the template in the editor.
                                             </button>
                                             <button type="submit" name="asignarPreguntas" class="btn btn-outline-white btn-rounded btn-sm px-2"
                                                     data-toggle="tooltip" data-placement="top" title="Asignar preguntas">
-                                                <i class="fas fa-question" style="font-size: 20px"></i>
+                                                <i class="fas fa-plus pr-1"style="font-size: 20px"></i><i class="fas fa-question" style="font-size: 20px"></i>
                                             </button>
 
                                         </div>
 
                                     </div>
                                     <table class="table text-center">
+                                        <?php
+                                        if (isset($_SESSION['mensaje'])) {
+                                            $mensaje = $_SESSION['mensaje'];
+                                            ?>
+                                            <p class="text-center"><?= $mensaje ?></p>
+                                            <?php
+                                            unset($_SESSION['mensaje']);
+                                        }
+                                        ?>
                                         <thead>
                                             <tr>
                                                 <th scope="col"></th>
