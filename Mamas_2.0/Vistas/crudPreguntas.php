@@ -27,7 +27,11 @@ and open the template in the editor.
         session_start();
         $usuario = $_SESSION['usuario'];
         $asignatura = $_SESSION['asignaturasImpartidas'];
-        $preguntas = $asignatura[0]->getPreguntas();
+        if (isset($_SESSION['preguntasF'])) {
+            $preguntas = $_SESSION['preguntasF'];
+        } else {
+            $preguntas = $asignatura[0]->getPreguntas();
+        }
         ?>
         <header>
             <nav class="row navbar navbar-expand-lg navbar-dark fixed-top deg">
@@ -103,10 +107,24 @@ and open the template in the editor.
                                 <form name="formExamenes" action="../Controlador/controladorProfesor.php" method="post">
                                     <div class="view view-cascade gradient-card-header mean-fruit-gradient narrower d-flex py-2 mx-4 mb-3 justify-content-between align-items-center">
 
-                                        <h4 class="ml-auto white-text text-center ">Mis preguntas</h4>
+                                        <h4 class="letra  text-center ">Preguntas</h4>
                                         <div class="ml-auto pr-3">
-                                            <input type="text" name="autor" >
-                                            <input class="form-check-input" type="checkbox" id="checkbox1" name="misPreguntas" >mis Preguntas</input>
+                                            <input class="ml-auto" type="text" name="autor" placeholder="Autor">
+
+                                            <input class="form-check-input" type="checkbox" id="checkbox1" name="misPreguntas" /><label>mis Preguntas</label>
+
+                                            <input type="radio" name="tipoPregunta" value="0"> Texto<br>
+                                            <input type="radio" name="tipoPregunta" value="1"> Test<br>
+
+                                            <button type="submit" name="filtrar" class="btn btn-outline-white btn-rounded btn-sm px-2"
+                                                    data-toggle="tooltip" data-placement="top" title="Filtrar preguntas">
+                                                <i class="fas fa-filter" style="font-size: 20px"></i>
+                                            </button>
+                                            <button type="submit" name="limpiar" class="btn btn-outline-white btn-rounded btn-sm px-2"
+                                                    data-toggle="tooltip" data-placement="top" title="Limpiar filtros">
+                                                <i class="fas fa-sync-alt" style="font-size: 20px"></i>
+                                            </button>
+
                                             <button type="submit" name="verExamen" class="btn btn-outline-white btn-rounded btn-sm px-2"
                                                     data-toggle="tooltip" data-placement="top" title="Ver en detalle">
                                                 <i class="far fa-eye " style="font-size: 20px"></i>

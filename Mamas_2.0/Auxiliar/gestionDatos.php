@@ -406,6 +406,23 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
+    static function getUsuarioNombre($idUsuario) {
+        self::conexion();
+        $stmt = self::$conexion->prepare("SELECT * FROM usuarios WHERE idUsuario =  ?");
+        $stmt->bind_param("i", $idUsuario);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+
+            if ($fila = $resultado->fetch_assoc()) {
+
+                //obtenemos los datos  en variables individuales para la creacion del objeto usuario.
+                $nombre = $fila['nombre'];
+            }
+            return $nombre;
+            mysqli_close(self::$conexion);
+        }
+    }
+
     static function getUsuarioId($id) {
         self::conexion();
         $stmt = self::$conexion->prepare("SELECT * FROM usuarios WHERE idUsuario =  ?");

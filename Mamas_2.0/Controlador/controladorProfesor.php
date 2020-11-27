@@ -262,3 +262,44 @@ if (isset($_REQUEST['asignarP'])) {
 if (isset($_REQUEST['crudP'])) {
     header('Location: ../Vistas/crudPreguntas.php');
 }
+if (isset($_REQUEST['limpiar'])) {
+    unset($_SESSION['preguntasF']);
+    header('Location: ../Vistas/crudPreguntas.php');
+}
+
+//------------------CRUD PREGUNTAS
+if (isset($_REQUEST['filtrar'])) {
+    if (isset($_REQUEST['tipoPregunta'])) {
+        $tip = $_REQUEST['tipoPregunta'];
+    } else {
+        $tip = -1;
+    }
+    $misPreguntas;
+    if (isset($_REQUEST['misPreguntas'])) {
+        $misPreguntas = true;
+    } else {
+        $misPreguntas = false;
+    };
+    $autor = $_REQUEST['autor'];
+    $preguntas = $asignaturas[0]->getPreguntas();
+    $preguntasF = array();
+
+    foreach ($preguntas as $i => $pregunta) {
+        $guardada = false;
+        if ($pregunta->getTipo() == $tip) {
+            $preguntasF[] = $pregunta;
+            $guardada = true;
+        }
+        if ($misPreguntas && $pregunta->getProfesor() == $usuario->getId() && !$guardada) {
+            $preguntasF[] = $pregunta;
+            $guardada = true;
+        }
+        if (!$guardada && $autor == gestionDatos::getUsuarioNombre($pregunta->getProfesor())) {
+            $preguntasF[] = $pregunta;
+            $guardada = true;
+        }
+    }
+    $_SESSION['preguntasF'] = $preguntasF;
+
+    header('Location: ../Vistas/crudPreguntas.php');
+}
