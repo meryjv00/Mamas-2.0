@@ -105,7 +105,8 @@ and open the template in the editor.
 
                                         <h4 class="ml-auto white-text text-center ">Mis preguntas</h4>
                                         <div class="ml-auto pr-3">
-
+                                            <input type="text" name="autor" >
+                                            <input class="form-check-input" type="checkbox" id="checkbox1" name="misPreguntas" >mis Preguntas</input>
                                             <button type="submit" name="verExamen" class="btn btn-outline-white btn-rounded btn-sm px-2"
                                                     data-toggle="tooltip" data-placement="top" title="Ver en detalle">
                                                 <i class="far fa-eye " style="font-size: 20px"></i>
@@ -122,36 +123,36 @@ and open the template in the editor.
                                         <thead>
                                             <tr>
                                                 <th scope="col"></th>
-                                                <th scope="col">Contenido</th>
+                                                <th scope="col">Enunciado</th>
                                                 <th scope="col">Activo</th>
-                                                <th scope="col">Preguntas</th>
+                                                <th scope="col">Opciones</th>
                                             </tr>
                                         </thead>
                                         <tbody class="">
                                             <?php
-                                            foreach ($examenes as $i => $examen) { // crea una fila para cada examen
+                                            foreach ($preguntas as $i => $pregunta) { // crea una fila para cada examen
                                                 ?>
                                                 <tr>
 
                                                     <th scope="row"> <input class="form-check-input" type="checkbox" id="checkbox1" name="<?= $i ?>">
                                                     </th>
-                                                    <td><?php echo $examen->getContenido(); ?></td>
+                                                    <td><?php echo $pregunta->getEnunciado(); ?></td>
                                                     <td><span class="badge badge-<?php
-                                                        if ($examen->getActivo() == 0) {
+                                                        if ($pregunta->getTipo() == 0) {
                                                             //Cambia el color de verde en activado y rojo en desactivado
                                                             echo'danger';
                                                         } else {
-                                                            echo'success';
+                                                            echo'warning';
                                                         }
                                                         ?>"><?php
-                                                                  if ($examen->getActivo() == 0) {
+                                                                  if ($pregunta->getTipo() == 0) {
                                                                       //Cambia el color de verde en activado y rojo en desactivado
-                                                                      echo'Desactivado';
+                                                                      echo'Texto';
                                                                   } else {
-                                                                      echo'Activado';
+                                                                      echo'Test';
                                                                   }
                                                                   ?></span></td>
-                                                    <td class="pt-2 pb-0"><?php echo count($examen->getPreguntas()); ?></td>
+                                                    <td class="pt-2 pb-0"><?php echo count($pregunta->getRespuestas()); ?></td>
                                                 </tr>
                                                 <?php
                                             }
