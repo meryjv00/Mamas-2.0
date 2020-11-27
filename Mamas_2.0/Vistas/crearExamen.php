@@ -18,7 +18,7 @@ and open the template in the editor.
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
     </head>
-    <body>
+    <body onload="validacionExamen()">
         <?php
         include_once '../Modelo/Asignatura.php';
         include_once '../Modelo/Usuario.php';
@@ -78,7 +78,6 @@ and open the template in the editor.
                                         btn-rounded waves-effect z-depth-1a" name="cerrarSesion" value="Cerrar sesión">
                                     <i class="fas fa-sign-out-alt"></i>
                                 </button>
-
                             </form>
                         </li> 
                     </ul>
@@ -97,7 +96,7 @@ and open the template in the editor.
                                 <h2 class="card-header-title  text-center titulo text-white pt-2 pb-2  ">Nuevo exámen</h2>
                             </div>
                             <div class="justify-content-center">
-                                <form name="formPreg" action="../Controlador/controladorProfesor.php" method="post" novalidate>
+                                <form id="formExamen" name="formExamen" action="../Controlador/controladorProfesor.php" method="post" novalidate>
 
                                     <!--Section: Content-->
                                     <section class="px-md-5 mx-md-5 text-center text-lg-left dark-grey-text mt-3">
@@ -111,22 +110,26 @@ and open the template in the editor.
                                                         <div class="col-md-6 col-s-12">
                                                             <label  for="asignaturas">Asignatura</label>
 
-                                                            <select class="browser-default custom-select " name="asignaturas" id="asignaturas">
-                                                                <option value="0" selected>Seleccione una asignatura</option>
+                                                            <select class="browser-default custom-select " name="asignaturas" id="asignaturas" required>
+                                                                <option value="Seleccione una asignatura" selected>Seleccione una asignatura</option>
                                                                 <?php for ($i = 0; $i < count($asignatura); $i++) { ?>
                                                                     <option value="<?php echo $asignatura[$i]->getIdAsignatura(); ?>" name="<?php echo $asignatura[$i]->getNombre(); ?>"><?php echo $asignatura[$i]->getNombre(); ?></option>
                                                                 <?php } ?>
                                                             </select>
+                                                            <div name="asignaturaError"  id="asignaturasError"></div>
+
                                                         </div>
                                                         <div class="pl-3 col-md-6 col-s-12">
                                                             <label for="contenido">Contenido</label>
-                                                            <input type="text" id="contenido" name="contenido" class="form-control mb-4" >
+                                                            <input type="text" id="contenido" name="contenido" class="form-control mb-4" required>
+                                                            <div name="contenidoError"  id="contenidoError"></div>
                                                         </div>
                                                     </div>
                                                     <div class="pt-2 form-row col-12">
                                                         <div class=" col-md-6 col-s-12">
                                                             <label for="descripcion">Descripcion</label>
-                                                            <textarea style="resize: none"  rows="5" cols="10" id="descripcion" name="descripcion" class="form-control mb-4" placeholder="Descripcion"></textarea>
+                                                            <textarea style="resize: none"  rows="5" cols="10" id="descripcion" name="descripcion" class="form-control mb-4" placeholder="Descripcion" required></textarea>
+                                                            <div name="descripcionError"  id="descripcionError"></div>
                                                         </div>
                                                         <!--Contenido-->
                                                         <div class="pl-3 col-md-6 col-s-12">
@@ -139,7 +142,7 @@ and open the template in the editor.
                                                         <!--BOTON CREAR EXAMEN-->
                                                         <div class="col-md-6 col-s-12 mx-auto">
                                                             <button type="submit" name="crearExamen"  class="btn purple lighten-3 text-white 
-                                                                    btn-block btn-rounded my-4 waves-effect z-depth-1a">Crear Examen</button>
+                                                                    btn-block btn-rounded my-4 waves-effect z-depth-1a" onclick="addExamen()">Crear Examen</button>
                                                         </div>
                                                     </div>
                                                 </div>

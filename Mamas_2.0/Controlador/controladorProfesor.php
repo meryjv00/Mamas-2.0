@@ -303,3 +303,30 @@ if (isset($_REQUEST['filtrar'])) {
 
     header('Location: ../Vistas/crudPreguntas.php');
 }
+
+//----------------ASIGNAR PREGUNTAS
+if (isset($_REQUEST['asignarPregunta'])) {
+    if (isset($_SESSION['preguntasF'])) {
+        $preguntas = $_SESSION['preguntasF'];
+    } else {
+        $preguntas = $asignaturas[0]->getPreguntas();
+    }
+    if (isset($_SESSION['preguntasCreadas'])) {
+        $datos = $_SESSION['preguntasCreadas'];
+    } else {
+        $datos = array();
+    }
+    $cont = 0;
+    foreach ($preguntas as $i => $pregunta) {
+        if (isset($_REQUEST[$i])) {
+            $pulsado = true;
+            $datos[] = $pregunta;
+        }
+    }
+    if (!$pulsado) {
+        header('Location: ../Vistas/crudPreguntas.php');
+    } else {
+        $_SESSION['preguntasCreadas'] = $datos;
+        header('Location: ../Vistas/asignarPreguntas.php');
+    }
+}
