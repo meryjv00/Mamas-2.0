@@ -172,6 +172,23 @@ if (isset($_REQUEST['crearPreguntasEx'])) {
     header('Location: ../Vistas/crearPregunta.php');
 }
 if (isset($_REQUEST['verPreguntasCreadas'])) {
+    $examenS = $_SESSION['examenS'];
+    $preguntasExamen = $examenS->getPreguntas();
+    $preguntasCreadas = $_SESSION['preguntasCreadas'];
+    $preguntasDisponibles = array();
+    //Recogemos todas las preguntas de su asignatura, ahora vamos a quitar aquellas que estan
+    //ya asignadas a un examen o que estan en la pantalla para asignarlas, para que no
+    //se puedan elegir de nuevo. 
+    $asignatura = $_SESSION['asignaturasImpartidas'];
+    $preguntas = $asignatura[0]->getPreguntas();
+    foreach ($preguntas as $i => $pregunta) {
+        foreach ($preguntasExamen as $j => $preguntaEx) {
+            if ($pregunta->getId() != $preguntaEx->getId()) {
+               $preguntasDisponibles[] = $preguntaEx;
+            }
+        }
+    }
+    $_SESSION['preguntasDisponibles'] = $preguntasDisponibles;
     header('Location: ../Vistas/crudPreguntas.php');
 }
 if (isset($_REQUEST['verExamenS'])) {

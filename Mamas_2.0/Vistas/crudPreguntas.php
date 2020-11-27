@@ -30,7 +30,7 @@ and open the template in the editor.
         if (isset($_SESSION['preguntasF'])) {
             $preguntas = $_SESSION['preguntasF'];
         } else {
-            $preguntas = $asignatura[0]->getPreguntas();
+            $preguntas = $_SESSION['preguntasDisponibles'];
         }
         ?>
         <header>
