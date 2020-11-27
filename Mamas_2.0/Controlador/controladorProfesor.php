@@ -174,8 +174,11 @@ if (isset($_REQUEST['crearPreguntasEx'])) {
 if (isset($_REQUEST['verPreguntasCreadas'])) {
     header('Location: ../Vistas/verPreguntas.php');
 }
-
+if (isset($_REQUEST['verExamenS'])) {
+    header('Location: ../Vistas/verExamen.php');
+}
 if (isset($_REQUEST['verExamen'])) {
+
     $examenes = $asignaturas[0]->getExamenes();
     if (count($examenes) > 0) {
         $cont = 0;
@@ -228,7 +231,7 @@ if (isset($_REQUEST['aniadirPreguntasExamen'])) {
     $examenes = $asignatura[0]->getExamenes();
     foreach ($examenes as $j => $examen) {
         if ($examen->getId() == $examenS->getId()) {
-            
+
             foreach ($preguntasCreadas as $i => $pregunta) {
                 gestionDatos::asignarPregunta($preguntasCreadas[$i], $examenS);
                 //Add pregunta al exámen
@@ -242,7 +245,6 @@ if (isset($_REQUEST['aniadirPreguntasExamen'])) {
     header('Location: ../Vistas/crudExamenes.php');
 }
 
-}
 //-----------------------ACTIVAR EXAMEN
 if (isset($_REQUEST['activarExamen'])) {
     $pulsado = false;
