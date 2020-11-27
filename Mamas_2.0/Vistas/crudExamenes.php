@@ -115,11 +115,11 @@ and open the template in the editor.
                                             </button>
                                             <button type="submit" name="verExamen" class="btn btn-outline-white btn-rounded btn-sm px-2"
                                                     data-toggle="tooltip" data-placement="top" title="Ver en detalle">
-                                                <i class="far fa-eye " style="font-size: 20px"></i>
+                                                <i class="far fa-eye" style="font-size: 18px"></i>
                                             </button>
                                             <button type="submit" name="asignarPreguntas" class="btn btn-outline-white btn-rounded btn-sm px-2"
                                                     data-toggle="tooltip" data-placement="top" title="Asignar preguntas">
-                                                <i class="fas fa-plus pr-1"style="font-size: 20px"></i><i class="fas fa-question" style="font-size: 20px"></i>
+                                                <i class="far fa-file-powerpoint px-1" style="font-size: 20px"></i>
                                             </button>
 
                                         </div>
@@ -130,7 +130,9 @@ and open the template in the editor.
                                         if (isset($_SESSION['mensaje'])) {
                                             $mensaje = $_SESSION['mensaje'];
                                             ?>
-                                            <p class="text-center"><?= $mensaje ?></p>
+                                            <div class="row">
+                                                <div class="mx-auto text-center text-white badge badge-secondary"><?= $mensaje ?></div>
+                                            </div>
                                             <?php
                                             unset($_SESSION['mensaje']);
                                         }

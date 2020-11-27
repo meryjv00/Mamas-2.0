@@ -139,20 +139,31 @@ and open the template in the editor.
 
                                             </div>
                                             <div class="row ml-auto">
-                                                <div class="col-md-3 ml-auto  ">
-                                                    <button type="submit" name="verExamen" class="btn btn-outline-white btn-rounded btn-sm px-2"
-                                                            data-toggle="tooltip" data-placement="top" title="Ver en detalle">
-                                                        <i class="far fa-eye " style="font-size: 15px"></i>
+                                                <div class="col-md-3 ml-auto">
+                                                    <button type="submit" name="verExamenP" class="btn btn-outline-white btn-rounded btn-sm px-2"
+                                                            data-toggle="tooltip" data-placement="top" title="Volver al exámen">
+                                                        <i class="fas fa-file-import" style="font-size: 20px"></i>
                                                     </button>
                                                     <button type="submit" name="asignarPregunta" class="btn btn-outline-white btn-rounded btn-sm px-2"
-                                                            data-toggle="tooltip" data-placement="top" title="Asignar preguntas">
-                                                        <i class="fas fa-question" style="font-size: 15px"></i>
+                                                            data-toggle="tooltip" data-placement="top" title="Añadir preguntas">
+                                                        <i class="far fa-file-powerpoint px-1" style="font-size: 20px"></i>
                                                     </button>
                                                 </div>
                                             </div>
                                         </div>
 
                                     </div>
+                                    <?php
+                                    if (isset($_SESSION['mensaje'])) {
+                                        $mensaje = $_SESSION['mensaje'];
+                                        ?>
+                                        <div class="row">
+                                        <div class="mx-auto text-center text-white badge badge-secondary"><?= $mensaje ?></div>
+                                        </div>
+                                        <?php
+                                        unset($_SESSION['mensaje']);
+                                    }
+                                    ?>
                                     <table class="table text-center">
                                         <thead>
                                             <tr>

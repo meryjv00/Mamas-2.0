@@ -354,13 +354,35 @@ class gestionDatos {
                 $tipo = $fila['tipo'];
                 $puntuacion = $fila['ponderacion'];
                 $p = new Pregunta($idP, $profesor, $enunciado, $tipo, $puntuacion);
-                $preguntas[] = $p;
+                $respuestas = self::getRespuestasPregunta($idP);
+                $p->setRespuestas($respuestas);
+                $preguntas[] = $p; 
+                
             }
             return $preguntas;
         }
         mysqli_close(self::$conexion);
     }
 
+    static function getRespuestasPregunta($idP) {
+        $respuestas = array();
+        $stmt = self::$conexion->prepare("SELECT * FROM respuesta where idPregunta = ?");
+        $stmt->bind_param("i", $idP);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            //var_dump($resultado);
+            while ($fila = $resultado->fetch_assoc()) {
+                $idR = $fila['idRespuesta'];
+                $profesor = $fila['idUsuario'];
+                $oppal = $fila['respuesta'];
+                $correcta = $fila['correcto'];
+                $respuesta = new Respuesta($idR, $profesor, $oppal, $correcta);
+                $respuestas[] = $respuesta;
+            }
+            return $respuestas;
+        }
+    }
+    
     static function getUsuarioRol($rol) {
         self::conexion();
         $idAlumnos = array();

@@ -136,7 +136,7 @@ and open the template in the editor.
                                                     </div>
                                                 </div>
                                                 <div class="form-row mt-2">
-                                                    <div class="border w-100">
+                                                    <div class="border w-100 px-3 pb-3">
 
                                                         <?php
                                                         if (isset($preguntasCreadas)) {
@@ -150,15 +150,16 @@ and open the template in the editor.
                                                             foreach ($preguntasCreadas as $i => $pregunta) {
                                                                 $contPregunta++;
                                                                 ?>
-                                                                <div class="container mt-3 z-depth-1 px-0 rounded">
+                                                                <div class="container mt-3 z-depth-1 px-0 rounded ">
                                                                     <!--Section: Content-->
-                                                                    <section class="white-text grey pt-1 rounded">
+                                                                    <section class="white-dark purple lighten-4 pt-1 rounded">
                                                                         <div class="row px-4">
                                                                             <div class="col-md-12 ">
                                                                                 <h5><?= $contPregunta . '. ' ?><?= $pregunta->getEnunciado() ?></h5>
                                                                             </div>
 
                                                                             <?php
+                                                                            echo $pregunta->getId(); //!!!
                                                                             $respuestas = $pregunta->getRespuestas();
                                                                             if ($pregunta->getTipo() == 0) {
                                                                                 $txt = "Palabras claves:";
@@ -170,6 +171,7 @@ and open the template in the editor.
                                                                             <div class="col-md-12 mb-2">
                                                                                 <?php
                                                                                 foreach ($respuestas as $j => $respuesta) {
+                                                                                    echo $respuesta->getId();//!!
                                                                                     $contOpciones++;
                                                                                     ?>
                                                                                     <span><?= $contOpciones . ') ' . $respuesta->getRespuesta() ?> </span><br>
