@@ -90,10 +90,15 @@ and open the template in the editor.
             <div class="container-fluid row ">
                 <div class=" col-md-8 mx-auto mt-5">
                     <div class="row">
-                        <div class="col-md-10 mx-auto card card-cascade narrower pb-5 bg-white">
-                            <div class="view view-cascade gradient-card-header mean-fruit-gradient">
+                        <div class="col-md-10 mx-auto card card-cascade narrower pb-2 bg-white">
+                            <div class="row view view-cascade gradient-card-header mean-fruit-gradient">
                                 <!-- Title -->
-                                <h2 class="card-header-title  text-center titulo text-white pt-2 pb-2 ">Asignar preguntas a exámen</h2>
+                                <div class="mx-auto"></div>
+                                <h2 class="card-header-title  mx-auto text-center titulo text-white pt-2 pb-2 ">Añadir preguntas a exámen</h2>
+                                <button type="submit" name="verExamen" class="ml-auto mr-3 btn btn-outline-white btn-rounded btn-sm px-2"
+                                        data-toggle="tooltip" data-placement="top" title="Ver en detalle">
+                                    <i class="far fa-eye " style="font-size: 20px"></i>
+                                </button>
                             </div>
                             <div class="justify-content-center">
                                 <form name="formPreg" action="../Controlador/controladorProfesor.php" method="post">
@@ -103,6 +108,15 @@ and open the template in the editor.
                                         <div class="row d-flex justify-content-center">
                                             <!--Grid column-->
                                             <div class="col-md-10">
+                                                <div class="form-row">
+                                                    <div class="border w-100">
+                                                        <h3 class="text-center">Información exámen</h3>
+                                                        <ul class="pr-2">
+                                                            <li><?= $examenS->getContenido() ?></li>
+                                                            <li><?= $examenS->getDescripcion() ?></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
                                                 <div class="form-row">
                                                     <!--Asignatura-->
                                                     <div class="form-row col-12">
@@ -118,39 +132,56 @@ and open the template in the editor.
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-row mt-3">
+                                                <div class="form-row mt-2">
                                                     <div class="border w-100">
-                                                        <h1 class="text-center"><?= $examenS->getContenido() ?></h1>
-                                                        <p class="pl-4"><?= $examenS->getDescripcion() ?></p>
-                                                    </div>
-                                                </div>
-                                                <div class="form-row mt-3">
-                                                    <div class="border w-100">
-                                                        <h1 class="text-center">Preguntas</h1>
+                                                        <h3 class="text-center">Preguntas a añadir 
+                                                            <span class="badge badge-secondary"><?= count($preguntasCreadas) ?></span>
+                                                        </h3>
                                                         <?php
                                                         if (isset($preguntasCreadas)) {
-                                                            echo '<hr>';
+                                                            $contOpciones;
+                                                            $contOpciones;
                                                             foreach ($preguntasCreadas as $i => $pregunta) {
-                                                                echo 'ID PREGUNTA: ' . $pregunta->getId() . '<br>';
-                                                                echo 'ENUNCIADO: ' . $pregunta->getEnunciado() . ' <br>';
-                                                                $respuestas = $pregunta->getRespuestas();
-                                                                if ($pregunta->getTipo() == 0) {
-                                                                    echo 'PALABRAS CLAVE: <br>';
-                                                                } else {
-                                                                    echo 'OPCIONES: <br>';
-                                                                }
-                                                                foreach ($respuestas as $j => $respuesta) {
-                                                                    echo 'ID:' . $respuesta->getId() . ' ';
-                                                                    echo $respuesta->getRespuesta() . '<br>';
-                                                                }
-                                                                echo '<hr>';
+                                                                $contPregunta++;
+                                                                ?>
+                                                                <div class="container mt-3 z-depth-1 px-0 rounded">
+                                                                    <!--Section: Content-->
+                                                                    <section class="white-text grey pt-1 rounded">
+                                                                        <div class="row px-4">
+                                                                            <div class="col-md-12 ">
+                                                                                <h5><?= $contPregunta . '. ' ?><?= $pregunta->getEnunciado() ?></h5>
+                                                                            </div>
+
+                                                                            <?php
+                                                                            $respuestas = $pregunta->getRespuestas();
+                                                                            if ($pregunta->getTipo() == 0) {
+                                                                                $txt = "Palabras claves:";
+                                                                            } else {
+                                                                                $txt = "Opciones:";
+                                                                            }
+                                                                            ?>
+                                                                            <span class="col-md-12 mt-1"><?= $txt ?></span>
+                                                                            <div class="col-md-12 mb-2">
+                                                                                <?php
+                                                                                foreach ($respuestas as $j => $respuesta) {
+                                                                                    $contOpciones++;
+                                                                                    ?>
+                                                                                    <span><?= $contOpciones . ') ' . $respuesta->getRespuesta() ?> </span><br>
+                                                                                    <?php
+                                                                                }
+                                                                                $contOpciones = 0;
+                                                                                ?>
+                                                                            </div>
+                                                                        </div>
+                                                                    </section>
+                                                                </div>
+                                                                <?php
                                                             }
                                                         } else {
                                                             ?>
-                                                            <p class="pl-4 font-weight-bold">
-                                                                Añade nuevas preguntas desde "Crear pregunta" o  desde 
-                                                                "Ver preguntas creadas" para elegir una pregunta ya creada.
-                                                            </p>
+                                                            <ul class="pr-2">
+                                                                <li>Añade nuevas preguntas a tu exámen, creandolas manualmente o eligiendolas desde el banco de preguntas.</li>
+                                                            </ul>
                                                             <?php
                                                         }
                                                         ?>
@@ -183,5 +214,6 @@ and open the template in the editor.
         <!-- MDB core JavaScript -->
         <script type="text/javascript" src="../js/mdb.min.js"></script>
         <script type="text/javascript" src="../js/validar.js"></script>
+        <script type="text/javascript" src="../js/diseño.js"></script>
     </body>
 </html>
