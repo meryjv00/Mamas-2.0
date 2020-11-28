@@ -24,16 +24,24 @@ and open the template in the editor.
         include_once '../Modelo/Usuario.php';
         include_once '../Modelo/Profesor.php';
         include_once '../Modelo/Alumno.php';
+        include_once '../Modelo/Examen.php';
         session_start();
         $usuario = $_SESSION['usuario'];
-        $asignaturas = $_SESSION['todasAsignaturas'];
+        $asignaturas = $_SESSION['asignaturasImpartidas'];
+
+        if ($usuario->getRol() == 0) {
+            $examenesPendientes = $_SESSION['examenesPendientes'];
+            $controlador = '../Controlador/controladorAlumno.php';
+        } else {
+            $controlador = '../Controlador/controlador.php';
+        }
         ?>
         <header>
             <nav class="row navbar navbar-expand-lg navbar-dark fixed-top deg">
                 <div class="container-fluid">
                     <ul class="navbar-nav mr-auto ml-5">
                         <li class="nav-item">
-                            <form name="home" action="../Controlador/controlador.php" method="post">
+                            <form name = "home" action = "<?= $controlador ?>" method = "post">
                                 <button type="submit" class="btn mean-fruit-gradient text-white
                                         btn-rounded waves-effect z-depth-1a" name="home" value="home">
                                     <i class="fas fa-home"></i>
@@ -53,7 +61,7 @@ and open the template in the editor.
                     </ul>
                     <ul class="navbar-nav ml-auto mr-5">
                         <li class="nav-item">
-                            <form name="cerrarSes" action="../Controlador/controlador.php" method="post">
+                            <form name="cerrarSes" action="<?= $controlador ?>" method="post">
                                 <button type="submit" class="btn mean-fruit-gradient text-white
                                         btn-rounded waves-effect z-depth-1a" name="perfil" value="Ver perfil">
                                     <i class="fas fa-user"></i>
@@ -116,16 +124,23 @@ and open the template in the editor.
                     <!-- Card image -->
                     <div class="view view-cascade gradient-card-header mean-fruit-gradient">
                         <!-- Title -->
-                        <h2 class="card-header-title text-center titulo text-white pt-1">EXÁMENES SIN REALIZAR</h2>
+                        <h2 class="card-header-title text-center titulo text-white pt-1">EXÁMENES PENDIENTES </h2>
                     </div>
                     <!-- Card content -->
                     <div class="card-body card-body-cascade">
                         <!-- Text -->
-                        <form name="cerrarSes" action="../Controlador/controlador.php" method="post">
-                            <p  style="font-size: 25px;color: #4D2034"><i class="fas fa-angle-right pr-2" ></i>Exámen 1</p>
-                            <p class="card-text">Tema 4 - GUIT: Exámen tipo test u4</p>
-                            <input type="submit" class="btn mean-fruit-gradient text-white
-                                   btn-rounded waves-effect z-depth-1a disabled" name="realizarExamen" value="Realizar exámen"/>
+                        <form name="examenes" action="<?= $controlador ?>" method="post">
+                            <?php foreach ($examenesPendientes as $key => $examenP) { ?>
+                                <p  style="font-size: 25px;color: #4D2034"><i class="fas fa-angle-right pr-2" ></i><?= $examenP->getContenido() ?></p>
+                                <p class="card-text"><?= $examenP->getDescripcion() ?></p>
+                                <button type="submit" class="btn mean-fruit-gradient text-white
+                                        btn-rounded waves-effect z-depth-1a" name="realizarExamen" value="<?= $examenP->getId() ?>">Realizar exámen
+                                </button> 
+
+                                <?php
+                            }
+                            ?>
+
                         </form>
                         <hr>
                     </div>

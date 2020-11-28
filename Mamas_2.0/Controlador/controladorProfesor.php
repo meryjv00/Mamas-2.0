@@ -8,7 +8,7 @@
 include_once '../Auxiliar/gestionDatos.php';
 include_once '../Modelo/Usuario.php';
 include_once '../Modelo/Profesor.php';
-        include_once '../Modelo/Alumno.php';
+include_once '../Modelo/Alumno.php';
 include_once '../Modelo/Asignatura.php';
 include_once '../Modelo/Pregunta.php';
 include_once '../Modelo/Asignatura.php';
@@ -113,7 +113,7 @@ if (isset($_REQUEST['aniadirPreguntas'])) {
     }
     $datos = $_REQUEST['json'];
     $preguntas = json_decode($datos, false); // Array asociativo los datos van por referencia
-    var_dump($preguntas);
+    //var_dump($preguntas);
     //echo $datosInicialesF[0]->datos[0]->id;
     for ($i = 0; $i < count($preguntas); $i++) {
         //INSERTAR PREGUNTA

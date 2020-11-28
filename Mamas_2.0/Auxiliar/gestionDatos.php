@@ -700,6 +700,19 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
+    static function updateTfno($usuario) {
+        self::conexion();
+        $consulta = "UPDATE usuarios SET telefono=" . $usuario->getTelefono() . " WHERE idUsuario =" . $usuario->getId();
+        if (self::$conexion->query($consulta)) {
+            $correcto = true;
+        } else {
+            $correcto = false;
+            echo "Error al actualizar: " . self::$conexion->error . '<br/>';
+        }
+        return $correcto;
+        mysqli_close(self::$conexion);
+    }
+
     static function updateRol($usuario) {
         self::conexion();
         $consulta = "UPDATE asignacionrol SET idRol=" . $usuario->getRol() . " WHERE idUsuario =" . $usuario->getId();

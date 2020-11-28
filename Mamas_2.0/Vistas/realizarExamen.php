@@ -7,8 +7,7 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Vista Examen</title>
-        <!-- Bootstrap core CSS -->
+        <title></title><!-- Bootstrap core CSS -->
         <link rel="stylesheet" href="../css/bootstrap.min.css">
         <!-- Material Design Bootstrap -->
         <link rel="stylesheet" href="../css/mdb.min.css">
@@ -30,65 +29,50 @@ and open the template in the editor.
         session_start();
         $usuario = $_SESSION['usuario'];
         $asignatura = $_SESSION['asignaturasImpartidas'];
-        $examenes = $asignatura[0]->getExamenes();
         $examen = $_SESSION['examenS'];
-        $creador = $_SESSION['creadorEx'];
+
+        if ($usuario->getRol() == 0) {
+            $examenesPendientes = $_SESSION['examenesPendientes'];
+            $controlador = '../Controlador/controladorAlumno.php';
+        } else {
+            $controlador = '../Controlador/controlador.php';
+        }
         ?>
         <header>
             <nav class="row navbar navbar-expand-lg navbar-dark fixed-top deg">
-                <div class="container-fluid ml-5 mr-5">
-                    <!--Left-->
-                    <ul class="navbar-nav mr-auto smooth-scroll">
-                        <form name="formu" action="../Controlador/controladorProfesor.php" method="post">
-                            <!--CRUD ADMINISTRADOR-->
-                            <?php
-                            if ($usuario->getRol() == 2) {
-                                ?>
+                <div class="container-fluid">
+                    <ul class="navbar-nav mr-auto ml-5">
+                        <li class="nav-item">
+                            <form name = "home" action = "<?= $controlador ?>" method = "post">
                                 <button type="submit" class="btn mean-fruit-gradient text-white
-                                        btn-rounded waves-effect z-depth-1a" name="CRUDadmin" value="CRUDadmin">
-                                    <i class="fas fa-cog"></i>
+                                        btn-rounded waves-effect z-depth-1a" name="home" value="home">
+                                    <i class="fas fa-home"></i>
                                 </button>
                                 <?php
-                            }
-                            ?>
-                            <!--HOME PAGINA INICIO-->
-                            <button type="submit" class="btn mean-fruit-gradient text-white
-                                    btn-rounded waves-effect z-depth-1a" name="home" value="home">
-                                <i class="fas fa-home"></i>
-                            </button>
+                                if ($usuario->getRol() == 1 || $usuario->getRol() == 2) {
+                                    ?>
+                                    <a href="inicioProfesor.php" class="btn mean-fruit-gradient btn-rounded text-white">
+                                        <i class="fas fa-times"></i>
+                                    </a>
+                                    <?php
+                                }
+                                ?>
 
-                            <button type="submit" class="btn mean-fruit-gradient text-white
-                                    btn-rounded waves-effect z-depth-1a" name="homeInicio" value="homeInicio">
-                                <i class="far fa-eye pr-1"></i> alumno
-                            </button>
-
-
+                            </form>
+                        </li> 
                     </ul>
-                    <!-- Right -->
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav ml-auto mr-5">
                         <li class="nav-item">
-
-                            <button type="submit" class="btn mean-fruit-gradient text-white 
-                                    btn-rounded waves-effect z-depth-1a" name="verExamenes" value="Ver exámenes">
-                                <i class="far fa-eye pr-1"></i> exámenes
-                            </button>
-                            <button type="submit" class="btn mean-fruit-gradient text-white 
-                                    btn-rounded waves-effect z-depth-1a" name="crearExamenes" value="Crear exámenes">
-                                <i class="fas fa-plus pr-1"></i> exámenes
-                            </button>
-                            <button type="submit" class="btn mean-fruit-gradient text-white 
-                                    btn-rounded waves-effect z-depth-1a" name="crearPreguntas" value="Crear preguntas">
-                                <i class="fas fa-plus pr-1"></i>  preguntas
-                            </button>
-                            <button type="submit" class="btn mean-fruit-gradient text-white
-                                    btn-rounded waves-effect z-depth-1a" name="perfil" value="Ver perfil">
-                                <i class="fas fa-user"></i>
-                            </button>
-                            <button type="submit" class="btn mean-fruit-gradient text-white
-                                    btn-rounded waves-effect z-depth-1a" name="cerrarSesion" value="Cerrar sesión">
-                                <i class="fas fa-sign-out-alt"></i>
-                            </button>
-
+                            <form name="cerrarSes" action="<?= $controlador ?>" method="post">
+                                <button type="submit" class="btn mean-fruit-gradient text-white
+                                        btn-rounded waves-effect z-depth-1a" name="perfil" value="Ver perfil">
+                                    <i class="fas fa-user"></i>
+                                </button>
+                                <button type="submit" class="btn mean-fruit-gradient text-white
+                                        btn-rounded waves-effect z-depth-1a" name="cerrarSesion" value="Cerrar sesión">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                </button>
+                            </form>
                         </li> 
                     </ul>
                 </div>
@@ -124,7 +108,6 @@ and open the template in the editor.
                                     <!-- Title -->
                                     <h3 class="font-weight-bold"><a><?= $examen->getContenido() ?></a></h3>
                                     <!-- Data -->
-                                    <p>Creado por: <?= $creador->getNombre(); ?></p>
                                     <p>Numero de preguntas: <?= count($examen->getPreguntas()); ?></p>
                                     <div class="mt-3">
                                         <h3>Descripcion</h3>
@@ -143,37 +126,32 @@ and open the template in the editor.
                                                 <section class="mx-auto mt-3 white-dark purple lighten-4 pt-1 rounded">
                                                     <div class="row px-4">
                                                         <div class="col-md-12">
-                                                            <h5><?= $contPregunta . '. ' ?><?= $pregunta->getEnunciado() ?></h5>
+                                                            <h5><?= $contPregunta . '. ' ?><?= $pregunta->getEnunciado() ?> (<?= $pregunta->getPuntuacion() ?> puntos).</h5>
                                                         </div>
 
                                                         <?php
                                                         $respuestas = $pregunta->getRespuestas();
                                                         if ($pregunta->getTipo() == 0) {
-                                                            $txt = "Palabras claves:";
-                                                        } else {
-                                                            $txt = "Opciones:";
-                                                        }
-                                                        ?>
-                                                        <span class="col-md-12 mt-1"><?= $txt ?></span>
-                                                        <div class="col-md-12">
+                                                            ?> 
+                                                            <textarea style="resize: none"  rows="5" cols="10"  name="pregunta<?= $contPregunta ?>" class="form-control mb-4" placeholder="Introduzca su respuesta"></textarea>
                                                             <?php
-                                                            foreach ($respuestas as $j => $respuesta) {
-                                                                $contOpciones++;
-                                                                ?>
-                                                                <span><?= $contOpciones . ') ' . $respuesta->getRespuesta() ?> </span><br>
-                                                                <?php
-                                                            }
-                                                            $contOpciones = 0;
+                                                        } else {
                                                             ?>
+                                                            <div class="col-md-12">
+                                                                <?php
+                                                                foreach ($respuestas as $j => $respuesta) {
+                                                                    $contOpciones++;
+                                                                    ?>
+                                                                    <input class="" type="radio" name="<?= $contPregunta ?>" value="<?= $respuesta->getRespuesta() ?>"><?= $contOpciones . ') ' . $respuesta->getRespuesta() ?> </input> <br>
+                                                                    <?php
+                                                                }
+                                                                $contOpciones = 0;
+                                                            }
+                                                            ?>
+
                                                         </div>
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col-md-2 ml-auto">
-                                                            <button type="submit" name="<?= $i ?>" value="Borrar" class=" btn purple lighten-2 text-white 
-                                                                        btn-block waves-effect z-depth-1a"><i class="fas fa-trash-alt"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
+
                                                 </section>
                                                 <?php
                                             }
@@ -192,23 +170,23 @@ and open the template in the editor.
                 </section>
                 <!--Section: Content-->
                 </form>
-        </main>
-    </div>
-    <footer class="footer-copyright text-center text-white py-3 z-depth-2">
-        <div> © 2020 Copyright: Israel y María</div>
-    </footer>
+        </main> 
+
+        <footer class="footer-copyright text-center text-white py-3 z-depth-2">
+            <div> © 2020 Copyright: Israel y María</div>
+        </footer>
 
 
-    <!-- jQuery -->
-    <script type="text/javascript" src="../js/jquery.min.js"></script>
-    <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="../js/popper.min.js"></script>
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
-    <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="../js/mdb.min.js"></script>
-    <!-- Your custom scripts (optional) -->
-    <script type="text/javascript" src="../js/validar.js"></script>
-    <script type="text/javascript" src="../js/diseño.js"></script>
-</body>
+        <!-- jQuery -->
+        <script type="text/javascript" src="../js/jquery.min.js"></script>
+        <!-- Bootstrap tooltips -->
+        <script type="text/javascript" src="../js/popper.min.js"></script>
+        <!-- Bootstrap core JavaScript -->
+        <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+        <!-- MDB core JavaScript -->
+        <script type="text/javascript" src="../js/mdb.min.js"></script>
+        <!-- Your custom scripts (optional) -->
+        <script type="text/javascript" src="../js/validar.js"></script>
+        <script type="text/javascript" src="../js/diseño.js"></script>
+    </body>
 </html>
