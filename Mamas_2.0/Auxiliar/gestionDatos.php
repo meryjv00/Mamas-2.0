@@ -858,7 +858,7 @@ class gestionDatos {
 
     static function insertRespuesta($respuesta, $idPregunta) {
         self::conexion();
-        $consulta = "INSERT INTO respuesta VALUES (" . $respuesta->getId() . ",'" . $respuesta->getCreador() . "'," . $idPregunta . ",'" .
+        $consulta = "INSERT INTO respuesta VALUES (default,'" . $respuesta->getCreador() . "'," . $idPregunta . ",'" .
                 $respuesta->getRespuesta() . "'," . $respuesta->getCorrecta() . ")";
         if (self::$conexion->query($consulta)) {
             $correcto = false;
@@ -872,6 +872,18 @@ class gestionDatos {
         if ($resultado = self::$conexion->query($consulta)) {
             if ($fila = $resultado->fetch_assoc()) {
                 $id = $fila['max(idPregunta)'];
+            }
+        }
+        return $id;
+        mysqli_close(self::$conexion);
+    }
+
+    static function getIdSolucion($solucion) {
+        self::conexion();
+        $consulta = "SELECT max(idSolucion) FROM solucion";
+        if ($resultado = self::$conexion->query($consulta)) {
+            if ($fila = $resultado->fetch_assoc()) {
+                $id = $fila['max(idSolucion)'];
             }
         }
         return $id;

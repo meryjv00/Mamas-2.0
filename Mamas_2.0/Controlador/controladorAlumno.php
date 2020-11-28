@@ -76,3 +76,28 @@ if (isset($_REQUEST['realizarExamen'])) {
     $_SESSION['examenS'] = $examenS;
     header('Location: ../Vistas/realizarExamen.php');
 }
+if (isset($_REQUEST['entregarExamen'])) {
+    $examenS = $_SESSION['examenS'];
+    $preguntas = $examenS->getPreguntas();
+    $solucion = new Solucion(0, $examenS->getId());
+    for ($i = 0; $i < count($preguntas); $i++) {
+        $respuesta = $_REQUEST[$i];
+        $r = new Respuesta(0, $usuario->getId(), $respuesta, 0);
+        gestionDatos::insertRespuesta($respuesta, $preguntas[$i]->getId());
+        $r->setId(gestionDatos::getIdRespuesta());
+        $solucion->addRespuesta($r);
+    }
+    gestionDatos::insertSolucion($solucion);
+    $solucion->setId(gestionDatos::getIdSolucion($solucion));
+    $usuario->addSolucion($solucion);
+    $_SESSION['usuario'] = $usuario;
+    foreach ($examenesPendientes as $k => $examen) {
+        if ($examen->getId() == $examenS->getId()) {
+            unset($examenesPendientes[$k]);
+        }
+    }
+    $_SESSION['examenesPendientes'] = $examenesPendientes;
+    $mensaje = 'Examen Entregado,SUERTE!!';
+    $_SESSION['mensaje'] = $mensaje;
+    header('Location: ../Vistas/inicio.php');
+}

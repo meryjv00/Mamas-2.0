@@ -84,6 +84,17 @@ and open the template in the editor.
                             <div class="view view-cascade gradient-card-header">
                                 <!-- Title -->
                                 <h2 class="card-header-title font-weight-bold text-center letra display-4 titulo2 pt-2 pb-2">Mis asignaturas</h2>
+                                <?php
+                                if (isset($_SESSION['mensaje'])) {
+                                    $mensaje = $_SESSION['mensaje'];
+                                    ?>
+                                    <div class="row">
+                                        <div class="mx-auto text-center text-white badge badge-secondary"><?= $mensaje ?></div>
+                                    </div>
+                                    <?php
+                                    unset($_SESSION['mensaje']);
+                                }
+                                ?>
                             </div>
                             <div class="row justify-content-center">
                                 <?php

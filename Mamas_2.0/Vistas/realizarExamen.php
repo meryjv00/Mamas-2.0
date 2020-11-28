@@ -38,6 +38,7 @@ and open the template in the editor.
             $controlador = '../Controlador/controlador.php';
         }
         ?>
+
         <header>
             <nav class="row navbar navbar-expand-lg navbar-dark fixed-top deg">
                 <div class="container-fluid">
@@ -57,8 +58,8 @@ and open the template in the editor.
                                     <?php
                                 }
                                 ?>
-
                             </form>
+
                         </li> 
                     </ul>
                     <ul class="navbar-nav ml-auto mr-5">
@@ -85,23 +86,9 @@ and open the template in the editor.
                         <div class="col-md-12">
                             <div class="card card-cascade wider reverse">
                                 <div class="view view-cascade gradient-card-header mean-fruit-gradient">
-                                    <div class="row">
-                                        <div class="mx-auto"></div>
-                                        <h4 class="card-header-title  text-center titulo text-white pt-2 pb-2  ">Info exámen</h4>
-                                        <div class="ml-auto mr-5 pb-2">
-                                            <!-- Facebook -->
-                                            <button name="corregirA" title="Corregir auto" class=" btn btn-outline-secondary btn-rounded btn-sm px-2 purple lighten-3" ">
-                                                <i class="fas fa-magic " style="font-size: 20px ;color: white" ></i>
-                                            </button>
-                                            <button name="corregirM" title="Corregir manual" class=" btn btn-outline-secondary btn-rounded btn-sm px-2 purple lighten-3" ">
-                                                <i class="fas fa-file-signature" style="font-size: 20px ;color: white"></i>
-                                            </button>
-                                            <button name="asignarP" title="Asignar preguntas"  class=" btn btn-outline-secondary btn-rounded btn-sm px-2 purple lighten-3" ">
-                                                <i class="far fa-file-powerpoint" style="font-size: 20px ;color: white"></i>
-                                            </button>
-                                        </div>
-                                    </div>
+                                    <h4 class="card-header-title  text-center titulo text-white pt-2 pb-2  ">Examen</h4>
                                 </div>
+
                                 <div class="view view-cascade overlay pt-4">
                                 </div>
                                 <div class="card-body card-body-cascade text-center">
@@ -114,54 +101,65 @@ and open the template in the editor.
                                         <p><?= $examen->getDescripcion() ?></p>
                                     </div>
                                     <div class="row pt-3">
-                                        <div class="col-md-8 mx-auto border pb-3">
+                                        <div class="col-md-8 mx-auto border pb-3 ">
                                             <h3 class="text-center">Preguntas </h3>
-                                            <?php
-                                            $preguntas = $examen->getPreguntas();
-                                            $contOpciones = 0;
-                                            $contPregunta = 0;
-                                            foreach ($preguntas as $i => $pregunta) {
-                                                $contPregunta++;
-                                                ?>
-                                                <section class="mx-auto mt-3 white-dark purple lighten-4 pt-1 rounded">
-                                                    <div class="row px-4">
-                                                        <div class="col-md-12">
-                                                            <h5><?= $contPregunta . '. ' ?><?= $pregunta->getEnunciado() ?> (<?= $pregunta->getPuntuacion() ?> puntos).</h5>
-                                                        </div>
 
-                                                        <?php
-                                                        $respuestas = $pregunta->getRespuestas();
-                                                        if ($pregunta->getTipo() == 0) {
-                                                            ?> 
-                                                            <textarea style="resize: none"  rows="5" cols="10"  name="pregunta<?= $contPregunta ?>" class="form-control mb-4" placeholder="Introduzca su respuesta"></textarea>
-                                                            <?php
-                                                        } else {
-                                                            ?>
-                                                            <div class="col-md-12">
-                                                                <?php
-                                                                foreach ($respuestas as $j => $respuesta) {
-                                                                    $contOpciones++;
-                                                                    ?>
-                                                                    <input class="" type="radio" name="<?= $contPregunta ?>" value="<?= $respuesta->getRespuesta() ?>"><?= $contOpciones . ') ' . $respuesta->getRespuesta() ?> </input> <br>
-                                                                    <?php
-                                                                }
-                                                                $contOpciones = 0;
-                                                            }
-                                                            ?>
+                                            <form name="examen" action="<?= $controlador ?>" method="post">
+                                                <div class="row"> 
 
-                                                        </div>
-                                                    </div>
+                                                    <button type="submit" class="btn mean-fruit-gradient text-white
+                                                            btn-rounded waves-effect z-depth-1a" name="entregarExamen" value="entregar">Entregar exámen
+                                                    </button> 
 
-                                                </section>
+                                                </div>
                                                 <?php
-                                            }
-                                            ?>
+                                                $preguntas = $examen->getPreguntas();
+                                                $contOpciones = 0;
+                                                $contPregunta = 0;
+                                                foreach ($preguntas as $i => $pregunta) {
+                                                    $contPregunta++;
+                                                    ?>
+                                                    <section class="mx-auto mt-3 white-dark purple lighten-4 pt-1 rounded">
+                                                        <div class="row px-4">
+                                                            <div class="col-md-12">
+                                                                <h5><?= $contPregunta . '. ' ?><?= $pregunta->getEnunciado() ?> (<?= $pregunta->getPuntuacion() ?> puntos).</h5>
+                                                            </div>
+
+                                                            <?php
+                                                            $respuestas = $pregunta->getRespuestas();
+                                                            if ($pregunta->getTipo() == 0) {
+                                                                ?> 
+                                                                <textarea style="resize: none"  rows="5" cols="10"  name="<?= $contPregunta ?>" class="form-control mb-4" placeholder="Introduzca su respuesta"></textarea>
+                                                                <?php
+                                                            } else {
+                                                                ?>
+                                                                <div class="col-md-12">
+                                                                    <div class="col-md-3"></div>
+                                                                    <?php
+                                                                    foreach ($respuestas as $j => $respuesta) {
+                                                                        $contOpciones++;
+                                                                        ?>
+                                                                        <input class="" type="radio" name="<?= $contPregunta ?>" value="<?= $respuesta->getRespuesta() ?>"><?= $contOpciones . ') ' . $respuesta->getRespuesta() ?> </input> <br>
+                                                                        <?php
+                                                                    }
+                                                                    $contOpciones = 0;
+                                                                    ?>
+                                                                <?php }
+                                                                ?>
+
+                                                            </div>
+                                                        </div>
+                                                    </section>
+                                                    <?php
+                                                    $contOpciones++;
+                                                }
+                                                ?>
+                                            </form>
                                         </div>
+
                                     </div>
-                                    <!-- Social shares -->
                                 </div>
                             </div>
-                            <!-- Card -->
                         </div>
                         <!-- Grid column -->
                     </div>
@@ -169,7 +167,8 @@ and open the template in the editor.
                     <hr class="mb-5 mt-4">
                 </section>
                 <!--Section: Content-->
-                </form>
+
+
         </main> 
 
         <footer class="footer-copyright text-center text-white py-3 z-depth-2">
