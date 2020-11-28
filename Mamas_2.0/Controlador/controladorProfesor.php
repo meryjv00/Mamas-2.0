@@ -204,7 +204,6 @@ if (isset($_REQUEST['verExamenS'])) {
     header('Location: ../Vistas/verExamen.php');
 }
 if (isset($_REQUEST['verExamen'])) {
-
     $examenes = $asignaturas[0]->getExamenes();
     if (count($examenes) > 0) {
         $cont = 0;

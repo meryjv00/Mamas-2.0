@@ -316,7 +316,7 @@ class gestionDatos {
 
         mysqli_close(self::$conexion);
     }
-
+    
     static function getPreguntasExamen($idE) {
         $preguntas = array();
         $stmt = self::$conexion->prepare("SELECT * FROM asignacionpregunta,pregunta where pregunta.idPregunta = asignacionpregunta.idPregunta "
@@ -332,6 +332,8 @@ class gestionDatos {
                 $tipo = $fila['tipo'];
                 $ponderacion = $fila['ponderacion'];
                 $p = new Pregunta($idP, $profesor, $enunciado, $tipo, $ponderacion);
+                $respuestas = self::getRespuestasPregunta($idP);
+                $p->setRespuestas($respuestas);
                 $preguntas[] = $p;
             }
             return $preguntas;
