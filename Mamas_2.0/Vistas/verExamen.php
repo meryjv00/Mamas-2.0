@@ -136,11 +136,11 @@ and open the template in the editor.
                                     <!-- Data -->
                                     <p>Creado por: <?= $creador->getNombre(); ?></p>
                                     <p>Numero de preguntas: <?= count($examen->getPreguntas()); ?></p>
-                                    <div class="mt-5">
+                                    <div class="mt-3">
                                         <h3>Descripcion</h3>
                                         <p><?= $examen->getDescripcion() ?></p>
                                     </div>
-                                    <div class="row">
+                                    <div class="row pt-3">
                                         <div class="col-md-8 mx-auto border pb-3">
                                             <h3 class="text-center">Preguntas </h3>
                                             <?php

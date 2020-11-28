@@ -350,6 +350,11 @@ if (isset($_REQUEST['limpiar'])) {
 
 //------------------CRUD PREGUNTAS
 if (isset($_REQUEST['filtrar'])) {
+    if (isset($_SESSION['preguntasDisponibles'])) {
+        $preguntas = $_SESSION['preguntasDisponibles'];
+    } else {
+        $preguntas = $asignaturas[0]->getPreguntas();
+    }
     if (isset($_REQUEST['tipoPregunta'])) {
         $tip = $_REQUEST['tipoPregunta'];
     } else {
@@ -362,7 +367,7 @@ if (isset($_REQUEST['filtrar'])) {
         $misPreguntas = false;
     };
 
-    $preguntas = $asignaturas[0]->getPreguntas();
+
     $preguntasF = array();
 
     foreach ($preguntas as $i => $pregunta) {
