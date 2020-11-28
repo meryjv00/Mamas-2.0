@@ -22,6 +22,8 @@ and open the template in the editor.
         <?php
         include_once '../Modelo/Asignatura.php';
         include_once '../Modelo/Usuario.php';
+        include_once '../Modelo/Profesor.php';
+        include_once '../Modelo/Alumno.php';
         session_start();
         $usuario = $_SESSION['usuario'];
         $asignaturas = $_SESSION['todasAsignaturas'];
@@ -92,10 +94,11 @@ and open the template in the editor.
                                         <!-- Card content -->
                                         <div class="card-body card-body-cascade text-center">
                                             <!-- Category & Title -->
-                                            <a href="" class="text-muted">
+                                            <button name="<?= $asignatura->getNombre() ?>"
+                                                    <a href="" class="text-muted">
                                                 <h5><?= $asignatura->getNombre() ?></h5>
-                                            </a>
-                                            <!-- Card content -->
+                                                </a>
+                                                <!-- Card content -->
                                         </div>
                                     </div>
                                     <?php

@@ -20,6 +20,8 @@ and open the template in the editor.
     <body onload="validacionTfnoPass()">
         <?php
         require_once '../Modelo/Usuario.php';
+        include_once '../Modelo/Profesor.php';
+        include_once '../Modelo/Alumno.php';
         require_once '../Modelo/Asignatura.php';
         session_start();
         $usuario = $_SESSION['usuario'];

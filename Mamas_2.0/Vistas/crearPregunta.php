@@ -21,6 +21,8 @@ and open the template in the editor.
     <body onload="validarPregunta()">
         <?php
         include_once '../Modelo/Usuario.php';
+        include_once '../Modelo/Profesor.php';
+        include_once '../Modelo/Alumno.php';
         include_once '../Modelo/Asignatura.php';
         session_start();
         $usuario = $_SESSION['usuario'];

@@ -24,6 +24,8 @@ and open the template in the editor.
         include_once '../Modelo/Respuesta.php';
         include_once '../Modelo/Examen.php';
         include_once '../Modelo/Usuario.php';
+        include_once '../Modelo/Profesor.php';
+        include_once '../Modelo/Alumno.php';
         session_start();
         $usuario = $_SESSION['usuario'];
         $examenS = $_SESSION['examenS'];

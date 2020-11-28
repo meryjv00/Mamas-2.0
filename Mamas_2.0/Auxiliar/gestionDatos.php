@@ -20,6 +20,7 @@ include_once '../Modelo/Alumno.php';
 include_once '../Modelo/Profesor.php';
 include_once '../Modelo/Asignatura.php';
 include_once '../Auxiliar/constantes.php';
+include_once '../Modelo/Solucion.php';
 
 class gestionDatos {
 
@@ -50,9 +51,9 @@ class gestionDatos {
         $stmt->bind_param("ss", $mail, $password);
         if ($stmt->execute()) {
             $resultado = $stmt->get_result();
-            var_dump($resultado);
+            //var_dump($resultado);
             if ($fila = $resultado->fetch_assoc()) {
-                var_dump($fila);
+                //var_dump($fila);
                 //obtenemos los datos  en variables individuales para la creacion del objeto usuario.
                 $id = $fila['idUsuario'];
                 $email = $fila['email'];
@@ -62,8 +63,9 @@ class gestionDatos {
                 $telefono = $fila['telefono'];
                 $activo = $fila['activo'];
                 $imagen = $fila['imagen'];
-                $p = new Usuario($id, $email, $dni, $nombre, $apellidos, $telefono, $activo, $imagen);
 
+                $p = new Usuario($id, $email, $dni, $nombre, $apellidos, $telefono, $activo, $imagen);
+                $p->setRol(self::getRol($id));
                 //almacenamos en sesion al usuario que ha realizado el Login.
             }
             return $p;
@@ -89,12 +91,24 @@ class gestionDatos {
         }
     }
 
-    static function inicializarProfesor($idU) {
+    static function inicializarAlumno($idAl) {
+        $asignaturas = array();
+        $examenes = array();
+        $preguntas = array();
+        $asignaturas = self::getAsignaturasUsu2($idAl);
+        for ($i = 0; $i < count($asignaturas); $i++) {
+            $examenes = self::getExamenesActivos($asignaturas[$i]->getIdAsignatura());
+            $asignaturas[$i]->setExamenes($examenes);
+        }
+        return $asignaturas;
+    }
+
+    static function inicializarProfesor($idP) {
         $asignaturas = array();
         $alumnos = array();
         $examenes = array();
         $preguntas = array();
-        $asignaturas = self::getAsignaturasUsu2($idU);
+        $asignaturas = self::getAsignaturasUsu2($idP);
         for ($i = 0; $i < count($asignaturas); $i++) {
             $examenes = self::getExamenes($asignaturas[$i]->getIdAsignatura());
             $preguntas = self::getPreguntas($asignaturas[$i]->getIdAsignatura());
@@ -170,6 +184,116 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
+    static function getSoluciones($idAl) {
+        self::conexion();
+        $soluciones = array();
+        $respuestas = array();
+        $stmt = self::$conexion->prepare("SELECT * FROM solucion WHERE idUsuario= ? ");
+        $stmt->bind_param("i", $idAl);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            //var_dump($resultado);
+            while ($fila = $resultado->fetch_assoc()) {
+                //var_dump($fila);
+                $idSol = $fila['idSolucion'];
+                $idEx = $fila['idExamne'];
+                $solucion = new Solucion($idSol, $idEx);
+
+                $correcion = self::getCorreccion($idSol);
+                $correcion->setNotas(self::getNotas($idSol));
+                $correcion->setAnotacion(self::getAnotaciones($idSol));
+
+                $respuestas = self::getRespuestas($idAl);
+
+                $solucion->setRespuestas($respuestas);
+                $solucion->setCorreccion($correccion);
+
+                $soluciones[] = $solucion;
+            }
+        }
+        return $soluciones;
+        mysqli_close(self::$conexion);
+    }
+
+    static function getNotas($idSol) {
+        self::conexion();
+        $notas = array();
+        $stmt = self::$conexion->prepare("SELECT * FROM correcion WHERE idSolucion= ? ");
+        $stmt->bind_param("i", $idSol);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            //var_dump($resultado);
+            while ($fila = $resultado->fetch_assoc()) {
+                $nota = $fila['nota'];
+                $notas[] = $nota;
+            }
+        }
+        return $notas;
+        mysqli_close(self::$conexion);
+    }
+
+    static function getAnotaciones($idSol) {
+        self::conexion();
+        $anotaciones = array();
+        $stmt = self::$conexion->prepare("SELECT * FROM correcion WHERE idSolucion= ? ");
+        $stmt->bind_param("i", $idSol);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            //var_dump($resultado);
+            while ($fila = $resultado->fetch_assoc()) {
+                $anotacion = $fila['anotacion'];
+                $anotaciones[] = $anotacion;
+            }
+        }
+        return $anotaciones;
+        mysqli_close(self::$conexion);
+    }
+
+    static function getCorreccion($idSol) {
+        self::conexion();
+        $stmt = self::$conexion->prepare("SELECT * FROM correcion WHERE idSolucion= ? ");
+        $stmt->bind_param("i", $idSol);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            //var_dump($resultado);
+            if ($fila = $resultado->fetch_assoc()) {
+                $profesor = $fila['idUsuario'];
+                $corr = new Correccion($profesor);
+            }
+        }
+        return $corr;
+        mysqli_close(self::$conexion);
+    }
+
+    static function crearTipo($usuario) {
+        self::conexion();
+        $id = $usuario->getId();
+        $stmt = self::$conexion->prepare("SELECT * FROM asignacionrol WHERE idUsuario= ? ");
+        $stmt->bind_param("i", $id);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            //var_dump($resultado);
+            if ($fila = $resultado->fetch_assoc()) {
+                //var_dump($fila);
+
+                $rol = $fila['idRol'];
+                if ($rol == 0) {
+                    $alumno = new Alumno($usuario->getId(), $usuario->getEmail(), $usuario->getDni(), $usuario->getNombre(), $usuario->getApellidos(), $usuario->getTelefono(), $usuario->getActivo(), $usuario->getImagen());
+                    $alumno->setRol(0);
+                    $soluciones = array();
+                    $soluciones = self::getSoluciones($alumno->getId());
+                    $alumno->setSoluciones($soluciones);
+                    $user = $alumno;
+                } else {
+                    $profesor = new Profesor($usuario->getId(), $usuario->getEmail(), $usuario->getDni(), $usuario->getNombre(), $usuario->getApellidos(), $usuario->getTelefono(), $usuario->getActivo(), $usuario->getImagen());
+                    $profesor->setRol($rol);
+                    $user = $profesor;
+                }
+            }
+        }
+        return $user;
+    }
+
     static function getRol($id) {
         self::conexion();
         $rol = -1;
@@ -192,7 +316,7 @@ class gestionDatos {
         $stmt->bind_param("s", $email);
         if ($stmt->execute()) {
             $resultado = $stmt->get_result();
-            var_dump($resultado);
+            //var_dump($resultado);
             if ($fila = $resultado->fetch_assoc()) {
                 $id = $fila['idUsuario'];
             } else {
@@ -245,7 +369,7 @@ class gestionDatos {
         $stmt->bind_param("i", $id);
         if ($stmt->execute()) {
             $resultado = $stmt->get_result();
-            var_dump($resultado);
+            //var_dump($resultado);
             if ($fila = $resultado->fetch_assoc()) {
                 $idRol = $fila['idRol'];
             } else {
@@ -262,7 +386,7 @@ class gestionDatos {
         $stmt->bind_param("i", $idUsuario);
         if ($stmt->execute()) {
             $resultado = $stmt->get_result();
-            var_dump($resultado);
+            //var_dump($resultado);
             while ($fila = $resultado->fetch_assoc()) {
                 $id[] = $fila['idAsignatura'];
             }
@@ -277,13 +401,38 @@ class gestionDatos {
         $stmt->bind_param("ii", $idUsuario);
         if ($stmt->execute()) {
             $resultado = $stmt->get_result();
-            var_dump($resultado);
+            //var_dump($resultado);
             while ($fila = $resultado->fetch_assoc()) {
                 $idE = $fila['idExamen'];
                 $contenido = $fila['contenido'];
                 $descripcion = $fila['descripcion'];
                 $activo = $fila['activo'];
                 $e = new Examen($idE, $idUsuario, $contenido, $descripcion, $activo);
+                $examenes[] = $e;
+            }
+            return $examenes;
+        }
+
+        mysqli_close(self::$conexion);
+    }
+
+    static function getExamenesActivos($idAs) {
+        self::conexion();
+        $examenes = array();
+        $stmt = self::$conexion->prepare("SELECT * FROM examen WHERE idAsignatura= ? AND activo= 1");
+        $stmt->bind_param("i", $idAs);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            //var_dump($resultado);
+            while ($fila = $resultado->fetch_assoc()) {
+                $idE = $fila['idExamen'];
+                $profesor = $fila['idUsuario'];
+                $contenido = $fila['contenido'];
+                $descripcion = $fila['descripcion'];
+                $activo = $fila['activo'];
+                $e = new Examen($idE, $profesor, $contenido, $descripcion, $activo);
+                $preguntas = self::getPreguntasExamen($idE);
+                $e->setPreguntas($preguntas);
                 $examenes[] = $e;
             }
             return $examenes;
@@ -316,7 +465,7 @@ class gestionDatos {
 
         mysqli_close(self::$conexion);
     }
-    
+
     static function getPreguntasExamen($idE) {
         $preguntas = array();
         $stmt = self::$conexion->prepare("SELECT * FROM asignacionpregunta,pregunta where pregunta.idPregunta = asignacionpregunta.idPregunta "
@@ -475,9 +624,9 @@ class gestionDatos {
         $stmt->bind_param("i", $id);
         if ($stmt->execute()) {
             $resultado = $stmt->get_result();
-            var_dump($resultado);
+            //var_dump($resultado);
             if ($fila = $resultado->fetch_assoc()) {
-                var_dump($fila);
+                // var_dump($fila);
                 //obtenemos los datos  en variables individuales para la creacion del objeto usuario.
                 $id = $fila['idUsuario'];
                 $email = $fila['email'];

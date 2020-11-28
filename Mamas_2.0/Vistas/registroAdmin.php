@@ -19,6 +19,8 @@ and open the template in the editor.
     <body onload="validarRegistro()">
         <?php
         require_once '../Modelo/Usuario.php';
+        include_once '../Modelo/Profesor.php';
+        include_once '../Modelo/Alumno.php';
         session_start()
         ?>
         <header>
