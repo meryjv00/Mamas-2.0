@@ -152,7 +152,7 @@ and open the template in the editor.
                                                                 ?>
                                                                 <div class="container mt-3 z-depth-1 px-0 rounded ">
                                                                     <!--Section: Content-->
-                                                                    <section class="white-dark purple lighten-4 pt-1 rounded">
+                                                                    <section class="white-dark purple lighten-4 pt-1 rounded pr-1">
                                                                         <div class="row px-4">
                                                                             <div class="col-md-12">
                                                                                 <h5><?= $contPregunta . '. ' ?><?= $pregunta->getEnunciado() ?></h5>
@@ -180,9 +180,9 @@ and open the template in the editor.
                                                                             </div>
                                                                         </div>
                                                                         <div class="row">
-                                                                            <div class="col-md-3 ml-auto">
-                                                                                <button type="submit" name="<?= $i ?>" value="Quitar" class="btn purple lighten-2 text-white 
-                                                                                        btn-block waves-effect z-depth-1a">Quitar
+                                                                            <div class="col-md-2  ml-auto">
+                                                                                <button type="submit" name="<?= $i ?>" value="Quitar" class="btn  purple lighten-2 text-white 
+                                                                                        btn-block waves-effect z-depth-1a"><i class="fas fa-trash"></i>
                                                                                 </button>
                                                                             </div>
                                                                         </div>

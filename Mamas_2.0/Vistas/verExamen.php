@@ -141,7 +141,7 @@ and open the template in the editor.
                                         <p><?= $examen->getDescripcion() ?></p>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-8 mx-auto border">
+                                        <div class="col-md-8 mx-auto border pb-3">
                                             <h3 class="text-center">Preguntas </h3>
                                             <?php
                                             $preguntas = $examen->getPreguntas();
@@ -178,9 +178,9 @@ and open the template in the editor.
                                                         </div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-md-3 ml-auto">
+                                                        <div class="col-md-2 ml-auto">
                                                             <button type="submit" name="<?= $i ?>" value="Borrar" class=" btn purple lighten-2 text-white 
-                                                                    btn-block waves-effect z-depth-1a">Borrar
+                                                                    btn-block waves-effect z-depth-1a"><i class="fas fa-trash-alt"></i>
                                                             </button>
                                                         </div>
                                                     </div>

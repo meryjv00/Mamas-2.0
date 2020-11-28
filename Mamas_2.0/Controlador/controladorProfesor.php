@@ -36,7 +36,7 @@ if (isset($_REQUEST['homeInicio'])) {
 
 //-----------------CERRAR SESIÓN
 if (isset($_REQUEST['cerrarSesion'])) {
-    unset($_SESSION['usuario']);
+    session_destroy();
     header('Location: ../index.php');
 }
 
@@ -174,7 +174,11 @@ if (isset($_REQUEST['crearPreguntasEx'])) {
 if (isset($_REQUEST['verPreguntasCreadas'])) {
     $examenS = $_SESSION['examenS'];
     $preguntasExamen = $examenS->getPreguntas();
-    $preguntasCreadas = $_SESSION['preguntasCreadas'];
+    if (isset($_SESSION['preguntasCreadas'])) {
+        $preguntasCreadas = $_SESSION['preguntasCreadas'];
+    } else {
+        $preguntasCreadas = array();
+    }
     $preguntasDisponibles = array();
     //Recogemos todas las preguntas de su asignatura, ahora vamos a quitar aquellas que estan
     //ya asignadas a un examen o que estan en la pantalla para asignarlas, para que no
@@ -183,11 +187,16 @@ if (isset($_REQUEST['verPreguntasCreadas'])) {
     $preguntas = $asignatura[0]->getPreguntas();
     foreach ($preguntas as $i => $pregunta) {
         foreach ($preguntasExamen as $j => $preguntaEx) {
-            if ($pregunta->getId() != $preguntaEx->getId()) {
-               $preguntasDisponibles[] = $preguntaEx;
+            if ($pregunta->getId() == $preguntaEx->getId()) {
+                unset($preguntas[$i]);
             }
         }
-    }
+        foreach ($preguntasCreadas as $z => $preguntaC) {
+            if ($pregunta->getId() == $preguntaC->getId()) {
+                unset($preguntas[$i]);
+            }
+        }
+    }$preguntasDisponibles = $preguntas;
     $_SESSION['preguntasDisponibles'] = $preguntasDisponibles;
     header('Location: ../Vistas/crudPreguntas.php');
 }
@@ -353,7 +362,7 @@ if (isset($_REQUEST['filtrar'])) {
     } else {
         $misPreguntas = false;
     };
-    $autor = $_REQUEST['autor'];
+
     $preguntas = $asignaturas[0]->getPreguntas();
     $preguntasF = array();
 
@@ -364,10 +373,6 @@ if (isset($_REQUEST['filtrar'])) {
             $guardada = true;
         }
         if ($misPreguntas && $pregunta->getProfesor() == $usuario->getId() && !$guardada) {
-            $preguntasF[] = $pregunta;
-            $guardada = true;
-        }
-        if (!$guardada && $autor == gestionDatos::getUsuarioNombre($pregunta->getProfesor())) {
             $preguntasF[] = $pregunta;
             $guardada = true;
         }

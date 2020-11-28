@@ -106,37 +106,37 @@ and open the template in the editor.
 
                             <div class="card-body">
                                 <form name="formExamenes" action="../Controlador/controladorProfesor.php" method="post">
-                                <div class="row mb-4 mx-3">
-                                    <div class="col-md-4 mx-auto">
-                                        <div class="row purple lighten-3">
-                                            <div class="ml-auto col-md-5 text-center">
-                                                <button type="submit" name="filtrar" class="btn btn-outline-white btn-rounded btn-sm px-2"
-                                                        data-toggle="tooltip" data-placement="top" title="Filtrar preguntas">
-                                                    <i class="fas fa-filter" style="font-size: 10px"></i>
-                                                </button>
-                                                <button type="submit" name="limpiar" class="btn btn-outline-white btn-rounded btn-sm px-2"
-                                                        data-toggle="tooltip" data-placement="top" title="Limpiar filtros">
-                                                    <i class="fas fa-sync-alt" style="font-size: 10px"></i>
-                                                </button>
+                                    <div class="row mb-4 mx-3">
+                                        <div class="col-md-4 mx-auto">
+                                            <div class="row purple lighten-3">
+                                                <div class="ml-auto col-md-5 text-center">
+                                                    <button type="submit" name="filtrar" class="btn btn-outline-white btn-rounded btn-sm px-2"
+                                                            data-toggle="tooltip" data-placement="top" title="Filtrar preguntas">
+                                                        <i class="fas fa-filter" style="font-size: 10px"></i>
+                                                    </button>
+                                                    <button type="submit" name="limpiar" class="btn btn-outline-white btn-rounded btn-sm px-2"
+                                                            data-toggle="tooltip" data-placement="top" title="Limpiar filtros">
+                                                        <i class="fas fa-sync-alt" style="font-size: 10px"></i>
+                                                    </button>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row purple lighten-2 pl-3 pb-2">
-                                            <div id="admin" class="col-12 custom-control custom-checkbox " >
-                                                <input type="checkbox" class="custom-control-input" id="misPreguntas" name="misPreguntas" >
-                                                <label class="custom-control-label" for="misPreguntas">Mis preguntas</label>
+                                            <div class="row purple lighten-2 pl-3 pb-2">
+                                                <div id="admin" class="col-12 custom-control custom-checkbox " >
+                                                    <input type="checkbox" class="custom-control-input" id="misPreguntas" name="misPreguntas" >
+                                                    <label class="custom-control-label" for="misPreguntas">Mis preguntas</label>
+                                                </div>
+                                                <div class="col-12 custom-control custom-radio ml-auto ">
+                                                    <input type="radio" class="custom-control-input" id="texto" name="tipoPregunta" value="0" >
+                                                    <label class="custom-control-label" for="texto">Texto</label>
+                                                </div>
+                                                <div class="col-12 custom-control custom-radio ml-auto ">
+                                                    <input type="radio" class="custom-control-input" id="test" name="tipoPregunta" value="1" >
+                                                    <label class="custom-control-label" for="test">Test</label>
+                                                </div>
+
                                             </div>
-                                            <div class="col-12 custom-control custom-radio ml-auto ">
-                                                <input type="radio" class="custom-control-input" id="texto" name="tipoPregunta" value="0" >
-                                                <label class="custom-control-label" for="texto">Texto</label>
-                                            </div>
-                                            <div class="col-12 custom-control custom-radio ml-auto ">
-                                                <input type="radio" class="custom-control-input" id="test" name="tipoPregunta" value="1" >
-                                                <label class="custom-control-label" for="test">Test</label>
-                                            </div>
-                                            <input class="col-5 mr-3" type="text" name="autor" placeholder="Autor">
                                         </div>
                                     </div>
-                                </div>
                                     <div class="row view view-cascade gradient-card-header mean-fruit-gradient narrower d-flex mx-4 mb-3">
                                         <div class="mx-auto"></div>
                                         <h4 class="card-header-title  text-center titulo text-white pt-2 pb-2 ">Preguntas</h4>
@@ -146,7 +146,7 @@ and open the template in the editor.
                                                 <i class="fas fa-file-import" style="font-size: 20px"></i>
                                             </button>
                                             <button type="submit" name="asignarPregunta" class="btn btn-outline-white btn-rounded btn-sm px-2"
-                                                    data-toggle="tooltip" data-placement="top" title="Añadir preguntas">
+                                                    data-toggle="tooltip" data-placement="top" title="Asignar preguntas">
                                                 <i class="far fa-file-powerpoint px-1" style="font-size: 20px"></i>
                                             </button>
                                         </div>
