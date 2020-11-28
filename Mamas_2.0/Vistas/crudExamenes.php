@@ -29,7 +29,7 @@ and open the template in the editor.
         $asignatura = $_SESSION['asignaturasImpartidas'];
         $examenes = $asignatura[0]->getExamenes();
         ?>
-         <header>
+        <header>
             <form name="formu" action="../Controlador/controladorProfesor.php" method="post">
                 <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar colorNav">
                     <div class="container-fluid ml-5 mr-5">
@@ -121,14 +121,6 @@ and open the template in the editor.
                                         <div class="mx-auto"></div>
                                         <h4 class="white-text text-center ">Mis exámenes</h4>
                                         <div class="ml-auto pr-3">
-                                            <button type="submit" name="activarExamen" class="btn btn-outline-white btn-rounded btn-sm px-2"
-                                                    data-toggle="tooltip" data-placement="top" title="Activar">
-                                                <i class="fas fa-check-circle" style="font-size: 20px"></i>
-                                            </button>
-                                            <button type="submit" name="desactivarExamen" class="btn btn-outline-white btn-rounded btn-sm px-2"
-                                                    data-toggle="tooltip" data-placement="top" title="Desactivar">
-                                                <i class="fas fa-times-circle" style="font-size: 20px"></i>
-                                            </button>
                                             <button type="submit" name="verExamen" class="btn btn-outline-white btn-rounded btn-sm px-2"
                                                     data-toggle="tooltip" data-placement="top" title="Ver en detalle">
                                                 <i class="far fa-eye" style="font-size: 18px"></i>
@@ -137,7 +129,17 @@ and open the template in the editor.
                                                     data-toggle="tooltip" data-placement="top" title="Asignar preguntas">
                                                 <i class="far fa-file-powerpoint px-1" style="font-size: 20px"></i>
                                             </button>
-
+                                            <button type="submit" name="activarExamen" class="btn btn-outline-white btn-rounded btn-sm px-2"
+                                                    data-toggle="tooltip" data-placement="top" title="Activar">
+                                                <i class="fas fa-check-circle" style="font-size: 20px"></i>
+                                            </button>
+                                            <button type="submit" name="desactivarExamen" class="btn btn-outline-white btn-rounded btn-sm px-2"
+                                                    data-toggle="tooltip" data-placement="top" title="Desactivar">
+                                                <i class="fas fa-times-circle" style="font-size: 20px"></i>
+                                            </button>
+                                            <button type="submit" name="borrarExamen" class="btn btn-outline-white btn-rounded btn-sm px-2 waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="" data-original-title="Eliminar">
+                                                <i class="far fa-trash-alt mt-0" style="font-size: 20px"></i>
+                                            </button>
                                         </div>
 
                                     </div>

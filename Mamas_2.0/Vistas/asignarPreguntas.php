@@ -31,7 +31,7 @@ and open the template in the editor.
             $preguntasCreadas = $_SESSION['preguntasCreadas'];
         }
         ?>
-                <header>
+        <header>
             <form name="formu" action="../Controlador/controladorProfesor.php" method="post">
                 <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar colorNav">
                     <div class="container-fluid ml-5 mr-5">
@@ -112,10 +112,10 @@ and open the template in the editor.
                     <div class="row">
                         <div class="col-md-10 mx-auto card card-cascade narrower pb-2 bg-white">
                             <form name="formPreg" action="../Controlador/controladorProfesor.php" method="post">
-                                <div class="row view view-cascade gradient-card-header mean-fruit-gradient">
+                                <div class="row view view-cascade gradient-card-header mean-fruit-gradient py-1">
 
                                     <div class="mx-auto"></div>
-                                    <h2 class="card-header-title  mx-auto text-center titulo text-white pt-2 pb-2 ">Añadir preguntas a exámen</h2>
+                                    <h2 class="card-header-title  mx-auto text-center titulo text-white py-2 ">Añadir preguntas a exámen</h2>
                                     <button type="submit" name="verExamenS" class="ml-auto mr-3 btn btn-outline-white btn-rounded btn-sm px-2"
                                             data-toggle="tooltip" data-placement="top" title="Ver exámen en detalle">
                                         <i class="far fa-eye " style="font-size: 20px"></i>
@@ -191,8 +191,17 @@ and open the template in the editor.
                                                                                 <?php
                                                                                 foreach ($respuestas as $j => $respuesta) {
                                                                                     $contOpciones++;
+                                                                                    if ($pregunta->getTipo() == 1) {
+                                                                                        if ($respuesta->getCorrecta() == 0) {
+                                                                                            $icono = "fas fa-times";
+                                                                                        } else {
+                                                                                            $icono = "fas fa-check";
+                                                                                        }
+                                                                                    }else{
+                                                                                        $icono = "fas fa-sort-alpha-up";
+                                                                                    }
                                                                                     ?>
-                                                                                    <span><?= $contOpciones . ') ' . $respuesta->getRespuesta() ?> </span><br>
+                                                                                    <span><?= $contOpciones . ') ' . $respuesta->getRespuesta() ?> <i class="<?= $icono ?> letra"></i></span><br>
                                                                                     <?php
                                                                                 }
                                                                                 $contOpciones = 0;

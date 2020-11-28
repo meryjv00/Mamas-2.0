@@ -136,9 +136,7 @@ if (isset($_REQUEST['salirVista'])) {
 }
 //-----------------VER PERFIL
 if (isset($_REQUEST['perfil'])) {
-    if ($usuario->getRol() != 0) {
-        $_SESSION['origen'] = 'alumno';
-    }
+    $_SESSION['vieneAlum'] = true;
     header('Location: ../Vistas/perfil.php');
 }
 
@@ -147,26 +145,54 @@ if (isset($_REQUEST['editarFotoPerfil'])) {
     gestionDatos::updateFoto($usuario->getId());
     //Obtiene el usuario con la foto actualizada y lo guarda en sesión  
     $_SESSION['usuario'] = gestionDatos::getUsuarioId($usuario->getId());
-    header('Location: ../Vistas/perfil.php');
+    if ($usuario->getRol() == 0) {
+        header('Location: ../Vistas/perfil.php');
+    } else {
+        if (isset($_SESSION['vieneAlum'])) {
+            header('Location: ../Vistas/perfil.php');
+        } else {
+            header('Location: ../Vistas/perfilP.php');
+        }
+    }
 }
 
 //-----------------EDITAR NUMERO TELEFONO
 if (isset($_REQUEST['editarTfno'])) {
     $tfno = $_REQUEST['tfno'];
     $usuario->setTelefono($tfno);
-    if (!gestionDatos::updateTfno($usuario)) {
-        $mensaje = 'No se ha podido cambiar número de teléfono';
-        $_SESSION['mensaje'] = $mensaje;
+    gestionDatos::updateTfno($usuario);
+    if ($usuario->getRol() == 0) {
+        header('Location: ../Vistas/perfil.php');
+    } else {
+        if (isset($_SESSION['vieneAlum'])) {
+            header('Location: ../Vistas/perfil.php');
+        } else {
+            header('Location: ../Vistas/perfilP.php');
+        }
     }
-    header('Location: ../Vistas/perfil.php');
 }
 
 //-----------------EDITAR CONTRASEÑA
 if (isset($_REQUEST['nuevaPass'])) {
     $pass = md5($_REQUEST['pass']);
-    if (!gestionDatos::updatePass($usuario, $pass)) {
+    if (!gestionDatos::setPassword($usuario->getEmail(), $pass)) {
         $mensaje = 'No se ha podido cambiar la contraseña';
         $_SESSION['mensaje'] = $mensaje;
     }
-    header('Location: ../Vistas/perfil.php');
+    if ($usuario->getRol() == 0) {
+        header('Location: ../Vistas/perfil.php');
+    } else {
+        if (isset($_SESSION['vieneAlum'])) {
+            header('Location: ../Vistas/perfil.php');
+        } else {
+            header('Location: ../Vistas/perfilP.php');
+        }
+    }
+}
+
+if (isset($_REQUEST['salirAlumno'])) {
+    if (isset($_SESSION['vieneAlum'])) {
+        unset($_SESSION['vieneAlum']);
+    }
+    header('Location: ../Vistas/inicioProfesor.php');
 }

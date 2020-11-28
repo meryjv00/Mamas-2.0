@@ -212,7 +212,19 @@ class gestionDatos {
         }
         return $id;
     }
-
+    
+    static function getUltEx() {
+        self::conexion();
+        $consulta = "SELECT max(idExamen) FROM examen";
+        if ($resultado = self::$conexion->query($consulta)) {
+            if ($fila = $resultado->fetch_assoc()) {
+                $id = $fila['max(idExamen)'];
+            }
+        }
+        return $id;
+        mysqli_close(self::$conexion);
+    }
+    
     static function getUsuarios() {
         self::conexion();
         $usuarios = Array();
@@ -316,7 +328,7 @@ class gestionDatos {
 
         mysqli_close(self::$conexion);
     }
-    
+
     static function getPreguntasExamen($idE) {
         $preguntas = array();
         $stmt = self::$conexion->prepare("SELECT * FROM asignacionpregunta,pregunta where pregunta.idPregunta = asignacionpregunta.idPregunta "
@@ -525,6 +537,18 @@ class gestionDatos {
         return $correcto;
         mysqli_close(self::$conexion);
     }
+        static function deleteExamen($examen) {
+        self::conexion();
+        $consulta = "DELETE FROM examen WHERE idExamen =" . $examen->getId();
+        if (self::$conexion->query($consulta)) {
+            $correcto = true;
+        } else {
+            $correcto = false;
+            echo "Error al borrar la asignacion: " . self::$conexion->error . '<br/>';
+        }
+        return $correcto;
+        mysqli_close(self::$conexion);
+    }
 
 //======================================================================
 // UPDATE
@@ -547,6 +571,13 @@ class gestionDatos {
         self::conexion();
         $fotoBin = self::$conexion->real_escape_string(file_get_contents($_FILES["imagen"]["tmp_name"]));
         $sentencia = "UPDATE usuarios SET imagen = ('$fotoBin') WHERE idUsuario = " . $id;
+        self::$conexion->query($sentencia);
+        mysqli_close(self::$conexion);
+    }
+
+    static function updateTfno($usuario) {
+        self::conexion();
+        $sentencia = "UPDATE usuarios SET telefono = '". $usuario->getTelefono() ."' WHERE idUsuario = " . $usuario->getId();
         self::$conexion->query($sentencia);
         mysqli_close(self::$conexion);
     }

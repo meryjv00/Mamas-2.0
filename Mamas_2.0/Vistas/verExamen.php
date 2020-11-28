@@ -148,7 +148,7 @@ and open the template in the editor.
                                     <!-- Card content -->
                                     <div class="card-body card-body-cascade text-center">
                                         <!-- Title -->
-                                        <h3 class="font-weight-bold"><a><?= $examen->getContenido() ?></a></h3>
+                                        <h3 class="font-weight-bold "><a><?= $examen->getContenido() ?></a></h3>
                                         <!-- Data -->
                                         <p>Creado por: <?= $creador->getNombre(); ?></p>
                                         <p>Numero de preguntas: <?= count($examen->getPreguntas()); ?></p>
@@ -156,7 +156,7 @@ and open the template in the editor.
                                             <h3>Descripcion</h3>
                                             <p><?= $examen->getDescripcion() ?></p>
                                         </div>
-                                        <div class="row pt-3">
+                                        <div class="row pt-3 text-left">
                                             <div class="col-md-8 mx-auto border pb-3">
                                                 <h3 class="text-center">Preguntas </h3>
                                                 <?php
@@ -185,8 +185,19 @@ and open the template in the editor.
                                                                 <?php
                                                                 foreach ($respuestas as $j => $respuesta) {
                                                                     $contOpciones++;
+                                                                    if ($pregunta->getTipo() == 1) {
+                                                                        if ($respuesta->getCorrecta() == 0) {
+                                                                            $icono = "fas fa-times";
+                                                                        } else {
+                                                                            $icono = "fas fa-check";
+                                                                        }
+                                                                    } else {
+                                                                        $icono = "fas fa-sort-alpha-up";
+                                                                    }
                                                                     ?>
-                                                                    <span><?= $contOpciones . ') ' . $respuesta->getRespuesta() ?> </span><br>
+                                                                    <span><?= $contOpciones . ') ' . $respuesta->getRespuesta() ?> <i class="<?= $icono ?> letra"></i></span>
+
+                                                                    <br>
                                                                     <?php
                                                                 }
                                                                 $contOpciones = 0;

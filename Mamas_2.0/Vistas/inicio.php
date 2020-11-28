@@ -39,9 +39,10 @@ and open the template in the editor.
                                 <?php
                                 if ($usuario->getRol() == 1 || $usuario->getRol() == 2) {
                                     ?>
-                                    <a href="inicioProfesor.php" class="btn mean-fruit-gradient btn-rounded text-white">
+                                    <button type="submit" class="btn mean-fruit-gradient text-white
+                                            btn-rounded waves-effect z-depth-1a" name="salirAlumno" value="salirAlumno">
                                         <i class="fas fa-times"></i>
-                                    </a>
+                                    </button>
                                     <?php
                                 }
                                 ?>
@@ -109,7 +110,7 @@ and open the template in the editor.
 
                 </div>
 
-                <div class="col-md-3 mt-5 card card-cascade narrower">
+                <div class="col-md-3 mt-5 card card-cascade narrower align-self-start">
                     <!-- Card image -->
                     <div class="view view-cascade gradient-card-header mean-fruit-gradient">
                         <!-- Title -->
