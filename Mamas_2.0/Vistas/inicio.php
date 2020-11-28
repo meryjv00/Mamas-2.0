@@ -26,8 +26,8 @@ and open the template in the editor.
         $usuario = $_SESSION['usuario'];
         $asignaturas = $_SESSION['todasAsignaturas'];
         ?>
-        <header>
-            <nav class="row navbar navbar-expand-lg navbar-dark fixed-top deg">
+        <header class="bg-white">
+            <nav class="row navbar navbar-expand-lg navbar-dark fixed-top colorNav">
                 <div class="container-fluid">
                     <ul class="navbar-nav mr-auto ml-5">
                         <li class="nav-item">
@@ -73,7 +73,7 @@ and open the template in the editor.
                         <div class="col-md-10 mx-auto card card-cascade narrower pb-5 bg-transparent">
                             <div class="view view-cascade gradient-card-header">
                                 <!-- Title -->
-                                <h2 class="card-header-title font-weight-bold text-center letra display-4 titulo2 pt-2 pb-2">Mis asignaturas</h2>
+                                <h2 class="card-header-title font-weight-bold text-center letra display-4 tit pt-2 pb-2">Mis asignaturas</h2>
                             </div>
                             <div class="row justify-content-center">
                                 <?php
@@ -113,7 +113,7 @@ and open the template in the editor.
                     <!-- Card image -->
                     <div class="view view-cascade gradient-card-header mean-fruit-gradient">
                         <!-- Title -->
-                        <h2 class="card-header-title text-center titulo text-white pt-1">EXÁMENES SIN REALIZAR</h2>
+                        <h1 class="card-header-title text-center titulo text-white pt-1">Exámenes sin realizar</h1>
                     </div>
                     <!-- Card content -->
                     <div class="card-body card-body-cascade">
@@ -127,10 +127,10 @@ and open the template in the editor.
                         <hr>
                     </div>
                 </div>
-
+            </div>
         </main>
 
-        <footer class="footer-copyright text-center text-white py-3 z-depth-2">
+        <footer class="footer-copyright text-center text-white py-3 z-depth-2 colorNav fixed-bottom">
             <div> © 2020 Copyright: Israel y María</div>
         </footer>
         <!-- jQuery -->

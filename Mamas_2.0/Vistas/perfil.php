@@ -26,7 +26,7 @@ and open the template in the editor.
         $asignaturas = $_SESSION['asignaturas'];
         ?>
         <header>
-            <nav class="row navbar navbar-expand-lg navbar-dark fixed-top deg">
+            <nav class="row navbar navbar-expand-lg navbar-dark fixed-top colorNav">
                 <div class="container-fluid">
                     <ul class="navbar-nav mr-auto ml-5">
                         <li class="nav-item">
@@ -60,7 +60,7 @@ and open the template in the editor.
                 </div>
             </nav>
         </header>
-        <main class="pb-5 pt-5 ml-4">
+        <main class="pb-5 pt-5 ml-4 mb-5">
             <div class="container-fluid row">
                 <div class="col-md-4 mt-5 mx-auto">
                     <!-- Card -->
@@ -191,7 +191,7 @@ and open the template in the editor.
         </div>
     </main>
 
-    <footer class="footer-copyright text-center text-white py-3 z-depth-2">
+    <footer class="footer-copyright text-center text-white py-3 z-depth-2 colorNav fixed-bottom">
         <div> © 2020 Copyright: Israel y María</div>
     </footer>
     <!-- jQuery -->

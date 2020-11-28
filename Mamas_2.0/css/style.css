@@ -73,3 +73,6 @@ button, input[type=submit]{
 #preguntasCreadas li p:nth-child(1), .enunciadoPregunta{
     background-color: #d5e1df;
 }
+.colorNav{
+    background: #543B54;
+}

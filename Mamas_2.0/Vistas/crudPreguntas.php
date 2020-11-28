@@ -33,65 +33,80 @@ and open the template in the editor.
             $preguntas = $_SESSION['preguntasDisponibles'];
         }
         ?>
-        <header>
-            <nav class="row navbar navbar-expand-lg navbar-dark fixed-top deg">
-                <div class="container-fluid ml-5 mr-5">
-                    <!--Left-->
-                    <ul class="navbar-nav mr-auto smooth-scroll">
-                        <form name="formu" action="../Controlador/controladorProfesor.php" method="post">
-                            <!--CRUD ADMINISTRADOR-->
-                            <?php
-                            if ($usuario->getRol() == 2) {
-                                ?>
-                                <button type="submit" class="btn mean-fruit-gradient text-white
-                                        btn-rounded waves-effect z-depth-1a" name="CRUDadmin" value="CRUDadmin">
-                                    <i class="fas fa-cog"></i>
-                                </button>
+                <header>
+            <form name="formu" action="../Controlador/controladorProfesor.php" method="post">
+                <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar colorNav">
+                    <div class="container-fluid ml-5 mr-5">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+                                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                            <!--LEFT-->
+                            <ul class="navbar-nav mr-auto smooth-scroll">
+                                <!--CRUD ADMINISTRADOR-->
                                 <?php
-                            }
-                            ?>
-                            <!--HOME PAGINA INICIO-->
-                            <button type="submit" class="btn mean-fruit-gradient text-white
-                                    btn-rounded waves-effect z-depth-1a" name="home" value="home">
-                                <i class="fas fa-home"></i>
-                            </button>
-
-                            <button type="submit" class="btn mean-fruit-gradient text-white
-                                    btn-rounded waves-effect z-depth-1a" name="homeInicio" value="homeInicio">
-                                <i class="far fa-eye pr-1"></i> alumno
-                            </button>
-
-                        </form>
-                    </ul>
-                    <!-- Right -->
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <form name="formu" action="../Controlador/controladorProfesor.php" method="post">
-                                <button type="submit" class="btn mean-fruit-gradient text-white 
-                                        btn-rounded waves-effect z-depth-1a" name="verExamenes" value="Ver exámenes">
-                                    <i class="far fa-eye pr-1"></i> exámenes
-                                </button>
-                                <button type="submit" class="btn mean-fruit-gradient text-white 
-                                        btn-rounded waves-effect z-depth-1a" name="crearExamenes" value="Crear exámenes">
-                                    <i class="fas fa-plus pr-1"></i> exámenes
-                                </button>
-                                <button type="submit" class="btn mean-fruit-gradient text-white 
-                                        btn-rounded waves-effect z-depth-1a" name="crearPreguntas" value="Crear preguntas">
-                                    <i class="fas fa-plus pr-1"></i>  preguntas
-                                </button>
-                                <button type="submit" class="btn mean-fruit-gradient text-white
-                                        btn-rounded waves-effect z-depth-1a" name="perfil" value="Ver perfil">
-                                    <i class="fas fa-user"></i>
-                                </button>
-                                <button type="submit" class="btn mean-fruit-gradient text-white
-                                        btn-rounded waves-effect z-depth-1a" name="cerrarSesion" value="Cerrar sesión">
-                                    <i class="fas fa-sign-out-alt"></i>
-                                </button>
-                            </form>
-                        </li> 
-                    </ul>
-                </div>
-            </nav>
+                                if ($usuario->getRol() == 2) {
+                                    ?>
+                                    <li class="nav-item">
+                                        <button type="submit" class="btn mean-fruit-gradient text-white
+                                                btn-rounded waves-effect z-depth-1a" name="CRUDadmin" value="CRUDadmin">
+                                            <i class="fas fa-cog"></i>
+                                        </button>
+                                    </li>
+                                    <?php
+                                }
+                                ?>
+                                <li  class="nav-item">
+                                    <button type="submit" class="btn mean-fruit-gradient text-white
+                                            btn-rounded waves-effect z-depth-1a" name="home" value="home">
+                                        <i class="fas fa-home"></i>
+                                    </button>
+                                </li>
+                                <li class="nav-item">
+                                    <button type="submit" class="btn mean-fruit-gradient text-white
+                                            btn-rounded waves-effect z-depth-1a" name="homeInicio" value="homeInicio">
+                                        <i class="far fa-eye pr-1"></i> alumno
+                                    </button>
+                                </li>
+                            </ul>
+                            <!--RIGHT-->
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <button type="submit" class="btn mean-fruit-gradient text-white 
+                                            btn-rounded waves-effect z-depth-1a" name="verExamenes" value="Ver exámenes">
+                                        <i class="far fa-eye pr-1"></i> exámenes
+                                    </button>
+                                </li>
+                                <li class="nav-item">
+                                    <button type="submit" class="btn mean-fruit-gradient text-white 
+                                            btn-rounded waves-effect z-depth-1a" name="crearExamenes" value="Crear exámenes">
+                                        <i class="fas fa-plus pr-1"></i> exámenes
+                                    </button>
+                                </li>
+                                <li class="nav-item">
+                                    <button type="submit" class="btn mean-fruit-gradient text-white 
+                                            btn-rounded waves-effect z-depth-1a" name="crearPreguntas" value="Crear preguntas">
+                                        <i class="fas fa-plus pr-1"></i>  preguntas
+                                    </button>
+                                </li>
+                                <li class="nav-item">
+                                    <button type="submit" class="btn mean-fruit-gradient text-white
+                                            btn-rounded waves-effect z-depth-1a" name="perfil" value="Ver perfil">
+                                        <i class="fas fa-user"></i>
+                                    </button>
+                                </li>
+                                <li class="nav-item">
+                                    <button type="submit" class="btn mean-fruit-gradient text-white
+                                            btn-rounded waves-effect z-depth-1a" name="cerrarSesion" value="Cerrar sesión">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </form>
         </header>
         <div class="container my-5 pt-5">
             <!-- Section: Block Content -->
@@ -107,8 +122,8 @@ and open the template in the editor.
                             <div class="card-body">
                                 <form name="formExamenes" action="../Controlador/controladorProfesor.php" method="post">
                                     <div class="row mb-4 mx-3">
-                                        <div class="col-md-4 mx-auto">
-                                            <div class="row purple lighten-3">
+                                        <div class="col-md-4 mx-auto border">
+                                            <div class="row purple mean-fruit-gradient">
                                                 <div class="ml-auto col-md-5 text-center">
                                                     <button type="submit" name="filtrar" class="btn btn-outline-white btn-rounded btn-sm px-2"
                                                             data-toggle="tooltip" data-placement="top" title="Filtrar preguntas">
@@ -120,7 +135,7 @@ and open the template in the editor.
                                                     </button>
                                                 </div>
                                             </div>
-                                            <div class="row purple lighten-2 pl-3 pb-2">
+                                            <div class="row  pl-3 pb-2">
                                                 <div id="admin" class="col-12 custom-control custom-checkbox " >
                                                     <input type="checkbox" class="custom-control-input" id="misPreguntas" name="misPreguntas" >
                                                     <label class="custom-control-label" for="misPreguntas">Mis preguntas</label>
@@ -212,7 +227,7 @@ and open the template in the editor.
             </section>
             <!-- Section: Block Content -->
         </div>
-        <footer class="footer-copyright text-center text-white py-3 z-depth-2">
+        <footer class="footer-copyright text-center text-white py-3 z-depth-2 colorNav fixed-bottom">
             <div> © 2020 Copyright: Israel y María</div>
         </footer>
         <!-- jQuery -->
