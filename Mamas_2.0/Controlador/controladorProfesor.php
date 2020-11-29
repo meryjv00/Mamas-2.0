@@ -30,6 +30,17 @@ if (isset($_REQUEST['home'])) {
 }
 if (isset($_REQUEST['homeInicio'])) {
     if ($_SESSION['origen'] = 'alumno') {
+        $examenesPendientes = array();
+
+        foreach ($asignaturas as $asignatura) {
+            $examenAsig = $asignatura->getExamenes();
+            foreach ($examenAsig as $examen) {
+                if ($examen->getActivo() == 1) {
+                    $examenesPendientes[] = $examen;
+                }
+            }
+        }
+        $_SESSION['examenesPendientes'] = $examenesPendientes;
         header('Location: ../Vistas/inicio.php');
     } else {
         header('Location: ../Vistas/inicioProfesor.php');
@@ -148,7 +159,7 @@ if (isset($_REQUEST['aniadirPreguntas'])) {
                         $respuesta = new Respuesta($idRespuesta + 1, $profesor, $opcion, $correcto);
                     }
                     $p->addRespuesta($respuesta);
-                    gestionDatos::insertRespuesta($respuesta, $idPregunta);
+                    gestionDatos::insertRespuesta($respuesta->getRespuesta(), $usuario->getId(), $idPregunta);
                 }
                 $preguntasEx[] = $p;
                 $asignatura->addPregunta($p);
