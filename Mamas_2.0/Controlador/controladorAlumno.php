@@ -132,18 +132,22 @@ for ($i = 0; $i < count($asignaturas); $i++) {
                 $examenesCorregidos = array();
                 $examenAsig = $asignatura->getExamenes();
                 foreach ($examenAsig as $examen) {
-                    $examenesPendientes[] = $examen;
+                    if ($examen->getActivo() == 1) {
+                        $examenesPendientes[] = $examen;
+                    }
                 }
 
-                $soluciones = $usuario->getSoluciones();
-                foreach ($examenesPendientes as $key => $examenP) {
-                    foreach ($soluciones as $j => $solucion) {
-                        if ($solucion->getExamen() == $examenP->getId()) {
-                            if ($solucion->getCorreccion() != null) {
-                                $examenesCorregidos[] = $examenP;
-                            } else {
-                                $examenesRealizados[] = $examenP;
-                                unset($examenesPendientes[$key]);
+                if ($usuario->getRol() == 0) {
+                    $soluciones = $usuario->getSoluciones();
+                    foreach ($examenesPendientes as $key => $examenP) {
+                        foreach ($soluciones as $j => $solucion) {
+                            if ($solucion->getExamen() == $examenP->getId()) {
+                                if ($solucion->getCorreccion() != null) {
+                                    $examenesCorregidos[] = $examenP;
+                                } else {
+                                    $examenesRealizados[] = $examenP;
+                                    unset($examenesPendientes[$key]);
+                                }
                             }
                         }
                     }
