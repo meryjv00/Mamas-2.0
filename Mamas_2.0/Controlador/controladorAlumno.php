@@ -113,3 +113,15 @@ if (isset($_REQUEST['entregarExamen'])) {
     $_SESSION['mensaje'] = $mensaje;
     header('Location: ../Vistas/inicio.php');
 }
+//---------------SIEMPRE AL FINAL----------
+for ($i = 0; $i < count($asignaturas); $i++) {
+    if (isset($_REQUEST[$i])) {
+        $idAsignatura = $_REQUEST[$i];
+        foreach ($asignaturas as $asignatura) {
+            if ($asignatura->getIdAsignatura() == $idAsignatura) {
+                $_SESSION['asignaturaS'] = $asignatura;
+                header('Location: ../Vistas/inicioAsignatura.php');
+            }
+        }
+    }
+}
