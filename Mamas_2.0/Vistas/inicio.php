@@ -7,7 +7,7 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title></title>
+        <title>Inicio alumno</title>
         <!-- Bootstrap core CSS -->
         <link rel="stylesheet" href="../css/bootstrap.min.css">
         <!-- Material Design Bootstrap -->
@@ -22,16 +22,21 @@ and open the template in the editor.
         <?php
         include_once '../Modelo/Asignatura.php';
         include_once '../Modelo/Usuario.php';
+        include_once '../Modelo/Profesor.php';
+        include_once '../Modelo/Alumno.php';
+        include_once '../Modelo/Examen.php';
         session_start();
         $usuario = $_SESSION['usuario'];
-        $asignaturas = $_SESSION['todasAsignaturas'];
+        $asignaturas = $_SESSION['asignaturasImpartidas'];
+        $examenesPendientes = $_SESSION['examenesPendientes'];
+        $controlador = '../Controlador/controladorAlumno.php';
         ?>
         <header class="bg-white">
             <nav class="row navbar navbar-expand-lg navbar-dark fixed-top colorNav">
                 <div class="container-fluid">
                     <ul class="navbar-nav mr-auto ml-5">
                         <li class="nav-item">
-                            <form name="home" action="../Controlador/controlador.php" method="post">
+                            <form name = "home" action = "<?= $controlador ?>" method = "post">
                                 <button type="submit" class="btn mean-fruit-gradient text-white
                                         btn-rounded waves-effect z-depth-1a" name="home" value="home">
                                     <i class="fas fa-home"></i>
@@ -52,7 +57,7 @@ and open the template in the editor.
                     </ul>
                     <ul class="navbar-nav ml-auto mr-5">
                         <li class="nav-item">
-                            <form name="cerrarSes" action="../Controlador/controlador.php" method="post">
+                            <form name="cerrarSes" action="<?= $controlador ?>" method="post">
                                 <button type="submit" class="btn mean-fruit-gradient text-white
                                         btn-rounded waves-effect z-depth-1a" name="perfil" value="Ver perfil">
                                     <i class="fas fa-user"></i>
@@ -67,7 +72,7 @@ and open the template in the editor.
                 </div>
             </nav>
         </header>
-        <main class="pb-5 pt-5 ml-4">
+        <main class="pb-5 pt-5 ml-4 mb-5">
             <div class="container-fluid row ">
                 <div class="col-md-9 mt-5">
                     <div class="row">
@@ -75,34 +80,50 @@ and open the template in the editor.
                             <div class="view view-cascade gradient-card-header">
                                 <!-- Title -->
                                 <h2 class="card-header-title font-weight-bold text-center letra display-4 tit pt-2 pb-2">Mis asignaturas</h2>
+                                <?php
+                                if (isset($_SESSION['mensaje'])) {
+                                    $mensaje = $_SESSION['mensaje'];
+                                    ?>
+                                    <div class="row">
+                                        <div class="mx-auto text-center text-white badge badge-secondary"><?= $mensaje ?></div>
+                                    </div>
+                                    <?php
+                                    unset($_SESSION['mensaje']);
+                                }
+                                ?>
                             </div>
-                            <div class="row justify-content-center">
+                            <form class="row justify-content-center" name = "home" action = "<?= $controlador ?>" method = "post">
                                 <?php
                                 foreach ($asignaturas as $i => $asignatura) {
                                     ?>
-                                    <div class="col-md-3 card card-cascade narrower card-ecommerce mt-3 ml-3 mr-3" style="height: 280px" >
-                                        <!-- Card image -->
-                                        <div class="view overlay zoom" style="height: 200px">
-                                            <img src="data:image/png;base64,<?php echo base64_encode($asignatura->getImagen()); ?>" alt="titulo foto" class="img-fluid"
-                                                 />
-                                            <div class="mask flex-center">
-                                                <p class="white-text"><i class="fas fa-arrow-right" style="color:#543b54;font-size: 40px"></i></p>
+
+                                    <div class="col-md-3 card  card-cascade narrower card-ecommerce mt-3 ml-3 mr-3" style="height: 280px" >
+                                        <button class="border-0 bg-white" type="submit" name="<?= $i ?>" value="<?= $asignatura->getIdAsignatura() ?>"> <!-- Card image -->
+
+                                            <div class="view bg-white overlay zoom" style="height: 200px">
+                                                <img src="data:image/png;base64,<?php echo base64_encode($asignatura->getImagen()); ?>" alt="titulo foto" class="img-fluid"
+                                                     />
+                                                <div class="mask flex-center">
+                                                    <p class="white-text"><i class="fas fa-arrow-right" style="color:#543b54;font-size: 40px"></i></p>
+                                                </div>
                                             </div>
-                                        </div>
+                                        </button>
                                         <!-- Card image -->
                                         <!-- Card content -->
                                         <div class="card-body card-body-cascade text-center">
                                             <!-- Category & Title -->
-                                            <a href="" class="text-muted">
-                                                <h5><?= $asignatura->getNombre() ?></h5>
-                                            </a>
+
+                                            <h5><?= $asignatura->getNombre() ?></h5>
+
                                             <!-- Card content -->
                                         </div>
+
                                     </div>
+
                                     <?php
                                 }
                                 ?>
-                            </div>
+                            </form>
 
                         </div>
 
@@ -119,13 +140,19 @@ and open the template in the editor.
                     <!-- Card content -->
                     <div class="card-body card-body-cascade">
                         <!-- Text -->
-                        <form name="cerrarSes" action="../Controlador/controlador.php" method="post">
-                            <p  style="font-size: 25px;color: #4D2034"><i class="fas fa-angle-right pr-2" ></i>Exámen 1</p>
-                            <p class="card-text">Tema 4 - GUIT: Exámen tipo test u4</p>
-                            <input type="submit" class="btn mean-fruit-gradient text-white
-                                   btn-rounded waves-effect z-depth-1a disabled" name="realizarExamen" value="Realizar exámen"/>
+                        <form name="examenes" action="<?= $controlador ?>" method="post">
+                            <?php foreach ($examenesPendientes as $key => $examenP) { ?>
+                                <p  style="font-size: 20px;color: #4D2034"><i class="fas fa-angle-right pr-2" ></i><?= $examenP->getContenido() ?></p>
+                                <p class="card-text"><?= $examenP->getDescripcion() ?></p>
+                                <button type="submit" class="btn purple lighten-3 text-white
+                                        btn-rounded waves-effect z-depth-1a" name="realizarExamen" value="<?= $examenP->getId() ?>">Realizar exámen
+                                </button> 
+                                <hr>
+                                <?php
+                            }
+                            ?>
+
                         </form>
-                        <hr>
                     </div>
                 </div>
             </div>

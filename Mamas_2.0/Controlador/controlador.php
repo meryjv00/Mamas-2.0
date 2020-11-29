@@ -7,9 +7,13 @@
  */
 include_once '../Auxiliar/gestionDatos.php';
 include_once '../Modelo/Usuario.php';
+include_once '../Modelo/Profesor.php';
+include_once '../Modelo/Alumno.php';
 session_start();
 if (isset($_SESSION['usuario'])) {
     $usuario = $_SESSION['usuario'];
+    $asignaturas = $_SESSION['asignaturasImpartidas'];
+    $examenesPendientes = $_SESSION['examenesPendientes'];
 }
 //---------------LOGIN
 if (isset($_REQUEST['login'])) {
@@ -24,7 +28,7 @@ if (isset($_REQUEST['login'])) {
         $password = md5($_REQUEST['password']);
         $usuario = gestionDatos::getUsuario($email, $password);
         if (isset($usuario)) {
-            $usuario->setRol(gestionDatos::getRol($usuario->getId()));
+            $usuario = gestionDatos::crearTipo($usuario);
             $_SESSION['usuario'] = $usuario;
             if (!isset($_SESSION['usuario'])) {
                 $mensaje = 'Error al realizar el Login.';
@@ -36,15 +40,51 @@ if (isset($_REQUEST['login'])) {
                     $_SESSION['mensaje'] = $mensaje;
                     header('Location: ../Vistas/login.php');
                 } else if ($usuario->getActivo() == 1) {
-                    if ($usuario->getRol() == 0) {
+                    if ($usuario->getRol() == 0) { //ROL ALUMNO
+                        $alumno = $usuario; // nombre alumno , ya que contiene un objeto alumno. Por evitar confusiones.
+                        $asig = gestionDatos::inicializarAlumno($alumno->getId());
+                        $_SESSION['alumno'] = $alumno;
+                        $_SESSION['asignaturasImpartidas'] = $asig;
+                        $examenesPendientes = array();
+
+                        foreach ($asig as $asignatura) {
+                            $examenAsig = $asignatura->getExamenes();
+                            foreach ($examenAsig as $examen) {
+                                $examenesPendientes[] = $examen;
+                            }
+                        }
+                        $soluciones = $alumno->getSoluciones();
+                        foreach ($examenesPendientes as $key => $examenP) {
+                            foreach ($soluciones as $j => $solucion) {
+                                if ($solucion->getExamen() == $examenP->getId()) {
+
+                                    unset($examenesPendientes[$key]);
+                                }
+                            }
+                        }
+
+                        $_SESSION['examenesPendientes'] = $examenesPendientes;
+
                         header('Location: ../Vistas/inicio.php');
-                    } else if ($usuario->getRol() == 1 || $usuario->getRol() == 2) {
+                    } else if ($usuario->getRol() == 1 || $usuario->getRol() == 2) { //ROL ADMIN O PROFESOR
+                        $profesor = $usuario; // nombre pofesor , ya que contiene un objeto profesor . Por evitar confusiones.
                         $asig = gestionDatos::inicializarProfesor($usuario->getId());
                         $_SESSION['asignaturasImpartidas'] = $asig;
                         $_SESSION['examenes'] = $asig[0]->getExamenes();
                         $_SESSION['exCorregidos'] = 0;
                         $_SESSION['exPendientes'] = $_SESSION['examenes'];
+                        $examenesPendientes = array();
+                        foreach ($asig as $asignatura) {
+                            $examenAsig = $asignatura->getExamenes();
+                            foreach ($examenAsig as $examen) {
+                                if ($examen->getActivo()) {
+                                    $examenesPendientes[] = $examen;
+                                }
+                            }
+                        }
+                        $_SESSION['examenesPendientes'] = $examenesPendientes;
                         $_SESSION['origen'] = 'profesor';
+                        $_SESSION['usuario'] = $profesor;
                         header('Location: ../Vistas/inicioProfesor.php');
                     }
                     //Obtiene las asignaturas que imparte
@@ -195,4 +235,15 @@ if (isset($_REQUEST['salirAlumno'])) {
         unset($_SESSION['vieneAlum']);
     }
     header('Location: ../Vistas/inicioProfesor.php');
+}
+//------------------REALIZAR EXAMEN
+if (isset($_REQUEST['realizarExamen'])) {
+    $idE = $_REQUEST['realizarExamen'];
+    foreach ($examenesPendientes as $key => $examen) {
+        if ($examen->getId() == $idE) {
+            $examenS = $examen;
+        }
+    }
+    $_SESSION['examenS'] = $examenS;
+    header('Location: ../Vistas/realizarExamen.php');
 }

@@ -150,9 +150,7 @@ and open the template in the editor.
                             </form>
 
                         </section>
-                        <aside>
 
-                        </aside>
                         <!-- Section: Block Content -->
 
 

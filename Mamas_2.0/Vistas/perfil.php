@@ -20,11 +20,16 @@ and open the template in the editor.
     <body onload="validacionTfnoPass()">
         <?php
         require_once '../Modelo/Usuario.php';
+        include_once '../Modelo/Profesor.php';
+        include_once '../Modelo/Alumno.php';
         require_once '../Modelo/Asignatura.php';
         session_start();
         $usuario = $_SESSION['usuario'];
-        $asignaturas = $_SESSION['asignaturas'];
+        $asignaturas = $_SESSION['asignaturasImpartidas'];
+        $examenesPendientes = $_SESSION['examenesPendientes'];
+        $controlador = '../Controlador/controladorAlumno.php';
         ?>
+
         <header>
             <nav class="row navbar navbar-expand-lg navbar-dark fixed-top colorNav">
                 <div class="container-fluid">
@@ -33,11 +38,21 @@ and open the template in the editor.
 
                             <!--CRUD ADMINISTRADOR-->
 
-                            <form name="home" action="../Controlador/controlador.php" method="post">
+                            <form name="home" action="<?= $controlador ?>" method="post">
                                 <button type="submit" class="btn mean-fruit-gradient text-white
                                         btn-rounded waves-effect z-depth-1a" name="home" value="home">
                                     <i class="fas fa-home"></i>
                                 </button>
+                                <?php
+                                if ($usuario->getRol() == 1 || $usuario->getRol() == 2) {
+                                    ?>
+                                    <button type="submit" class="btn mean-fruit-gradient text-white
+                                            btn-rounded waves-effect z-depth-1a" name="salirAlumno" value="salirAlumno">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                    <?php
+                                }
+                                ?>
 
                             </form>
                         </li> 
@@ -45,7 +60,7 @@ and open the template in the editor.
                     <ul class="navbar-nav ml-auto mr-5">
                         <li class="nav-item">
 
-                            <form name="cerrarSes" action="../Controlador/controlador.php" method="post">
+                            <form name="cerrarSes" action="<?= $controlador ?>" method="post">
                                 <button type="submit" class="btn mean-fruit-gradient text-white
                                         btn-rounded waves-effect z-depth-1a" name="perfil" value="Ver perfil">
                                     <i class="fas fa-user"></i>
@@ -105,7 +120,7 @@ and open the template in the editor.
                                 ?>
                             </ul>
                             <hr>
-                            <form name="aniadirfoto" id="add" action="../Controlador/controlador.php" method="post" enctype="multipart/form-data">
+                            <form name="aniadirfoto" id="add" action="<?= $controlador ?>" method="post" enctype="multipart/form-data">
                                 <p class="grey-text font-weight-bold">Editar foto perfil:</p>
                                 <!--INPUT FOTO-->
                                 <div class="input-group">
@@ -138,7 +153,7 @@ and open the template in the editor.
                             </ul>
                             <hr>
                             <!--TELEFONO-->
-                            <form name="editarTfno" id="editarTfno" action="../Controlador/controlador.php" method="post" novalidate>
+                            <form name="editarTfno" id="editarTfno" action="<?= $controlador ?>" method="post" novalidate>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <p class="grey-text font-weight-bold">Cambia tu número de teléfono:</p>
@@ -158,7 +173,7 @@ and open the template in the editor.
                             </form>
                             <hr>
                             <!--CONTRASEÑA-->
-                            <form name="editarPass" id="editarPass" action="../Controlador/controlador.php" method="post" novalidate>
+                            <form name="editarPass" id="editarPass" action="<?= $controlador ?>" method="post" novalidate>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <p class="grey-text font-weight-bold">Cambia tu contraseña:</p>
