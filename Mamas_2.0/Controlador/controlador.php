@@ -12,6 +12,8 @@ include_once '../Modelo/Alumno.php';
 session_start();
 if (isset($_SESSION['usuario'])) {
     $usuario = $_SESSION['usuario'];
+    $asignaturas = $_SESSION['asignaturasImpartidas'];
+    $examenesPendientes = $_SESSION['examenesPendientes'];
 }
 //---------------LOGIN
 if (isset($_REQUEST['login'])) {
@@ -67,6 +69,16 @@ if (isset($_REQUEST['login'])) {
                         $_SESSION['examenes'] = $asig[0]->getExamenes();
                         $_SESSION['exCorregidos'] = 0;
                         $_SESSION['exPendientes'] = $_SESSION['examenes'];
+                        $examenesPendientes = array();
+                        foreach ($asig as $asignatura) {
+                            $examenAsig = $asignatura->getExamenes();
+                            foreach ($examenAsig as $examen) {
+                                if ($examen->getActivo()) {
+                                    $examenesPendientes[] = $examen;
+                                }
+                            }
+                        }
+                        $_SESSION['examenesPendientes'] = $examenesPendientes;
                         $_SESSION['origen'] = 'profesor';
                         $_SESSION['usuario'] = $profesor;
                         header('Location: ../Vistas/inicioProfesor.php');
@@ -193,4 +205,15 @@ if (isset($_REQUEST['nuevaPass'])) {
         $_SESSION['mensaje'] = $mensaje;
     }
     header('Location: ../Vistas/perfil.php');
+}
+//------------------REALIZAR EXAMEN
+if (isset($_REQUEST['realizarExamen'])) {
+    $idE = $_REQUEST['realizarExamen'];
+    foreach ($examenesPendientes as $key => $examen) {
+        if ($examen->getId() == $idE) {
+            $examenS = $examen;
+        }
+    }
+    $_SESSION['examenS'] = $examenS;
+    header('Location: ../Vistas/realizarExamen.php');
 }

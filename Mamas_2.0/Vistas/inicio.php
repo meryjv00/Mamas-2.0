@@ -33,6 +33,7 @@ and open the template in the editor.
             $examenesPendientes = $_SESSION['examenesPendientes'];
             $controlador = '../Controlador/controladorAlumno.php';
         } else {
+            $examenesPendientes = $_SESSION['examenesPendientes'];
             $controlador = '../Controlador/controlador.php';
         }
         ?>

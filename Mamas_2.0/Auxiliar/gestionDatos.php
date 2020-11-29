@@ -21,6 +21,7 @@ include_once '../Modelo/Profesor.php';
 include_once '../Modelo/Asignatura.php';
 include_once '../Auxiliar/constantes.php';
 include_once '../Modelo/Solucion.php';
+include_once '../Modelo/Correccion.php';
 
 class gestionDatos {
 
@@ -196,22 +197,44 @@ class gestionDatos {
             while ($fila = $resultado->fetch_assoc()) {
                 //var_dump($fila);
                 $idSol = $fila['idSolucion'];
-                $idEx = $fila['idExamne'];
+                $idEx = $fila['idExamen'];
                 $solucion = new Solucion($idSol, $idEx);
 
                 $correcion = self::getCorreccion($idSol);
-                $correcion->setNotas(self::getNotas($idSol));
-                $correcion->setAnotacion(self::getAnotaciones($idSol));
-
+                if ($correcion != 1) {
+                    $correcion->setNotas(self::getNotas($idSol));
+                    $correcion->setAnotacion(self::getAnotaciones($idSol));
+                    $solucion->setCorreccion($correccion);
+                }
                 $respuestas = self::getRespuestas($idAl);
 
                 $solucion->setRespuestas($respuestas);
-                $solucion->setCorreccion($correccion);
+
 
                 $soluciones[] = $solucion;
             }
         }
         return $soluciones;
+        mysqli_close(self::$conexion);
+    }
+
+    static function getRespuestas($idAl) {
+        self::conexion();
+        $respuestas = array();
+        $stmt = self::$conexion->prepare("SELECT * FROM respuesta WHERE idUsuario= ? ");
+        $stmt->bind_param("i", $idAl);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            //var_dump($resultado);
+            while ($fila = $resultado->fetch_assoc()) {
+                $idR = $fila['idRespuesta'];
+                $correcta = $fila['correcto'];
+                $respuesta = $fila['respuesta'];
+                $r = new Respuesta($idR, $idAl, $respuesta, $correcta);
+                $respuestas[] = $r;
+            }
+        }
+        return $respuestas;
         mysqli_close(self::$conexion);
     }
 
@@ -251,7 +274,8 @@ class gestionDatos {
 
     static function getCorreccion($idSol) {
         self::conexion();
-        $stmt = self::$conexion->prepare("SELECT * FROM correcion WHERE idSolucion= ? ");
+        $corr = 1;
+        $stmt = self::$conexion->prepare("SELECT * FROM correccion WHERE idSolucion= ? ");
         $stmt->bind_param("i", $idSol);
         if ($stmt->execute()) {
             $resultado = $stmt->get_result();
@@ -261,6 +285,7 @@ class gestionDatos {
                 $corr = new Correccion($profesor);
             }
         }
+        var_dump($corr);
         return $corr;
         mysqli_close(self::$conexion);
     }
@@ -481,7 +506,7 @@ class gestionDatos {
                 $tipo = $fila['tipo'];
                 $ponderacion = $fila['ponderacion'];
                 $p = new Pregunta($idP, $profesor, $enunciado, $tipo, $ponderacion);
-                $respuestas = self::getRespuestasPregunta($idP);
+                $respuestas = self::getRespuestasPregunta($idP, $profesor);
                 $p->setRespuestas($respuestas);
                 $preguntas[] = $p;
             }
@@ -504,7 +529,7 @@ class gestionDatos {
                 $tipo = $fila['tipo'];
                 $puntuacion = $fila['ponderacion'];
                 $p = new Pregunta($idP, $profesor, $enunciado, $tipo, $puntuacion);
-                $respuestas = self::getRespuestasPregunta($idP);
+                $respuestas = self::getRespuestasPregunta($idP, $profesor);
                 $p->setRespuestas($respuestas);
                 $preguntas[] = $p;
             }
@@ -513,10 +538,10 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
-    static function getRespuestasPregunta($idP) {
+    static function getRespuestasPregunta($idP, $idProf) {
         $respuestas = array();
-        $stmt = self::$conexion->prepare("SELECT * FROM respuesta where idPregunta = ?");
-        $stmt->bind_param("i", $idP);
+        $stmt = self::$conexion->prepare("SELECT * FROM respuesta where idPregunta = ? AND idUsuario= ?");
+        $stmt->bind_param("ii", $idP, $idProf);
         if ($stmt->execute()) {
             $resultado = $stmt->get_result();
             //var_dump($resultado);
@@ -856,10 +881,9 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
-    static function insertRespuesta($respuesta, $idPregunta) {
+    static function insertRespuesta($respuesta, $idUsuario, $idPregunta) {
         self::conexion();
-        $consulta = "INSERT INTO respuesta VALUES (default,'" . $respuesta->getCreador() . "'," . $idPregunta . ",'" .
-                $respuesta->getRespuesta() . "'," . $respuesta->getCorrecta() . ")";
+        $consulta = "INSERT INTO respuesta VALUES ('','" . $idUsuario . "'," . $idPregunta . ",'" . $respuesta . "',0)";
         if (self::$conexion->query($consulta)) {
             $correcto = false;
         }
@@ -878,7 +902,7 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
-    static function getIdSolucion($solucion) {
+    static function getIdSolucion() {
         self::conexion();
         $consulta = "SELECT max(idSolucion) FROM solucion";
         if ($resultado = self::$conexion->query($consulta)) {
@@ -887,6 +911,33 @@ class gestionDatos {
             }
         }
         return $id;
+        mysqli_close(self::$conexion);
+    }
+
+    static function asignarRespuesta($solId, $respId) {
+        self::conexion();
+        $consulta = "INSERT INTO asignacionrespuesta VALUES (" . $solId . "," . $respId . ")";
+        if (self::$conexion->query($consulta)) {
+            $correcto = true;
+        } else {
+            $correcto = false;
+            echo "Error al insertar: " . self::$conexion->error . '<br/>';
+        }
+        return $correcto;
+        mysqli_close(self::$conexion);
+    }
+
+    static function insertSolucion($usuarioId, $examenId) {
+        self::conexion();
+        $consulta = "INSERT INTO solucion VALUES (''," . $usuarioId . "," . $examenId . ")";
+        if (self::$conexion->query($consulta)) {
+
+            $correcto = true;
+        } else {
+            $correcto = false;
+            echo "Error al insertar: " . self::$conexion->error . '<br/>';
+        }
+        return $correcto;
         mysqli_close(self::$conexion);
     }
 

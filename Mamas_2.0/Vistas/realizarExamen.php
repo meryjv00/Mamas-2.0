@@ -35,6 +35,7 @@ and open the template in the editor.
             $examenesPendientes = $_SESSION['examenesPendientes'];
             $controlador = '../Controlador/controladorAlumno.php';
         } else {
+            $examenesPendientes = $_SESSION['examenesPendientes'];
             $controlador = '../Controlador/controlador.php';
         }
         ?>
@@ -103,15 +104,8 @@ and open the template in the editor.
                                     <div class="row pt-3">
                                         <div class="col-md-8 mx-auto border pb-3 ">
                                             <h3 class="text-center">Preguntas </h3>
-
                                             <form name="examen" action="<?= $controlador ?>" method="post">
-                                                <div class="row"> 
 
-                                                    <button type="submit" class="btn mean-fruit-gradient text-white
-                                                            btn-rounded waves-effect z-depth-1a" name="entregarExamen" value="entregar">Entregar exámen
-                                                    </button> 
-
-                                                </div>
                                                 <?php
                                                 $preguntas = $examen->getPreguntas();
                                                 $contOpciones = 0;
@@ -119,7 +113,7 @@ and open the template in the editor.
                                                 foreach ($preguntas as $i => $pregunta) {
                                                     $contPregunta++;
                                                     ?>
-                                                    <section class="mx-auto mt-3 white-dark purple lighten-4 pt-1 rounded">
+                                                    <section class="mx-auto mt-3 white-dark text-left purple lighten-4 pt-1 rounded py-2 my-2">
                                                         <div class="row px-4">
                                                             <div class="col-md-12">
                                                                 <h5><?= $contPregunta . '. ' ?><?= $pregunta->getEnunciado() ?> (<?= $pregunta->getPuntuacion() ?> puntos).</h5>
@@ -127,6 +121,7 @@ and open the template in the editor.
 
                                                             <?php
                                                             $respuestas = $pregunta->getRespuestas();
+                                                            $contOpciones = 0;
                                                             if ($pregunta->getTipo() == 0) {
                                                                 ?> 
                                                                 <textarea style="resize: none"  rows="5" cols="10"  name="<?= $contPregunta ?>" class="form-control mb-4" placeholder="Introduzca su respuesta"></textarea>
@@ -134,41 +129,46 @@ and open the template in the editor.
                                                             } else {
                                                                 ?>
                                                                 <div class="col-md-12">
-                                                                    <div class="col-md-3"></div>
+
                                                                     <?php
                                                                     foreach ($respuestas as $j => $respuesta) {
                                                                         $contOpciones++;
                                                                         ?>
-                                                                        <input class="" type="radio" name="<?= $contPregunta ?>" value="<?= $respuesta->getRespuesta() ?>"><?= $contOpciones . ') ' . $respuesta->getRespuesta() ?> </input> <br>
+
+                                                                        <input type="radio" name="<?= $contPregunta ?>" value="<?= $respuesta->getRespuesta() ?>"><?= ' ' . $contOpciones . ') ' . $respuesta->getRespuesta() ?> </input> <br>
                                                                         <?php
                                                                     }
-                                                                    $contOpciones = 0;
                                                                     ?>
-                                                                <?php }
-                                                                ?>
-
-                                                            </div>
+                                                                </div>   <?php
+                                                            }
+                                                            ?>
                                                         </div>
                                                     </section>
                                                     <?php
                                                     $contOpciones++;
                                                 }
                                                 ?>
+                                                <div class=" mx-auto"> 
+
+                                                    <button type="submit" class="btn purple lighten-3 text-white
+                                                            btn-rounded waves-effect z-depth-1a <?php
+                                                            if ($usuario->getRol() != 0) {
+                                                                echo 'disabled';
+                                                            }
+                                                            ?>" name="entregarExamen" value="entregar">Entregar exámen
+                                                    </button> 
+
+                                                </div>
                                             </form>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- Grid column -->
                     </div>
-                    <!-- Grid row -->
-                    <hr class="mb-5 mt-4">
                 </section>
-                <!--Section: Content-->
-
-
+            </div>
+            <hr class="mb-5 mt-4">
         </main> 
 
         <footer class="footer-copyright text-center text-white py-3 z-depth-2">

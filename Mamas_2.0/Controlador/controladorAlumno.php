@@ -11,6 +11,7 @@ include_once '../Modelo/Usuario.php';
 include_once '../Modelo/Profesor.php';
 include_once '../Modelo/Alumno.php';
 include_once '../Modelo/Asignatura.php';
+include_once '../Modelo/Solucion.php';
 include_once '../Modelo/Pregunta.php';
 include_once '../Modelo/Asignatura.php';
 include_once '../Modelo/Respuesta.php';
@@ -40,7 +41,7 @@ if (isset($_REQUEST['cerrarSesion'])) {
 //-----------------EDITAR FOTO PERFIL
 if (isset($_REQUEST['editarFotoPerfil'])) {
     gestionDatos::updateFoto($usuario->getId());
-    //Obtiene el usuario con la foto actualizada y lo guarda en sesión  
+//Obtiene el usuario con la foto actualizada y lo guarda en sesión  
     $_SESSION['usuario'] = gestionDatos::getUsuarioId($usuario->getId());
     header('Location: ../Vistas/perfil.php');
 }
@@ -78,17 +79,28 @@ if (isset($_REQUEST['realizarExamen'])) {
 }
 if (isset($_REQUEST['entregarExamen'])) {
     $examenS = $_SESSION['examenS'];
+    $idProf = $examenS->getProfesor();
     $preguntas = $examenS->getPreguntas();
     $solucion = new Solucion(0, $examenS->getId());
-    for ($i = 0; $i < count($preguntas); $i++) {
-        $respuesta = $_REQUEST[$i];
-        $r = new Respuesta(0, $usuario->getId(), $respuesta, 0);
-        gestionDatos::insertRespuesta($respuesta, $preguntas[$i]->getId());
-        $r->setId(gestionDatos::getIdRespuesta());
-        $solucion->addRespuesta($r);
+    $j = 1;
+    foreach ($preguntas as $i => $pregunta) {
+        if (isset($_REQUEST[$j])) {
+            $r = $_REQUEST[$j];
+            $j++;
+            $idP = $pregunta->getId();
+            $rep = new Respuesta(0, $usuario->getId(), $r, 0);
+            gestionDatos::insertRespuesta($r, $usuario->getId(), $idP);
+            $rep->setId(gestionDatos::getIdRespuesta() + 1);
+            $solucion->addRespuesta($rep);
+        } else {
+            $j++;
+        }
     }
-    gestionDatos::insertSolucion($solucion);
-    $solucion->setId(gestionDatos::getIdSolucion($solucion));
+    gestionDatos::insertSolucion($usuario->getId(), $examenS->getId());
+    $solucion->setId(gestionDatos::getIdSolucion() + 1);
+    foreach ($solucion->getRespuestas() as $respuesta) {
+        gestionDatos::asignarRespuesta($solucion->getId(), $respuesta->getId());
+    }
     $usuario->addSolucion($solucion);
     $_SESSION['usuario'] = $usuario;
     foreach ($examenesPendientes as $k => $examen) {
