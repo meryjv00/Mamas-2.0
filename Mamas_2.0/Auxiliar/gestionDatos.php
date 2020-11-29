@@ -290,6 +290,33 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
+    static function getProfesor($idAsig) {
+        self::conexion();
+        $alumnos = array();
+        $stmt = self::$conexion->prepare("SELECT * FROM usuarios WHERE idUsuario IN (SELECT idUsuario FROM asignacionasignatura WHERE idAsignatura= ?) AND idUsuario IN(SELECT idUsuario FROM asignacionrol WHERE idRol IN (1,2))");
+        $stmt->bind_param("i", $idAsig);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            //var_dump($resultado);
+            if ($fila = $resultado->fetch_assoc()) {
+                $id = $fila['idUsuario'];
+                $email = $fila['email'];
+                $nombre = $fila['nombre'];
+                $dni = $fila['dni'];
+                $apellidos = $fila['apellidos'];
+                $telefono = $fila['telefono'];
+                $activo = $fila['activo'];
+                $imagen = $fila['imagen'];
+
+                $p = new Profesor($id, $email, $dni, $nombre, $apellidos, $telefono, $activo, $imagen);
+                $p->setRol(self::getRol($id));
+                //almacenamos en sesion al usuario que ha realizado el Login.
+            }
+            return $p;
+            mysqli_close(self::$conexion);
+        }
+    }
+
     static function crearTipo($usuario) {
         self::conexion();
         $id = $usuario->getId();
@@ -361,7 +388,7 @@ class gestionDatos {
         }
         return $id;
     }
-    
+
     static function getUltEx() {
         self::conexion();
         $consulta = "SELECT max(idExamen) FROM examen";
@@ -373,7 +400,7 @@ class gestionDatos {
         return $id;
         mysqli_close(self::$conexion);
     }
-    
+
     static function getUsuarios() {
         self::conexion();
         $usuarios = Array();
@@ -711,7 +738,8 @@ class gestionDatos {
         return $correcto;
         mysqli_close(self::$conexion);
     }
-        static function deleteExamen($examen) {
+
+    static function deleteExamen($examen) {
         self::conexion();
         $consulta = "DELETE FROM examen WHERE idExamen =" . $examen->getId();
         if (self::$conexion->query($consulta)) {
@@ -751,7 +779,7 @@ class gestionDatos {
 
     static function updateTfno($usuario) {
         self::conexion();
-        $sentencia = "UPDATE usuarios SET telefono = '". $usuario->getTelefono() ."' WHERE idUsuario = " . $usuario->getId();
+        $sentencia = "UPDATE usuarios SET telefono = '" . $usuario->getTelefono() . "' WHERE idUsuario = " . $usuario->getId();
         self::$conexion->query($sentencia);
         mysqli_close(self::$conexion);
     }

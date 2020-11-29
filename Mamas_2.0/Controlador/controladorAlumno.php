@@ -109,9 +109,17 @@ if (isset($_REQUEST['entregarExamen'])) {
         }
     }
     $_SESSION['examenesPendientes'] = $examenesPendientes;
+    if (isset($_SESSION['examenesRealizados'])) {
+        $realizados = $_SESSION['examenesRealizados'];
+        $realizados[] = $examenS;
+        $_SESSION['examenesRealizados'] = $realizados;
+    }
     $mensaje = 'Examen Entregado,SUERTE!!';
     $_SESSION['mensaje'] = $mensaje;
     header('Location: ../Vistas/inicio.php');
+}
+if (isset($_REQUEST['salirAlumno'])) {
+    header('Location: ../Vistas/inicioProfesor.php');
 }
 //---------------SIEMPRE AL FINAL----------
 for ($i = 0; $i < count($asignaturas); $i++) {
@@ -119,6 +127,31 @@ for ($i = 0; $i < count($asignaturas); $i++) {
         $idAsignatura = $_REQUEST[$i];
         foreach ($asignaturas as $asignatura) {
             if ($asignatura->getIdAsignatura() == $idAsignatura) {
+                $examenesPendientes = array();
+                $examenesRealizados = array();
+                $examenesCorregidos = array();
+                $examenAsig = $asignatura->getExamenes();
+                foreach ($examenAsig as $examen) {
+                    $examenesPendientes[] = $examen;
+                }
+
+                $soluciones = $usuario->getSoluciones();
+                foreach ($examenesPendientes as $key => $examenP) {
+                    foreach ($soluciones as $j => $solucion) {
+                        if ($solucion->getExamen() == $examenP->getId()) {
+                            if ($solucion->getCorreccion() != null) {
+                                $examenesCorregidos[] = $examenP;
+                            } else {
+                                $examenesRealizados[] = $examenP;
+                                unset($examenesPendientes[$key]);
+                            }
+                        }
+                    }
+                }
+                $_SESSION['examenesPendientesA'] = $examenesPendientes;
+                $_SESSION['examenesRealizadosA'] = $examenesRealizados;
+                $_SESSION['examenesCorregidosA'] = $examenesCorregidos;
+                $_SESSION['profesorAsignaturaS'] = gestionDatos::getProfesor($idAsignatura);
                 $_SESSION['asignaturaS'] = $asignatura;
                 header('Location: ../Vistas/inicioAsignatura.php');
             }

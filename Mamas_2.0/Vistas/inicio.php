@@ -28,14 +28,8 @@ and open the template in the editor.
         session_start();
         $usuario = $_SESSION['usuario'];
         $asignaturas = $_SESSION['asignaturasImpartidas'];
-
-        if ($usuario->getRol() == 0) {
-            $examenesPendientes = $_SESSION['examenesPendientes'];
-            $controlador = '../Controlador/controladorAlumno.php';
-        } else {
-            $examenesPendientes = $_SESSION['examenesPendientes'];
-            $controlador = '../Controlador/controlador.php';
-        }
+        $examenesPendientes = $_SESSION['examenesPendientes'];
+        $controlador = '../Controlador/controladorAlumno.php';
         ?>
         <header class="bg-white">
             <nav class="row navbar navbar-expand-lg navbar-dark fixed-top colorNav">

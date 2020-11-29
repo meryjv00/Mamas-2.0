@@ -26,13 +26,10 @@ and open the template in the editor.
         session_start();
         $usuario = $_SESSION['usuario'];
         $asignaturas = $_SESSION['asignaturasImpartidas'];
-        if ($usuario->getRol() == 0) {
-            $controlador = '../Controlador/controladorAlumno.php';
-        } else {
-            $controlador = '../Controlador/controlador.php';
-        }
+        $examenesPendientes = $_SESSION['examenesPendientes'];
+        $controlador = '../Controlador/controladorAlumno.php';
         ?>
-        ?>
+
         <header>
             <nav class="row navbar navbar-expand-lg navbar-dark fixed-top colorNav">
                 <div class="container-fluid">
@@ -46,6 +43,16 @@ and open the template in the editor.
                                         btn-rounded waves-effect z-depth-1a" name="home" value="home">
                                     <i class="fas fa-home"></i>
                                 </button>
+                                <?php
+                                if ($usuario->getRol() == 1 || $usuario->getRol() == 2) {
+                                    ?>
+                                    <button type="submit" class="btn mean-fruit-gradient text-white
+                                            btn-rounded waves-effect z-depth-1a" name="salirAlumno" value="salirAlumno">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                    <?php
+                                }
+                                ?>
 
                             </form>
                         </li> 

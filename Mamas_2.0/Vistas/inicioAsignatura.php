@@ -27,13 +27,11 @@ and open the template in the editor.
         session_start();
         $usuario = $_SESSION['usuario'];
         $asignaturaS = $_SESSION['asignaturaS'];
-        if ($usuario->getRol() == 0) {
-            $examenesPendientes = $_SESSION['examenesPendientes'];
-            $controlador = '../Controlador/controladorAlumno.php';
-        } else {
-            $examenesPendientes = $_SESSION['examenesPendientes'];
-            $controlador = '../Controlador/controlador.php';
-        }
+        $profesorS = $_SESSION['profesorAsignaturaS'];
+        $examenesPendientes = $_SESSION['examenesPendientesA'];
+        $examenesRealizados = $_SESSION['examenesRealizadosA'];
+        $examenesCorregidos = $_SESSION['examenesCorregidosA'];
+        $controlador = '../Controlador/controladorAlumno.php';
         ?>
         <header class="bg-white">
             <nav class="row navbar navbar-expand-lg navbar-dark fixed-top colorNav">
@@ -110,22 +108,24 @@ and open the template in the editor.
                     </style>
                     <div class="col-md-9 mx-auto">
                         <div class="row mx-1">
-                            <div class="bg-white mx-auto list-group-flush  rounded mb-4 col-md-4 ">
-                                <img src="data:image/png;base64,<?php echo base64_encode($asignaturaS->getImagen()); ?>" alt="titulo foto" class="img-fluid"/>
+                            <div class=" bg-white mx-auto list-group-flush  rounded mb-4 col-md-4 " >
+                                <div class="row ">
+                                    <img src="data:image/png;base64,<?php echo base64_encode($asignaturaS->getImagen()); ?>" alt="titulo foto" class=" mx-auto img-fluid" style=" height: 210px"/>
+                                </div>
                                 <div class="bg-white list-group-item active d-flex justify-content-start align-items-center py-3">
                                     <?php
-                                    if ($usuario->getImagen() == "") {
+                                    if ($profesorS->getImagen() == "") {
                                         ?>
                                         <img class="rounded-circle" src="../img/defectousu.png" height="50"/>
                                         <?php
                                     } else {
                                         ?>
-                                        <img src="data:image/png;base64,<?php echo base64_encode($usuario->getImagen()); ?>" class="rounded-circle z-depth-0" width="50" alt="avatar image">
+                                        <img src="data:image/png;base64,<?php echo base64_encode($profesorS->getImagen()); ?>" class="rounded-circle z-depth-0" width="50" alt="avatar image">
                                         <?php
                                     }
                                     ?>
                                     <div class="d-flex flex-column pl-3 ">
-                                        <p class="font-weight-bold letra titulo mb-0"> <?php echo $usuario->getNombre(); ?></p>
+                                        <p class="font-weight-bold letra titulo mb-0"> <?php echo $profesorS->getNombre(); ?></p>
                                     </div>
                                 </div>
 
@@ -143,20 +143,18 @@ and open the template in the editor.
                                 <div class="card  orange lighten-3 white-text">
                                     <div class="card-body d-flex justify-content-between align-items-center">
                                         <div>
-                                            <p class="h2-responsive font-weight-bold mt-n2 mb-0">150</p>
+                                            <p class="h2-responsive font-weight-bold mt-n2 mb-0"><?= count($examenesPendientes) ?></p>
                                             <p class="mb-0">Exámenes pendientes</p>
                                         </div>
                                         <div>
                                             <i class="fas fa-hourglass-end fa-4x text-black-40"></i>
                                         </div>
                                     </div>
-                                    <a class="card-footer footer-hover small text-center white-text border-0 p-2">More info<i class="fas fa-arrow-circle-right pl-2"></i></a>
+                                    <a class="card-footer footer-hover small text-center white-text border-0 p-2">Más información<i class="fas fa-arrow-circle-right pl-2"></i></a>
                                 </div>
                                 <!-- Card -->
-
                             </div>
                             <!-- Grid column -->
-
                             <!-- Grid column -->
                             <div class="col-md-6  mb-4">
 
@@ -164,14 +162,14 @@ and open the template in the editor.
                                 <div class="card purple lighten-3 white-text">
                                     <div class="card-body d-flex justify-content-between align-items-center">
                                         <div>
-                                            <p class="h2-responsive font-weight-bold mt-n2 mb-0">53 %</p>
+                                            <p class="h2-responsive font-weight-bold mt-n2 mb-0"><?= count($examenesRealizados) ?></p>
                                             <p class="mb-0">Exámenes realizados</p>
                                         </div>
                                         <div>
                                             <i class="fas fa-feather-alt  fa-4x text-black-40"></i>
                                         </div>
                                     </div>
-                                    <a class="card-footer footer-hover small text-center white-text border-0 p-2">More info<i class="fas fa-arrow-circle-right pl-2"></i></a>
+                                    <a class="card-footer footer-hover small text-center white-text border-0 p-2">Más información<i class="fas fa-arrow-circle-right pl-2"></i></a>
                                 </div>
                                 <!-- Card -->
 
@@ -185,14 +183,14 @@ and open the template in the editor.
                                 <div class="card purple lighten-3 white-text">
                                     <div class="card-body d-flex justify-content-between align-items-center">
                                         <div>
-                                            <p class="h2-responsive font-weight-bold mt-n2 mb-0">44</p>
+                                            <p class="h2-responsive font-weight-bold mt-n2 mb-0"><?= count($examenesCorregidos) ?></p>
                                             <p class="mb-0">Exámenes corregidos</p>
                                         </div>
                                         <div>
                                             <i class="fas fa-check-double fa-4x text-black-40"></i>
                                         </div>
                                     </div>
-                                    <a class="card-footer footer-hover small text-center white-text border-0 p-2">More info<i class="fas fa-arrow-circle-right pl-2"></i></a>
+                                    <a class="card-footer footer-hover small text-center white-text border-0 p-2">Más información<i class="fas fa-arrow-circle-right pl-2"></i></a>
                                 </div>
                                 <!-- Card -->
 
@@ -206,14 +204,14 @@ and open the template in the editor.
                                 <div class="card orange lighten-3 white-text">
                                     <div class="card-body d-flex justify-content-between align-items-center">
                                         <div>
-                                            <p class="h2-responsive font-weight-bold mt-n2 mb-0">65</p>
+                                            <p class="h2-responsive font-weight-bold mt-n2 mb-0 pr-2"><i class="fas fa-graduation-cap fa-x "></i> </p>
                                             <p class="mb-0">Resultados</p>
                                         </div>
                                         <div>
                                             <i class="fas fa-chart-pie fa-4x text-black-40"></i>
                                         </div>
                                     </div>
-                                    <a class="card-footer footer-hover small text-center white-text border-0 p-2">More info<i class="fas fa-arrow-circle-right pl-2"></i></a>
+                                    <a class="card-footer footer-hover small text-center white-text border-0 p-2">Más información<i class="fas fa-arrow-circle-right pl-2"></i></a>
                                 </div>
                                 <!-- Card -->
 
