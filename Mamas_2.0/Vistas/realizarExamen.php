@@ -80,7 +80,7 @@ and open the template in the editor.
                 </div>
             </nav>
         </header>
-        <main class="pt-5">
+        <main class="pt-5 mb-5">
             <div class="container mt-5 ">
                 <section class="mx-md-5 dark-grey-text">
                     <div class="row">
@@ -168,7 +168,6 @@ and open the template in the editor.
                     </div>
                 </section>
             </div>
-            <hr class="mb-5 mt-4">
         </main> 
 
         <footer class="footer-copyright text-center text-white py-3 z-depth-2">

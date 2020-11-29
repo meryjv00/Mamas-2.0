@@ -109,9 +109,10 @@ and open the template in the editor.
                         }
                     </style>
                     <div class="col-md-9 mx-auto">
-                        <div class="row">
-                            <div class="list-group mx-auto list-group-flush  rounded mb-4 col-md-7">
-                                <div class="list-group-item active d-flex justify-content-start align-items-center py-3" style="background-image: <?php echo base64_encode($asignaturaS->getImagen()); ?>">
+                        <div class="row mx-1">
+                            <div class="bg-white mx-auto list-group-flush  rounded mb-4 col-md-4 ">
+                                <img src="data:image/png;base64,<?php echo base64_encode($asignaturaS->getImagen()); ?>" alt="titulo foto" class="img-fluid"/>
+                                <div class="bg-white list-group-item active d-flex justify-content-start align-items-center py-3">
                                     <?php
                                     if ($usuario->getImagen() == "") {
                                         ?>
@@ -125,7 +126,6 @@ and open the template in the editor.
                                     ?>
                                     <div class="d-flex flex-column pl-3 ">
                                         <p class="font-weight-bold letra titulo mb-0"> <?php echo $usuario->getNombre(); ?></p>
-
                                     </div>
                                 </div>
 
@@ -140,7 +140,7 @@ and open the template in the editor.
                             <div class="col-md-6  mb-4">
 
                                 <!-- Card -->
-                                <div class="card rgba-indigo-slight white-text">
+                                <div class="card  orange lighten-3 white-text">
                                     <div class="card-body d-flex justify-content-between align-items-center">
                                         <div>
                                             <p class="h2-responsive font-weight-bold mt-n2 mb-0">150</p>
@@ -161,7 +161,7 @@ and open the template in the editor.
                             <div class="col-md-6  mb-4">
 
                                 <!-- Card -->
-                                <div class="card rgba-purple-slight white-text">
+                                <div class="card purple lighten-3 white-text">
                                     <div class="card-body d-flex justify-content-between align-items-center">
                                         <div>
                                             <p class="h2-responsive font-weight-bold mt-n2 mb-0">53 %</p>
@@ -182,7 +182,7 @@ and open the template in the editor.
                             <div class="col-md-6  mb-4">
 
                                 <!-- Card -->
-                                <div class="card rgba-purple-slight white-text">
+                                <div class="card purple lighten-3 white-text">
                                     <div class="card-body d-flex justify-content-between align-items-center">
                                         <div>
                                             <p class="h2-responsive font-weight-bold mt-n2 mb-0">44</p>
@@ -203,7 +203,7 @@ and open the template in the editor.
                             <div class="col-md-6  mb-4">
 
                                 <!-- Card -->
-                                <div class="card rgba-indigo-slight white-text">
+                                <div class="card orange lighten-3 white-text">
                                     <div class="card-body d-flex justify-content-between align-items-center">
                                         <div>
                                             <p class="h2-responsive font-weight-bold mt-n2 mb-0">65</p>
