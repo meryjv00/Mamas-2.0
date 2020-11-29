@@ -37,8 +37,8 @@ and open the template in the editor.
             $controlador = '../Controlador/controlador.php';
         }
         ?>
-        <header>
-            <nav class="row navbar navbar-expand-lg navbar-dark fixed-top deg">
+        <header class="bg-white">
+            <nav class="row navbar navbar-expand-lg navbar-dark fixed-top colorNav">
                 <div class="container-fluid">
                     <ul class="navbar-nav mr-auto ml-5">
                         <li class="nav-item">
@@ -50,9 +50,10 @@ and open the template in the editor.
                                 <?php
                                 if ($usuario->getRol() == 1 || $usuario->getRol() == 2) {
                                     ?>
-                                    <a href="inicioProfesor.php" class="btn mean-fruit-gradient btn-rounded text-white">
+                                    <button type="submit" class="btn mean-fruit-gradient text-white
+                                            btn-rounded waves-effect z-depth-1a" name="salirAlumno" value="salirAlumno">
                                         <i class="fas fa-times"></i>
-                                    </a>
+                                    </button>
                                     <?php
                                 }
                                 ?>
@@ -84,7 +85,7 @@ and open the template in the editor.
                         <div class="col-md-10 mx-auto card card-cascade narrower pb-5 bg-transparent">
                             <div class="view view-cascade gradient-card-header">
                                 <!-- Title -->
-                                <h2 class="card-header-title font-weight-bold text-center letra display-4 titulo2 pt-2 pb-2">Mis asignaturas</h2>
+                                <h2 class="card-header-title font-weight-bold text-center letra display-4 tit pt-2 pb-2">Mis asignaturas</h2>
                                 <?php
                                 if (isset($_SESSION['mensaje'])) {
                                     $mensaje = $_SESSION['mensaje'];
@@ -132,11 +133,11 @@ and open the template in the editor.
 
                 </div>
 
-                <div class="col-md-3 mt-5 card card-cascade narrower">
+                <div class="col-md-3 mt-5 card card-cascade narrower align-self-start">
                     <!-- Card image -->
                     <div class="view view-cascade gradient-card-header mean-fruit-gradient">
                         <!-- Title -->
-                        <h2 class="card-header-title text-center titulo text-white pt-1">EXÁMENES PENDIENTES </h2>
+                        <h1 class="card-header-title text-center titulo text-white pt-1">Exámenes sin realizar</h1>
                     </div>
                     <!-- Card content -->
                     <div class="card-body card-body-cascade">
@@ -157,10 +158,10 @@ and open the template in the editor.
                         <hr>
                     </div>
                 </div>
-
+            </div>
         </main>
 
-        <footer class="footer-copyright text-center text-white py-3 z-depth-2">
+        <footer class="footer-copyright text-center text-white py-3 z-depth-2 colorNav fixed-bottom">
             <div> © 2020 Copyright: Israel y María</div>
         </footer>
         <!-- jQuery -->

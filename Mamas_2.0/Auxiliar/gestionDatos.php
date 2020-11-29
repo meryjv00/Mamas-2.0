@@ -361,7 +361,19 @@ class gestionDatos {
         }
         return $id;
     }
-
+    
+    static function getUltEx() {
+        self::conexion();
+        $consulta = "SELECT max(idExamen) FROM examen";
+        if ($resultado = self::$conexion->query($consulta)) {
+            if ($fila = $resultado->fetch_assoc()) {
+                $id = $fila['max(idExamen)'];
+            }
+        }
+        return $id;
+        mysqli_close(self::$conexion);
+    }
+    
     static function getUsuarios() {
         self::conexion();
         $usuarios = Array();
@@ -699,6 +711,18 @@ class gestionDatos {
         return $correcto;
         mysqli_close(self::$conexion);
     }
+        static function deleteExamen($examen) {
+        self::conexion();
+        $consulta = "DELETE FROM examen WHERE idExamen =" . $examen->getId();
+        if (self::$conexion->query($consulta)) {
+            $correcto = true;
+        } else {
+            $correcto = false;
+            echo "Error al borrar la asignacion: " . self::$conexion->error . '<br/>';
+        }
+        return $correcto;
+        mysqli_close(self::$conexion);
+    }
 
 //======================================================================
 // UPDATE
@@ -727,14 +751,8 @@ class gestionDatos {
 
     static function updateTfno($usuario) {
         self::conexion();
-        $consulta = "UPDATE usuarios SET telefono=" . $usuario->getTelefono() . " WHERE idUsuario =" . $usuario->getId();
-        if (self::$conexion->query($consulta)) {
-            $correcto = true;
-        } else {
-            $correcto = false;
-            echo "Error al actualizar: " . self::$conexion->error . '<br/>';
-        }
-        return $correcto;
+        $sentencia = "UPDATE usuarios SET telefono = '". $usuario->getTelefono() ."' WHERE idUsuario = " . $usuario->getId();
+        self::$conexion->query($sentencia);
         mysqli_close(self::$conexion);
     }
 

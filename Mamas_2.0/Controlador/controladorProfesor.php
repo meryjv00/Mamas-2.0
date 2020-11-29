@@ -94,8 +94,8 @@ if (isset($_REQUEST['crearExamen'])) {
     $fechai = $_REQUEST['fechainicio'];
     $fechaf = $_REQUEST['fechafin'];
     $idP = $usuario->getId();
-
-    $ex = new Examen(0, $idP, $contenido, $descripcion, 0);
+    $idEx = gestionDatos::getUltEx();
+    $ex = new Examen($idEx + 1, $idP, $contenido, $descripcion, 0);
     for ($i = 0; $i < count($asignaturas); $i++) {
         if ($asignaturas[$i]->getIdAsignatura() == $idAsignatura) {
             $asignaturas[$i]->addExamen($ex);
@@ -167,6 +167,9 @@ if (isset($_REQUEST['aniadirPreguntas'])) {
 }
 //--------CREAR PREGUNTAS
 if (isset($_REQUEST['crearPreguntas'])) {
+    if (isset($_SESSION['vienesEx'])) {
+        unset($_SESSION['vienesEx']);
+    }
     header('Location: ../Vistas/crearPregunta.php');
 }
 if (isset($_REQUEST['crearPreguntasEx'])) {
@@ -291,10 +294,10 @@ if (isset($_REQUEST['activarExamen'])) {
     }
     if (!$pulsado) {
         $_SESSION['mensaje'] = "Marca el/los examen(es) que quieras activar";
-        $asignaturas[0]->setExamenes($examenes);
         header('Location: ../Vistas/crudExamenes.php');
     } else {
-        $_SESSION['examenS'] = $examenes[$pos];
+        $asignaturas[0]->setExamenes($examenes);
+        $_SESSION['asignaturas'] = $asignaturas;
         header('Location: ../Vistas/crudExamenes.php');
     }
 }
@@ -317,13 +320,40 @@ if (isset($_REQUEST['desactivarExamen'])) {
     }
     if (!$pulsado) {
         $_SESSION['mensaje'] = "Marca el/los examen(es) que quieras desactivar";
-        $asignaturas[0]->setExamenes($examenes);
         header('Location: ../Vistas/crudExamenes.php');
     } else {
-        $_SESSION['examenS'] = $examenes[$pos];
+        $asignaturas[0]->setExamenes($examenes);
+        $_SESSION['asignaturas'] = $asignaturas;
         header('Location: ../Vistas/crudExamenes.php');
     }
 }
+//----------------------BORRAR EXÁMEN
+if (isset($_REQUEST['borrarExamen'])) {
+    $pulsado = false;
+    $examenes = $asignaturas[0]->getExamenes();
+    if (count($examenes) > 0) {
+        $cont = 0;
+        foreach ($examenes as $i => $examen) {
+            if (isset($_REQUEST[$i])) {
+                $pulsado = true;
+                if (!gestionDatos::deleteExamen($examen)) {
+                    $mensaje = 'No se ha podido borrar el examen';
+                    $_SESSION['mensaje'] = $mensaje;
+                }
+                unset($examenes[$i]);
+            }
+        }
+    }
+    if (!$pulsado) {
+        $_SESSION['mensaje'] = "Marca el/los examen(es) que quieras borrar";
+        header('Location: ../Vistas/crudExamenes.php');
+    } else {
+        $asignaturas[0]->setExamenes($examenes);
+        $_SESSION['asignaturas'] = $asignaturas;
+        header('Location: ../Vistas/crudExamenes.php');
+    }
+}
+
 //------------------CORREGIR MANUALMENTE
 if (isset($_REQUEST['correccionM'])) {
     $_SESSION['corregir'] = 'manual';
@@ -416,11 +446,12 @@ if (isset($_REQUEST['asignarPregunta'])) {
     }
 }
 if (isset($_REQUEST['verExamenP'])) {
-    header('Location: ../Vistas/verExamen.php');
+    header('Location: ../Vistas/asignarPreguntas.php');
 }
 
 //-----------------------QUITAR PREGUNTA (DESDE ASIGNACION PREGUNTA, NO AÑADIDA TODAVIA)
 if (isset($_SESSION['preguntasCreadas'])) {
+    $accion = "";
     $preguntasCreadas = $_SESSION['preguntasCreadas'];
     foreach ($preguntasCreadas as $i => $pregunta) {
         if (isset($_REQUEST[$i])) {
@@ -444,6 +475,7 @@ if (isset($_SESSION['preguntasCreadas'])) {
 if (isset($_SESSION['examenS'])) {
     $examen = $_SESSION['examenS'];
     $preguntas = $examen->getPreguntas();
+    $accion = "";
     foreach ($preguntas as $i => $pregunta) {
         if (isset($_REQUEST[$i])) {
             $accion = $_REQUEST[$i];

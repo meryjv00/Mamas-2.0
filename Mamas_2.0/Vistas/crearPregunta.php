@@ -29,59 +29,79 @@ and open the template in the editor.
         $asignatura = $_SESSION['asignaturasImpartidas'];
         ?>
         <header>
-            <nav class="row navbar navbar-expand-lg navbar-dark fixed-top deg">
-                <div class="container-fluid ml-5 mr-5">
-                    <!--Left-->
-                    <ul class="navbar-nav mr-auto smooth-scroll">
-                        <form name="formu" action="../Controlador/controladorProfesor.php" method="post"> 
-                            <!--CRUD ADMINISTRADOR-->
-                            <?php
-                            if ($usuario->getRol() == 2) {
-                                ?>
-                                <button type="submit" class="btn mean-fruit-gradient text-white
-                                        btn-rounded waves-effect z-depth-1a" name="CRUDadmin" value="CRUDadmin">
-                                    <i class="fas fa-cog"></i>
-                                </button>
+            <form name="formu" action="../Controlador/controladorProfesor.php" method="post">
+                <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar colorNav">
+                    <div class="container-fluid ml-5 mr-5">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+                                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                            <!--LEFT-->
+                            <ul class="navbar-nav mr-auto smooth-scroll">
+                                <!--CRUD ADMINISTRADOR-->
                                 <?php
-                            }
-                            ?>
-                            <!--HOME PAGINA INICIO-->
-                            <button type="submit" class="btn mean-fruit-gradient text-white
-                                    btn-rounded waves-effect z-depth-1a" name="home" value="home">
-                                <i class="fas fa-home"></i>
-                            </button>
-
-                        </form>
-                    </ul>
-                    <!-- Right -->
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <form name="formu" action="../Controlador/controladorProfesor.php" method="post">
-                                <button type="submit" class="btn mean-fruit-gradient text-white 
-                                        btn-rounded waves-effect z-depth-1a" name="verExamenes" value="Ver exámenes">
-                                    <i class="far fa-eye pr-1"></i> exámenes
-                                </button>
-                                <button type="submit" class="btn mean-fruit-gradient text-white 
-                                        btn-rounded waves-effect z-depth-1a" name="crearExamenes" value="Crear exámenes">
-                                    <i class="fas fa-plus pr-1"></i> exámenes
-                                </button>
-                                <button type="submit" class="btn mean-fruit-gradient text-white 
-                                        btn-rounded waves-effect z-depth-1a" name="crearPreguntas" value="Crear preguntas">
-                                    <i class="fas fa-plus pr-1"></i>  preguntas
-                                </button>
-                                <button type="submit" class="btn mean-fruit-gradient text-white
-                                        btn-rounded waves-effect z-depth-1a" name="perfil" value="Ver perfil">
-                                    <i class="fas fa-user"></i>
-                                </button>
-                                <button type="submit" class="btn mean-fruit-gradient text-white
-                                        btn-rounded waves-effect z-depth-1a" name="cerrarSesion" value="Cerrar sesión">
-                                    <i class="fas fa-sign-out-alt"></i>
-                                </button>
-                            </form>
-                        </li> 
-                    </ul>
-                </div>
-            </nav>
+                                if ($usuario->getRol() == 2) {
+                                    ?>
+                                    <li class="nav-item">
+                                        <button type="submit" class="btn mean-fruit-gradient text-white
+                                                btn-rounded waves-effect z-depth-1a" name="CRUDadmin" value="CRUDadmin">
+                                            <i class="fas fa-cog"></i>
+                                        </button>
+                                    </li>
+                                    <?php
+                                }
+                                ?>
+                                <li  class="nav-item">
+                                    <button type="submit" class="btn mean-fruit-gradient text-white
+                                            btn-rounded waves-effect z-depth-1a" name="home" value="home">
+                                        <i class="fas fa-home"></i>
+                                    </button>
+                                </li>
+                                <li class="nav-item">
+                                    <button type="submit" class="btn mean-fruit-gradient text-white
+                                            btn-rounded waves-effect z-depth-1a" name="homeInicio" value="homeInicio">
+                                        <i class="far fa-eye pr-1"></i> alumno
+                                    </button>
+                                </li>
+                            </ul>
+                            <!--RIGHT-->
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <button type="submit" class="btn mean-fruit-gradient text-white 
+                                            btn-rounded waves-effect z-depth-1a" name="verExamenes" value="Ver exámenes">
+                                        <i class="far fa-eye pr-1"></i> exámenes
+                                    </button>
+                                </li>
+                                <li class="nav-item">
+                                    <button type="submit" class="btn mean-fruit-gradient text-white 
+                                            btn-rounded waves-effect z-depth-1a" name="crearExamenes" value="Crear exámenes">
+                                        <i class="fas fa-plus pr-1"></i> exámenes
+                                    </button>
+                                </li>
+                                <li class="nav-item">
+                                    <button type="submit" class="btn mean-fruit-gradient text-white 
+                                            btn-rounded waves-effect z-depth-1a" name="crearPreguntas" value="Crear preguntas">
+                                        <i class="fas fa-plus pr-1"></i>  preguntas
+                                    </button>
+                                </li>
+                                <li class="nav-item">
+                                    <button type="submit" class="btn mean-fruit-gradient text-white
+                                            btn-rounded waves-effect z-depth-1a" name="perfil" value="Ver perfil">
+                                        <i class="fas fa-user"></i>
+                                    </button>
+                                </li>
+                                <li class="nav-item">
+                                    <button type="submit" class="btn mean-fruit-gradient text-white
+                                            btn-rounded waves-effect z-depth-1a" name="cerrarSesion" value="Cerrar sesión">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </form>
         </header>
         <main class="pb-5 pt-5 ml-4">
             <div class="container-fluid row ">
@@ -287,7 +307,7 @@ and open the template in the editor.
                 </div>
             </div>
         </main>
-        <footer class="footer-copyright text-center text-white py-3 z-depth-2">
+        <footer class="footer-copyright text-center text-white py-3 z-depth-2 colorNav fixed-bottom">
             <div> © 2020 Copyright: Israel y María</div>
         </footer>
         <!-- jQuery -->
