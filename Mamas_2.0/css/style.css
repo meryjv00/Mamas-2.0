@@ -76,3 +76,6 @@ button, input[type=submit]{
 .colorNav{
     background: #543B54;
 }
+#navbarTogglerDemo02.show{
+    display: flex;
+}

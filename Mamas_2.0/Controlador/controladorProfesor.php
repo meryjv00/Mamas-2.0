@@ -243,6 +243,29 @@ if (isset($_REQUEST['verExamen'])) {
         header('Location: ../Vistas/verExamen.php');
     }
 }
+//--------------------------------IR A EXAMEN CORRECCION DESDE TABLA
+if (isset($_REQUEST['corregirTabla'])) {
+    $examenes = $asignaturas[0]->getExamenes();
+    if (count($examenes) > 0) {
+        $cont = 0;
+        foreach ($examenes as $i => $examen) {
+            if (isset($_REQUEST[$i])) {
+                $pulsado = true;
+                $cont++;
+                $pos = $i;
+            }
+        }
+    }
+    if (!$pulsado || $cont >= 2) {
+        $_SESSION['mensaje'] = "Marca el exámen que quieras corregir";
+        header('Location: ../Vistas/crudExamenes.php');
+    } else {
+        $_SESSION['examenS'] = $examenes[$pos];
+        $_SESSION['creadorEx'] = gestionDatos::getUsuarioId($examenes[$pos]->getProfesor());
+        //PONER METODO 'CORREGIR' CUANDO ESTE IMPLEMENTADO
+        header('Location: ../Vistas/correccion.php');
+    }
+}
 //----------------ASIGNAR PREGUNTAS
 if (isset($_REQUEST['asignarPreguntas'])) {
     $examenes = $asignaturas[0]->getExamenes();
@@ -590,7 +613,7 @@ if (isset($_REQUEST['corregirExamen'])) {
     }
     $_SESSION['asignaturasImpartidas'] = $asignaturas;
 
-//Quitar alumno de alumnosS (desaparece visualmente) 
+    //Quitar alumno de alumnosS (desaparece visualmente) 
     $alumnoS = $_SESSION['alumnoS'];
     $alumnosS = $_SESSION['alumnosExamen'];
     foreach ($alumnosS as $i => $alumno) {
@@ -600,7 +623,7 @@ if (isset($_REQUEST['corregirExamen'])) {
     }
     $_SESSION['alumnosExamen'] = $alumnosS;
 
-//Aparezca exámen original
+    //Aparezca exámen original
     unset($_SESSION['correccionS']);
     header('Location: ../Vistas/correccion.php');
 }

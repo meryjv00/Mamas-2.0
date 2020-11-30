@@ -32,10 +32,10 @@ and open the template in the editor.
         session_start();
         $usuario = $_SESSION['usuario'];
         $alumnosS = $_SESSION['alumnosExamen'];
-        $alumnoS = $_SESSION['alumnoS'];
         $examenS = $_SESSION['examenS'];
         if (isset($_SESSION['correccionS'])) {
             $correccionS = $_SESSION['correccionS'];
+            $alumnoS = $_SESSION['alumnoS'];
             $respuestasS = $correccionS->getRespuestas();
         } else {
             $correccionS = $examenS;

@@ -89,7 +89,7 @@ and open the template in the editor.
                         <div class="col-md-12">
                             <div class="card card-cascade wider reverse">
                                 <div class="view view-cascade gradient-card-header mean-fruit-gradient">
-                                    <h4 class="card-header-title  text-center titulo text-white pt-2 pb-2  ">Examen</h4>
+                                    <h4 class="card-header-title  text-center titulo text-white pt-2 pb-2  ">Exámen</h4>
                                 </div>
 
                                 <div class="view view-cascade overlay pt-4">
@@ -100,7 +100,7 @@ and open the template in the editor.
                                     <!-- Data -->
                                     <p>Numero de preguntas: <?= count($examen->getPreguntas()); ?></p>
                                     <div class="mt-3">
-                                        <h3>Descripcion</h3>
+                                        <h3>Descripción</h3>
                                         <p><?= $examen->getDescripcion() ?></p>
                                     </div>
                                     <div class="row pt-3">

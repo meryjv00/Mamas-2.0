@@ -120,22 +120,17 @@ and open the template in the editor.
                                     <div class="view view-cascade gradient-card-header mean-fruit-gradient">
                                         <div class="row">
                                             <div class="mx-auto"></div>
-                                            <h4 class="card-header-title  text-center titulo text-white pt-2 pb-2  ">Info exámen</h4>
-                                            <div class="ml-auto mr-5 pb-2">
+                                            <h4 class="card-header-title  text-center titulo text-white pt-2 pb-2">Información exámen</h4>
+                                            <div class="ml-auto mr-4 pb-2">
                                                 <!-- Facebook -->
-                                                <button name="corregir" title="Corregir exámen" class=" btn btn-outline-secondary btn-rounded btn-sm px-2 purple lighten-3" ">
+                                                <button name="corregir" data-toggle="tooltip" data-placement="top" title="Corregir exámen" class=" btn btn-outline-secondary btn-rounded btn-sm  purple lighten-3" ">
                                                     <i class="fas fa-file-signature" style="font-size: 20px ;color: white"></i>
                                                 </button>
-                                                <button name="asignarP" title="Asignar preguntas"  class=" btn btn-outline-secondary btn-rounded btn-sm px-2 purple lighten-3" ">
+                                                <button name="asignarP" data-toggle="tooltip" data-placement="top" title="Asignar preguntas"  class=" btn btn-outline-secondary btn-rounded btn-sm  purple lighten-3" ">
                                                     <i class="far fa-file-powerpoint" style="font-size: 20px ;color: white"></i>
                                                 </button>
                                             </div>
                                         </div>
-                                    </div>
-                                    <!-- Card image -->
-                                    <div class="view view-cascade overlay pt-4">
-
-
                                     </div>
 
                                     <!-- Card content -->

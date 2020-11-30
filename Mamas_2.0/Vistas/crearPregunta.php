@@ -97,7 +97,7 @@ and open the template in the editor.
                 </nav>
             </form>
         </header>
-        <main class="pb-5 pt-5 ml-4">
+        <main class="pb-5 pt-5 mb-5">
             <div class="container-fluid row ">
                 <div class="col-md-9 mt-5">
                     <div class="row">

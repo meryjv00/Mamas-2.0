@@ -124,9 +124,13 @@ and open the template in the editor.
                                     ?>
                                     Alumno - DAW:
                                     <?php
-                                } else {
+                                } else if ($usuario->getRol() == 1) {
                                     ?>
                                     Profesor - DAW:
+                                    <?php
+                                } else {
+                                    ?>
+                                    Profesor Administrador - DAW:
                                     <?php
                                 }
                                 ?>
@@ -157,7 +161,7 @@ and open the template in the editor.
                                 </div>
                                 <!--BOTON-->
                                 <div class="text-center mb-3 pl-5 pr-5">
-                                    <button type="submit" name="editarFotoPerfil"  class="btn mean-fruit-gradient text-white 
+                                    <button type="submit" name="editarFotoPerfil"  class="btn purple lighten-3 text-white 
                                             btn-block btn-rounded my-4 waves-effect z-depth-1a">Editar foto</button>
                                 </div>
 
@@ -185,7 +189,7 @@ and open the template in the editor.
                                         </div>
 
                                         <div class="text-center mb-3 pl-5 pr-5">
-                                            <button type="submit" name="editarTfno"  class="btn mean-fruit-gradient text-white 
+                                            <button type="submit" name="editarTfno"  class="btn purple lighten-3 text-white 
                                                     btn-block btn-rounded my-4 waves-effect z-depth-1a">Editar número de teléfono</button>
                                         </div>
                                     </div>
@@ -209,7 +213,7 @@ and open the template in the editor.
                                             <div id="pass2Error"></div>
                                         </div>
                                         <div class="text-center mb-3 pl-5 pr-5">
-                                            <button type="submit" name="nuevaPass"  class="btn mean-fruit-gradient text-white 
+                                            <button type="submit" name="nuevaPass"  class="btn purple lighten-3 text-white 
                                                     btn-block btn-rounded my-4 waves-effect z-depth-1a">Confirmar</button>
                                         </div>
 
