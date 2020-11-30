@@ -13,6 +13,9 @@ include_once '../Modelo/Asignatura.php';
 include_once '../Modelo/Pregunta.php';
 include_once '../Modelo/Asignatura.php';
 include_once '../Modelo/Respuesta.php';
+include_once '../Modelo/Examen.php';
+include_once '../Modelo/Solucion.php';
+include_once '../Modelo/Correccion.php';
 session_start();
 if (isset($_SESSION['usuario'])) {
     $usuario = $_SESSION['usuario'];
@@ -490,7 +493,7 @@ if (isset($_REQUEST['corregir'])) {
             //!!!!!! comprobar que no esté corregido
         }
     }
-    if(isset($_SESSION['correccionS'])){
+    if (isset($_SESSION['correccionS'])) {
         unset($_SESSION['correccionS']);
     }
     $_SESSION['alumnosExamen'] = $alumnosExamen;
@@ -523,8 +526,71 @@ if (isset($_SESSION['alumnosExamen'])) {
 //-----------------------------CORREGIR EXAMEN DE UN ALUMNO
 if (isset($_REQUEST['corregirExamen'])) {
 
+    //recogemos datos y creamos el objeto correccion
+    $examenS = $_SESSION['examenS'];
+    $alumnoS = $_SESSION['alumnoS'];
+    $notas = array();
+    $notaTexto = $_REQUEST['nota'];
+    $anotacion = $_REQUEST['anotacion'];
+    $solucionAlumno = $_SESSION['correccionS'];
+    $respuestasAlu = $solucionAlumno->getRespuestas();
+    $preguntasS = $examenS->getPreguntas();
+    foreach ($preguntasS as $i => $preguntaS) {
+        $respuestasS = $preguntaS->getRespuestas();
+        foreach ($respuestasS as $j => $respuestaS) {
+            if ($preguntaS->getTipo() == 1) {
+                //tipo test
+                if ($respuestasAlu[$i]->getRespuesta() == $respuestaS->getRespuesta()) {
+                    if ($respuestaS->getCorrecta() == 1) {
+                        //respuesta correcta sumamos puntuacion
+                        $notas[] = $preguntaS->getPuntuacion();
+                    } else {
+                        $notas[] = 0;
+                    }
+                }
+            } else {// tipo texto
+                $notas[] = array_shift($notaTexto);
+            }
+        }
+    }
 
-    //Quitar alumno de alumnosS (desaparece visualmente) 
+    //creamos el objeto Correccion y lo guardamos dentro de la solucion del alumno.
+    $correccionProfesor = new Correccion($usuario->getId());
+    $correccionProfesor->addAnotacion($anotacion);
+    $correccionProfesor->addNota($notas);
+
+    $solucionAlumno->setCorreccion($correccionProfesor);
+    $usuario->addCorreccion($correccionProfesor);
+
+    //cogemos el objeto alumno y sacamos todas sus soluciones para actualizar su solucion con su correccion dentro
+    $solucionesAlumno = $alumnoS->getSoluciones();
+    foreach ($solucionesAlumno as $i => $sol) {
+        if ($sol->getId() == $solucionAlumno->getId()) {
+            $solucionesAlumno[$i] = $solucionAlumno;
+        }
+    }
+
+    //metemos el array actualizado Soluciones dentro del alumno
+
+    $alumnoS->setSoluciones($solucionesAlumno);
+    $_SESSION['alumnoS'] = $alumnoS;
+
+    //actualizamos el alumno en el array alumnos de su asignatura
+    $asignaturas = $_SESSION['asignaturasImpartidas'];
+
+    for ($i = 0; $i < count($asignaturas); $i++) {
+        $alumnos = $asignaturas[$i]->getAlumnos();
+
+        for ($j = 0; $j < count($alumnos); $j++) {
+            if ($alumnos[$j]->getId() == $alumnoS->getId()) {
+                $alumnos[$j] = $alumnoS;
+                $asignaturas[$i]->setAlumnos($alumnos);
+            }
+        }
+    }
+    $_SESSION['asignaturasImpartidas'] = $asignaturas;
+
+//Quitar alumno de alumnosS (desaparece visualmente) 
     $alumnoS = $_SESSION['alumnoS'];
     $alumnosS = $_SESSION['alumnosExamen'];
     foreach ($alumnosS as $i => $alumno) {
@@ -534,12 +600,10 @@ if (isset($_REQUEST['corregirExamen'])) {
     }
     $_SESSION['alumnosExamen'] = $alumnosS;
 
-    //Aparezca exámen original
+//Aparezca exámen original
     unset($_SESSION['correccionS']);
     header('Location: ../Vistas/correccion.php');
 }
-
-
 //------------------------QUITAR PREGUNTA YA AÑADIDA A UN EXAMEN
 if (isset($_SESSION['examenS'])) {
     $examen = $_SESSION['examenS'];
@@ -553,9 +617,9 @@ if (isset($_SESSION['examenS'])) {
     }
     if ($accion == 'Borrar') {
         $preguntaSeleccionada = $preguntas[$pos];
-        //Borrar en bd
+//Borrar en bd
         gestionDatos::deleteAsignacionPreguntaExamen($examen->getId(), $preguntaSeleccionada->getId());
-        //Borrar en el objeto
+//Borrar en el objeto
         unset($preguntas[$pos]);
         $examen->setPreguntas($preguntas);
 
@@ -572,3 +636,4 @@ if (isset($_SESSION['examenS'])) {
     }
 }
 
+    

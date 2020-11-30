@@ -117,7 +117,7 @@ and open the template in the editor.
                     <!-- Card image -->
                     <div class="view view-cascade gradient-card-header mean-fruit-gradient">
                         <!-- Title -->
-                        <h3 class="card-header-title text-center titulo text-white pt-1">Pendientes (<?php echo count($alumnosS)?>)</h3>
+                        <h3 class="card-header-title text-center titulo text-white pt-1">Pendientes (<?php echo count($alumnosS) ?>)</h3>
                     </div>
                     <!-- Card content -->
                     <div class="card-body card-body-cascade">
@@ -172,7 +172,7 @@ and open the template in the editor.
                             <h2 class="card-header-title text-center titulo text-white pt-1">
                                 <?php
                                 if (isset($_SESSION['correccionS'])) {
-                                    echo 'Exámen - '. $alumnoS->getNombre() . ' ' .$alumnoS->getApellidos();
+                                    echo 'Exámen - ' . $alumnoS->getNombre() . ' ' . $alumnoS->getApellidos();
                                 } else {
                                     echo 'Exámen solución';
                                 }
@@ -252,7 +252,7 @@ and open the template in the editor.
                                                                     <textarea style="resize: none;" readonly  rows="5" cols="10"  name="<?= $contPregunta ?>" class="form-control mb-3" ><?= $respuestasS[$i]->getRespuesta() ?></textarea>
                                                                     <div class="row">
                                                                         <div class="col-md-2">
-                                                                            <label for="nota">Puntuación: </label><input type="number" name="nota" class="form-control" max="<?= $pregunta->getPuntuacion() ?>" min="0">
+                                                                            <label for="nota">Puntuación: </label><input type="number" name="nota[]" class="form-control" max="<?= $pregunta->getPuntuacion() ?>" min="0">
                                                                         </div>
                                                                     </div>
                                                                     <?php
@@ -280,9 +280,9 @@ and open the template in the editor.
                                             <div class="row px-4">
                                                 <div class="col-md-12 mx-auto">
                                                     <h5 class="text-center">Anotación</h5>
-                                                    <textarea style="resize: none;"   rows="5" cols="10"  name="" class="form-control mb-3" placeholder="Deje su valoración aquí..."></textarea>
+                                                    <textarea style="resize: none;"   rows="5" cols="10"  name="anotacion" class="form-control mb-3" placeholder="Deje su valoración aquí..."></textarea>
 
-                                            </div>
+                                                </div>
                                         </section>
                                         <button type="submit" class="btn purple lighten-3 text-white
                                                 btn-rounded waves-effect z-depth-1a" name="corregirExamen">Corregir
