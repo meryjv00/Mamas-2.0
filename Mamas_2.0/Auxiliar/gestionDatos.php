@@ -928,7 +928,7 @@ class gestionDatos {
 
     static function insertRespuesta($respuesta, $idUsuario, $idPregunta) {
         self::conexion();
-        $consulta = "INSERT INTO respuesta VALUES ('','" . $idUsuario . "'," . $idPregunta . ",'" . $respuesta . "',0)";
+        $consulta = "INSERT INTO respuesta VALUES (default,'" . $idUsuario . "'," . $idPregunta . ",'" . $respuesta . "',0)";
         if (self::$conexion->query($consulta)) {
             $correcto = false;
         }
@@ -974,7 +974,7 @@ class gestionDatos {
 
     static function insertSolucion($usuarioId, $examenId) {
         self::conexion();
-        $consulta = "INSERT INTO solucion VALUES (''," . $usuarioId . "," . $examenId . ")";
+        $consulta = "INSERT INTO solucion VALUES (default," . $usuarioId . "," . $examenId . ")";
         if (self::$conexion->query($consulta)) {
 
             $correcto = true;

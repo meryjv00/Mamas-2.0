@@ -41,11 +41,12 @@ and open the template in the editor.
         ?>
 
         <header>
-            <nav class="row navbar navbar-expand-lg navbar-dark fixed-top deg">
+            <nav class="row navbar navbar-expand-lg navbar-dark fixed-top colorNav">
                 <div class="container-fluid">
                     <ul class="navbar-nav mr-auto ml-5">
                         <li class="nav-item">
-                            <form name = "home" action = "<?= $controlador ?>" method = "post">
+                            <!--CRUD ADMINISTRADOR-->
+                            <form name="home" action="<?= $controlador ?>" method="post">
                                 <button type="submit" class="btn mean-fruit-gradient text-white
                                         btn-rounded waves-effect z-depth-1a" name="home" value="home">
                                     <i class="fas fa-home"></i>
@@ -53,14 +54,15 @@ and open the template in the editor.
                                 <?php
                                 if ($usuario->getRol() == 1 || $usuario->getRol() == 2) {
                                     ?>
-                                    <a href="inicioProfesor.php" class="btn mean-fruit-gradient btn-rounded text-white">
+                                    <button type="submit" class="btn mean-fruit-gradient text-white
+                                            btn-rounded waves-effect z-depth-1a" name="salirAlumno" value="salirAlumno">
                                         <i class="fas fa-times"></i>
-                                    </a>
+                                    </button>
                                     <?php
                                 }
                                 ?>
-                            </form>
 
+                            </form>
                         </li> 
                     </ul>
                     <ul class="navbar-nav ml-auto mr-5">
@@ -169,8 +171,7 @@ and open the template in the editor.
                 </section>
             </div>
         </main> 
-
-        <footer class="footer-copyright text-center text-white py-3 z-depth-2">
+        <footer class="footer-copyright text-center text-white py-3 z-depth-2 colorNav fixed-bottom">
             <div> © 2020 Copyright: Israel y María</div>
         </footer>
 

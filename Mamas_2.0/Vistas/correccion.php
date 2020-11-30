@@ -203,7 +203,7 @@ and open the template in the editor.
                                     foreach ($preguntas as $i => $pregunta) {
                                         $contPregunta++;
                                         ?>
-                                        <section class="mx-auto mt-3 white-dark text-left purple lighten-4 pt-1 rounded py-2 my-2">
+                                        <section class="mx-auto mt-3 white-dark text-left purple lighten-4 rounded pt-2 pb-4 my-2">
                                             <div class="row px-4">
                                                 <div class="col-md-12">
                                                     <h5><?= $contPregunta . '. ' ?><?= $pregunta->getEnunciado() ?> (<?= $pregunta->getPuntuacion() ?> puntos).</h5>
@@ -215,28 +215,25 @@ and open the template in the editor.
                                                 <div class="col-md-12">
                                                     <?php
                                                     foreach ($respuestas as $j => $respuesta) {
+                                                        $contOpciones++;
                                                         if ($pregunta->getTipo() == 1) {
-                                                            $contOpciones++;
-                                                            ?>
-                                                            <span>
-                                                                <?php
-                                                                //--
-                                                                if (isset($_SESSION['correccionS'])) {
-                                                                    if ($respuestasS[$i]->getRespuesta() == $respuesta->getRespuesta()) {
-                                                                        if ($respuesta->getCorrecta() == 1) {
-                                                                            $color = "#237965";
-                                                                        } else {
-                                                                            $color = "#E25B64";
-                                                                        }
-                                                                        ?>
-                                                                        <i class="fas fa-hand-point-right letra" style="color: <?= $color ?>"></i>
-                                                                        <?php
+                                                            //--
+                                                            if (isset($_SESSION['correccionS'])) {
+                                                                if ($respuestasS[$i]->getRespuesta() == $respuesta->getRespuesta()) {
+                                                                    if ($respuesta->getCorrecta() == 1) {
+                                                                        $color = "#237965";
                                                                     } else {
-                                                                        echo $contOpciones . ') ';
+                                                                        $color = "#E25B64";
                                                                     }
                                                                     ?>
-                                                                    <?= $respuesta->getRespuesta() ?></span><br>
+                                                                    <i class="fas fa-hand-point-right letra" style="color: <?= $color ?>"></i>
                                                                     <?php
+                                                                } else {
+                                                                    echo $contOpciones . ') ';
+                                                                }
+                                                                ?>
+                                                                <span><?= $respuesta->getRespuesta() ?></span><br>
+                                                                <?php
                                                             } else {
                                                                 echo $contOpciones . ') ';
                                                                 if ($pregunta->getTipo() == 1) {
@@ -249,20 +246,22 @@ and open the template in the editor.
                                                                     $icono = "fas fa-sort-alpha-up";
                                                                 }
                                                                 ?>
-                                                                <?= $respuesta->getRespuesta() . '   ' ?><i class="<?= $icono ?> letra"></i></span><br>
+                                                                <span><?= $respuesta->getRespuesta() . '   ' ?><i class="<?= $icono ?> letra"></i></span><br>
+                                                                <?php
+                                                            }
+                                                        } else {
+                                                            if (isset($_SESSION['correccionS'])) {
+                                                                if ($contOpciones == 1) {
+                                                                    ?>
+
+                                                                    <textarea style="resize: none;" readonly  rows="5" cols="10"  name="<?= $contPregunta ?>" class="form-control mb-3" ><?= $respuestasS[$i]->getRespuesta() ?></textarea>
+                                                                    <div class="row">
+                                                                        <div class="col-md-2">
+                                                                            <label for="nota">Puntuación: </label><input type="number" name="nota" class="form-control" max="<?= $pregunta->getPuntuacion() ?>" min="0">
+                                                                        </div>
+                                                                    </div>
                                                                     <?php
                                                                 }
-                                                                
-                                                        } else {
-                                                                if (isset($_SESSION['correccionS'])) {
-                                                                    ?>
-                                                                <textarea style="resize: none;" readonly  rows="5" cols="10"  name="<?= $contPregunta ?>" class="form-control mb-3" ><?= $respuestasS[$i]->getRespuesta() ?></textarea>
-                                                                <div class="row">
-                                                                    <div class="col-md-2">
-                                                                        <label for="nota">Puntuación: </label><input type="number" name="nota" class="form-control" max="<?= $pregunta->getPuntuacion() ?>" min="0">
-                                                                    </div>
-                                                                </div>
-                                                                <?php
                                                             } else {
                                                                 ?>
                                                                 <span><?= $contOpciones . ') ' . $respuesta->getRespuesta() ?></span><br>
@@ -272,16 +271,15 @@ and open the template in the editor.
                                                     }
                                                     ?>
                                                 </div>  
-                                                    <?php ?>
                                             </div>
                                         </section>
-    <?php
-}
-?>
+                                        <?php
+                                    }
+                                    ?>
                                 </div>
-                                    <?php
-                                    if (isset($_SESSION['correccionS'])) {
-                                        ?>
+                                <?php
+                                if (isset($_SESSION['correccionS'])) {
+                                    ?>
                                     <div class="col-md-8 mx-auto border pb-3 mt-3">
                                         <section class="mx-auto mt-3 white-dark text-left orange lighten-3 pt-1 rounded py-2 my-2">
                                             <div class="row px-4">
@@ -296,9 +294,9 @@ and open the template in the editor.
                                                 btn-rounded waves-effect z-depth-1a" name="corregirExamen">Corregir
                                         </button> 
                                     </div>
-    <?php
-}
-?>
+                                    <?php
+                                }
+                                ?>
 
                             </div>
                         </div>
