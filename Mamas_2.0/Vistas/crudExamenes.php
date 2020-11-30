@@ -26,7 +26,11 @@ and open the template in the editor.
         include_once '../Modelo/Alumno.php';
         include_once '../Modelo/Examen.php';
         include_once '../Modelo/Pregunta.php';
+        include_once '../Modelo/Correccion.php';
+        include_once '../Modelo/Solucion.php';
         session_start();
+        $alumnosExamen = array();
+        $soluciones = array();
         $usuario = $_SESSION['usuario'];
         $asignatura = $_SESSION['asignaturasImpartidas'];
         $examenes = $asignatura[0]->getExamenes();
@@ -170,7 +174,26 @@ and open the template in the editor.
 
                                                     <th scope="row"> <input class="form-check-input" type="checkbox" id="checkbox1" name="<?= $i ?>">
                                                     </th>
-                                                    <td>ahsdfsd</td>
+                                                    <td><?php
+                                                        $alumnos = $asignatura[0]->getAlumnos();
+                                                        foreach ($alumnos as $i => $alumno) {
+                                                            $soluciones = $alumno->getSoluciones();
+                                                            $correcto = false;
+                                                            foreach ($soluciones as $j => $solucion) {
+                                                                if ($solucion->getExamen() == $examen->getId() && $solucion->getCorreccion() == null) {
+                                                                    $correcto = true;
+                                                                }
+                                                            }
+                                                            if ($correcto) {
+                                                                $alumnosExamen[] = $alumno;
+                                                            }
+                                                        }
+                                                        if (count($alumnosExamen) == 0) {
+                                                            ?> <i class="fas fa-check-double"></i><?php
+                                                        } else {
+                                                            echo count($alumnosExamen);
+                                                        }
+                                                        ?></td>
                                                     <td><?php echo $examen->getContenido(); ?></td>
                                                     <td><span class="badge badge-<?php
                                                         if ($examen->getActivo() == 0) {

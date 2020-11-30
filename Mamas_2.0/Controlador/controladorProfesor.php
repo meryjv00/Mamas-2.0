@@ -260,30 +260,35 @@ if (isset($_REQUEST['corregirTabla'])) {
         $_SESSION['mensaje'] = "Marca el exámen que quieras corregir";
         header('Location: ../Vistas/crudExamenes.php');
     } else {
-        $_SESSION['examenS'] = $examenes[$pos];
-        $_SESSION['creadorEx'] = gestionDatos::getUsuarioId($examenes[$pos]->getProfesor());
-        //PONER METODO 'CORREGIR' CUANDO ESTE IMPLEMENTADO
-        $alumnosExamen = array();
-        $soluciones = array();
-        $examenS = $_SESSION['examenS'];
-        $alumnos = $asignaturas[0]->getAlumnos();
-        foreach ($alumnos as $i => $alumno) {
-            $soluciones = $alumno->getSoluciones();
-            $correcto = false;
-            foreach ($soluciones as $j => $solucion) {
-                if ($solucion->getExamen() == $examenS->getId() && $solucion->getCorreccion() == null) {//!!!!!! comprobar que no esté corregido
-                    $correcto = true;
+        if ($examenes[$pos]->getPreguntas() != null) {
+            $_SESSION['examenS'] = $examenes[$pos];
+            $_SESSION['creadorEx'] = gestionDatos::getUsuarioId($examenes[$pos]->getProfesor());
+            //PONER METODO 'CORREGIR' CUANDO ESTE IMPLEMENTADO
+            $alumnosExamen = array();
+            $soluciones = array();
+            $examenS = $_SESSION['examenS'];
+            $alumnos = $asignaturas[0]->getAlumnos();
+            foreach ($alumnos as $i => $alumno) {
+                $soluciones = $alumno->getSoluciones();
+                $correcto = false;
+                foreach ($soluciones as $j => $solucion) {
+                    if ($solucion->getExamen() == $examenS->getId() && $solucion->getCorreccion() == null) {//!!!!!! comprobar que no esté corregido
+                        $correcto = true;
+                    }
+                }
+                if ($correcto) {
+                    $alumnosExamen[] = $alumno;
                 }
             }
-            if ($correcto) {
-                $alumnosExamen[] = $alumno;
+            if (isset($_SESSION['correccionS'])) {
+                unset($_SESSION['correccionS']);
             }
+            $_SESSION['alumnosExamen'] = $alumnosExamen;
+            header('Location: ../Vistas/correccion.php');
+        } else {
+            $_SESSION['mensaje'] = "Marca un exámen que contenga preguntas";
+            header('Location: ../Vistas/crudExamenes.php');
         }
-        if (isset($_SESSION['correccionS'])) {
-            unset($_SESSION['correccionS']);
-        }
-        $_SESSION['alumnosExamen'] = $alumnosExamen;
-        header('Location: ../Vistas/correccion.php');
     }
 }
 //----------------ASIGNAR PREGUNTAS
@@ -303,9 +308,14 @@ if (isset($_REQUEST['asignarPreguntas'])) {
         $_SESSION['mensaje'] = "Marca el exámen al que quieras añadir preguntas";
         header('Location: ../Vistas/crudExamenes.php');
     } else {
-        $_SESSION['examenS'] = $examenes[$pos];
-        $_SESSION['creadorEx'] = gestionDatos::getUsuarioId($examenes[$pos]->getProfesor());
-        header('Location: ../Vistas/asignarPreguntas.php');
+        if ($examenes[$pos]->getActivo() == 0) {
+            $_SESSION['examenS'] = $examenes[$pos];
+            $_SESSION['creadorEx'] = gestionDatos::getUsuarioId($examenes[$pos]->getProfesor());
+            header('Location: ../Vistas/asignarPreguntas.php');
+        } else {
+            $_SESSION['mensaje'] = "No puedes modificar preguntas de un exámen ACTIVADO";
+            header('Location: ../Vistas/crudExamenes.php');
+        }
     }
 }
 
@@ -413,7 +423,12 @@ if (isset($_REQUEST['borrarExamen'])) {
 
 //------------------ASIGNAR PREGUNTAS
 if (isset($_REQUEST['asignarP'])) {
-    header('Location: ../Vistas/asignarPreguntas.php');
+    if ($_SESSION['examenS']->getActivo() == 0) {
+        header('Location: ../Vistas/asignarPreguntas.php');
+    } else {
+        $_SESSION['mensaje'] = "No puedes modificar preguntas de un exámen ACTIVADO";
+        header('Location: ../Vistas/verExamen.php');
+    }
 }
 //------------------CRUD PREGUNTAS
 if (isset($_REQUEST['crudP'])) {

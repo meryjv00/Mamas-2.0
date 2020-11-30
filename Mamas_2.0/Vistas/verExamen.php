@@ -135,7 +135,17 @@ and open the template in the editor.
 
                                     <!-- Card content -->
                                     <div class="card-body card-body-cascade text-center">
-                                        <!-- Title -->
+                                        <!-- Title --><?php
+                                        if (isset($_SESSION['mensaje'])) {
+                                            $mensaje = $_SESSION['mensaje'];
+                                            ?>
+                                            <div class="row">
+                                                <div class="mx-auto text-center text-white badge badge-secondary mb-2"><?= $mensaje ?></div>
+                                            </div>
+                                            <?php
+                                            unset($_SESSION['mensaje']);
+                                        }
+                                        ?>
                                         <h3 class="font-weight-bold "><a><?= $examen->getContenido() ?></a></h3>
                                         <!-- Data -->
                                         <p>Creado por: <?= $creador->getNombre(); ?></p>
