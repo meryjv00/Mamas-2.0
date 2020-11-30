@@ -263,6 +263,26 @@ if (isset($_REQUEST['corregirTabla'])) {
         $_SESSION['examenS'] = $examenes[$pos];
         $_SESSION['creadorEx'] = gestionDatos::getUsuarioId($examenes[$pos]->getProfesor());
         //PONER METODO 'CORREGIR' CUANDO ESTE IMPLEMENTADO
+        $alumnosExamen = array();
+        $soluciones = array();
+        $examenS = $_SESSION['examenS'];
+        $alumnos = $asignaturas[0]->getAlumnos();
+        foreach ($alumnos as $i => $alumno) {
+            $soluciones = $alumno->getSoluciones();
+            $correcto = false;
+            foreach ($soluciones as $j => $solucion) {
+                if ($solucion->getExamen() == $examenS->getId() && $solucion->getCorreccion() == null) {//!!!!!! comprobar que no esté corregido
+                    $correcto = true;
+                }
+            }
+            if ($correcto) {
+                $alumnosExamen[] = $alumno;
+            }
+        }
+        if (isset($_SESSION['correccionS'])) {
+            unset($_SESSION['correccionS']);
+        }
+        $_SESSION['alumnosExamen'] = $alumnosExamen;
         header('Location: ../Vistas/correccion.php');
     }
 }
@@ -507,13 +527,12 @@ if (isset($_REQUEST['corregir'])) {
         $soluciones = $alumno->getSoluciones();
         $correcto = false;
         foreach ($soluciones as $j => $solucion) {
-            if ($solucion->getExamen() == $examenS->getId()) {
+            if ($solucion->getExamen() == $examenS->getId() && $solucion->getCorreccion() == null) {//!!!!!! comprobar que no esté corregido
                 $correcto = true;
             }
         }
         if ($correcto) {
             $alumnosExamen[] = $alumno;
-            //!!!!!! comprobar que no esté corregido
         }
     }
     if (isset($_SESSION['correccionS'])) {
@@ -558,29 +577,45 @@ if (isset($_REQUEST['corregirExamen'])) {
     $solucionAlumno = $_SESSION['correccionS'];
     $respuestasAlu = $solucionAlumno->getRespuestas();
     $preguntasS = $examenS->getPreguntas();
+
+
     foreach ($preguntasS as $i => $preguntaS) {
+        $corregido = false;
         $respuestasS = $preguntaS->getRespuestas();
         foreach ($respuestasS as $j => $respuestaS) {
-            if ($preguntaS->getTipo() == 1) {
+            if ($preguntaS->getTipo() == 1 && !$corregido) {
                 //tipo test
                 if ($respuestasAlu[$i]->getRespuesta() == $respuestaS->getRespuesta()) {
                     if ($respuestaS->getCorrecta() == 1) {
                         //respuesta correcta sumamos puntuacion
                         $notas[] = $preguntaS->getPuntuacion();
+                        $corregido = true;
                     } else {
                         $notas[] = 0;
+                        $corregido = true;
                     }
+                } else if ($respuestasAlu[$i]->getRespuesta() == "") {
+                    $notas[] = 0;
+                    $corregido = true;
                 }
-            } else {// tipo texto
-                $notas[] = array_shift($notaTexto);
+            } else if ($preguntaS->getTipo() == 0 && !$corregido) {// tipo texto
+                $n = array_shift($notaTexto);
+                if ($n == "") {
+                    $n = 0;
+                } else {
+                    $n = intval($n);
+                }
+                $notas[] = $n;
+                $corregido = true;
             }
         }
     }
-
     //creamos el objeto Correccion y lo guardamos dentro de la solucion del alumno.
     $correccionProfesor = new Correccion($usuario->getId());
-    $correccionProfesor->addAnotacion($anotacion);
-    $correccionProfesor->addNota($notas);
+    $correccionProfesor->setAnotacion($anotacion);
+    $correccionProfesor->setNotas($notas);
+
+    gestionDatos::insertCorreccion($correccionProfesor, $solucionAlumno->getId());
 
     $solucionAlumno->setCorreccion($correccionProfesor);
     $usuario->addCorreccion($correccionProfesor);

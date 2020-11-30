@@ -200,10 +200,10 @@ class gestionDatos {
                 $idEx = $fila['idExamen'];
                 $solucion = new Solucion($idSol, $idEx);
 
-                $correcion = self::getCorreccion($idSol);
-                if ($correcion != 1) {
-                    $correcion->setNotas(self::getNotas($idSol));
-                    $correcion->setAnotacion(self::getAnotaciones($idSol));
+                $correccion = self::getCorreccion($idSol);
+                if ($correccion != null) {
+                    $correccion->setNotas(self::getNotas($idSol));
+                    $correccion->setAnotacion(self::getAnotaciones($idSol));
                     $solucion->setCorreccion($correccion);
                 }
                 $respuestas = self::getRespuestas($idAl);
@@ -241,7 +241,7 @@ class gestionDatos {
     static function getNotas($idSol) {
         self::conexion();
         $notas = array();
-        $stmt = self::$conexion->prepare("SELECT * FROM correcion WHERE idSolucion= ? ");
+        $stmt = self::$conexion->prepare("SELECT * FROM correccion WHERE idSolucion= ? ");
         $stmt->bind_param("i", $idSol);
         if ($stmt->execute()) {
             $resultado = $stmt->get_result();
@@ -258,7 +258,7 @@ class gestionDatos {
     static function getAnotaciones($idSol) {
         self::conexion();
         $anotaciones = array();
-        $stmt = self::$conexion->prepare("SELECT * FROM correcion WHERE idSolucion= ? ");
+        $stmt = self::$conexion->prepare("SELECT * FROM correccion WHERE idSolucion= ? ");
         $stmt->bind_param("i", $idSol);
         if ($stmt->execute()) {
             $resultado = $stmt->get_result();
@@ -274,7 +274,7 @@ class gestionDatos {
 
     static function getCorreccion($idSol) {
         self::conexion();
-        $corr = 1;
+        $corr = null;
         $stmt = self::$conexion->prepare("SELECT * FROM correccion WHERE idSolucion= ? ");
         $stmt->bind_param("i", $idSol);
         if ($stmt->execute()) {
@@ -839,6 +839,19 @@ class gestionDatos {
 //======================================================================
 // INSERT
 //======================================================================
+    static function insertCorreccion($correccion, $idSolucion) {
+        self::conexion();
+        $consulta = "INSERT INTO correccion VALUES (" . $idSolucion . "," . $correccion->getProfesor() . "," . array_sum($correccion->getNotas()) . ",'" . $correccion->getAnotacion() . "')";
+        if (self::$conexion->query($consulta)) {
+
+            $correcto = true;
+        } else {
+            $correcto = false;
+            echo "Error al insertar: " . self::$conexion->error . '<br/>';
+        }
+        return $correcto;
+        mysqli_close(self::$conexion);
+    }
 
     static function insertUsuarioRol($id, $rol) {
         self::conexion();

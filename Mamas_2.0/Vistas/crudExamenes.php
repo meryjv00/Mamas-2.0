@@ -124,7 +124,7 @@ and open the template in the editor.
                                                     data-toggle="tooltip" data-placement="top" title="Asignar preguntas">
                                                 <i class="far fa-file-powerpoint px-1" style="font-size: 20px"></i>
                                             </button>
-                                            <button name="corregirTabla" disabled data-toggle="tooltip" data-placement="top" title="Corregir exámen" class="btn btn-outline-white btn-rounded btn-sm px-2">
+                                            <button name="corregirTabla"  data-toggle="tooltip" data-placement="top" title="Corregir exámen" class="btn btn-outline-white btn-rounded btn-sm px-2">
                                                 <i class="fas fa-file-signature" style="font-size: 20px ;color: white"></i>
                                             </button>
                                             <button type="submit" name="activarExamen" class="btn btn-outline-white btn-rounded btn-sm px-2"
@@ -156,6 +156,7 @@ and open the template in the editor.
                                         <thead>
                                             <tr>
                                                 <th scope="col"></th>
+                                                <th scope="col">Pendientes</th>
                                                 <th scope="col">Contenido</th>
                                                 <th scope="col">Activo</th>
                                                 <th scope="col">Preguntas</th>
@@ -169,6 +170,7 @@ and open the template in the editor.
 
                                                     <th scope="row"> <input class="form-check-input" type="checkbox" id="checkbox1" name="<?= $i ?>">
                                                     </th>
+                                                    <td>ahsdfsd</td>
                                                     <td><?php echo $examen->getContenido(); ?></td>
                                                     <td><span class="badge badge-<?php
                                                         if ($examen->getActivo() == 0) {
