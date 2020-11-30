@@ -365,28 +365,6 @@ if (isset($_REQUEST['borrarExamen'])) {
     }
 }
 
-//------------------CORREGIR MANUALMENTE
-if (isset($_REQUEST['corregir'])) {
-    $alumnosExamen = array();
-    $soluciones = array();
-    $examenS = $_SESSION['examenS'];
-    $alumnos = $asignaturas[0]->getAlumnos();
-    foreach ($alumnos as $i => $alumno) {
-        $soluciones = $alumno->getSoluciones();
-        $correcto = false;
-        foreach ($soluciones as $j => $solucion) {
-            if ($solucion->getExamen() == $examenS->getId()) {
-                $correcto = true;
-            }
-        }
-        if ($correcto) {
-            $alumnosExamen[] = $alumno;
-        }
-    }
-    $_SESSION['alumnosExamen'] = $alumnosExamen;
-    header('Location: ../Vistas/correccion.php');
-}
-
 //------------------ASIGNAR PREGUNTAS
 if (isset($_REQUEST['asignarP'])) {
     header('Location: ../Vistas/asignarPreguntas.php');
@@ -493,15 +471,31 @@ if (isset($_SESSION['preguntasCreadas'])) {
 if (isset($_REQUEST['verAlumnos'])) {
     header('Location: ../Vistas/verAlumnos.php');
 }
-
-if (isset($_REQUEST['corregirExamen'])) {
-
-
-
-    unset($_SESSION['correccionS']);
+//------------------CORREGIR EXÁMEN CARGAR PÁGINA
+if (isset($_REQUEST['corregir'])) {
+    $alumnosExamen = array();
+    $soluciones = array();
+    $examenS = $_SESSION['examenS'];
+    $alumnos = $asignaturas[0]->getAlumnos();
+    foreach ($alumnos as $i => $alumno) {
+        $soluciones = $alumno->getSoluciones();
+        $correcto = false;
+        foreach ($soluciones as $j => $solucion) {
+            if ($solucion->getExamen() == $examenS->getId()) {
+                $correcto = true;
+            }
+        }
+        if ($correcto) {
+            $alumnosExamen[] = $alumno;
+            //!!!!!! comprobar que no esté corregido
+        }
+    }
+    if(isset($_SESSION['correccionS'])){
+        unset($_SESSION['correccionS']);
+    }
+    $_SESSION['alumnosExamen'] = $alumnosExamen;
     header('Location: ../Vistas/correccion.php');
 }
-
 //-----------------------VER EXAMEN DE UN ALUMNO
 if (isset($_SESSION['alumnosExamen'])) {
     $alumnosExamen = $_SESSION['alumnosExamen'];
@@ -525,6 +519,26 @@ if (isset($_SESSION['alumnosExamen'])) {
         header('Location: ../Vistas/correccion.php');
     }
 }
+
+//-----------------------------CORREGIR EXAMEN DE UN ALUMNO
+if (isset($_REQUEST['corregirExamen'])) {
+
+
+    //Quitar alumno de alumnosS (desaparece visualmente) 
+    $alumnoS = $_SESSION['alumnoS'];
+    $alumnosS = $_SESSION['alumnosExamen'];
+    foreach ($alumnosS as $i => $alumno) {
+        if ($alumno->getId() == $alumnoS->getId()) {
+            unset($alumnosS[$i]);
+        }
+    }
+    $_SESSION['alumnosExamen'] = $alumnosS;
+
+    //Aparezca exámen original
+    unset($_SESSION['correccionS']);
+    header('Location: ../Vistas/correccion.php');
+}
+
 
 //------------------------QUITAR PREGUNTA YA AÑADIDA A UN EXAMEN
 if (isset($_SESSION['examenS'])) {

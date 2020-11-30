@@ -75,12 +75,6 @@ and open the template in the editor.
                             <ul class="navbar-nav">
                                 <li class="nav-item">
                                     <button type="submit" class="btn mean-fruit-gradient text-white 
-                                            btn-rounded waves-effect z-depth-1a" name="verExamenes" value="Ver exámenes">
-                                        <i class="far fa-eye pr-1"></i> exámenes
-                                    </button>
-                                </li>
-                                <li class="nav-item">
-                                    <button type="submit" class="btn mean-fruit-gradient text-white 
                                             btn-rounded waves-effect z-depth-1a" name="crearExamenes" value="Crear exámenes">
                                         <i class="fas fa-plus pr-1"></i> exámenes
                                     </button>
@@ -152,7 +146,7 @@ and open the template in the editor.
                                         <p>Creado por: <?= $creador->getNombre(); ?></p>
                                         <p>Numero de preguntas: <?= count($examen->getPreguntas()); ?></p>
                                         <div class="mt-3">
-                                            <h3>Descripcion</h3>
+                                            <h3>Descripción</h3>
                                             <p><?= $examen->getDescripcion() ?></p>
                                         </div>
                                         <div class="row pt-3 text-left">

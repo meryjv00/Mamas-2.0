@@ -97,10 +97,10 @@ and open the template in the editor.
                                 foreach ($asignaturas as $i => $asignatura) {
                                     ?>
 
-                                    <div class="col-md-3 card  card-cascade narrower card-ecommerce mt-3 ml-3 mr-3" style="height: 280px" >
+                                    <div class="col-md-3 card  card-cascade narrower card-ecommerce mt-3 ml-3 mr-3" style="height: 250px" >
                                         <button class="border-0 bg-white" type="submit" name="<?= $i ?>" value="<?= $asignatura->getIdAsignatura() ?>"> <!-- Card image -->
 
-                                            <div class="view bg-white overlay zoom" style="height: 200px">
+                                            <div class="view bg-white overlay zoom" style="height: 150px">
                                                 <img src="data:image/png;base64,<?php echo base64_encode($asignatura->getImagen()); ?>" alt="titulo foto" class="img-fluid"
                                                      />
                                                 <div class="mask flex-center">

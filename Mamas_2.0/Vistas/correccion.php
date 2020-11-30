@@ -32,6 +32,7 @@ and open the template in the editor.
         session_start();
         $usuario = $_SESSION['usuario'];
         $alumnosS = $_SESSION['alumnosExamen'];
+        $alumnoS = $_SESSION['alumnoS'];
         $examenS = $_SESSION['examenS'];
         if (isset($_SESSION['correccionS'])) {
             $correccionS = $_SESSION['correccionS'];
@@ -82,12 +83,6 @@ and open the template in the editor.
                             <ul class="navbar-nav">
                                 <li class="nav-item">
                                     <button type="submit" class="btn mean-fruit-gradient text-white 
-                                            btn-rounded waves-effect z-depth-1a" name="verExamenes" value="Ver exámenes">
-                                        <i class="far fa-eye pr-1"></i> exámenes
-                                    </button>
-                                </li>
-                                <li class="nav-item">
-                                    <button type="submit" class="btn mean-fruit-gradient text-white 
                                             btn-rounded waves-effect z-depth-1a" name="crearExamenes" value="Crear exámenes">
                                         <i class="fas fa-plus pr-1"></i> exámenes
                                     </button>
@@ -122,7 +117,7 @@ and open the template in the editor.
                     <!-- Card image -->
                     <div class="view view-cascade gradient-card-header mean-fruit-gradient">
                         <!-- Title -->
-                        <h2 class="card-header-title text-center titulo text-white pt-1">Exámenes pendientes</h2>
+                        <h3 class="card-header-title text-center titulo text-white pt-1">Pendientes (<?php echo count($alumnosS)?>)</h3>
                     </div>
                     <!-- Card content -->
                     <div class="card-body card-body-cascade">
@@ -177,9 +172,9 @@ and open the template in the editor.
                             <h2 class="card-header-title text-center titulo text-white pt-1">
                                 <?php
                                 if (isset($_SESSION['correccionS'])) {
-                                    echo 'Exámen entregado';
+                                    echo 'Exámen - '. $alumnoS->getNombre() . ' ' .$alumnoS->getApellidos();
                                 } else {
-                                    echo 'Exámen';
+                                    echo 'Exámen solución';
                                 }
                                 ?>
                             </h2>
