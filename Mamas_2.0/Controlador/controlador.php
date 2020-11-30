@@ -72,7 +72,7 @@ if (isset($_REQUEST['login'])) {
                         $_SESSION['asignaturasImpartidas'] = $asig;
                         $_SESSION['examenes'] = $asig[0]->getExamenes();
                         $_SESSION['exCorregidos'] = 0;
-                        $_SESSION['exPendientes'] = $_SESSION['examenes'];
+                        //$_SESSION['exPendientes'] = $_SESSION['examenes'];
                         $examenesPendientes = array();
                         foreach ($asig as $asignatura) {
                             $examenAsig = $asignatura->getExamenes();

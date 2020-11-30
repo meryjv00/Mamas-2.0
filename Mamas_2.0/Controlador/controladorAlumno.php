@@ -93,7 +93,13 @@ if (isset($_REQUEST['entregarExamen'])) {
             $rep->setId(gestionDatos::getIdRespuesta() + 1);
             $solucion->addRespuesta($rep);
         } else {
+            $r = "";
             $j++;
+            $idP = $pregunta->getId();
+            $rep = new Respuesta(0, $usuario->getId(), $r, 0);
+            gestionDatos::insertRespuesta($r, $usuario->getId(), $idP);
+            $rep->setId(gestionDatos::getIdRespuesta() + 1);
+            $solucion->addRespuesta($rep);
         }
     }
     gestionDatos::insertSolucion($usuario->getId(), $examenS->getId());

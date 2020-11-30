@@ -80,7 +80,6 @@ class gestionDatos {
         $stmt->bind_param("s", $email);
         if ($stmt->execute()) {
             $resultado = $stmt->get_result();
-            var_dump($resultado);
             if ($fila = $resultado->fetch_assoc()) {
                 $existe = true;
             } else {
@@ -140,6 +139,7 @@ class gestionDatos {
                 $imagen = $fila['imagen'];
                 $p = new Alumno($idUsuario, $email, $dni, $nombre, $apellidos, $telefono, $activo, $imagen);
                 $p->setRol(0);
+                $p->setSoluciones(self::getSoluciones($idUsuario));
                 //almacenamos en sesion al usuario que ha realizado el Login.
             }
             return $p;
@@ -285,7 +285,6 @@ class gestionDatos {
                 $corr = new Correccion($profesor);
             }
         }
-        var_dump($corr);
         return $corr;
         mysqli_close(self::$conexion);
     }

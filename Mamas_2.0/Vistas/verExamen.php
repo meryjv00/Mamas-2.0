@@ -129,10 +129,7 @@ and open the template in the editor.
                                             <h4 class="card-header-title  text-center titulo text-white pt-2 pb-2  ">Info exámen</h4>
                                             <div class="ml-auto mr-5 pb-2">
                                                 <!-- Facebook -->
-                                                <button name="corregirA" title="Corregir auto" class=" btn btn-outline-secondary btn-rounded btn-sm px-2 purple lighten-3" ">
-                                                    <i class="fas fa-magic " style="font-size: 20px ;color: white" ></i>
-                                                </button>
-                                                <button name="corregirM" title="Corregir manual" class=" btn btn-outline-secondary btn-rounded btn-sm px-2 purple lighten-3" ">
+                                                <button name="corregir" title="Corregir exámen" class=" btn btn-outline-secondary btn-rounded btn-sm px-2 purple lighten-3" ">
                                                     <i class="fas fa-file-signature" style="font-size: 20px ;color: white"></i>
                                                 </button>
                                                 <button name="asignarP" title="Asignar preguntas"  class=" btn btn-outline-secondary btn-rounded btn-sm px-2 purple lighten-3" ">
@@ -197,9 +194,7 @@ and open the template in the editor.
                                                                         $icono = "fas fa-sort-alpha-up";
                                                                     }
                                                                     ?>
-                                                                    <span><?= $contOpciones . ') ' . $respuesta->getRespuesta() ?> <i class="<?= $icono ?> letra"></i></span>
-
-                                                                    <br>
+                                                                    <span><?= $contOpciones . ') ' . $respuesta->getRespuesta() ?> <i class="<?= $icono ?> letra"></i></span><br>
                                                                     <?php
                                                                 }
                                                                 $contOpciones = 0;
@@ -241,6 +236,7 @@ and open the template in the editor.
                     </section>
                     <!--Section: Content-->
                 </form>
+            </div>
         </main>
     </div>
     <footer class="footer-copyright text-center text-white py-3 z-depth-2 colorNav fixed-bottom">

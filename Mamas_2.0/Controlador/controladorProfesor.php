@@ -366,20 +366,29 @@ if (isset($_REQUEST['borrarExamen'])) {
 }
 
 //------------------CORREGIR MANUALMENTE
-if (isset($_REQUEST['correccionM'])) {
-    $_SESSION['corregir'] = 'manual';
-    header('Location: ../Vistas/correccion.php');
-}
-
-//------------------CORREGIR AUTO
-if (isset($_REQUEST['correcionA'])) {
-    $_SESSION['corregir'] = 'auto';
+if (isset($_REQUEST['corregir'])) {
+    $alumnosExamen = array();
+    $soluciones = array();
+    $examenS = $_SESSION['examenS'];
+    $alumnos = $asignaturas[0]->getAlumnos();
+    foreach ($alumnos as $i => $alumno) {
+        $soluciones = $alumno->getSoluciones();
+        $correcto = false;
+        foreach ($soluciones as $j => $solucion) {
+            if ($solucion->getExamen() == $examenS->getId()) {
+                $correcto = true;
+            }
+        }
+        if ($correcto) {
+            $alumnosExamen[] = $alumno;
+        }
+    }
+    $_SESSION['alumnosExamen'] = $alumnosExamen;
     header('Location: ../Vistas/correccion.php');
 }
 
 //------------------ASIGNAR PREGUNTAS
 if (isset($_REQUEST['asignarP'])) {
-
     header('Location: ../Vistas/asignarPreguntas.php');
 }
 //------------------CRUD PREGUNTAS
@@ -479,6 +488,41 @@ if (isset($_SESSION['preguntasCreadas'])) {
         }
         $_SESSION['preguntasCreadas'] = $preguntasCreadas;
         header('Location: ../Vistas/asignarPreguntas.php');
+    }
+}
+if (isset($_REQUEST['verAlumnos'])) {
+    header('Location: ../Vistas/verAlumnos.php');
+}
+
+if (isset($_REQUEST['corregirExamen'])) {
+
+
+
+    unset($_SESSION['correccionS']);
+    header('Location: ../Vistas/correccion.php');
+}
+
+//-----------------------VER EXAMEN DE UN ALUMNO
+if (isset($_SESSION['alumnosExamen'])) {
+    $alumnosExamen = $_SESSION['alumnosExamen'];
+    $examen = $_SESSION['examenS'];
+    $accion = "";
+    foreach ($alumnosExamen as $i => $alumno) {
+        if (isset($_REQUEST[$i])) {
+            $accion = $_REQUEST[$i];
+            $pos = $i;
+        }
+    }
+    if ($accion == 'Corregir') {
+        $alumnoS = $alumnosExamen[$pos];
+        $_SESSION['alumnoS'] = $alumnoS;
+        $soluciones = $alumnoS->getSoluciones();
+        foreach ($soluciones as $i => $solucion) {
+            if ($solucion->getExamen() == $examen->getId()) {
+                $_SESSION['correccionS'] = $solucion;
+            }
+        }
+        header('Location: ../Vistas/correccion.php');
     }
 }
 

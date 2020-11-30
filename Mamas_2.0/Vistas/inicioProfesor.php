@@ -30,6 +30,7 @@ and open the template in the editor.
         session_start();
         $usuario = $_SESSION['usuario'];
         $asignaturas = $_SESSION['asignaturasImpartidas'];
+        $asignatura = $asignaturas[0];
         ?>
         <header>
             <form name="formu" action="../Controlador/controladorProfesor.php" method="post">
@@ -109,132 +110,142 @@ and open the template in the editor.
         <main class="pb-5 pt-5">
             <div class="container-fluid my-5">
                 <div class="row">
-                    <div class="col-md-8 col-lg-7 mx-auto mt-3">
+                    <div class="col-md-9 mx-auto">
                         <!-- Section: Block Content -->
                         <section>
-                            <form action="../Controlador/controladorProfesor.php">
-                                <div class="list-group list-group-flush z-depth-1 rounded ">
-                                    <div class="list-group-item active d-flex justify-content-start align-items-center py-3 mean-fruit-gradient">
-                                        <?php
-                                        if ($usuario->getImagen() == "") {
-                                            ?>
-                                            <img class="rounded-circle" src="../img/defectousu.png" height="50"/>
+                            <form action="../Controlador/controladorProfesor.php" method="post">
+                                <div class="row mx-1">
+                                    <div class=" bg-white mx-auto list-group-flush  rounded mb-4 col-md-4 " >
+                                        <div class="row ">
+                                            <img src="data:image/png;base64,<?php echo base64_encode($asignatura->getImagen()); ?>" alt="titulo foto" class=" mx-auto img-fluid" style=" height: 210px"/>
+                                        </div>
+                                        <div class="bg-white list-group-item active d-flex justify-content-start align-items-center py-3">
                                             <?php
-                                        } else {
-                                            ?>
-                                            <img src="data:image/png;base64,<?php echo base64_encode($usuario->getImagen()); ?>" class="rounded-circle z-depth-0" width="50" alt="avatar image">
-                                            <?php
-                                        }
-                                        ?>
-                                        <div class="d-flex flex-column pl-3 ">
-                                            <p class="font-weight-bold letra titulo mb-0"> <?php echo $usuario->getNombre(); ?></p>
-                                            <?php
-                                            foreach ($asignaturas as $asignatura) {
+                                            if ($usuario->getImagen() == "") {
                                                 ?>
-                                                <p class="small mb-0 letra"><?php echo $asignatura->getNombre(); ?></p>
+                                                <img class="rounded-circle" src="../img/defectousu.png" height="50"/>
+                                                <?php
+                                            } else {
+                                                ?>
+                                                <img src="data:image/png;base64,<?php echo base64_encode($usuario->getImagen()); ?>" class="rounded-circle z-depth-0" width="50" alt="avatar image">
                                                 <?php
                                             }
                                             ?>
+                                            <div class="d-flex flex-column pl-3 ">
+                                                <p class="font-weight-bold letra titulo mb-0"> <?php echo $usuario->getNombre(); ?></p>
+                                            </div>
                                         </div>
                                     </div>
-                                    <button name="examenCreado" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center disabled">Ex. Creados
-                                        <span class="badge badge-info badge-pill"><?php echo count($_SESSION['examenes']); ?></span>
-                                    </button>   
-                                    <button name="examenCorregido" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center disabled">Ex. Corregidos
-                                        <span class="badge badge-success badge-pill"><?php echo $_SESSION['exCorregidos']; ?></span>
-                                    </button>
-                                    <button name="examenPendiente" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center disabled">Ex. Pendientes
-                                        <span class="badge badge-warning badge-pill"><?php echo count($_SESSION['exPendientes']); ?></span>
-                                    </button>
+                                </div>
+                                <div class="row">
+                                    <style>
+                                        .footer-hover {
+                                            background-color: rgba(0, 0, 0, 0.1);
+                                            -webkit-transition: all .3s ease-in-out;
+                                            transition: all .3s ease-in-out
+                                        }
+
+                                        .footer-hover:hover {
+                                            background-color: rgba(0, 0, 0, 0.2)
+                                        }
+
+                                        .text-black-40 {
+                                            color: rgba(0, 0, 0, 0.4)
+                                        }
+                                    </style>
+                                    <!-- Grid column -->
+                                    <div class="col-md-6  mb-4">
+                                        <!-- Card -->
+                                        <div class="card  orange lighten-3 white-text">
+                                            <div class="card-body d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <p class="h2-responsive font-weight-bold mt-n2 mb-0"><?php echo count($_SESSION['examenesPendientes']); ?></p>
+                                                    <p class="mb-0">Exámenes pendientes</p>
+                                                </div>
+                                                <div>
+                                                    <i class="fas fa-hourglass-end fa-4x text-black-40"></i>
+                                                </div>
+                                            </div>
+                                            <button class="card-footer footer-hover small text-center white-text border-0 p-2" type="submit" name="verExamenes">
+                                                Más información<i class="fas fa-arrow-circle-right pl-2"></i>
+                                            </button>
+                                        </div>
+                                        <!-- Card -->
+                                    </div>
+                                    <!-- Grid column -->
+                                    <!-- Grid column -->
+                                    <div class="col-md-6  mb-4">
+
+                                        <!-- Card -->
+                                        <div class="card purple lighten-3 white-text">
+                                            <div class="card-body d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <p class="h2-responsive font-weight-bold mt-n2 mb-0"><?php echo count($_SESSION['examenes']); ?></p>
+                                                    <p class="mb-0">Exámenes </p>
+                                                </div>
+                                                <div>
+                                                    <i class="fas fa-feather-alt  fa-4x text-black-40"></i>
+                                                </div>
+                                            </div>
+                                            <button class="card-footer footer-hover small text-center white-text border-0 p-2" type="submit" name="verExamenes">
+                                                Más información<i class="fas fa-arrow-circle-right pl-2"></i>
+                                            </button>
+                                        </div>
+                                        <!-- Card -->
+
+                                    </div>
+                                    <!-- Grid column -->
+
+                                    <!-- Grid column -->
+                                    <div class="col-md-6  mb-4">
+
+                                        <!-- Card -->
+                                        <div class="card purple lighten-3 white-text">
+                                            <div class="card-body d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <p class="h2-responsive font-weight-bold mt-n2 mb-0"><?php echo $_SESSION['exCorregidos']; ?></p>
+                                                    <p class="mb-0">Exámenes corregidos</p>
+                                                </div>
+                                                <div>
+                                                    <i class="fas fa-check-double fa-4x text-black-40"></i>
+                                                </div>
+                                            </div>
+                                            <button class="card-footer footer-hover small text-center white-text border-0 p-2" type="submit" name="verExamenes">
+                                                Más información<i class="fas fa-arrow-circle-right pl-2"></i>
+                                            </button>                                        
+                                        </div>
+                                        <!-- Card -->
+                                    </div>
+                                    <!-- Grid column -->
+
+                                    <!-- Grid column -->
+                                    <div class="col-md-6  mb-4">
+
+                                        <!-- Card -->
+                                        <div class="card orange lighten-3 white-text">
+                                            <div class="card-body d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <p class="h2-responsive font-weight-bold mt-n2 mb-0 pr-2"><i class="fas fa-graduation-cap fa-x "></i> </p>
+                                                    <p class="mb-0">Alumnos</p>
+                                                </div>
+                                                <div>
+                                                    <i class="fas fa-user fa-4x text-black-40"></i>
+                                                </div>
+                                            </div>
+                                            <button class="card-footer footer-hover small text-center white-text border-0 p-2" type="submit" name="verAlumnos">
+                                                Más información<i class="fas fa-arrow-circle-right pl-2"></i>
+                                            </button>                                        
+                                        </div>
+                                        <!-- Card -->
+
+                                    </div>
+                                    <!-- Grid column -->
                                 </div>
                             </form>
-
                         </section>
-
-                        <!-- Section: Block Content -->
-
-
                     </div>
                 </div>
-                <div class="row mt-4">
-                    <div class="col-lg-7 mx-auto">
-                        <div class="card card-cascade narrower">
-                            <!--Card image-->
-                            <div class="view view-cascade gradient-card-header mean-fruit-gradient narrower pt-2 mx-4  justify-content-between align-items-center">
-                                <h4 class="white-text text-center">Mis alumnos</h4>
-                            </div>
-                            <!--/Card image-->
-                            <div class="px-4">
-                                <div class="table-responsive">
-                                    <!--Table-->
-                                    <table class="table table-hover mb-0">
-                                        <!--Table head-->
-                                        <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th class="th-lg">
-                                                    <i class="fas fa-envelope c1 pr-1"></i>
-                                                    <a>Mail</a>
-                                                </th>
-                                                <th class="th-lg">
-                                                    <i class="fas fa-id-card c1 pr-1"></i>
-                                                    <a>Dni</a>
-                                                </th>
-                                                <th class="th-lg">
-                                                    <i class="fas fa-address-book c1 pr-1"></i>
-                                                    <a>Nombre completo</a>
-                                                </th>
-                                                <th class="th-lg">
-                                                    <i class="fas fa-phone-alt c1 pr-1"></i>
-                                                    <a>Telefono</a>
-                                                </th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <!--Table head-->
 
-                                        <!--Table body-->
-                                        <tbody>
-                                            <?php
-                                            for ($i = 0; $i < count($asignaturas); $i++) {
-                                                $alumnos = $asignaturas[$i]->getAlumnos();
-
-                                                for ($j = 0; $j < count($alumnos); $j++) {
-                                                    ?>
-                                                    <tr>
-                                                        <td>
-                                                            <?php
-                                                            if ($alumnos[$j]->getImagen() == "") {
-                                                                ?>
-                                                                <img class="rounded-circle" src="../img/defectousu.png" height="35px"/>
-                                                                <?php
-                                                            } else {
-                                                                ?>
-                                                                <img class="rounded-circle" src="data:image/png;base64,<?php echo base64_encode($alumnos[$j]->getImagen()); ?>" 
-                                                                     alt="titulo foto" class="img-fluid" height="35px"  width="35px"/>
-                                                                     <?php
-                                                                 }
-                                                                 ?>
-                                                        </td>
-                                                        <td><?= $alumnos[$j]->getEmail() ?></td>
-                                                        <td><?= $alumnos[$j]->getDni() ?></td>
-                                                        <td><?= $alumnos[$j]->getNombre() . ' ' ?><?= $alumnos[$j]->getApellidos() ?></td>
-                                                        <td><?= $alumnos[$j]->getTelefono() ?></td>
-                                                    </tr>
-                                                    <?php
-                                                }
-                                            }
-                                            ?>
-                                        </tbody>
-                                        <!--Table body-->
-                                    </table>
-                                    <!--Table-->
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
             </div>
         </main>
         <footer class="footer-copyright text-center text-white py-3 z-depth-2 colorNav fixed-bottom">
