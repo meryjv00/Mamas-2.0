@@ -282,7 +282,6 @@ and open the template in the editor.
                                                     <h5 class="text-center">Anotación</h5>
                                                     <textarea style="resize: none;"   rows="5" cols="10"  name="" class="form-control mb-3" placeholder="Deje su valoración aquí..."></textarea>
 
-                                                </div>
                                             </div>
                                         </section>
                                         <button type="submit" class="btn purple lighten-3 text-white
