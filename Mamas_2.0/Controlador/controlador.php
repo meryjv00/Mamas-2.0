@@ -88,6 +88,8 @@ if (isset($_REQUEST['login'])) {
                             }
                         }
                         $_SESSION['examenesPendientes'] = $examenesPendientes;
+                        $_SESSION['examenesR'] = 0;
+                        $_SESSION['examenesC'] = 0;
                         $_SESSION['origen'] = 'profesor';
                         $_SESSION['usuario'] = $profesor;
                         header('Location: ../Vistas/inicioProfesor.php');
