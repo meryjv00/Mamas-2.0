@@ -442,8 +442,97 @@ function validarPregunta() {
 
 }
 
+//******************************************************************************
+//--------------------------VALIDACIÓN FORMULARIO CREAR EXAMEN------------------
+//******************************************************************************
+function validacionExamen() {
+    var formulario = document.getElementById("formExamen");
+    var asignaturas = document.getElementById("asignaturas");
+    var contenido = document.getElementById("contenido");
+    var descripcion = document.getElementById("descripcion");
 
+    var asignaturaError = document.getElementById("asignaturaError");
+    var contenidoError = document.getElementById("contenidoError");
+    var descripcionError = document.getElementById("descripcionError");
 
+    formulario.addEventListener('submit', function (event) {
+        if (!contenido.validity.valid) {
+            error(contenido);
+            event.preventDefault();
+        }
+        if (!descripcion.validity.valid) {
+            error(descripcion);
+            event.preventDefault();
+
+        }
+        if (!asignaturaS()) {
+
+            event.preventDefault();
+        }
+    });
+    function asignaturaS() {
+        correct = false;
+        var asignaturaSeleccionada = asignaturas.options[asignaturas.selectedIndex].value;
+        if (asignaturaSeleccionada != "Seleccione una asignatura") {
+            correct = true;
+            asignaturasError.className = 'valid-feedback';
+            asignaturas.classList.remove('is-invalid');
+            asignaturas.classList.add('is-valid');
+            asignaturasError.textContent = '';
+        } else {
+            error(asignaturas);
+        }
+        return correct;
+    }
+    contenido.addEventListener('blur', function (event) {
+        if (contenido.validity.valid) {
+            contenidoError.className = 'valid-feedback';
+            contenido.classList.remove('is-invalid');
+            contenido.classList.add('is-valid');
+            contenidoError.textContent = '';
+        } else {
+            error(contenido);
+        }
+    });
+    descripcion.addEventListener('blur', function (event) {
+        if (descripcion.validity.valid) {
+            descripcionError.className = 'valid-feedback';
+            descripcion.classList.remove('is-invalid');
+            descripcion.classList.add('is-valid');
+            descripcionError.textContent = '';
+        } else {
+            error(descripcion);
+        }
+    });
+    function error(campo) {
+        if (campo == contenido) {
+            //Campo vacío
+            if (contenido.validity.valueMissing) {
+                contenidoError.textContent = 'Debe introducir el contenido del examen';
+
+            }
+            contenido.classList.remove('is-valid');
+            contenido.classList.add('is-invalid');
+            contenidoError.className = 'invalid-feedback';
+        }
+        if (campo == descripcion) {
+            //Campo vacío
+            if (descripcion.validity.valueMissing) {
+                descripcionError.textContent = 'Debe introducir la descipcion del examen';
+
+            }
+            descripcion.classList.remove('is-valid');
+            descripcion.classList.add('is-invalid');
+            descripcionError.className = 'invalid-feedback';
+        }
+        if (campo == asignaturas) {
+            asignaturasError.textContent = 'Debe seleccionar una asignatura';
+            asignaturas.classList.remove('is-valid');
+            asignaturas.classList.add('is-invalid');
+            asignaturasError.className = 'invalid-feedback';
+        }
+    }
+}
 //---------------------CLASES
 var idClave = 0;
 var idOpcion = 0;
@@ -561,101 +650,6 @@ function addOpcionT() {
     document.getElementById("opcion").value = "";
 }
 
-//******************************************************************************
-//--------------------------VALIDACIÓN FORMULARIO CREAR EXAMEN------------------
-//******************************************************************************
-function validacionExamen() {
-    var formulario = document.getElementById("formExamen");
-    var asignaturas = document.getElementById("asignaturas");
-    var contenido = document.getElementById("contenido");
-    var descripcion = document.getElementById("descripcion");
-
-    var asignaturaError = document.getElementById("asignaturaError");
-    var contenidoError = document.getElementById("contenidoError");
-    var descripcionError = document.getElementById("descripcionError");
-
-    formulario.addEventListener('submit', function (event) {
-        if (!contenido.validity.valid) {
-            error(contenido);
-            event.preventDefault();
-        }
-        if (!descripcion.validity.valid) {
-            error(descripcion);
-            event.preventDefault();
-
-        }
-        if (!asignaturaS()) {
-
-            event.preventDefault();
-        }
-    });
-    function asignaturaS() {
-        correct = false;
-        var asignaturaSeleccionada = asignaturas.options[asignaturas.selectedIndex].value;
-        if (asignaturaSeleccionada != "Seleccione una asignatura") {
-            correct = true;
-            asignaturasError.className = 'valid-feedback';
-            asignaturas.classList.remove('is-invalid');
-            asignaturas.classList.add('is-valid');
-            asignaturasError.textContent = '';
-        } else {
-            error(asignaturas);
-        }
-        return correct;
-    }
-    contenido.addEventListener('blur', function (event) {
-        if (contenido.validity.valid) {
-            contenidoError.className = 'valid-feedback';
-            contenido.classList.remove('is-invalid');
-            contenido.classList.add('is-valid');
-            contenidoError.textContent = '';
-        } else {
-            error(contenido);
-        }
-    });
-    descripcion.addEventListener('blur', function (event) {
-        if (descripcion.validity.valid) {
-            descripcionError.className = 'valid-feedback';
-            descripcion.classList.remove('is-invalid');
-            descripcion.classList.add('is-valid');
-            descripcionError.textContent = '';
-        } else {
-            error(descripcion);
-        }
-    });
-    function error(campo) {
-        if (campo == contenido) {
-            //Campo vacío
-            if (contenido.validity.valueMissing) {
-                contenidoError.textContent = 'Debe introducir el contenido del examen';
-
-            }
-            contenido.classList.remove('is-valid');
-            contenido.classList.add('is-invalid');
-            contenidoError.className = 'invalid-feedback';
-        }
-        if (campo == descripcion) {
-            //Campo vacío
-            if (descripcion.validity.valueMissing) {
-                descripcionError.textContent = 'Debe introducir la descipcion del examen';
-
-            }
-            descripcion.classList.remove('is-valid');
-            descripcion.classList.add('is-invalid');
-            descripcionError.className = 'invalid-feedback';
-        }
-        if (campo == asignaturas) {
-            asignaturasError.textContent = 'Debe seleccionar una asignatura';
-            asignaturas.classList.remove('is-valid');
-            asignaturas.classList.add('is-invalid');
-            asignaturasError.className = 'invalid-feedback';
-
-        }
-    }
-
-}
-
-
 //AÑADIR PREGUNTAS
 function addPregunta() {
     var enunciado = document.getElementById("enunciado").value;
@@ -739,7 +733,8 @@ function limpiarCampos() {
             tablaClaves.removeChild(tablaClaves.firstChild);
         }
     }
-
+    idClave = 0;
+    idOpcion = 0;
 }
 
 function addVistaPrevia(pregunta) {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-11-2020 a las 17:47:51
+-- Tiempo de generación: 01-12-2020 a las 00:18:40
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.4.10
 
@@ -114,30 +114,9 @@ CREATE TABLE `asignacionpregunta` (
 --
 
 INSERT INTO `asignacionpregunta` (`idExamen`, `idPregunta`) VALUES
-(2, 1),
-(2, 3),
-(2, 2),
-(2, 5),
-(2, 6),
-(2, 9),
-(4, 1),
-(4, 2),
-(4, 3),
-(4, 5),
-(4, 6),
-(4, 7),
-(4, 8),
-(4, 9),
-(4, 10),
-(4, 11),
-(3, 7),
-(3, 8),
-(3, 10),
-(3, 11),
-(5, 15),
-(5, 16),
-(6, 17),
-(6, 18);
+(1, 1),
+(1, 2),
+(1, 3);
 
 -- --------------------------------------------------------
 
@@ -155,18 +134,9 @@ CREATE TABLE `asignacionrespuesta` (
 --
 
 INSERT INTO `asignacionrespuesta` (`idSolucion`, `idRespuesta`) VALUES
-(10, 71),
-(10, 72),
-(11, 73),
-(11, 74),
-(11, 75),
-(11, 76),
-(12, 77),
-(12, 78),
-(12, 79),
-(12, 80),
-(13, 94),
-(13, 95);
+(25, 182),
+(25, 183),
+(25, 184);
 
 -- --------------------------------------------------------
 
@@ -241,6 +211,13 @@ CREATE TABLE `correccion` (
   `anotacion` text NOT NULL COMMENT 'comentario del profesor'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `correccion`
+--
+
+INSERT INTO `correccion` (`idSolucion`, `idUsuario`, `nota`, `anotacion`) VALUES
+(24, 1, 20, 'Se nota tu esfuerzo , puedes mejorar ,sigue asi. ');
+
 -- --------------------------------------------------------
 
 --
@@ -261,12 +238,8 @@ CREATE TABLE `examen` (
 --
 
 INSERT INTO `examen` (`idExamen`, `idAsignatura`, `idUsuario`, `contenido`, `descripcion`, `activo`) VALUES
-(1, 1, 1, 'Tema 1 - JSP', 'Exámen tipo test JSP', 0),
-(2, 1, 1, 'Tema 2 - TEST PHP', 'Exámen tipo test PHP', 1),
-(3, 1, 1, 'Tema 2 - DESARROLLO PHP', 'Exámen con preguntas cortas PHP', 1),
-(4, 1, 1, 'Tema 2 - MIX PHP', 'Exámen con preguntas cortas y tipo test ', 1),
-(5, 2, 2, 'JQUERY', 'Este examen va de semaforos ', 1),
-(6, 2, 2, 'Tangram', 'Este examenes es 100% teorico , no hay j', 1);
+(1, 1, 1, 'Tema 1 - JSP', 'JSP', 1),
+(2, 1, 1, 'larabel', 'asdfsd', 0);
 
 -- --------------------------------------------------------
 
@@ -288,23 +261,11 @@ CREATE TABLE `pregunta` (
 --
 
 INSERT INTO `pregunta` (`idPregunta`, `idAsignatura`, `idUsuario`, `enunciado`, `tipo`, `ponderacion`) VALUES
-(1, 1, 1, 'Cuál de las siguientes opciones se utiliza para recuperar el valor de un campo:', 1, 10),
-(2, 1, 1, 'Cuál de las siguientes opciones se utiliza para redirigir a otra página:', 1, 10),
-(3, 1, 1, 'Donde debemos colocar un session_start():', 1, 10),
-(5, 1, 1, 'Cómo podemos concatenar información:', 1, 10),
-(6, 1, 1, 'Qué tipo de archivo utilizamos para crear una clase en PHP', 1, 10),
-(7, 1, 1, '¿Qué es PHP?', 0, 10),
-(8, 1, 1, '¿Cuál es la diferencia entre == y ===?', 0, 10),
-(9, 1, 1, 'Método para averiguar longitud de un array', 1, 10),
-(10, 1, 1, '¿Qué es PHP Pear?', 0, 10),
-(11, 1, 1, '¿Cuál es la diferencia entre GET y POST?', 0, 10),
-(12, 2, 2, '¿Cual va despues del Rojo?', 1, 10),
-(13, 2, 2, '¿Cual va despues del Rojo?', 1, 10),
-(14, 2, 2, '¿Cual va despues del Rojo?', 1, 10),
-(15, 2, 2, '¿Cual va despues del Rojo?', 1, 10),
-(16, 2, 2, '¿El semaforo que sonido hace?', 0, 10),
-(17, 2, 2, '¿que formas tienen las piezas?', 0, 10),
-(18, 2, 2, '¿cuantas piezas tiene el juego?', 1, 10);
+(1, 1, 1, '¿Te gusta JSP?', 1, 10),
+(2, 1, 1, '¿Introduzca el comando para recuperar una sesion con el nombre datos?', 0, 10),
+(3, 1, 1, '¿diferencia entre == Y ===?', 1, 10),
+(4, 1, 1, '¿Que tipos de datos tienen las variables en PHP?', 0, 10),
+(5, 1, 1, '¿Conoces Laravel?', 1, 10);
 
 -- --------------------------------------------------------
 
@@ -325,72 +286,24 @@ CREATE TABLE `respuesta` (
 --
 
 INSERT INTO `respuesta` (`idRespuesta`, `idUsuario`, `idPregunta`, `respuesta`, `correcto`) VALUES
-(1, 1, 1, 'REQUEST', 1),
-(2, 1, 1, 'SESSION', 0),
-(3, 1, 1, 'RESPONSE', 0),
-(4, 1, 1, 'HEADER', 0),
-(5, 1, 2, 'REQUEST', 0),
-(6, 1, 2, 'SESSION', 0),
-(7, 1, 2, 'RESPONSE', 0),
-(8, 1, 2, 'HEADER', 1),
-(9, 1, 3, 'Al final del todo', 0),
-(10, 1, 3, 'En la primera línea siempre', 0),
-(11, 1, 3, 'Debajo de los include siempre', 1),
-(16, 1, 5, '+', 0),
-(17, 1, 5, '.', 1),
-(18, 1, 6, 'php class', 1),
-(19, 1, 6, 'php file', 0),
-(20, 1, 6, 'php web page', 0),
-(21, 1, 7, 'lenguaje', 0),
-(22, 1, 7, 'desarrollo web', 0),
-(23, 1, 7, 'dinamicas', 0),
-(24, 1, 8, 'valor', 0),
-(25, 1, 8, 'iguales', 0),
-(26, 1, 8, 'operadores', 0),
-(27, 1, 8, 'tipos', 0),
-(28, 1, 9, 'count()', 1),
-(29, 1, 9, 'length', 0),
-(30, 1, 9, 'No existe método', 0),
-(31, 1, 10, 'extension', 0),
-(32, 1, 10, 'opciones', 0),
-(33, 1, 11, 'recuperar', 0),
-(34, 1, 11, 'insertar', 0),
-(35, 1, 11, 'actualizar', 0),
-(60, 5, 1, 'HEADER', 0),
-(61, 5, 3, 'Al final del todo', 0),
-(62, 5, 2, 'SESSION', 0),
-(63, 5, 6, 'php web page', 0),
-(64, 5, 9, 'length', 0),
-(65, 5, 1, 'SESSION', 0),
-(66, 5, 3, 'Al final del todo', 0),
-(67, 5, 9, 'count()', 0),
-(68, 5, 1, 'RESPONSE', 0),
-(69, 5, 2, 'HEADER', 0),
-(70, 5, 1, 'REQUEST', 0),
-(71, 5, 3, 'Al final del todo', 0),
-(72, 5, 7, 'un lenguaje', 0),
-(73, 5, 8, '1 =', 0),
-(74, 5, 10, 'la pera de PHP', 0),
-(75, 5, 11, 'POST usa request', 0),
-(76, 5, 7, '', 0),
-(77, 5, 8, '', 0),
-(78, 5, 10, '', 0),
-(79, 5, 11, 'ddddd', 0),
-(80, 2, 15, 'verde', 0),
-(81, 2, 15, 'rojo', 0),
-(82, 2, 15, 'amarillo', 0),
-(83, 2, 15, 'todas son correctas', 0),
-(84, 2, 16, 'pio', 0),
-(85, 2, 16, 'pi', 0),
-(86, 2, 17, 'triangulos', 0),
-(87, 2, 17, 'cuadrados', 0),
-(88, 2, 17, 'formas', 0),
-(89, 2, 18, '30', 0),
-(90, 2, 18, '29', 0),
-(91, 2, 18, '28', 0),
-(92, 2, 18, '31 , tengo una repetida', 0),
-(93, 5, 15, 'todas son correctas', 0),
-(94, 5, 16, 'pio pio miau', 0);
+(166, 1, 1, 'Es mejor PHP', 0),
+(167, 1, 1, 'JSP esta bien', 1),
+(168, 1, 1, 'Puro C++', 0),
+(169, 1, 2, 'datos', 0),
+(170, 1, 2, 'session', 0),
+(171, 1, 2, 'get', 0),
+(172, 1, 3, '=', 0),
+(173, 1, 3, 'Compara el valor ', 0),
+(174, 1, 3, 'Compara el valor y tipo ', 1),
+(175, 1, 4, 'no tienen', 0),
+(176, 1, 4, 'tipo', 0),
+(177, 1, 4, 'definido', 0),
+(178, 1, 4, 'abstracto', 0),
+(179, 1, 5, 'si', 0),
+(180, 1, 5, 'no', 1),
+(181, 5, 1, 'JSP esta bien', 0),
+(182, 5, 2, 'esta es mi respuesta', 0),
+(183, 5, 3, 'Compara el valor ', 0);
 
 -- --------------------------------------------------------
 
@@ -429,10 +342,7 @@ CREATE TABLE `solucion` (
 --
 
 INSERT INTO `solucion` (`idSolucion`, `idUsuario`, `idExamen`) VALUES
-(9, 5, 2),
-(10, 5, 3),
-(11, 5, 4),
-(12, 5, 5);
+(24, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -586,7 +496,7 @@ ALTER TABLE `asignatura`
 -- AUTO_INCREMENT de la tabla `examen`
 --
 ALTER TABLE `examen`
-  MODIFY `idExamen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idExamen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `pregunta`
@@ -598,7 +508,7 @@ ALTER TABLE `pregunta`
 -- AUTO_INCREMENT de la tabla `respuesta`
 --
 ALTER TABLE `respuesta`
-  MODIFY `idRespuesta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+  MODIFY `idRespuesta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=184;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
@@ -610,7 +520,7 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `solucion`
 --
 ALTER TABLE `solucion`
-  MODIFY `idSolucion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `idSolucion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`

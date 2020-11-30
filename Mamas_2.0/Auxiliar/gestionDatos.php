@@ -931,7 +931,7 @@ class gestionDatos {
 
     static function insertPregunta($pregunta, $idasignatura) {
         self::conexion();
-        $consulta = "INSERT INTO pregunta VALUES (" . $pregunta->getId() . "," . $idasignatura . ",'" . $pregunta->getProfesor() . "','" . $pregunta->getEnunciado() . "','" . $pregunta->getTipo() . "','" . $pregunta->getPuntuacion() . "')";
+        $consulta = "INSERT INTO pregunta VALUES (" . $pregunta->getId() . "," . $idasignatura . "," . $pregunta->getProfesor() . ",'" . $pregunta->getEnunciado() . "'," . $pregunta->getTipo() . "," . $pregunta->getPuntuacion() . ")";
         if (self::$conexion->query($consulta)) {
             $idPregunta = self::getIdPregunta();
         }
@@ -939,9 +939,18 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
+    static function insertRespuestaAlumno($respuesta, $idUsuario, $idPregunta) {
+        self::conexion();
+        $consulta = "INSERT INTO respuesta VALUES (default," . $idUsuario . "," . $idPregunta . ",'" . $respuesta . "',0)";
+        if (self::$conexion->query($consulta)) {
+            $correcto = false;
+        }
+        mysqli_close(self::$conexion);
+    }
+
     static function insertRespuesta($respuesta, $idUsuario, $idPregunta) {
         self::conexion();
-        $consulta = "INSERT INTO respuesta VALUES (default,'" . $idUsuario . "'," . $idPregunta . ",'" . $respuesta . "',0)";
+        $consulta = "INSERT INTO respuesta VALUES (default," . $idUsuario . "," . $idPregunta . ",'" . $respuesta->getRespuesta() . "'," . $respuesta->getCorrecta() . ")";
         if (self::$conexion->query($consulta)) {
             $correcto = false;
         }

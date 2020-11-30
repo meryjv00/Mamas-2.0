@@ -46,7 +46,8 @@ if (isset($_REQUEST['login'])) {
                         $_SESSION['alumno'] = $alumno;
                         $_SESSION['asignaturasImpartidas'] = $asig;
                         $examenesPendientes = array();
-
+                        $examenesCorregidos = array();
+                        $examenesRealizados = array();
                         foreach ($asig as $asignatura) {
                             $examenAsig = $asignatura->getExamenes();
                             foreach ($examenAsig as $examen) {
@@ -57,14 +58,18 @@ if (isset($_REQUEST['login'])) {
                         foreach ($examenesPendientes as $key => $examenP) {
                             foreach ($soluciones as $j => $solucion) {
                                 if ($solucion->getExamen() == $examenP->getId()) {
-
+                                    $examenesRealizados[] = $examenP;
+                                    if ($solucion->getCorreccion() != null) {
+                                        $examenesCorregidos[] = $examenP;
+                                    }
                                     unset($examenesPendientes[$key]);
                                 }
                             }
                         }
 
                         $_SESSION['examenesPendientes'] = $examenesPendientes;
-
+                        $_SESSION['examenesR'] = $examenesRealizados;
+                        $_SESSION['examenesC'] = $examenesCorregidos;
                         header('Location: ../Vistas/inicio.php');
                     } else if ($usuario->getRol() == 1 || $usuario->getRol() == 2) { //ROL ADMIN O PROFESOR
                         $profesor = $usuario; // nombre pofesor , ya que contiene un objeto profesor . Por evitar confusiones.

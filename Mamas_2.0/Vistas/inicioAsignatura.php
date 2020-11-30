@@ -28,9 +28,9 @@ and open the template in the editor.
         $usuario = $_SESSION['usuario'];
         $asignaturaS = $_SESSION['asignaturaS'];
         $profesorS = $_SESSION['profesorAsignaturaS'];
-        $examenesPendientes = $_SESSION['examenesPendientesA'];
-        $examenesRealizados = $_SESSION['examenesRealizadosA'];
-        $examenesCorregidos = $_SESSION['examenesCorregidosA'];
+        $examenesPendientes = $_SESSION['examenesPendientes'];
+        $examenesRealizados = $_SESSION['examenesR'];
+        $examenesCorregidos = $_SESSION['examenesC'];
         $controlador = '../Controlador/controladorAlumno.php';
         ?>
         <header class="bg-white">
@@ -172,7 +172,7 @@ and open the template in the editor.
                                 <div class="card purple lighten-3 white-text">
                                     <div class="card-body d-flex justify-content-between align-items-center">
                                         <div>
-                                            <p class="h2-responsive font-weight-bold mt-n2 mb-0"><?= count($examenesRealizados)+count($examenesPendientes)  ?></p>
+                                            <p class="h2-responsive font-weight-bold mt-n2 mb-0"><?= count($examenesRealizados) + count($examenesPendientes) ?></p>
                                             <p class="mb-0">Exámenes</p>
                                         </div>
                                         <div>
@@ -182,7 +182,7 @@ and open the template in the editor.
                                     <a class="card-footer footer-hover small text-center white-text border-0 p-2">Más información<i class="fas fa-arrow-circle-right pl-2"></i></a>
                                 </div>
                             </div>
-                            
+
                             <div class="col-md-6  mb-4">
                                 <div class="card orange lighten-3 white-text">
                                     <div class="card-body d-flex justify-content-between align-items-center">

@@ -89,7 +89,7 @@ if (isset($_REQUEST['entregarExamen'])) {
             $j++;
             $idP = $pregunta->getId();
             $rep = new Respuesta(0, $usuario->getId(), $r, 0);
-            gestionDatos::insertRespuesta($r, $usuario->getId(), $idP);
+            gestionDatos::insertRespuestaAlumno($r, $usuario->getId(), $idP);
             $rep->setId(gestionDatos::getIdRespuesta() + 1);
             $solucion->addRespuesta($rep);
         } else {
@@ -97,7 +97,7 @@ if (isset($_REQUEST['entregarExamen'])) {
             $j++;
             $idP = $pregunta->getId();
             $rep = new Respuesta(0, $usuario->getId(), $r, 0);
-            gestionDatos::insertRespuesta($r, $usuario->getId(), $idP);
+            gestionDatos::insertRespuestaAlumno($r, $usuario->getId(), $idP);
             $rep->setId(gestionDatos::getIdRespuesta() + 1);
             $solucion->addRespuesta($rep);
         }

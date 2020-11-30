@@ -150,7 +150,9 @@ and open the template in the editor.
                                     <div class="card purple lighten-3 white-text">
                                         <div class="card-body d-flex justify-content-between align-items-center">
                                             <div>
-                                                <p class="h2-responsive font-weight-bold mt-n2 mb-0"><?php echo count($_SESSION['examenes']); ?></p>
+                                                <p class="h2-responsive font-weight-bold mt-n2 mb-0"><?php
+                                                    echo count($asignatura->getExamenes())
+                                                    ?></p>
                                                 <p class="mb-0">Exámenes </p>
                                             </div>
                                             <div>

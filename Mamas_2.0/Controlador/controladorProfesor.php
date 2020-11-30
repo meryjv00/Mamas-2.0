@@ -162,7 +162,7 @@ if (isset($_REQUEST['aniadirPreguntas'])) {
                         $respuesta = new Respuesta($idRespuesta + 1, $profesor, $opcion, $correcto);
                     }
                     $p->addRespuesta($respuesta);
-                    gestionDatos::insertRespuesta($respuesta->getRespuesta(), $usuario->getId(), $idPregunta);
+                    gestionDatos::insertRespuesta($respuesta, $usuario->getId(), $idPregunta);
                 }
                 $preguntasEx[] = $p;
                 $asignatura->addPregunta($p);
@@ -318,12 +318,10 @@ if (isset($_REQUEST['asignarPreguntas'])) {
         }
     }
 }
-
 //---------------------ASIGNAR PREGUNTAS A UN EXÁMEN
 if (isset($_REQUEST['aniadirPreguntasExamen'])) {
     $preguntasCreadas = $_SESSION['preguntasCreadas'];
     $examenS = $_SESSION['examenS'];
-
     $asignatura = $_SESSION['asignaturasImpartidas'];
     $examenes = $asignatura[0]->getExamenes();
     foreach ($examenes as $j => $examen) {
@@ -352,6 +350,7 @@ if (isset($_REQUEST['activarExamen'])) {
             if (isset($_REQUEST[$i])) {
                 $pulsado = true;
                 $examen->setActivo(1);
+
                 if (!gestionDatos::updateExamenEstado($examen, 1)) {
                     $mensaje = 'No se ha podido activar el examen';
                     $_SESSION['mensaje'] = $mensaje;
