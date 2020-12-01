@@ -31,6 +31,7 @@ if (isset($_REQUEST['CRUDadmin'])) {
 if (isset($_REQUEST['home'])) {
     header('Location: ../Vistas/inicioProfesor.php');
 }
+
 if (isset($_REQUEST['homeInicio'])) {
     if ($_SESSION['origen'] = 'alumno') {
         $examenesPendientes = array();
@@ -95,7 +96,7 @@ if (isset($_REQUEST['verExamenes'])) {
 
     header('Location: ../Vistas/crudExamenes.php');
 }
-
+//------AUTOR: ISRAEL MOLINA PULPON
 //------------------CREAR EXAMENES
 if (isset($_REQUEST['crearExamenes'])) {
 
@@ -245,6 +246,7 @@ if (isset($_REQUEST['verExamen'])) {
         header('Location: ../Vistas/verExamen.php');
     }
 }
+//------AUTOR: ISRAEL MOLINA PULPON & MARIA JUAN VIÑAS
 //--------------------------------IR A EXAMEN CORRECCION DESDE TABLA
 if (isset($_REQUEST['corregirTabla'])) {
     $examenes = $asignaturas[0]->getExamenes();
@@ -581,6 +583,7 @@ if (isset($_SESSION['alumnosExamen'])) {
     }
 }
 
+//------AUTOR: ISRAEL MOLINA PULPON & MARIA JUAN VIÑAS
 //-----------------------------CORREGIR EXAMEN DE UN ALUMNO
 if (isset($_REQUEST['corregirExamen'])) {
 

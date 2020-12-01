@@ -66,7 +66,7 @@ if (isset($_REQUEST['nuevaPass'])) {
     }
     header('Location: ../Vistas/perfil.php');
 }
-
+//------AUTOR: ISRAEL MOLINA PULPON
 if (isset($_REQUEST['realizarExamen'])) {
     $idE = $_REQUEST['realizarExamen'];
     foreach ($examenesPendientes as $key => $examen) {
@@ -77,6 +77,7 @@ if (isset($_REQUEST['realizarExamen'])) {
     $_SESSION['examenS'] = $examenS;
     header('Location: ../Vistas/realizarExamen.php');
 }
+//------AUTOR: ISRAEL MOLINA PULPON
 if (isset($_REQUEST['entregarExamen'])) {
     $examenS = $_SESSION['examenS'];
     $idProf = $examenS->getProfesor();
@@ -129,7 +130,7 @@ if (isset($_REQUEST['entregarExamen'])) {
 if (isset($_REQUEST['salirAlumno'])) {
     header('Location: ../Vistas/inicioProfesor.php');
 }
-
+//------AUTOR: ISRAEL MOLINA PULPON
 //---------------------------VER EXÁMENES ALUMNO
 if (isset($_REQUEST['verExamenesAlumno'])) {
     $examenesPendientes = $_SESSION['examenesPendientes'];
@@ -150,13 +151,14 @@ if (isset($_REQUEST['verExamenesAlumno'])) {
     $_SESSION['examenesMostrar'] = $examenes;
     header('Location: ../Vistas/crudExamenesAlumno.php');
 }
+//------AUTOR: ISRAEL MOLINA PULPON
 //---------------------------VER NOTAS ALUMNO
 if (isset($_REQUEST['verNotasAlumno'])) {
     $examenesCorregidos = $_SESSION['examenesC'];
 
     header('Location: ../Vistas/notas.php');
 }
-
+//------AUTOR: ISRAEL MOLINA PULPON && MARIA JUAN VIÑAS
 //----------------------------------------------
 if (isset($_REQUEST['verExamenAlumno'])) {
     $pulsado = false;
@@ -205,6 +207,7 @@ if (isset($_REQUEST['verExamenAlumno'])) {
         }
     }
 }
+
 if (isset($_REQUEST['verExamenesPendientes'])) {
     $_SESSION['examenesMostrar'] = $_SESSION['examenesPendientes'];
     header('Location: ../Vistas/crudExamenesAlumno.php');

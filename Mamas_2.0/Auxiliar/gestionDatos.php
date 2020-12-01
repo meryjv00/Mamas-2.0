@@ -1081,7 +1081,7 @@ class gestionDatos {
         return $id;
         mysqli_close(self::$conexion);
     }
-
+//------AUTOR: ISRAEL MOLINA PULPON
     static function asignarRespuesta($solId, $respId) {
         self::conexion();
         $consulta = "INSERT INTO asignacionrespuesta VALUES (" . $solId . "," . $respId . ")";
