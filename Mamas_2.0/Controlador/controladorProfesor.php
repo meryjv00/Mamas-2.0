@@ -7,10 +7,15 @@
  */
 include_once '../Auxiliar/gestionDatos.php';
 include_once '../Modelo/Usuario.php';
+include_once '../Modelo/Profesor.php';
+include_once '../Modelo/Alumno.php';
 include_once '../Modelo/Asignatura.php';
 include_once '../Modelo/Pregunta.php';
 include_once '../Modelo/Asignatura.php';
 include_once '../Modelo/Respuesta.php';
+include_once '../Modelo/Examen.php';
+include_once '../Modelo/Solucion.php';
+include_once '../Modelo/Correccion.php';
 session_start();
 if (isset($_SESSION['usuario'])) {
     $usuario = $_SESSION['usuario'];
@@ -28,6 +33,17 @@ if (isset($_REQUEST['home'])) {
 }
 if (isset($_REQUEST['homeInicio'])) {
     if ($_SESSION['origen'] = 'alumno') {
+        $examenesPendientes = array();
+
+        foreach ($asignaturas as $asignatura) {
+            $examenAsig = $asignatura->getExamenes();
+            foreach ($examenAsig as $examen) {
+                if ($examen->getActivo() == 1) {
+                    $examenesPendientes[] = $examen;
+                }
+            }
+        }
+        $_SESSION['examenesPendientes'] = $examenesPendientes;
         header('Location: ../Vistas/inicio.php');
     } else {
         header('Location: ../Vistas/inicioProfesor.php');
@@ -92,8 +108,8 @@ if (isset($_REQUEST['crearExamen'])) {
     $fechai = $_REQUEST['fechainicio'];
     $fechaf = $_REQUEST['fechafin'];
     $idP = $usuario->getId();
-
-    $ex = new Examen(0, $idP, $contenido, $descripcion, 0);
+    $idEx = gestionDatos::getUltEx();
+    $ex = new Examen($idEx + 1, $idP, $contenido, $descripcion, 0);
     for ($i = 0; $i < count($asignaturas); $i++) {
         if ($asignaturas[$i]->getIdAsignatura() == $idAsignatura) {
             $asignaturas[$i]->addExamen($ex);
@@ -111,7 +127,7 @@ if (isset($_REQUEST['aniadirPreguntas'])) {
     }
     $datos = $_REQUEST['json'];
     $preguntas = json_decode($datos, false); // Array asociativo los datos van por referencia
-    var_dump($preguntas);
+    //var_dump($preguntas);
     //echo $datosInicialesF[0]->datos[0]->id;
     for ($i = 0; $i < count($preguntas); $i++) {
         //INSERTAR PREGUNTA
@@ -146,7 +162,7 @@ if (isset($_REQUEST['aniadirPreguntas'])) {
                         $respuesta = new Respuesta($idRespuesta + 1, $profesor, $opcion, $correcto);
                     }
                     $p->addRespuesta($respuesta);
-                    gestionDatos::insertRespuesta($respuesta, $idPregunta);
+                    gestionDatos::insertRespuesta($respuesta, $usuario->getId(), $idPregunta);
                 }
                 $preguntasEx[] = $p;
                 $asignatura->addPregunta($p);
@@ -165,6 +181,9 @@ if (isset($_REQUEST['aniadirPreguntas'])) {
 }
 //--------CREAR PREGUNTAS
 if (isset($_REQUEST['crearPreguntas'])) {
+    if (isset($_SESSION['vienesEx'])) {
+        unset($_SESSION['vienesEx']);
+    }
     header('Location: ../Vistas/crearPregunta.php');
 }
 if (isset($_REQUEST['crearPreguntasEx'])) {
@@ -224,6 +243,54 @@ if (isset($_REQUEST['verExamen'])) {
         header('Location: ../Vistas/verExamen.php');
     }
 }
+//--------------------------------IR A EXAMEN CORRECCION DESDE TABLA
+if (isset($_REQUEST['corregirTabla'])) {
+    $examenes = $asignaturas[0]->getExamenes();
+    if (count($examenes) > 0) {
+        $cont = 0;
+        foreach ($examenes as $i => $examen) {
+            if (isset($_REQUEST[$i])) {
+                $pulsado = true;
+                $cont++;
+                $pos = $i;
+            }
+        }
+    }
+    if (!$pulsado || $cont >= 2) {
+        $_SESSION['mensaje'] = "Marca el exámen que quieras corregir";
+        header('Location: ../Vistas/crudExamenes.php');
+    } else {
+        if ($examenes[$pos]->getPreguntas() != null) {
+            $_SESSION['examenS'] = $examenes[$pos];
+            $_SESSION['creadorEx'] = gestionDatos::getUsuarioId($examenes[$pos]->getProfesor());
+            //PONER METODO 'CORREGIR' CUANDO ESTE IMPLEMENTADO
+            $alumnosExamen = array();
+            $soluciones = array();
+            $examenS = $_SESSION['examenS'];
+            $alumnos = $asignaturas[0]->getAlumnos();
+            foreach ($alumnos as $i => $alumno) {
+                $soluciones = $alumno->getSoluciones();
+                $correcto = false;
+                foreach ($soluciones as $j => $solucion) {
+                    if ($solucion->getExamen() == $examenS->getId() && $solucion->getCorreccion() == null) {//!!!!!! comprobar que no esté corregido
+                        $correcto = true;
+                    }
+                }
+                if ($correcto) {
+                    $alumnosExamen[] = $alumno;
+                }
+            }
+            if (isset($_SESSION['correccionS'])) {
+                unset($_SESSION['correccionS']);
+            }
+            $_SESSION['alumnosExamen'] = $alumnosExamen;
+            header('Location: ../Vistas/correccion.php');
+        } else {
+            $_SESSION['mensaje'] = "Marca un exámen que contenga preguntas";
+            header('Location: ../Vistas/crudExamenes.php');
+        }
+    }
+}
 //----------------ASIGNAR PREGUNTAS
 if (isset($_REQUEST['asignarPreguntas'])) {
     $examenes = $asignaturas[0]->getExamenes();
@@ -241,17 +308,20 @@ if (isset($_REQUEST['asignarPreguntas'])) {
         $_SESSION['mensaje'] = "Marca el exámen al que quieras añadir preguntas";
         header('Location: ../Vistas/crudExamenes.php');
     } else {
-        $_SESSION['examenS'] = $examenes[$pos];
-        $_SESSION['creadorEx'] = gestionDatos::getUsuarioId($examenes[$pos]->getProfesor());
-        header('Location: ../Vistas/asignarPreguntas.php');
+        if ($examenes[$pos]->getActivo() == 0) {
+            $_SESSION['examenS'] = $examenes[$pos];
+            $_SESSION['creadorEx'] = gestionDatos::getUsuarioId($examenes[$pos]->getProfesor());
+            header('Location: ../Vistas/asignarPreguntas.php');
+        } else {
+            $_SESSION['mensaje'] = "No puedes modificar preguntas de un exámen ACTIVADO";
+            header('Location: ../Vistas/crudExamenes.php');
+        }
     }
 }
-
 //---------------------ASIGNAR PREGUNTAS A UN EXÁMEN
 if (isset($_REQUEST['aniadirPreguntasExamen'])) {
     $preguntasCreadas = $_SESSION['preguntasCreadas'];
     $examenS = $_SESSION['examenS'];
-
     $asignatura = $_SESSION['asignaturasImpartidas'];
     $examenes = $asignatura[0]->getExamenes();
     foreach ($examenes as $j => $examen) {
@@ -280,6 +350,7 @@ if (isset($_REQUEST['activarExamen'])) {
             if (isset($_REQUEST[$i])) {
                 $pulsado = true;
                 $examen->setActivo(1);
+
                 if (!gestionDatos::updateExamenEstado($examen, 1)) {
                     $mensaje = 'No se ha podido activar el examen';
                     $_SESSION['mensaje'] = $mensaje;
@@ -289,10 +360,10 @@ if (isset($_REQUEST['activarExamen'])) {
     }
     if (!$pulsado) {
         $_SESSION['mensaje'] = "Marca el/los examen(es) que quieras activar";
-        $asignaturas[0]->setExamenes($examenes);
         header('Location: ../Vistas/crudExamenes.php');
     } else {
-        $_SESSION['examenS'] = $examenes[$pos];
+        $asignaturas[0]->setExamenes($examenes);
+        $_SESSION['asignaturas'] = $asignaturas;
         header('Location: ../Vistas/crudExamenes.php');
     }
 }
@@ -315,29 +386,48 @@ if (isset($_REQUEST['desactivarExamen'])) {
     }
     if (!$pulsado) {
         $_SESSION['mensaje'] = "Marca el/los examen(es) que quieras desactivar";
-        $asignaturas[0]->setExamenes($examenes);
         header('Location: ../Vistas/crudExamenes.php');
     } else {
-        $_SESSION['examenS'] = $examenes[$pos];
+        $asignaturas[0]->setExamenes($examenes);
+        $_SESSION['asignaturas'] = $asignaturas;
         header('Location: ../Vistas/crudExamenes.php');
     }
 }
-//------------------CORREGIR MANUALMENTE
-if (isset($_REQUEST['correccionM'])) {
-    $_SESSION['corregir'] = 'manual';
-    header('Location: ../Vistas/correccion.php');
-}
-
-//------------------CORREGIR AUTO
-if (isset($_REQUEST['correcionA'])) {
-    $_SESSION['corregir'] = 'auto';
-    header('Location: ../Vistas/correccion.php');
+//----------------------BORRAR EXÁMEN
+if (isset($_REQUEST['borrarExamen'])) {
+    $pulsado = false;
+    $examenes = $asignaturas[0]->getExamenes();
+    if (count($examenes) > 0) {
+        $cont = 0;
+        foreach ($examenes as $i => $examen) {
+            if (isset($_REQUEST[$i])) {
+                $pulsado = true;
+                if (!gestionDatos::deleteExamen($examen)) {
+                    $mensaje = 'No se ha podido borrar el examen';
+                    $_SESSION['mensaje'] = $mensaje;
+                }
+                unset($examenes[$i]);
+            }
+        }
+    }
+    if (!$pulsado) {
+        $_SESSION['mensaje'] = "Marca el/los examen(es) que quieras borrar";
+        header('Location: ../Vistas/crudExamenes.php');
+    } else {
+        $asignaturas[0]->setExamenes($examenes);
+        $_SESSION['asignaturas'] = $asignaturas;
+        header('Location: ../Vistas/crudExamenes.php');
+    }
 }
 
 //------------------ASIGNAR PREGUNTAS
 if (isset($_REQUEST['asignarP'])) {
-
-    header('Location: ../Vistas/asignarPreguntas.php');
+    if ($_SESSION['examenS']->getActivo() == 0) {
+        header('Location: ../Vistas/asignarPreguntas.php');
+    } else {
+        $_SESSION['mensaje'] = "No puedes modificar preguntas de un exámen ACTIVADO";
+        header('Location: ../Vistas/verExamen.php');
+    }
 }
 //------------------CRUD PREGUNTAS
 if (isset($_REQUEST['crudP'])) {
@@ -414,11 +504,12 @@ if (isset($_REQUEST['asignarPregunta'])) {
     }
 }
 if (isset($_REQUEST['verExamenP'])) {
-    header('Location: ../Vistas/verExamen.php');
+    header('Location: ../Vistas/asignarPreguntas.php');
 }
 
 //-----------------------QUITAR PREGUNTA (DESDE ASIGNACION PREGUNTA, NO AÑADIDA TODAVIA)
 if (isset($_SESSION['preguntasCreadas'])) {
+    $accion = "";
     $preguntasCreadas = $_SESSION['preguntasCreadas'];
     foreach ($preguntasCreadas as $i => $pregunta) {
         if (isset($_REQUEST[$i])) {
@@ -437,11 +528,159 @@ if (isset($_SESSION['preguntasCreadas'])) {
         header('Location: ../Vistas/asignarPreguntas.php');
     }
 }
+if (isset($_REQUEST['verAlumnos'])) {
+    header('Location: ../Vistas/verAlumnos.php');
+}
+//------------------CORREGIR EXÁMEN CARGAR PÁGINA
+if (isset($_REQUEST['corregir'])) {
+    $alumnosExamen = array();
+    $soluciones = array();
+    $examenS = $_SESSION['examenS'];
+    $alumnos = $asignaturas[0]->getAlumnos();
+    foreach ($alumnos as $i => $alumno) {
+        $soluciones = $alumno->getSoluciones();
+        $correcto = false;
+        foreach ($soluciones as $j => $solucion) {
+            if ($solucion->getExamen() == $examenS->getId() && $solucion->getCorreccion() == null) {//!!!!!! comprobar que no esté corregido
+                $correcto = true;
+            }
+        }
+        if ($correcto) {
+            $alumnosExamen[] = $alumno;
+        }
+    }
+    if (isset($_SESSION['correccionS'])) {
+        unset($_SESSION['correccionS']);
+    }
+    $_SESSION['alumnosExamen'] = $alumnosExamen;
+    header('Location: ../Vistas/correccion.php');
+}
+//-----------------------VER EXAMEN DE UN ALUMNO
+if (isset($_SESSION['alumnosExamen'])) {
+    $alumnosExamen = $_SESSION['alumnosExamen'];
+    $examen = $_SESSION['examenS'];
+    $accion = "";
+    foreach ($alumnosExamen as $i => $alumno) {
+        if (isset($_REQUEST[$i])) {
+            $accion = $_REQUEST[$i];
+            $pos = $i;
+        }
+    }
+    if ($accion == 'Corregir') {
+        $alumnoS = $alumnosExamen[$pos];
+        $_SESSION['alumnoS'] = $alumnoS;
+        $soluciones = $alumnoS->getSoluciones();
+        foreach ($soluciones as $i => $solucion) {
+            if ($solucion->getExamen() == $examen->getId()) {
+                $_SESSION['correccionS'] = $solucion;
+            }
+        }
+        header('Location: ../Vistas/correccion.php');
+    }
+}
 
+//-----------------------------CORREGIR EXAMEN DE UN ALUMNO
+if (isset($_REQUEST['corregirExamen'])) {
+
+    //recogemos datos y creamos el objeto correccion
+    $examenS = $_SESSION['examenS'];
+    $alumnoS = $_SESSION['alumnoS'];
+    $notas = array();
+    $notaTexto = $_REQUEST['nota'];
+    $anotacion = $_REQUEST['anotacion'];
+    $solucionAlumno = $_SESSION['correccionS'];
+    $respuestasAlu = $solucionAlumno->getRespuestas();
+    $preguntasS = $examenS->getPreguntas();
+
+
+    foreach ($preguntasS as $i => $preguntaS) {
+        $corregido = false;
+        $respuestasS = $preguntaS->getRespuestas();
+        foreach ($respuestasS as $j => $respuestaS) {
+            if ($preguntaS->getTipo() == 1 && !$corregido) {
+                //tipo test
+                if ($respuestasAlu[$i]->getRespuesta() == $respuestaS->getRespuesta()) {
+                    if ($respuestaS->getCorrecta() == 1) {
+                        //respuesta correcta sumamos puntuacion
+                        $notas[] = $preguntaS->getPuntuacion();
+                        $corregido = true;
+                    } else {
+                        $notas[] = 0;
+                        $corregido = true;
+                    }
+                } else if ($respuestasAlu[$i]->getRespuesta() == "") {
+                    $notas[] = 0;
+                    $corregido = true;
+                }
+            } else if ($preguntaS->getTipo() == 0 && !$corregido) {// tipo texto
+                $n = array_shift($notaTexto);
+                if ($n == "") {
+                    $n = 0;
+                } else {
+                    $n = intval($n);
+                }
+                $notas[] = $n;
+                $corregido = true;
+            }
+        }
+    }
+    //creamos el objeto Correccion y lo guardamos dentro de la solucion del alumno.
+    $correccionProfesor = new Correccion($usuario->getId());
+    $correccionProfesor->setAnotacion($anotacion);
+    $correccionProfesor->setNotas($notas);
+
+    gestionDatos::insertCorreccion($correccionProfesor, $solucionAlumno->getId());
+
+    $solucionAlumno->setCorreccion($correccionProfesor);
+    $usuario->addCorreccion($correccionProfesor);
+
+    //cogemos el objeto alumno y sacamos todas sus soluciones para actualizar su solucion con su correccion dentro
+    $solucionesAlumno = $alumnoS->getSoluciones();
+    foreach ($solucionesAlumno as $i => $sol) {
+        if ($sol->getId() == $solucionAlumno->getId()) {
+            $solucionesAlumno[$i] = $solucionAlumno;
+        }
+    }
+
+    //metemos el array actualizado Soluciones dentro del alumno
+
+    $alumnoS->setSoluciones($solucionesAlumno);
+    $_SESSION['alumnoS'] = $alumnoS;
+
+    //actualizamos el alumno en el array alumnos de su asignatura
+    $asignaturas = $_SESSION['asignaturasImpartidas'];
+
+    for ($i = 0; $i < count($asignaturas); $i++) {
+        $alumnos = $asignaturas[$i]->getAlumnos();
+
+        for ($j = 0; $j < count($alumnos); $j++) {
+            if ($alumnos[$j]->getId() == $alumnoS->getId()) {
+                $alumnos[$j] = $alumnoS;
+                $asignaturas[$i]->setAlumnos($alumnos);
+            }
+        }
+    }
+    $_SESSION['asignaturasImpartidas'] = $asignaturas;
+
+    //Quitar alumno de alumnosS (desaparece visualmente) 
+    $alumnoS = $_SESSION['alumnoS'];
+    $alumnosS = $_SESSION['alumnosExamen'];
+    foreach ($alumnosS as $i => $alumno) {
+        if ($alumno->getId() == $alumnoS->getId()) {
+            unset($alumnosS[$i]);
+        }
+    }
+    $_SESSION['alumnosExamen'] = $alumnosS;
+
+    //Aparezca exámen original
+    unset($_SESSION['correccionS']);
+    header('Location: ../Vistas/correccion.php');
+}
 //------------------------QUITAR PREGUNTA YA AÑADIDA A UN EXAMEN
 if (isset($_SESSION['examenS'])) {
     $examen = $_SESSION['examenS'];
     $preguntas = $examen->getPreguntas();
+    $accion = "";
     foreach ($preguntas as $i => $pregunta) {
         if (isset($_REQUEST[$i])) {
             $accion = $_REQUEST[$i];
@@ -450,9 +689,9 @@ if (isset($_SESSION['examenS'])) {
     }
     if ($accion == 'Borrar') {
         $preguntaSeleccionada = $preguntas[$pos];
-        //Borrar en bd
+//Borrar en bd
         gestionDatos::deleteAsignacionPreguntaExamen($examen->getId(), $preguntaSeleccionada->getId());
-        //Borrar en el objeto
+//Borrar en el objeto
         unset($preguntas[$pos]);
         $examen->setPreguntas($preguntas);
 
@@ -469,3 +708,4 @@ if (isset($_SESSION['examenS'])) {
     }
 }
 
+    

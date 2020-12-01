@@ -7,8 +7,7 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Inicio profesor</title>
-        <!-- Bootstrap core CSS -->
+        <title></title>
         <link rel="stylesheet" href="../css/bootstrap.min.css">
         <!-- Material Design Bootstrap -->
         <link rel="stylesheet" href="../css/mdb.min.css">
@@ -103,88 +102,85 @@ and open the template in the editor.
         </header>
         <main class="pb-5 pt-5">
             <div class="container-fluid my-5">
-                <div class="row altura d-flex justify-content-center align-items-center">
-                    <div class="col-md-9 mx-auto">
-                        <!-- Section: Block Content -->
-                        <form action="../Controlador/controladorProfesor.php" method="post">
-                            <div class="row mx-1 mb-4">
-                                <div class=" bg-white mx-auto list-group-flush  rounded mb-4 col-md-4 " >
-                                    <div class="row ">
-                                        <img src="data:image/png;base64,<?php echo base64_encode($asignatura->getImagen()); ?>" alt="titulo foto" class=" mx-auto img-fluid" style=" height: 210px"/>
-                                    </div>
-                                    <div class="bg-white list-group-item active d-flex justify-content-start align-items-center py-3">
-                                        <?php
-                                        if ($usuario->getImagen() == "") {
-                                            ?>
-                                            <img class="rounded-circle" src="../img/defectousu.png" height="50"/>
+                <div class="row mt-4">
+                    <div class="col-lg-7 mx-auto">
+                        <div class="card card-cascade narrower">
+                            <!--Card image-->
+                            <div class="view view-cascade gradient-card-header mean-fruit-gradient narrower pt-2 mx-4  justify-content-between align-items-center">
+                                <h4 class="white-text text-center">Mis alumnos</h4>
+                            </div>
+                            <!--/Card image-->
+                            <div class="px-4">
+                                <div class="table-responsive">
+                                    <!--Table-->
+                                    <table class="table table-hover mb-0">
+                                        <!--Table head-->
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th class="th-lg">
+                                                    <i class="fas fa-envelope c1 pr-1"></i>
+                                                    <a>Mail</a>
+                                                </th>
+                                                <th class="th-lg">
+                                                    <i class="fas fa-id-card c1 pr-1"></i>
+                                                    <a>Dni</a>
+                                                </th>
+                                                <th class="th-lg">
+                                                    <i class="fas fa-address-book c1 pr-1"></i>
+                                                    <a>Nombre completo</a>
+                                                </th>
+                                                <th class="th-lg">
+                                                    <i class="fas fa-phone-alt c1 pr-1"></i>
+                                                    <a>Telefono</a>
+                                                </th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <!--Table head-->
+
+                                        <!--Table body-->
+                                        <tbody>
                                             <?php
-                                        } else {
+                                            for ($i = 0; $i < count($asignaturas); $i++) {
+                                                $alumnos = $asignaturas[$i]->getAlumnos();
+
+                                                for ($j = 0; $j < count($alumnos); $j++) {
+                                                    ?>
+                                                    <tr>
+                                                        <td>
+                                                            <?php
+                                                            if ($alumnos[$j]->getImagen() == "") {
+                                                                ?>
+                                                                <img class="rounded-circle" src="../img/defectousu.png" height="35px"/>
+                                                                <?php
+                                                            } else {
+                                                                ?>
+                                                                <img class="rounded-circle" src="data:image/png;base64,<?php echo base64_encode($alumnos[$j]->getImagen()); ?>" 
+                                                                     alt="titulo foto" class="img-fluid" height="35px"  width="35px"/>
+                                                                     <?php
+                                                                 }
+                                                                 ?>
+                                                        </td>
+                                                        <td><?= $alumnos[$j]->getEmail() ?></td>
+                                                        <td><?= $alumnos[$j]->getDni() ?></td>
+                                                        <td><?= $alumnos[$j]->getNombre() . ' ' ?><?= $alumnos[$j]->getApellidos() ?></td>
+                                                        <td><?= $alumnos[$j]->getTelefono() ?></td>
+                                                    </tr>
+                                                    <?php
+                                                }
+                                            }
                                             ?>
-                                            <img src="data:image/png;base64,<?php echo base64_encode($usuario->getImagen()); ?>" class="rounded-circle z-depth-0" width="50" alt="avatar image">
-                                            <?php
-                                        }
-                                        ?>
-                                        <div class="d-flex flex-column pl-3 ">
-                                            <p class="font-weight-bold letra titulo mb-0"> <?php echo $usuario->getNombre(); ?></p>
-                                        </div>
-                                    </div>
+                                        </tbody>
+                                        <!--Table body-->
+                                    </table>
+                                    <!--Table-->
                                 </div>
                             </div>
-                            <div class="row">
-                                <style>
-                                    .footer-hover {
-                                        background-color: rgba(0, 0, 0, 0.1);
-                                        -webkit-transition: all .3s ease-in-out;
-                                        transition: all .3s ease-in-out
-                                    }
+                        </div>
 
-                                    .footer-hover:hover {
-                                        background-color: rgba(0, 0, 0, 0.2)
-                                    }
-
-                                    .text-black-40 {
-                                        color: rgba(0, 0, 0, 0.4)
-                                    }
-                                </style>
-                                <div class="col-md-6  mb-4">
-                                    <div class="card purple lighten-3 white-text">
-                                        <div class="card-body d-flex justify-content-between align-items-center">
-                                            <div>
-                                                <p class="h2-responsive font-weight-bold mt-n2 mb-0"><?php
-                                                    echo count($asignatura->getExamenes())
-                                                    ?></p>
-                                                <p class="mb-0">Exámenes </p>
-                                            </div>
-                                            <div>
-                                                <i class="fas fa-feather-alt  fa-4x text-black-40"></i>
-                                            </div>
-                                        </div>
-                                        <button class="card-footer footer-hover small text-center white-text border-0 p-2" type="submit" name="verExamenes">
-                                            Más información<i class="fas fa-arrow-circle-right pl-2"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="col-md-6  mb-4">
-                                    <div class="card orange lighten-3 white-text">
-                                        <div class="card-body d-flex justify-content-between align-items-center">
-                                            <div>
-                                                <p class="h2-responsive font-weight-bold mt-n2 mb-0 pr-2"><i class="fas fa-graduation-cap fa-x "></i> </p>
-                                                <p class="mb-0">Alumnos</p>
-                                            </div>
-                                            <div>
-                                                <i class="fas fa-user fa-4x text-black-40"></i>
-                                            </div>
-                                        </div>
-                                        <button class="card-footer footer-hover small text-center white-text border-0 p-2" type="submit" name="verAlumnos">
-                                            Más información<i class="fas fa-arrow-circle-right pl-2"></i>
-                                        </button>                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
                     </div>
                 </div>
-
             </div>
         </main>
         <footer class="footer-copyright text-center text-white py-3 z-depth-2 colorNav fixed-bottom">
@@ -198,6 +194,5 @@ and open the template in the editor.
         <script type="text/javascript" src="../js/bootstrap.min.js"></script>
         <!-- MDB core JavaScript -->
         <script type="text/javascript" src="../js/mdb.min.js"></script>
-        <!-- Your custom scripts (optional) -->
-    </body> 
+    </body>
 </html>

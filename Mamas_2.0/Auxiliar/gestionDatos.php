@@ -20,6 +20,8 @@ include_once '../Modelo/Alumno.php';
 include_once '../Modelo/Profesor.php';
 include_once '../Modelo/Asignatura.php';
 include_once '../Auxiliar/constantes.php';
+include_once '../Modelo/Solucion.php';
+include_once '../Modelo/Correccion.php';
 
 class gestionDatos {
 
@@ -50,9 +52,9 @@ class gestionDatos {
         $stmt->bind_param("ss", $mail, $password);
         if ($stmt->execute()) {
             $resultado = $stmt->get_result();
-            var_dump($resultado);
+            //var_dump($resultado);
             if ($fila = $resultado->fetch_assoc()) {
-                var_dump($fila);
+                //var_dump($fila);
                 //obtenemos los datos  en variables individuales para la creacion del objeto usuario.
                 $id = $fila['idUsuario'];
                 $email = $fila['email'];
@@ -62,8 +64,9 @@ class gestionDatos {
                 $telefono = $fila['telefono'];
                 $activo = $fila['activo'];
                 $imagen = $fila['imagen'];
-                $p = new Usuario($id, $email, $dni, $nombre, $apellidos, $telefono, $activo, $imagen);
 
+                $p = new Usuario($id, $email, $dni, $nombre, $apellidos, $telefono, $activo, $imagen);
+                $p->setRol(self::getRol($id));
                 //almacenamos en sesion al usuario que ha realizado el Login.
             }
             return $p;
@@ -77,7 +80,6 @@ class gestionDatos {
         $stmt->bind_param("s", $email);
         if ($stmt->execute()) {
             $resultado = $stmt->get_result();
-            var_dump($resultado);
             if ($fila = $resultado->fetch_assoc()) {
                 $existe = true;
             } else {
@@ -89,12 +91,23 @@ class gestionDatos {
         }
     }
 
-    static function inicializarProfesor($idU) {
+    static function inicializarAlumno($idAl) {
+        $asignaturas = array();
+        $examenes = array();
+        $asignaturas = self::getAsignaturasUsu2($idAl);
+        for ($i = 0; $i < count($asignaturas); $i++) {
+            $examenes = self::getExamenesActivos($asignaturas[$i]->getIdAsignatura());
+            $asignaturas[$i]->setExamenes($examenes);
+        }
+        return $asignaturas;
+    }
+
+    static function inicializarProfesor($idP) {
         $asignaturas = array();
         $alumnos = array();
         $examenes = array();
         $preguntas = array();
-        $asignaturas = self::getAsignaturasUsu2($idU);
+        $asignaturas = self::getAsignaturasUsu2($idP);
         for ($i = 0; $i < count($asignaturas); $i++) {
             $examenes = self::getExamenes($asignaturas[$i]->getIdAsignatura());
             $preguntas = self::getPreguntas($asignaturas[$i]->getIdAsignatura());
@@ -125,6 +138,7 @@ class gestionDatos {
                 $imagen = $fila['imagen'];
                 $p = new Alumno($idUsuario, $email, $dni, $nombre, $apellidos, $telefono, $activo, $imagen);
                 $p->setRol(0);
+                $p->setSoluciones(self::getSoluciones($idUsuario));
                 //almacenamos en sesion al usuario que ha realizado el Login.
             }
             return $p;
@@ -170,6 +184,248 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
+    static function getSolucionIdExamen($idAl, $idEx) {
+        self::conexion();
+        $respuestas = array();
+
+        $stmt = self::$conexion->prepare("SELECT * FROM solucion WHERE idUsuario= ? AND idExamen= ?");
+        $stmt->bind_param("ii", $idAl, $idEx);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            //var_dump($resultado);
+            if ($fila = $resultado->fetch_assoc()) {
+                //var_dump($fila);
+                $idSol = $fila['idSolucion'];
+                $idEx = $fila['idExamen'];
+                $solucion = new Solucion($idSol, $idEx);
+
+                $correccion = self::getCorreccion($idSol);
+                if ($correccion != null) {
+                    $correccion->setNotas(self::getNotas($idSol));
+                    $correccion->setAnotacion(self::getAnotaciones($idSol));
+                    $solucion->setCorreccion($correccion);
+                }
+                $respuestas = self::getRespExamenAlumno($idSol);
+                $solucion->setRespuestas($respuestas);
+                return $solucion;
+            }
+        }
+
+        mysqli_close(self::$conexion);
+    }
+
+    static function getSoluciones($idAl) {
+        self::conexion();
+        $soluciones = array();
+        $respuestas = array();
+        $stmt = self::$conexion->prepare("SELECT * FROM solucion WHERE idUsuario= ? ");
+        $stmt->bind_param("i", $idAl);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            //var_dump($resultado);
+            while ($fila = $resultado->fetch_assoc()) {
+                //var_dump($fila);
+                $idSol = $fila['idSolucion'];
+                $idEx = $fila['idExamen'];
+                $solucion = new Solucion($idSol, $idEx);
+
+                $correccion = self::getCorreccion($idSol);
+                if ($correccion != null) {
+                    $correccion->setNotas(self::getNotas($idSol));
+                    $correccion->setAnotacion(self::getAnotaciones($idSol));
+                    $solucion->setCorreccion($correccion);
+                }
+                $respuestas = self::getRespExamenAlumno($idSol);
+
+                $solucion->setRespuestas($respuestas);
+
+
+                $soluciones[] = $solucion;
+            }
+        }
+        return $soluciones;
+        mysqli_close(self::$conexion);
+    }
+
+    static function getRespuestaAlumno($idResp) {
+        $r;
+        $stmt = self::$conexion->prepare("SELECT * FROM respuesta WHERE idRespuesta= ? ");
+        $stmt->bind_param("i", $idResp);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            //var_dump($resultado);
+            if ($fila = $resultado->fetch_assoc()) {
+                $idRespuesta = $fila['idRespuesta'];
+                $correcto = $fila['correcto'];
+                $respuesta = $fila['respuesta'];
+                $idUsu = $fila['idUsuario'];
+                $r = new Respuesta($idRespuesta, $idUsu, $respuesta, $correcto);
+            }
+        }
+        return $r;
+    }
+
+    static function getRespExamenAlumno($idSol) {
+        self::conexion();
+        $idResp = array();
+        $respuestas = array();
+        $stmt = self::$conexion->prepare("SELECT * FROM asignacionrespuesta WHERE idSolucion= ? ");
+        $stmt->bind_param("i", $idSol);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            //var_dump($resultado);
+            while ($fila = $resultado->fetch_assoc()) {
+                $idResp[] = $fila['idRespuesta'];
+            }
+        }foreach ($idResp as $i => $idR) {
+            $respuesta = self::getRespuestaAlumno($idR);
+            $respuestas[] = $respuesta;
+        }
+        return $respuestas;
+        mysqli_close(self::$conexion);
+    }
+
+    static function getRespuestas($idAl) {
+        self::conexion();
+        $respuestas = array();
+        $stmt = self::$conexion->prepare("SELECT * FROM respuesta WHERE idUsuario= ? ");
+        $stmt->bind_param("i", $idAl);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            //var_dump($resultado);
+            while ($fila = $resultado->fetch_assoc()) {
+                $idR = $fila['idRespuesta'];
+                $correcta = $fila['correcto'];
+                $respuesta = $fila['respuesta'];
+                $r = new Respuesta($idR, $idAl, $respuesta, $correcta);
+                $respuestas[] = $r;
+            }
+        }
+        return $respuestas;
+        mysqli_close(self::$conexion);
+    }
+
+    static function getNotas($idSol) {
+        self::conexion();
+        $notas = array();
+        $stmt = self::$conexion->prepare("SELECT * FROM correccion WHERE idSolucion= ? ");
+        $stmt->bind_param("i", $idSol);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            //var_dump($resultado);
+            while ($fila = $resultado->fetch_assoc()) {
+                $nota = $fila['nota'];
+                $notas[] = $nota;
+            }
+        }
+        return $notas;
+        mysqli_close(self::$conexion);
+    }
+
+    static function getAnotaciones($idSol) {
+        self::conexion();
+        $anotaciones = array();
+        $stmt = self::$conexion->prepare("SELECT * FROM correccion WHERE idSolucion= ? ");
+        $stmt->bind_param("i", $idSol);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            //var_dump($resultado);
+            while ($fila = $resultado->fetch_assoc()) {
+                $anotacion = $fila['anotacion'];
+                $anotaciones[] = $anotacion;
+            }
+        }
+        return $anotaciones;
+        mysqli_close(self::$conexion);
+    }
+
+    static function getCorreccion($idSol) {
+        self::conexion();
+        $corr = null;
+        $stmt = self::$conexion->prepare("SELECT * FROM correccion WHERE idSolucion= ? ");
+        $stmt->bind_param("i", $idSol);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            //var_dump($resultado);
+            if ($fila = $resultado->fetch_assoc()) {
+                $profesor = $fila['idUsuario'];
+                $corr = new Correccion($profesor);
+            }
+        }
+        return $corr;
+        mysqli_close(self::$conexion);
+    }
+
+    static function getProfesor($idAsig) {
+        self::conexion();
+        $alumnos = array();
+        $stmt = self::$conexion->prepare("SELECT * FROM usuarios WHERE idUsuario IN (SELECT idUsuario FROM asignacionasignatura WHERE idAsignatura= ?) AND idUsuario IN(SELECT idUsuario FROM asignacionrol WHERE idRol IN (1,2))");
+        $stmt->bind_param("i", $idAsig);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            //var_dump($resultado);
+            if ($fila = $resultado->fetch_assoc()) {
+                $id = $fila['idUsuario'];
+                $email = $fila['email'];
+                $nombre = $fila['nombre'];
+                $dni = $fila['dni'];
+                $apellidos = $fila['apellidos'];
+                $telefono = $fila['telefono'];
+                $activo = $fila['activo'];
+                $imagen = $fila['imagen'];
+
+                $p = new Profesor($id, $email, $dni, $nombre, $apellidos, $telefono, $activo, $imagen);
+                $p->setRol(self::getRol($id));
+                //almacenamos en sesion al usuario que ha realizado el Login.
+            }
+            return $p;
+            mysqli_close(self::$conexion);
+        }
+    }
+
+    static function crearTipo($usuario) {
+        self::conexion();
+        $id = $usuario->getId();
+        $stmt = self::$conexion->prepare("SELECT * FROM asignacionrol WHERE idUsuario= ? ");
+        $stmt->bind_param("i", $id);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            //var_dump($resultado);
+            if ($fila = $resultado->fetch_assoc()) {
+                //var_dump($fila);
+
+                $rol = $fila['idRol'];
+                if ($rol == 0) {
+                    $alumno = new Alumno($usuario->getId(), $usuario->getEmail(), $usuario->getDni(), $usuario->getNombre(), $usuario->getApellidos(), $usuario->getTelefono(), $usuario->getActivo(), $usuario->getImagen());
+                    $alumno->setRol(0);
+                    $asignaturas = array();
+                    $soluciones = array();
+                    $examenes = array();
+                    $asignaturas = self::getAsignaturasUsu2($alumno->getId());
+                    for ($i = 0; $i < count($asignaturas); $i++) {
+                        $examenes = self::getExamenesActivos($asignaturas[$i]->getIdAsignatura());
+                        $asignaturas[$i]->setExamenes($examenes);
+                        foreach ($examenes as $k => $examen) {
+                            $solucion = self::getSolucionIdExamen($alumno->getId(), $examen->getId());
+                            if (isset($solucion)) {
+                                $soluciones[] = $solucion;
+                            }
+                        }
+                    }
+
+
+                    $alumno->setSoluciones($soluciones);
+                    $user = $alumno;
+                } else {
+                    $profesor = new Profesor($usuario->getId(), $usuario->getEmail(), $usuario->getDni(), $usuario->getNombre(), $usuario->getApellidos(), $usuario->getTelefono(), $usuario->getActivo(), $usuario->getImagen());
+                    $profesor->setRol($rol);
+                    $user = $profesor;
+                }
+            }
+        }
+        return $user;
+    }
+
     static function getRol($id) {
         self::conexion();
         $rol = -1;
@@ -192,7 +448,7 @@ class gestionDatos {
         $stmt->bind_param("s", $email);
         if ($stmt->execute()) {
             $resultado = $stmt->get_result();
-            var_dump($resultado);
+            //var_dump($resultado);
             if ($fila = $resultado->fetch_assoc()) {
                 $id = $fila['idUsuario'];
             } else {
@@ -211,6 +467,18 @@ class gestionDatos {
             }
         }
         return $id;
+    }
+
+    static function getUltEx() {
+        self::conexion();
+        $consulta = "SELECT max(idExamen) FROM examen";
+        if ($resultado = self::$conexion->query($consulta)) {
+            if ($fila = $resultado->fetch_assoc()) {
+                $id = $fila['max(idExamen)'];
+            }
+        }
+        return $id;
+        mysqli_close(self::$conexion);
     }
 
     static function getUsuarios() {
@@ -245,7 +513,7 @@ class gestionDatos {
         $stmt->bind_param("i", $id);
         if ($stmt->execute()) {
             $resultado = $stmt->get_result();
-            var_dump($resultado);
+            //var_dump($resultado);
             if ($fila = $resultado->fetch_assoc()) {
                 $idRol = $fila['idRol'];
             } else {
@@ -262,7 +530,7 @@ class gestionDatos {
         $stmt->bind_param("i", $idUsuario);
         if ($stmt->execute()) {
             $resultado = $stmt->get_result();
-            var_dump($resultado);
+            //var_dump($resultado);
             while ($fila = $resultado->fetch_assoc()) {
                 $id[] = $fila['idAsignatura'];
             }
@@ -277,13 +545,38 @@ class gestionDatos {
         $stmt->bind_param("ii", $idUsuario);
         if ($stmt->execute()) {
             $resultado = $stmt->get_result();
-            var_dump($resultado);
+            //var_dump($resultado);
             while ($fila = $resultado->fetch_assoc()) {
                 $idE = $fila['idExamen'];
                 $contenido = $fila['contenido'];
                 $descripcion = $fila['descripcion'];
                 $activo = $fila['activo'];
                 $e = new Examen($idE, $idUsuario, $contenido, $descripcion, $activo);
+                $examenes[] = $e;
+            }
+            return $examenes;
+        }
+
+        mysqli_close(self::$conexion);
+    }
+
+    static function getExamenesActivos($idAs) {
+        self::conexion();
+        $examenes = array();
+        $stmt = self::$conexion->prepare("SELECT * FROM examen WHERE idAsignatura= ? AND activo= 1");
+        $stmt->bind_param("i", $idAs);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            //var_dump($resultado);
+            while ($fila = $resultado->fetch_assoc()) {
+                $idE = $fila['idExamen'];
+                $profesor = $fila['idUsuario'];
+                $contenido = $fila['contenido'];
+                $descripcion = $fila['descripcion'];
+                $activo = $fila['activo'];
+                $e = new Examen($idE, $profesor, $contenido, $descripcion, $activo);
+                $preguntas = self::getPreguntasExamen($idE);
+                $e->setPreguntas($preguntas);
                 $examenes[] = $e;
             }
             return $examenes;
@@ -316,7 +609,7 @@ class gestionDatos {
 
         mysqli_close(self::$conexion);
     }
-    
+
     static function getPreguntasExamen($idE) {
         $preguntas = array();
         $stmt = self::$conexion->prepare("SELECT * FROM asignacionpregunta,pregunta where pregunta.idPregunta = asignacionpregunta.idPregunta "
@@ -332,7 +625,7 @@ class gestionDatos {
                 $tipo = $fila['tipo'];
                 $ponderacion = $fila['ponderacion'];
                 $p = new Pregunta($idP, $profesor, $enunciado, $tipo, $ponderacion);
-                $respuestas = self::getRespuestasPregunta($idP);
+                $respuestas = self::getRespuestasPregunta($idP, $profesor);
                 $p->setRespuestas($respuestas);
                 $preguntas[] = $p;
             }
@@ -355,7 +648,7 @@ class gestionDatos {
                 $tipo = $fila['tipo'];
                 $puntuacion = $fila['ponderacion'];
                 $p = new Pregunta($idP, $profesor, $enunciado, $tipo, $puntuacion);
-                $respuestas = self::getRespuestasPregunta($idP);
+                $respuestas = self::getRespuestasPregunta($idP, $profesor);
                 $p->setRespuestas($respuestas);
                 $preguntas[] = $p;
             }
@@ -364,10 +657,10 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
-    static function getRespuestasPregunta($idP) {
+    static function getRespuestasPregunta($idP, $idProf) {
         $respuestas = array();
-        $stmt = self::$conexion->prepare("SELECT * FROM respuesta where idPregunta = ?");
-        $stmt->bind_param("i", $idP);
+        $stmt = self::$conexion->prepare("SELECT * FROM respuesta where idPregunta = ? AND idUsuario= ?");
+        $stmt->bind_param("ii", $idP, $idProf);
         if ($stmt->execute()) {
             $resultado = $stmt->get_result();
             //var_dump($resultado);
@@ -475,9 +768,9 @@ class gestionDatos {
         $stmt->bind_param("i", $id);
         if ($stmt->execute()) {
             $resultado = $stmt->get_result();
-            var_dump($resultado);
+            //var_dump($resultado);
             if ($fila = $resultado->fetch_assoc()) {
-                var_dump($fila);
+                // var_dump($fila);
                 //obtenemos los datos  en variables individuales para la creacion del objeto usuario.
                 $id = $fila['idUsuario'];
                 $email = $fila['email'];
@@ -526,6 +819,19 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
+    static function deleteExamen($examen) {
+        self::conexion();
+        $consulta = "DELETE FROM examen WHERE idExamen =" . $examen->getId();
+        if (self::$conexion->query($consulta)) {
+            $correcto = true;
+        } else {
+            $correcto = false;
+            echo "Error al borrar la asignacion: " . self::$conexion->error . '<br/>';
+        }
+        return $correcto;
+        mysqli_close(self::$conexion);
+    }
+
 //======================================================================
 // UPDATE
 //======================================================================
@@ -547,6 +853,13 @@ class gestionDatos {
         self::conexion();
         $fotoBin = self::$conexion->real_escape_string(file_get_contents($_FILES["imagen"]["tmp_name"]));
         $sentencia = "UPDATE usuarios SET imagen = ('$fotoBin') WHERE idUsuario = " . $id;
+        self::$conexion->query($sentencia);
+        mysqli_close(self::$conexion);
+    }
+
+    static function updateTfno($usuario) {
+        self::conexion();
+        $sentencia = "UPDATE usuarios SET telefono = '" . $usuario->getTelefono() . "' WHERE idUsuario = " . $usuario->getId();
         self::$conexion->query($sentencia);
         mysqli_close(self::$conexion);
     }
@@ -607,6 +920,19 @@ class gestionDatos {
 //======================================================================
 // INSERT
 //======================================================================
+    static function insertCorreccion($correccion, $idSolucion) {
+        self::conexion();
+        $consulta = "INSERT INTO correccion VALUES (" . $idSolucion . "," . $correccion->getProfesor() . "," . array_sum($correccion->getNotas()) . ",'" . $correccion->getAnotacion() . "')";
+        if (self::$conexion->query($consulta)) {
+
+            $correcto = true;
+        } else {
+            $correcto = false;
+            echo "Error al insertar: " . self::$conexion->error . '<br/>';
+        }
+        return $correcto;
+        mysqli_close(self::$conexion);
+    }
 
     static function insertUsuarioRol($id, $rol) {
         self::conexion();
@@ -686,7 +1012,7 @@ class gestionDatos {
 
     static function insertPregunta($pregunta, $idasignatura) {
         self::conexion();
-        $consulta = "INSERT INTO pregunta VALUES (" . $pregunta->getId() . "," . $idasignatura . ",'" . $pregunta->getProfesor() . "','" . $pregunta->getEnunciado() . "','" . $pregunta->getTipo() . "','" . $pregunta->getPuntuacion() . "')";
+        $consulta = "INSERT INTO pregunta VALUES (" . $pregunta->getId() . "," . $idasignatura . "," . $pregunta->getProfesor() . ",'" . $pregunta->getEnunciado() . "'," . $pregunta->getTipo() . "," . $pregunta->getPuntuacion() . ")";
         if (self::$conexion->query($consulta)) {
             $idPregunta = self::getIdPregunta();
         }
@@ -694,10 +1020,18 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
-    static function insertRespuesta($respuesta, $idPregunta) {
+    static function insertRespuestaAlumno($respuesta, $idUsuario, $idPregunta) {
         self::conexion();
-        $consulta = "INSERT INTO respuesta VALUES (" . $respuesta->getId() . ",'" . $respuesta->getCreador() . "'," . $idPregunta . ",'" .
-                $respuesta->getRespuesta() . "'," . $respuesta->getCorrecta() . ")";
+        $consulta = "INSERT INTO respuesta VALUES (default," . $idUsuario . "," . $idPregunta . ",'" . $respuesta . "',0)";
+        if (self::$conexion->query($consulta)) {
+            $correcto = false;
+        }
+        mysqli_close(self::$conexion);
+    }
+
+    static function insertRespuesta($respuesta, $idUsuario, $idPregunta) {
+        self::conexion();
+        $consulta = "INSERT INTO respuesta VALUES (default," . $idUsuario . "," . $idPregunta . ",'" . $respuesta->getRespuesta() . "'," . $respuesta->getCorrecta() . ")";
         if (self::$conexion->query($consulta)) {
             $correcto = false;
         }
@@ -713,6 +1047,45 @@ class gestionDatos {
             }
         }
         return $id;
+        mysqli_close(self::$conexion);
+    }
+
+    static function getIdSolucion() {
+        self::conexion();
+        $consulta = "SELECT max(idSolucion) FROM solucion";
+        if ($resultado = self::$conexion->query($consulta)) {
+            if ($fila = $resultado->fetch_assoc()) {
+                $id = $fila['max(idSolucion)'];
+            }
+        }
+        return $id;
+        mysqli_close(self::$conexion);
+    }
+
+    static function asignarRespuesta($solId, $respId) {
+        self::conexion();
+        $consulta = "INSERT INTO asignacionrespuesta VALUES (" . $solId . "," . $respId . ")";
+        if (self::$conexion->query($consulta)) {
+            $correcto = true;
+        } else {
+            $correcto = false;
+            echo "Error al insertar: " . self::$conexion->error . '<br/>';
+        }
+        return $correcto;
+        mysqli_close(self::$conexion);
+    }
+
+    static function insertSolucion($usuarioId, $examenId) {
+        self::conexion();
+        $consulta = "INSERT INTO solucion VALUES (default," . $usuarioId . "," . $examenId . ")";
+        if (self::$conexion->query($consulta)) {
+
+            $correcto = true;
+        } else {
+            $correcto = false;
+            echo "Error al insertar: " . self::$conexion->error . '<br/>';
+        }
+        return $correcto;
         mysqli_close(self::$conexion);
     }
 

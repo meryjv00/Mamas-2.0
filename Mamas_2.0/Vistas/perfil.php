@@ -20,24 +20,39 @@ and open the template in the editor.
     <body onload="validacionTfnoPass()">
         <?php
         require_once '../Modelo/Usuario.php';
+        include_once '../Modelo/Profesor.php';
+        include_once '../Modelo/Alumno.php';
         require_once '../Modelo/Asignatura.php';
         session_start();
         $usuario = $_SESSION['usuario'];
-        $asignaturas = $_SESSION['asignaturas'];
+        $asignaturas = $_SESSION['asignaturasImpartidas'];
+        $examenesPendientes = $_SESSION['examenesPendientes'];
+        $controlador = '../Controlador/controladorAlumno.php';
         ?>
+
         <header>
-            <nav class="row navbar navbar-expand-lg navbar-dark fixed-top deg">
+            <nav class="row navbar navbar-expand-lg navbar-dark fixed-top colorNav">
                 <div class="container-fluid">
                     <ul class="navbar-nav mr-auto ml-5">
                         <li class="nav-item">
 
                             <!--CRUD ADMINISTRADOR-->
 
-                            <form name="home" action="../Controlador/controlador.php" method="post">
+                            <form name="home" action="<?= $controlador ?>" method="post">
                                 <button type="submit" class="btn mean-fruit-gradient text-white
                                         btn-rounded waves-effect z-depth-1a" name="home" value="home">
                                     <i class="fas fa-home"></i>
                                 </button>
+                                <?php
+                                if ($usuario->getRol() == 1 || $usuario->getRol() == 2) {
+                                    ?>
+                                    <button type="submit" class="btn mean-fruit-gradient text-white
+                                            btn-rounded waves-effect z-depth-1a" name="salirAlumno" value="salirAlumno">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                    <?php
+                                }
+                                ?>
 
                             </form>
                         </li> 
@@ -45,7 +60,7 @@ and open the template in the editor.
                     <ul class="navbar-nav ml-auto mr-5">
                         <li class="nav-item">
 
-                            <form name="cerrarSes" action="../Controlador/controlador.php" method="post">
+                            <form name="cerrarSes" action="<?= $controlador ?>" method="post">
                                 <button type="submit" class="btn mean-fruit-gradient text-white
                                         btn-rounded waves-effect z-depth-1a" name="perfil" value="Ver perfil">
                                     <i class="fas fa-user"></i>
@@ -60,7 +75,7 @@ and open the template in the editor.
                 </div>
             </nav>
         </header>
-        <main class="pb-5 pt-5 ml-4">
+        <main class="pb-5 pt-5 ml-4 mb-5">
             <div class="container-fluid row">
                 <div class="col-md-4 mt-5 mx-auto">
                     <!-- Card -->
@@ -88,9 +103,13 @@ and open the template in the editor.
                                     ?>
                                     Alumno - DAW:
                                     <?php
-                                } else {
+                                } else if($usuario->getRol() == 1){
                                     ?>
                                     Profesor - DAW:
+                                    <?php
+                                }else{
+                                    ?>
+                                    Profesor Administrador - DAW:
                                     <?php
                                 }
                                 ?>
@@ -105,7 +124,7 @@ and open the template in the editor.
                                 ?>
                             </ul>
                             <hr>
-                            <form name="aniadirfoto" id="add" action="../Controlador/controlador.php" method="post" enctype="multipart/form-data">
+                            <form name="aniadirfoto" id="add" action="<?= $controlador ?>" method="post" enctype="multipart/form-data">
                                 <p class="grey-text font-weight-bold">Editar foto perfil:</p>
                                 <!--INPUT FOTO-->
                                 <div class="input-group">
@@ -121,7 +140,7 @@ and open the template in the editor.
                                 </div>
                                 <!--BOTON-->
                                 <div class="text-center mb-3 pl-5 pr-5">
-                                    <button type="submit" name="editarFotoPerfil"  class="btn mean-fruit-gradient text-white 
+                                    <button type="submit" name="editarFotoPerfil"  class="btn purple lighten-3 text-white 
                                             btn-block btn-rounded my-4 waves-effect z-depth-1a">Editar foto</button>
                                 </div>
 
@@ -138,7 +157,7 @@ and open the template in the editor.
                             </ul>
                             <hr>
                             <!--TELEFONO-->
-                            <form name="editarTfno" id="editarTfno" action="../Controlador/controlador.php" method="post" novalidate>
+                            <form name="editarTfno" id="editarTfno" action="<?= $controlador ?>" method="post" novalidate>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <p class="grey-text font-weight-bold">Cambia tu número de teléfono:</p>
@@ -149,7 +168,7 @@ and open the template in the editor.
                                         </div>
 
                                         <div class="text-center mb-3 pl-5 pr-5">
-                                            <button type="submit" name="editarTfno"  class="btn mean-fruit-gradient text-white 
+                                            <button type="submit" name="editarTfno"  class="btn purple lighten-3 text-white 
                                                     btn-block btn-rounded my-4 waves-effect z-depth-1a">Editar número de teléfono</button>
                                         </div>
                                     </div>
@@ -158,7 +177,7 @@ and open the template in the editor.
                             </form>
                             <hr>
                             <!--CONTRASEÑA-->
-                            <form name="editarPass" id="editarPass" action="../Controlador/controlador.php" method="post" novalidate>
+                            <form name="editarPass" id="editarPass" action="<?= $controlador ?>" method="post" novalidate>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <p class="grey-text font-weight-bold">Cambia tu contraseña:</p>
@@ -173,7 +192,7 @@ and open the template in the editor.
                                             <div id="pass2Error"></div>
                                         </div>
                                         <div class="text-center mb-3 pl-5 pr-5">
-                                            <button type="submit" name="nuevaPass"  class="btn mean-fruit-gradient text-white 
+                                            <button type="submit" name="nuevaPass"  class="btn purple lighten-3 text-white 
                                                     btn-block btn-rounded my-4 waves-effect z-depth-1a">Confirmar</button>
                                         </div>
 
@@ -191,7 +210,7 @@ and open the template in the editor.
         </div>
     </main>
 
-    <footer class="footer-copyright text-center text-white py-3 z-depth-2">
+    <footer class="footer-copyright text-center text-white py-3 z-depth-2 colorNav fixed-bottom">
         <div> © 2020 Copyright: Israel y María</div>
     </footer>
     <!-- jQuery -->

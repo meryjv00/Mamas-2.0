@@ -7,9 +7,13 @@
  */
 include_once '../Auxiliar/gestionDatos.php';
 include_once '../Modelo/Usuario.php';
+include_once '../Modelo/Profesor.php';
+include_once '../Modelo/Alumno.php';
 session_start();
 if (isset($_SESSION['usuario'])) {
     $usuario = $_SESSION['usuario'];
+    $asignaturas = $_SESSION['asignaturasImpartidas'];
+    $examenesPendientes = $_SESSION['examenesPendientes'];
 }
 //---------------LOGIN
 if (isset($_REQUEST['login'])) {
@@ -24,7 +28,7 @@ if (isset($_REQUEST['login'])) {
         $password = md5($_REQUEST['password']);
         $usuario = gestionDatos::getUsuario($email, $password);
         if (isset($usuario)) {
-            $usuario->setRol(gestionDatos::getRol($usuario->getId()));
+            $usuario = gestionDatos::crearTipo($usuario);
             $_SESSION['usuario'] = $usuario;
             if (!isset($_SESSION['usuario'])) {
                 $mensaje = 'Error al realizar el Login.';
@@ -36,15 +40,59 @@ if (isset($_REQUEST['login'])) {
                     $_SESSION['mensaje'] = $mensaje;
                     header('Location: ../Vistas/login.php');
                 } else if ($usuario->getActivo() == 1) {
-                    if ($usuario->getRol() == 0) {
+                    if ($usuario->getRol() == 0) { //ROL ALUMNO
+                        $alumno = $usuario; // nombre alumno , ya que contiene un objeto alumno. Por evitar confusiones.
+                        $asig = gestionDatos::inicializarAlumno($alumno->getId());
+                        $_SESSION['asignaturasImpartidas'] = $asig;
+                        $examenesPendientes = array();
+                        $examenesCorregidos = array();
+                        $examenesRealizados = array();
+                        foreach ($asig as $asignatura) {
+                            $examenAsig = $asignatura->getExamenes();
+                            foreach ($examenAsig as $examen) {
+                                $examenesPendientes[] = $examen;
+                            }
+                        }
+                        $soluciones = $alumno->getSoluciones();
+                        if (isset($soluciones)) {
+                            foreach ($examenesPendientes as $key => $examenP) {
+                                foreach ($soluciones as $j => $solucion) {
+                                    if ($solucion->getExamen() == $examenP->getId()) {
+                                        $examenesRealizados[] = $examenP;
+                                        if ($solucion->getCorreccion() != null) {
+                                            $examenesCorregidos[] = $examenP;
+                                        }
+                                        unset($examenesPendientes[$key]);
+                                    }
+                                }
+                            }
+                        }
+                        $_SESSION['examenesPendientes'] = $examenesPendientes;
+                        $_SESSION['examenesR'] = $examenesRealizados;
+                        $_SESSION['examenesC'] = $examenesCorregidos;
+
                         header('Location: ../Vistas/inicio.php');
-                    } else if ($usuario->getRol() == 1 || $usuario->getRol() == 2) {
+                    } else if ($usuario->getRol() == 1 || $usuario->getRol() == 2) { //ROL ADMIN O PROFESOR
+                        $profesor = $usuario; // nombre pofesor , ya que contiene un objeto profesor . Por evitar confusiones.
                         $asig = gestionDatos::inicializarProfesor($usuario->getId());
                         $_SESSION['asignaturasImpartidas'] = $asig;
                         $_SESSION['examenes'] = $asig[0]->getExamenes();
                         $_SESSION['exCorregidos'] = 0;
-                        $_SESSION['exPendientes'] = $_SESSION['examenes'];
+                        //$_SESSION['exPendientes'] = $_SESSION['examenes'];
+                        $examenesPendientes = array();
+                        foreach ($asig as $asignatura) {
+                            $examenAsig = $asignatura->getExamenes();
+                            foreach ($examenAsig as $examen) {
+                                if ($examen->getActivo()) {
+                                    $examenesPendientes[] = $examen;
+                                }
+                            }
+                        }
+                        $_SESSION['examenesPendientes'] = $examenesPendientes;
+                        $_SESSION['examenesR'] = [];
+                        $_SESSION['examenesC'] = [];
                         $_SESSION['origen'] = 'profesor';
+                        $_SESSION['usuario'] = $profesor;
                         header('Location: ../Vistas/inicioProfesor.php');
                     }
                     //Obtiene las asignaturas que imparte
@@ -136,9 +184,7 @@ if (isset($_REQUEST['salirVista'])) {
 }
 //-----------------VER PERFIL
 if (isset($_REQUEST['perfil'])) {
-    if ($usuario->getRol() != 0) {
-        $_SESSION['origen'] = 'alumno';
-    }
+    $_SESSION['vieneAlum'] = true;
     header('Location: ../Vistas/perfil.php');
 }
 
@@ -147,26 +193,65 @@ if (isset($_REQUEST['editarFotoPerfil'])) {
     gestionDatos::updateFoto($usuario->getId());
     //Obtiene el usuario con la foto actualizada y lo guarda en sesión  
     $_SESSION['usuario'] = gestionDatos::getUsuarioId($usuario->getId());
-    header('Location: ../Vistas/perfil.php');
+    if ($usuario->getRol() == 0) {
+        header('Location: ../Vistas/perfil.php');
+    } else {
+        if (isset($_SESSION['vieneAlum'])) {
+            header('Location: ../Vistas/perfil.php');
+        } else {
+            header('Location: ../Vistas/perfilP.php');
+        }
+    }
 }
 
 //-----------------EDITAR NUMERO TELEFONO
 if (isset($_REQUEST['editarTfno'])) {
     $tfno = $_REQUEST['tfno'];
     $usuario->setTelefono($tfno);
-    if (!gestionDatos::updateTfno($usuario)) {
-        $mensaje = 'No se ha podido cambiar número de teléfono';
-        $_SESSION['mensaje'] = $mensaje;
+    gestionDatos::updateTfno($usuario);
+    if ($usuario->getRol() == 0) {
+        header('Location: ../Vistas/perfil.php');
+    } else {
+        if (isset($_SESSION['vieneAlum'])) {
+            header('Location: ../Vistas/perfil.php');
+        } else {
+            header('Location: ../Vistas/perfilP.php');
+        }
     }
-    header('Location: ../Vistas/perfil.php');
 }
 
 //-----------------EDITAR CONTRASEÑA
 if (isset($_REQUEST['nuevaPass'])) {
     $pass = md5($_REQUEST['pass']);
-    if (!gestionDatos::updatePass($usuario, $pass)) {
+    if (!gestionDatos::setPassword($usuario->getEmail(), $pass)) {
         $mensaje = 'No se ha podido cambiar la contraseña';
         $_SESSION['mensaje'] = $mensaje;
     }
-    header('Location: ../Vistas/perfil.php');
+    if ($usuario->getRol() == 0) {
+        header('Location: ../Vistas/perfil.php');
+    } else {
+        if (isset($_SESSION['vieneAlum'])) {
+            header('Location: ../Vistas/perfil.php');
+        } else {
+            header('Location: ../Vistas/perfilP.php');
+        }
+    }
+}
+
+if (isset($_REQUEST['salirAlumno'])) {
+    if (isset($_SESSION['vieneAlum'])) {
+        unset($_SESSION['vieneAlum']);
+    }
+    header('Location: ../Vistas/inicioProfesor.php');
+}
+//------------------REALIZAR EXAMEN
+if (isset($_REQUEST['realizarExamen'])) {
+    $idE = $_REQUEST['realizarExamen'];
+    foreach ($examenesPendientes as $key => $examen) {
+        if ($examen->getId() == $idE) {
+            $examenS = $examen;
+        }
+    }
+    $_SESSION['examenS'] = $examenS;
+    header('Location: ../Vistas/realizarExamen.php');
 }

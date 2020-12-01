@@ -22,38 +22,48 @@ and open the template in the editor.
     <body>
         <?php
         require_once '../Modelo/Usuario.php';
+        include_once '../Modelo/Profesor.php';
+        include_once '../Modelo/Alumno.php';
         require_once '../Auxiliar/gestionDatos.php';
         session_start();
         $usuarios = $_SESSION['usuarios'];
         ?>
         <header>
-            <nav class="row navbar navbar-expand-lg navbar-dark fixed-top deg">
-                <div class="container-fluid ml-5 mr-5">
-                    <!--Left-->
-                    <ul class="navbar-nav mr-auto smooth-scroll">
-                        <li>
-                            <a href="inicioProfesor.php" class="btn mean-fruit-gradient btn-rounded text-white">
-                                <i class="fas fa-arrow-left"></i>
-                            </a>
-                        </li>
-                    </ul>
-                    <!-- Right -->
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <form name="cerrarSes" action="../Controlador/controladorCrud.php" method="post">
-                                <button type="submit" class="btn mean-fruit-gradient text-white
-                                        btn-rounded waves-effect z-depth-1a" name="nuevoUsuario" value="Añadir usuario">
-                                    <i class="fas fa-user-plus"></i>
-                                </button>
-                                <button type="submit" class="btn mean-fruit-gradient text-white
-                                        btn-rounded waves-effect z-depth-1a" name="cerrarSesion" value="Cerrar sesión">
-                                    <i class="fas fa-sign-out-alt"></i>
-                                </button>
-                            </form>
-                        </li> 
-                    </ul>
-                </div>
-            </nav>
+            <form name="cerrarSes" action="../Controlador/controladorCrud.php" method="post">
+                <nav class="row navbar navbar-expand-lg navbar-dark fixed-top colorNav">
+                    <div class="container-fluid ml-5 mr-5">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+                                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                            <!--Left-->
+                            <ul class="navbar-nav mr-auto smooth-scroll">
+                                <li class="nav-item">
+                                    <a href="inicioProfesor.php" class="btn mean-fruit-gradient btn-rounded text-white">
+                                        <i class="fas fa-arrow-left"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                            <!-- Right -->
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <button type="submit" class="btn mean-fruit-gradient text-white
+                                            btn-rounded waves-effect z-depth-1a" name="nuevoUsuario" value="Añadir usuario">
+                                        <i class="fas fa-user-plus"></i>
+                                    </button>
+                                </li>
+                                <li class="nav-item">
+                                    <button type="submit" class="btn mean-fruit-gradient text-white
+                                            btn-rounded waves-effect z-depth-1a" name="cerrarSesion" value="Cerrar sesión">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </form>
         </header>
         <div class="pt-5"></div>
         <main class="my-5 z-depth-1">
@@ -222,7 +232,7 @@ and open the template in the editor.
                 </section>
             </div>
         </main>
-        <footer class="footer-copyright text-center text-white py-3 z-depth-2">
+        <footer class="footer-copyright text-center text-white py-3 z-depth-2 colorNav fixed-bottom">
             <div> © 2020 Copyright: Israel y María</div>
         </footer>
         <!-- jQuery -->
