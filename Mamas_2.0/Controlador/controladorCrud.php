@@ -17,7 +17,7 @@ if (isset($_REQUEST['cerrarSesion'])) {
     header('Location: ../index.php');
 }
 
-//------------------EDITAR USUARIO
+//------------------EDITAR USUARIO AUTOR:MARIA
 if (isset($_REQUEST['editarUsuario'])) {
     $usuarios = $_SESSION['usuarios'];
     if (count($usuarios) > 0) {
@@ -51,7 +51,7 @@ if (isset($_REQUEST['editarUsuario'])) {
     }
 }
 
-//------------------ELIMINAR USUARIO
+//------------------ELIMINAR USUARIO AUTOR:MARIA
 if (isset($_REQUEST['borrarUsuario'])) {
     $usuarios = $_SESSION['usuarios'];
     if (count($usuarios) > 0) {
@@ -74,7 +74,7 @@ if (isset($_REQUEST['borrarUsuario'])) {
     }
 }
 
-//------------------CREAR USUARIO
+//------------------CREAR USUARIO AUTOR:MARIA
 if (isset($_REQUEST['nuevoUsuario'])) {
     header('Location: ../Vistas/registroAdmin.php');
 }
@@ -153,7 +153,7 @@ if (isset($_REQUEST['crearUsuario'])) {
     }
 }
 
-//--------------------ACTIVAR USUARIO
+//--------------------ACTIVAR USUARIO AUTOR:MARIA
 if (isset($_REQUEST['activarUsuario'])) {
     $usuarios = $_SESSION['usuarios'];
     if (count($usuarios) > 0) {
@@ -175,7 +175,7 @@ if (isset($_REQUEST['activarUsuario'])) {
     }
 }
 
-//--------------------DESACTIVAR USUARIO
+//--------------------DESACTIVAR USUARIO AUTOR:MARIA
 if (isset($_REQUEST['desactivarUsuario'])) {
     $usuarios = $_SESSION['usuarios'];
     if (count($usuarios) > 0) {
@@ -197,7 +197,7 @@ if (isset($_REQUEST['desactivarUsuario'])) {
     }
 }
 
-//--------------------CAMBIAR ROL ADMINISTRADOR
+//--------------------CAMBIAR ROL ADMINISTRADOR AUTOR:MARIA
 if (isset($_REQUEST['cambiarRolAdmnistrador'])) {
     $usuarios = $_SESSION['usuarios'];
     if (count($usuarios) > 0) {
@@ -227,7 +227,7 @@ if (isset($_REQUEST['cambiarRolAdmnistrador'])) {
     }
 }
 
-//--------------------CAMBIAR ROL PROFESOR
+//--------------------CAMBIAR ROL PROFESOR AUTOR:MARIA
 if (isset($_REQUEST['cambiarRolProfesor'])) {
     $usuarios = $_SESSION['usuarios'];
     if (count($usuarios) > 0) {

@@ -9,8 +9,10 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <title></title>
     </head>
+    
     <body>
         <?php
+        //------------------AUTOR:MARIA
         include_once '../Auxiliar/constantes.php';
         session_start();
 
