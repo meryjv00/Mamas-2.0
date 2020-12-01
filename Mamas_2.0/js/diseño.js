@@ -4,6 +4,5 @@
  * and open the template in the editor.
  */
 $(function () {
-  $('[data-toggle="tooltip"]').tooltip()
+    $('[data-toggle="tooltip"]').tooltip()
 })
-

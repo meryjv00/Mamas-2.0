@@ -28,9 +28,9 @@ and open the template in the editor.
         $usuario = $_SESSION['usuario'];
         $asignaturaS = $_SESSION['asignaturaS'];
         $profesorS = $_SESSION['profesorAsignaturaS'];
-        $examenesPendientes = $_SESSION['examenesPendientesA'];
-        $examenesRealizados = $_SESSION['examenesRealizadosA'];
-        $examenesCorregidos = $_SESSION['examenesCorregidosA'];
+        $examenesPendientes = $_SESSION['examenesPendientes'];
+        $examenesRealizados = $_SESSION['examenesR'];
+        $examenesCorregidos = $_SESSION['examenesC'];
         $controlador = '../Controlador/controladorAlumno.php';
         ?>
         <header class="bg-white">
@@ -74,7 +74,7 @@ and open the template in the editor.
                 </div>
             </nav>
         </header>
-        <main class="pb-5 pt-5">
+        <main class="pb-5 pt-5 mb-5">
             <?php
             if (isset($_SESSION['mensaje'])) {
                 $mensaje = $_SESSION['mensaje'];
@@ -86,10 +86,10 @@ and open the template in the editor.
                 unset($_SESSION['mensaje']);
             }
             ?>
-            <div class="container-fluid my-4 py-4">
+            <div class="container-fluid my-4 py-4  mb-5">
 
                 <!-- Section: Block Content -->
-                <section class="row">
+                <section class="row altura d-flex justify-content-center align-items-center">
 
                     <style>
                         .footer-hover {
@@ -107,125 +107,106 @@ and open the template in the editor.
                         }
                     </style>
                     <div class="col-md-9 mx-auto">
-                        <div class="row mx-1">
-                            <div class=" bg-white mx-auto list-group-flush  rounded mb-4 col-md-4 " >
-                                <div class="row ">
-                                    <img src="data:image/png;base64,<?php echo base64_encode($asignaturaS->getImagen()); ?>" alt="titulo foto" class=" mx-auto img-fluid" style=" height: 210px"/>
-                                </div>
-                                <div class="bg-white list-group-item active d-flex justify-content-start align-items-center py-3">
-                                    <?php
-                                    if ($profesorS->getImagen() == "") {
-                                        ?>
-                                        <img class="rounded-circle" src="../img/defectousu.png" height="50"/>
-                                        <?php
-                                    } else {
-                                        ?>
-                                        <img src="data:image/png;base64,<?php echo base64_encode($profesorS->getImagen()); ?>" class="rounded-circle z-depth-0" width="50" alt="avatar image">
-                                        <?php
-                                    }
-                                    ?>
-                                    <div class="d-flex flex-column pl-3 ">
-                                        <p class="font-weight-bold letra titulo mb-0"> <?php echo $profesorS->getNombre(); ?></p>
+                        <div class="row mx-1 mb-4">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="bg-white list-group-flush rounded mb-4 col-md-8 mx-auto" >
+                                        <div class="row ">
+                                            <img src="data:image/png;base64,<?php echo base64_encode($asignaturaS->getImagen()); ?>" alt="titulo foto" class=" mx-auto img-fluid" style=" height: 210px"/>
+                                        </div>
+                                        <div class="bg-white list-group-item active d-flex justify-content-start align-items-center py-3">
+                                            <?php
+                                            if ($profesorS->getImagen() == "") {
+                                                ?>
+                                                <img class="rounded-circle" src="../img/defectousu.png" height="50"/>
+                                                <?php
+                                            } else {
+                                                ?>
+                                                <img src="data:image/png;base64,<?php echo base64_encode($profesorS->getImagen()); ?>" class="rounded-circle z-depth-0" width="50" alt="avatar image">
+                                                <?php
+                                            }
+                                            ?>
+                                            <div class="d-flex flex-column pl-3 ">
+                                                <p class="font-weight-bold letra titulo mb-0"> <?php echo $profesorS->getNombre(); ?></p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-
-
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 mb-4">
+                                        <div class="card  orange lighten-3 white-text">
+                                            <div class="card-body d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <p class="h2-responsive font-weight-bold mt-n2 mb-0"><?= count($examenesPendientes) ?></p>
+                                                    <p class="mb-0">Exámenes pendientes</p>
+                                                </div>
+                                                <div>
+                                                    <i class="fas fa-hourglass-end fa-4x text-black-40"></i>
+                                                </div>
+                                            </div>
+                                            <a class="card-footer footer-hover small text-center white-text border-0 p-2"style="height: 35px"></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 mb-4">
+                                        <div class="card purple lighten-3 white-text">
+                                            <div class="card-body d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <p class="h2-responsive font-weight-bold mt-n2 mb-0"><?= count($examenesRealizados) ?></p>
+                                                    <p class="mb-0">Exámenes realizados</p>
+                                                </div>
+                                                <div>
+                                                    <i class="fas fa-feather-alt  fa-4x text-black-40"></i>
+                                                </div>
+                                            </div>
+                                            <a class="card-footer footer-hover small text-center white-text border-0 p-2" style="height: 35px"></a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
-                        <!-- Grid row -->
-                        <div class="row">
-
-                            <!-- Grid column -->
-                            <div class="col-md-6  mb-4">
-
-                                <!-- Card -->
-                                <div class="card  orange lighten-3 white-text">
-                                    <div class="card-body d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <p class="h2-responsive font-weight-bold mt-n2 mb-0"><?= count($examenesPendientes) ?></p>
-                                            <p class="mb-0">Exámenes pendientes</p>
+                        <form action="../Controlador/controladorAlumno.php" method="post">
+                            <div class="row mb-5">
+                                <div class="col-md-6  mb-4">
+                                    <div class="card purple lighten-3 white-text">
+                                        <div class="card-body d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <p class="h2-responsive font-weight-bold mt-n2 mb-0"><?= count($examenesRealizados) + count($examenesPendientes) ?></p>
+                                                <p class="mb-0">Exámenes</p>
+                                            </div>
+                                            <div>
+                                                <i class="fas fa-check-double fa-4x text-black-40"></i>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <i class="fas fa-hourglass-end fa-4x text-black-40"></i>
-                                        </div>
+
+                                        <button class="card-footer footer-hover small text-center white-text border-0 p-2" type="submit" name="verExamenesAlumno">
+                                            Más información<i class="fas fa-arrow-circle-right pl-2"></i>
+                                        </button>
                                     </div>
-                                    <a class="card-footer footer-hover small text-center white-text border-0 p-2">Más información<i class="fas fa-arrow-circle-right pl-2"></i></a>
                                 </div>
-                                <!-- Card -->
-                            </div>
-                            <!-- Grid column -->
-                            <!-- Grid column -->
-                            <div class="col-md-6  mb-4">
 
-                                <!-- Card -->
-                                <div class="card purple lighten-3 white-text">
-                                    <div class="card-body d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <p class="h2-responsive font-weight-bold mt-n2 mb-0"><?= count($examenesRealizados) ?></p>
-                                            <p class="mb-0">Exámenes realizados</p>
+                                <div class="col-md-6  mb-4">
+                                    <div class="card orange lighten-3 white-text">
+                                        <div class="card-body d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <p class="h2-responsive font-weight-bold mt-n2 mb-0 pr-2"><i class="fas fa-graduation-cap fa-x "></i> </p>
+                                                <p class="mb-0">Resultados</p>
+                                            </div>
+                                            <div>
+                                                <i class="fas fa-chart-pie fa-4x text-black-40"></i>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <i class="fas fa-feather-alt  fa-4x text-black-40"></i>
-                                        </div>
+                                        <button class="card-footer footer-hover small text-center white-text border-0 p-2" type="submit" name="verNotasAlumno">
+                                            Más información<i class="fas fa-arrow-circle-right pl-2"></i>
+                                        </button>                                
                                     </div>
-                                    <a class="card-footer footer-hover small text-center white-text border-0 p-2">Más información<i class="fas fa-arrow-circle-right pl-2"></i></a>
                                 </div>
-                                <!-- Card -->
-
                             </div>
-                            <!-- Grid column -->
-
-                            <!-- Grid column -->
-                            <div class="col-md-6  mb-4">
-
-                                <!-- Card -->
-                                <div class="card purple lighten-3 white-text">
-                                    <div class="card-body d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <p class="h2-responsive font-weight-bold mt-n2 mb-0"><?= count($examenesCorregidos) ?></p>
-                                            <p class="mb-0">Exámenes corregidos</p>
-                                        </div>
-                                        <div>
-                                            <i class="fas fa-check-double fa-4x text-black-40"></i>
-                                        </div>
-                                    </div>
-                                    <a class="card-footer footer-hover small text-center white-text border-0 p-2">Más información<i class="fas fa-arrow-circle-right pl-2"></i></a>
-                                </div>
-                                <!-- Card -->
-
-                            </div>
-                            <!-- Grid column -->
-
-                            <!-- Grid column -->
-                            <div class="col-md-6  mb-4">
-
-                                <!-- Card -->
-                                <div class="card orange lighten-3 white-text">
-                                    <div class="card-body d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <p class="h2-responsive font-weight-bold mt-n2 mb-0 pr-2"><i class="fas fa-graduation-cap fa-x "></i> </p>
-                                            <p class="mb-0">Resultados</p>
-                                        </div>
-                                        <div>
-                                            <i class="fas fa-chart-pie fa-4x text-black-40"></i>
-                                        </div>
-                                    </div>
-                                    <a class="card-footer footer-hover small text-center white-text border-0 p-2">Más información<i class="fas fa-arrow-circle-right pl-2"></i></a>
-                                </div>
-                                <!-- Card -->
-
-                            </div>
-                            <!-- Grid column -->
-                        </div>
+                        </form>
                     </div>
-                    <!-- Grid row -->
-
                 </section>
-                <!-- Section: Block Content -->
-
             </div>
-
         </main>
         <footer class="footer-copyright text-center text-white py-3 z-depth-2 colorNav fixed-bottom">
             <div> © 2020 Copyright: Israel y María</div>

@@ -72,12 +72,6 @@ and open the template in the editor.
                             <ul class="navbar-nav">
                                 <li class="nav-item">
                                     <button type="submit" class="btn mean-fruit-gradient text-white 
-                                            btn-rounded waves-effect z-depth-1a" name="verExamenes" value="Ver exámenes">
-                                        <i class="far fa-eye pr-1"></i> exámenes
-                                    </button>
-                                </li>
-                                <li class="nav-item">
-                                    <button type="submit" class="btn mean-fruit-gradient text-white 
                                             btn-rounded waves-effect z-depth-1a" name="crearExamenes" value="Crear exámenes">
                                         <i class="fas fa-plus pr-1"></i> exámenes
                                     </button>
@@ -107,11 +101,11 @@ and open the template in the editor.
             </form>
         </header>
 
-        <main class="pt-5 pb-5 ml-4 align-content-center">
-            <div class="container-fluid row ">
+        <main class="pb-5 pt-5 ml-4">
+            <div class="container-fluid my-5 row altura d-flex justify-content-center align-items-center">
                 <div class="col-md-2 "></div> 
-                <div class=" col-md-8 mt-5">
-                    <div class="row">
+                <div class=" col-md-8">
+                    <div class="row ">
                         <div class="col-md-10 mx-auto card card-cascade narrower pb-5 bg-white">
                             <div class="view view-cascade gradient-card-header mean-fruit-gradient">
                                 <!-- Title -->
@@ -182,9 +176,7 @@ and open the template in the editor.
                     </div>
 
                 </div><div class="col-md-2 "></div> 
-
-
-
+            </div>
         </main>
         <footer class="footer-copyright text-center text-white py-3 z-depth-2 colorNav fixed-bottom">
             <div> © 2020 Copyright: Israel y María</div>

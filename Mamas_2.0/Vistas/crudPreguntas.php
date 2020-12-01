@@ -35,7 +35,7 @@ and open the template in the editor.
             $preguntas = $_SESSION['preguntasDisponibles'];
         }
         ?>
-                <header>
+        <header>
             <form name="formu" action="../Controlador/controladorProfesor.php" method="post">
                 <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar colorNav">
                     <div class="container-fluid ml-5 mr-5">
@@ -74,12 +74,6 @@ and open the template in the editor.
                             </ul>
                             <!--RIGHT-->
                             <ul class="navbar-nav">
-                                <li class="nav-item">
-                                    <button type="submit" class="btn mean-fruit-gradient text-white 
-                                            btn-rounded waves-effect z-depth-1a" name="verExamenes" value="Ver exámenes">
-                                        <i class="far fa-eye pr-1"></i> exámenes
-                                    </button>
-                                </li>
                                 <li class="nav-item">
                                     <button type="submit" class="btn mean-fruit-gradient text-white 
                                             btn-rounded waves-effect z-depth-1a" name="crearExamenes" value="Crear exámenes">
@@ -158,13 +152,13 @@ and open the template in the editor.
                                         <div class="mx-auto"></div>
                                         <h4 class="card-header-title  text-center titulo text-white pt-2 pb-2 ">Preguntas</h4>
                                         <div class="ml-auto mr-5 pb-2">
-                                            <button type="submit" name="verExamenP" class="btn btn-outline-white btn-rounded btn-sm px-2"
-                                                    data-toggle="tooltip" data-placement="top" title="Volver al exámen">
-                                                <i class="fas fa-file-import" style="font-size: 20px"></i>
-                                            </button>
                                             <button type="submit" name="asignarPregunta" class="btn btn-outline-white btn-rounded btn-sm px-2"
                                                     data-toggle="tooltip" data-placement="top" title="Asignar preguntas">
                                                 <i class="far fa-file-powerpoint px-1" style="font-size: 20px"></i>
+                                            </button>
+                                            <button type="submit" name="verExamenP" class="btn btn-outline-white btn-rounded btn-sm px-2"
+                                                    data-toggle="tooltip" data-placement="top" title="Volver al exámen">
+                                                <i class="fas fa-file-import" style="font-size: 20px"></i>
                                             </button>
                                         </div>
                                     </div>

@@ -74,12 +74,6 @@ and open the template in the editor.
                             <ul class="navbar-nav">
                                 <li class="nav-item">
                                     <button type="submit" class="btn mean-fruit-gradient text-white 
-                                            btn-rounded waves-effect z-depth-1a" name="verExamenes" value="Ver exámenes">
-                                        <i class="far fa-eye pr-1"></i> exámenes
-                                    </button>
-                                </li>
-                                <li class="nav-item">
-                                    <button type="submit" class="btn mean-fruit-gradient text-white 
                                             btn-rounded waves-effect z-depth-1a" name="crearExamenes" value="Crear exámenes">
                                         <i class="fas fa-plus pr-1"></i> exámenes
                                     </button>
@@ -115,14 +109,12 @@ and open the template in the editor.
                         <div class="col-md-10 mx-auto card card-cascade narrower pb-2 bg-white">
                             <form name="formPreg" action="../Controlador/controladorProfesor.php" method="post">
                                 <div class="row view view-cascade gradient-card-header mean-fruit-gradient py-1">
-
                                     <div class="mx-auto"></div>
                                     <h2 class="card-header-title  mx-auto text-center titulo text-white py-2 ">Añadir preguntas a exámen</h2>
-                                    <button type="submit" name="verExamenS" class="ml-auto mr-3 btn btn-outline-white btn-rounded btn-sm px-2"
-                                            data-toggle="tooltip" data-placement="top" title="Ver exámen en detalle">
-                                        <i class="far fa-eye " style="font-size: 20px"></i>
+                                    <button type="submit" name="verExamenS" data-toggle="tooltip" data-placement="top" title="Ver exámen en detalle"  
+                                            class="btn btn-outline-secondary btn-rounded btn-sm  purple lighten-3 ml-auto mr-3">
+                                        <i class="far fa-eye" style="font-size: 20px ;color: white"></i>
                                     </button>
-
                                 </div>
                             </form>
                             <div class="justify-content-center">
@@ -199,7 +191,7 @@ and open the template in the editor.
                                                                                         } else {
                                                                                             $icono = "fas fa-check";
                                                                                         }
-                                                                                    }else{
+                                                                                    } else {
                                                                                         $icono = "fas fa-sort-alpha-up";
                                                                                     }
                                                                                     ?>

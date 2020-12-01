@@ -27,110 +27,71 @@ and open the template in the editor.
         include_once '../Modelo/Examen.php';
         include_once '../Modelo/Pregunta.php';
         include_once '../Modelo/Respuesta.php';
+        include_once '../Modelo/Solucion.php';
+        include_once '../Modelo/Correccion.php';
         session_start();
         $usuario = $_SESSION['usuario'];
         $asignatura = $_SESSION['asignaturasImpartidas'];
         $examenes = $asignatura[0]->getExamenes();
-        $examen = $_SESSION['examenS'];
-        $creador = $_SESSION['creadorEx'];
+        $examen = $_SESSION['examenSeleccionado'];
+        $solucion = $_SESSION['solucionSeleccionada'];
+        $correccion = $solucion->getCorreccion();
+        $notas = $correccion->getNotas();
+        $respuestasSolucion = $solucion->getRespuestas();
+        $notaTotal = $_SESSION['notaTotal'];
         ?>
         <header>
-            <form name="formu" action="../Controlador/controladorProfesor.php" method="post">
-                <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar colorNav">
-                    <div class="container-fluid ml-5 mr-5">
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
-                                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-                            <!--LEFT-->
-                            <ul class="navbar-nav mr-auto smooth-scroll">
-                                <!--CRUD ADMINISTRADOR-->
+            <nav class="row navbar navbar-expand-lg navbar-dark fixed-top colorNav">
+                <div class="container-fluid">
+                    <ul class="navbar-nav mr-auto ml-5">
+                        <li class="nav-item">
+                            <!--CRUD ADMINISTRADOR-->
+                            <form name="home" action="../Controlador/controladorAlumno.php" method="post">
+                                <button type="submit" class="btn mean-fruit-gradient text-white
+                                        btn-rounded waves-effect z-depth-1a" name="home" value="home">
+                                    <i class="fas fa-home"></i>
+                                </button>
                                 <?php
-                                if ($usuario->getRol() == 2) {
+                                if ($usuario->getRol() == 1 || $usuario->getRol() == 2) {
                                     ?>
-                                    <li class="nav-item">
-                                        <button type="submit" class="btn mean-fruit-gradient text-white
-                                                btn-rounded waves-effect z-depth-1a" name="CRUDadmin" value="CRUDadmin">
-                                            <i class="fas fa-cog"></i>
-                                        </button>
-                                    </li>
+                                    <button type="submit" class="btn mean-fruit-gradient text-white
+                                            btn-rounded waves-effect z-depth-1a" name="salirAlumno" value="salirAlumno">
+                                        <i class="fas fa-times"></i>
+                                    </button>
                                     <?php
                                 }
                                 ?>
-                                <li  class="nav-item">
-                                    <button type="submit" class="btn mean-fruit-gradient text-white
-                                            btn-rounded waves-effect z-depth-1a" name="home" value="home">
-                                        <i class="fas fa-home"></i>
-                                    </button>
-                                </li>
-                                <li class="nav-item">
-                                    <button type="submit" class="btn mean-fruit-gradient text-white
-                                            btn-rounded waves-effect z-depth-1a" name="homeInicio" value="homeInicio">
-                                        <i class="far fa-eye pr-1"></i> alumno
-                                    </button>
-                                </li>
-                            </ul>
-                            <!--RIGHT-->
-                            <ul class="navbar-nav">
-                                <li class="nav-item">
-                                    <button type="submit" class="btn mean-fruit-gradient text-white 
-                                            btn-rounded waves-effect z-depth-1a" name="crearExamenes" value="Crear exámenes">
-                                        <i class="fas fa-plus pr-1"></i> exámenes
-                                    </button>
-                                </li>
-                                <li class="nav-item">
-                                    <button type="submit" class="btn mean-fruit-gradient text-white 
-                                            btn-rounded waves-effect z-depth-1a" name="crearPreguntas" value="Crear preguntas">
-                                        <i class="fas fa-plus pr-1"></i>  preguntas
-                                    </button>
-                                </li>
-                                <li class="nav-item">
-                                    <button type="submit" class="btn mean-fruit-gradient text-white
-                                            btn-rounded waves-effect z-depth-1a" name="perfil" value="Ver perfil">
-                                        <i class="fas fa-user"></i>
-                                    </button>
-                                </li>
-                                <li class="nav-item">
-                                    <button type="submit" class="btn mean-fruit-gradient text-white
-                                            btn-rounded waves-effect z-depth-1a" name="cerrarSesion" value="Cerrar sesión">
-                                        <i class="fas fa-sign-out-alt"></i>
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
-            </form>
+
+                            </form>
+                        </li> 
+                    </ul>
+                    <ul class="navbar-nav ml-auto mr-5">
+                        <li class="nav-item">
+                            <form name="cerrarSes" action="../Controlador/controladorAlumno.php" method="post">
+                                <button type="submit" class="btn mean-fruit-gradient text-white
+                                        btn-rounded waves-effect z-depth-1a" name="perfil" value="Ver perfil">
+                                    <i class="fas fa-user"></i>
+                                </button>
+                                <button type="submit" class="btn mean-fruit-gradient text-white
+                                        btn-rounded waves-effect z-depth-1a" name="cerrarSesion" value="Cerrar sesión">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                </button>
+                            </form>
+                        </li> 
+                    </ul>
+                </div>
+            </nav>
         </header>
         <main class="pt-5">
             <div class="container mt-5 ">
                 <!--Section: Content-->
                 <form name="formu" action="../Controlador/controladorProfesor.php" method="post">
                     <section class="mx-md-5 dark-grey-text">
-
-                        <!-- Grid row -->
                         <div class="row">
-
-                            <!-- Grid column -->
                             <div class="col-md-12">
-
-                                <!-- Card -->
                                 <div class="card card-cascade wider reverse">
                                     <div class="view view-cascade gradient-card-header mean-fruit-gradient">
-                                        <div class="row">
-                                            <div class="mx-auto"></div>
-                                            <h4 class="card-header-title  text-center titulo text-white pt-2 pb-2">Información exámen</h4>
-                                            <div class="ml-auto mr-4 pb-2">
-                                                <!-- Facebook -->
-                                                <button name="corregir" data-toggle="tooltip" data-placement="top" title="Corregir exámen" class=" btn btn-outline-secondary btn-rounded btn-sm  purple lighten-3" ">
-                                                    <i class="fas fa-file-signature" style="font-size: 20px ;color: white"></i>
-                                                </button>
-                                                <button name="asignarP" data-toggle="tooltip" data-placement="top" title="Asignar preguntas"  class=" btn btn-outline-secondary btn-rounded btn-sm  purple lighten-3" ">
-                                                    <i class="far fa-file-powerpoint" style="font-size: 20px ;color: white"></i>
-                                                </button>
-                                            </div>
-                                        </div>
+                                        <h4 class="card-header-title  text-center titulo text-white pt-2 pb-2">Exámen</h4>
                                     </div>
 
                                     <!-- Card content -->
@@ -148,10 +109,11 @@ and open the template in the editor.
                                         ?>
                                         <h3 class="font-weight-bold "><a><?= $examen->getContenido() ?></a></h3>
                                         <!-- Data -->
-                                        <p>Creado por: <?= $creador->getNombre(); ?></p>
+                                        <span class="badge fa-2x badge-pill badge-secondary mb-2"><?php echo $notas[0] . '/' . $notaTotal; ?></span>
                                         <p>Numero de preguntas: <?= count($examen->getPreguntas()); ?></p>
+
                                         <div class="mt-3">
-                                            <h3>Descripción</h3>
+                                            <h3 class="font-weight-bold">Descripción</h3>
                                             <p><?= $examen->getDescripcion() ?></p>
                                         </div>
                                         <div class="row pt-3 text-left">
@@ -164,53 +126,69 @@ and open the template in the editor.
                                                 foreach ($preguntas as $i => $pregunta) {
                                                     $contPregunta++;
                                                     ?>
-                                                    <section class="mx-auto mt-3 white-dark purple lighten-4 pt-1 rounded">
+                                                    <section class="mx-auto mt-3 white-dark purple lighten-4 py-3 pt-1 rounded">
                                                         <div class="row px-4">
                                                             <div class="col-md-12">
-                                                                <h5><?= $contPregunta . '. ' ?><?= $pregunta->getEnunciado() ?></h5>
+                                                                <h5><?= $contPregunta . '. ' ?><?= $pregunta->getEnunciado() ?><?= ' (' . $pregunta->getPuntuacion() . ' puntos)' ?> </h5> 
                                                             </div>
 
                                                             <?php
                                                             $respuestas = $pregunta->getRespuestas();
-                                                            if ($pregunta->getTipo() == 0) {
-                                                                $txt = "Palabras claves:";
-                                                            } else {
-                                                                $txt = "Opciones:";
-                                                            }
                                                             ?>
-                                                            <span class="col-md-12 mt-1"><?= $txt ?></span>
+
                                                             <div class="col-md-12">
                                                                 <?php
                                                                 foreach ($respuestas as $j => $respuesta) {
                                                                     $contOpciones++;
                                                                     if ($pregunta->getTipo() == 1) {
+                                                                        if ($respuestasSolucion[$i]->getRespuesta() == $respuesta->getRespuesta()) {
+                                                                            if ($respuesta->getCorrecta() == 1) {
+                                                                                $color = "#237965";
+                                                                            } else {
+                                                                                $color = "#E25B64";
+                                                                            }
+                                                                            ?>
+                                                                            <i class="fas fa-hand-point-right letra" style="color: <?= $color ?>"></i>
+                                                                            <?php
+                                                                        }
                                                                         if ($respuesta->getCorrecta() == 0) {
                                                                             $icono = "fas fa-times";
                                                                         } else {
                                                                             $icono = "fas fa-check";
                                                                         }
+                                                                        ?>  <span><?= $contOpciones . ') ' . $respuesta->getRespuesta() ?> <i class="<?= $icono ?> letra"></i></span><br>
+                                                                        <?php
                                                                     } else {
-                                                                        $icono = "fas fa-sort-alpha-up";
-                                                                    }
-                                                                    ?>
-                                                                    <span><?= $contOpciones . ') ' . $respuesta->getRespuesta() ?> <i class="<?= $icono ?> letra"></i></span><br>
+                                                                        if ($contOpciones == 1) {
+                                                                            ?><textarea style="resize: none;" readonly  rows="5" cols="10"  class="form-control mb-3" ><?= $respuestasSolucion[$i]->getRespuesta() ?></textarea><?php
+                                                                            }
+                                                                        }
+                                                                        ?>
+
                                                                     <?php
                                                                 }
                                                                 $contOpciones = 0;
                                                                 ?>
                                                             </div>
                                                         </div>
-                                                        <div class="row">
-                                                            <div class="col-md-2 ml-auto">
-                                                                <button type="submit" name="<?= $i ?>" value="Borrar" class=" btn purple lighten-2 text-white 
-                                                                        btn-block waves-effect z-depth-1a"><i class="fas fa-trash-alt"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
+
                                                     </section>
                                                     <?php
                                                 }
                                                 ?>
+
+                                            </div>
+                                            <div class="col-md-8 mx-auto border pb-3 mt-3">
+                                                <section class="mx-auto mt-3 white-dark text-left orange lighten-3 pt-1 rounded py-2 my-2">
+                                                    <div class="row px-4">
+                                                        <div class="col-md-12 mx-auto">
+                                                            <h5 class="text-center">Anotación</h5>
+                                                            <textarea style="resize: none;"  readonly  rows="5" cols="10"  class="form-control mb-3" ><?= $correccion->getAnotacion()[0] ?></textarea>
+
+                                                        </div>
+                                                    </div>
+                                                </section>
+
                                             </div>
                                         </div>
 

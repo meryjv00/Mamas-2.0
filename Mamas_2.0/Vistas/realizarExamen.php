@@ -41,11 +41,12 @@ and open the template in the editor.
         ?>
 
         <header>
-            <nav class="row navbar navbar-expand-lg navbar-dark fixed-top deg">
+            <nav class="row navbar navbar-expand-lg navbar-dark fixed-top colorNav">
                 <div class="container-fluid">
                     <ul class="navbar-nav mr-auto ml-5">
                         <li class="nav-item">
-                            <form name = "home" action = "<?= $controlador ?>" method = "post">
+                            <!--CRUD ADMINISTRADOR-->
+                            <form name="home" action="<?= $controlador ?>" method="post">
                                 <button type="submit" class="btn mean-fruit-gradient text-white
                                         btn-rounded waves-effect z-depth-1a" name="home" value="home">
                                     <i class="fas fa-home"></i>
@@ -53,14 +54,15 @@ and open the template in the editor.
                                 <?php
                                 if ($usuario->getRol() == 1 || $usuario->getRol() == 2) {
                                     ?>
-                                    <a href="inicioProfesor.php" class="btn mean-fruit-gradient btn-rounded text-white">
+                                    <button type="submit" class="btn mean-fruit-gradient text-white
+                                            btn-rounded waves-effect z-depth-1a" name="salirAlumno" value="salirAlumno">
                                         <i class="fas fa-times"></i>
-                                    </a>
+                                    </button>
                                     <?php
                                 }
                                 ?>
-                            </form>
 
+                            </form>
                         </li> 
                     </ul>
                     <ul class="navbar-nav ml-auto mr-5">
@@ -87,7 +89,7 @@ and open the template in the editor.
                         <div class="col-md-12">
                             <div class="card card-cascade wider reverse">
                                 <div class="view view-cascade gradient-card-header mean-fruit-gradient">
-                                    <h4 class="card-header-title  text-center titulo text-white pt-2 pb-2  ">Examen</h4>
+                                    <h4 class="card-header-title  text-center titulo text-white pt-2 pb-2  ">Exámen</h4>
                                 </div>
 
                                 <div class="view view-cascade overlay pt-4">
@@ -98,7 +100,7 @@ and open the template in the editor.
                                     <!-- Data -->
                                     <p>Numero de preguntas: <?= count($examen->getPreguntas()); ?></p>
                                     <div class="mt-3">
-                                        <h3>Descripcion</h3>
+                                        <h3>Descripción</h3>
                                         <p><?= $examen->getDescripcion() ?></p>
                                     </div>
                                     <div class="row pt-3">
@@ -169,8 +171,7 @@ and open the template in the editor.
                 </section>
             </div>
         </main> 
-
-        <footer class="footer-copyright text-center text-white py-3 z-depth-2">
+        <footer class="footer-copyright text-center text-white py-3 z-depth-2 colorNav fixed-bottom">
             <div> © 2020 Copyright: Israel y María</div>
         </footer>
 

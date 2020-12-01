@@ -89,15 +89,23 @@ if (isset($_REQUEST['entregarExamen'])) {
             $j++;
             $idP = $pregunta->getId();
             $rep = new Respuesta(0, $usuario->getId(), $r, 0);
-            gestionDatos::insertRespuesta($r, $usuario->getId(), $idP);
-            $rep->setId(gestionDatos::getIdRespuesta() + 1);
+
+            gestionDatos::insertRespuestaAlumno($r, $usuario->getId(), $idP);
+            $rep->setId(gestionDatos::getIdRespuesta());
             $solucion->addRespuesta($rep);
         } else {
+            $r = "";
             $j++;
+            $idP = $pregunta->getId();
+            $rep = new Respuesta(0, $usuario->getId(), $r, 0);
+
+            gestionDatos::insertRespuestaAlumno($r, $usuario->getId(), $idP);
+            $rep->setId(gestionDatos::getIdRespuesta());
+            $solucion->addRespuesta($rep);
         }
     }
     gestionDatos::insertSolucion($usuario->getId(), $examenS->getId());
-    $solucion->setId(gestionDatos::getIdSolucion() + 1);
+    $solucion->setId(gestionDatos::getIdSolucion());
     foreach ($solucion->getRespuestas() as $respuesta) {
         gestionDatos::asignarRespuesta($solucion->getId(), $respuesta->getId());
     }
@@ -109,10 +117,10 @@ if (isset($_REQUEST['entregarExamen'])) {
         }
     }
     $_SESSION['examenesPendientes'] = $examenesPendientes;
-    if (isset($_SESSION['examenesRealizados'])) {
-        $realizados = $_SESSION['examenesRealizados'];
+    if (isset($_SESSION['examenesR'])) {
+        $realizados = $_SESSION['examenesR'];
         $realizados[] = $examenS;
-        $_SESSION['examenesRealizados'] = $realizados;
+        $_SESSION['examenesR'] = $realizados;
     }
     $mensaje = 'Examen Entregado,SUERTE!!';
     $_SESSION['mensaje'] = $mensaje;
@@ -120,6 +128,94 @@ if (isset($_REQUEST['entregarExamen'])) {
 }
 if (isset($_REQUEST['salirAlumno'])) {
     header('Location: ../Vistas/inicioProfesor.php');
+}
+
+//---------------------------VER EXÁMENES ALUMNO
+if (isset($_REQUEST['verExamenesAlumno'])) {
+    $examenesPendientes = $_SESSION['examenesPendientes'];
+    $examenesRealizados = $_SESSION['examenesR'];
+    $examenesCorregidos = $_SESSION['examenesC'];
+    $examenes = array();
+    if ($usuario->getRol() != 0) {
+        $soluciones = 0;
+    } else {
+        $soluciones = $usuario->getSoluciones();
+    }
+    foreach ($examenesPendientes as $i => $examenP) {
+        $examenes[] = $examenP;
+    }
+    foreach ($examenesRealizados as $i => $examenR) {
+        $examenes[] = $examenR;
+    }
+    $_SESSION['examenesMostrar'] = $examenes;
+    header('Location: ../Vistas/crudExamenesAlumno.php');
+}
+//---------------------------VER NOTAS ALUMNO
+if (isset($_REQUEST['verNotasAlumno'])) {
+    $examenesCorregidos = $_SESSION['examenesC'];
+
+    header('Location: ../Vistas/notas.php');
+}
+
+//----------------------------------------------
+if (isset($_REQUEST['verExamenAlumno'])) {
+    $pulsado = false;
+    $examenes = $_SESSION['examenesMostrar'];
+    $cont = 0;
+    foreach ($examenes as $i => $examen) {
+        if (isset($_REQUEST[$i])) {
+            $pulsado = true;
+            $pos = $i;
+        }
+    }
+    if (!$pulsado) {
+        $_SESSION['mensaje'] = "Marca el exámen que quieras ver";
+        header('Location: ../Vistas/crudExamenesAlumno.php');
+    } else {
+        $examenSel = $examenes[$pos];
+        $_SESSION['examenSeleccionado'] = $examenSel;
+        if ($usuario->getRol() != 0) {
+            $_SESSION['mensaje'] = "No has realizado ningun examen ;)";
+            header('Location: ../Vistas/crudExamenesAlumno.php');
+        } else {
+            $soluciones = $usuario->getSoluciones();
+            foreach ($soluciones as $i => $solucion) {
+                if ($examenSel->getId() == $solucion->getExamen()) {
+                    if ($solucion->getCorreccion() != null) {
+                        $solucionSel = $solucion;
+                    }
+                }
+            }
+
+            if (!isset($solucionSel)) {
+                $_SESSION['mensaje'] = "Este examen todavia no ha sido corregido";
+                header('Location: ../Vistas/crudExamenesAlumno.php');
+            } else {
+                $_SESSION['solucionSeleccionada'] = $solucionSel;
+                $preg = $examenSel->getPreguntas();
+                $notaTotal;
+                foreach ($preg as $p) {
+
+                    $notaTotal += $p->getPuntuacion();
+                }
+                $_SESSION['notaTotal'] = $notaTotal;
+
+                header('Location: ../Vistas/verExamenAlumno.php');
+            }
+        }
+    }
+}
+if (isset($_REQUEST['verExamenesPendientes'])) {
+    $_SESSION['examenesMostrar'] = $_SESSION['examenesPendientes'];
+    header('Location: ../Vistas/crudExamenesAlumno.php');
+}
+if (isset($_REQUEST['verExamenesRealizados'])) {
+    $_SESSION['examenesMostrar'] = $_SESSION['examenesR'];
+    header('Location: ../Vistas/crudExamenesAlumno.php');
+}
+if (isset($_REQUEST['verExamenesCorregidos'])) {
+    $_SESSION['examenesMostrar'] = $_SESSION['examenesC'];
+    header('Location: ../Vistas/crudExamenesAlumno.php');
 }
 //---------------SIEMPRE AL FINAL----------
 for ($i = 0; $i < count($asignaturas); $i++) {
@@ -132,25 +228,28 @@ for ($i = 0; $i < count($asignaturas); $i++) {
                 $examenesCorregidos = array();
                 $examenAsig = $asignatura->getExamenes();
                 foreach ($examenAsig as $examen) {
-                    $examenesPendientes[] = $examen;
+                    if ($examen->getActivo() == 1) {
+                        $examenesPendientes[] = $examen;
+                    }
                 }
 
-                $soluciones = $usuario->getSoluciones();
-                foreach ($examenesPendientes as $key => $examenP) {
-                    foreach ($soluciones as $j => $solucion) {
-                        if ($solucion->getExamen() == $examenP->getId()) {
-                            if ($solucion->getCorreccion() != null) {
-                                $examenesCorregidos[] = $examenP;
-                            } else {
+                if ($usuario->getRol() == 0) {
+                    $soluciones = $usuario->getSoluciones();
+                    foreach ($examenesPendientes as $key => $examenP) {
+                        foreach ($soluciones as $j => $solucion) {
+                            if ($solucion->getExamen() == $examenP->getId()) {
+                                if ($solucion->getCorreccion() != null) {
+                                    $examenesCorregidos[] = $examenP;
+                                }
                                 $examenesRealizados[] = $examenP;
                                 unset($examenesPendientes[$key]);
                             }
                         }
                     }
                 }
-                $_SESSION['examenesPendientesA'] = $examenesPendientes;
-                $_SESSION['examenesRealizadosA'] = $examenesRealizados;
-                $_SESSION['examenesCorregidosA'] = $examenesCorregidos;
+                $_SESSION['examenesPendientes'] = $examenesPendientes;
+                $_SESSION['examenesR'] = $examenesRealizados;
+                $_SESSION['examenesC'] = $examenesCorregidos;
                 $_SESSION['profesorAsignaturaS'] = gestionDatos::getProfesor($idAsignatura);
                 $_SESSION['asignaturaS'] = $asignatura;
                 header('Location: ../Vistas/inicioAsignatura.php');

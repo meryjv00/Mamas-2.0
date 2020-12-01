@@ -19,7 +19,6 @@ class Correccion {
 
     function __construct($profesor) {
         $this->notas = array();
-        $this->anotacion = array();
         $this->profesor = $profesor;
     }
 
@@ -51,8 +50,5 @@ class Correccion {
         $this->notas[] = $nota;
     }
 
-    function addAnotacion($nota) {
-        $this->anotacion[] = $nota;
-    }
-
+  
 }

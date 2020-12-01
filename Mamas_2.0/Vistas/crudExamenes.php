@@ -26,7 +26,11 @@ and open the template in the editor.
         include_once '../Modelo/Alumno.php';
         include_once '../Modelo/Examen.php';
         include_once '../Modelo/Pregunta.php';
+        include_once '../Modelo/Correccion.php';
+        include_once '../Modelo/Solucion.php';
         session_start();
+        $alumnosExamen = array();
+        $soluciones = array();
         $usuario = $_SESSION['usuario'];
         $asignatura = $_SESSION['asignaturasImpartidas'];
         $examenes = $asignatura[0]->getExamenes();
@@ -72,12 +76,6 @@ and open the template in the editor.
                             <ul class="navbar-nav">
                                 <li class="nav-item">
                                     <button type="submit" class="btn mean-fruit-gradient text-white 
-                                            btn-rounded waves-effect z-depth-1a" name="verExamenes" value="Ver exámenes">
-                                        <i class="far fa-eye pr-1"></i> exámenes
-                                    </button>
-                                </li>
-                                <li class="nav-item">
-                                    <button type="submit" class="btn mean-fruit-gradient text-white 
                                             btn-rounded waves-effect z-depth-1a" name="crearExamenes" value="Crear exámenes">
                                         <i class="fas fa-plus pr-1"></i> exámenes
                                     </button>
@@ -109,8 +107,7 @@ and open the template in the editor.
         <div class="container my-5 pt-5">
             <!-- Section: Block Content -->
             <section>
-
-                <div class="row">
+                <div class="row altura d-flex justify-content-center align-items-center">
                     <div class="col-12">
                         <div class="card card-list">
                             <div class="card-header white d-flex justify-content-between align-items-center py-3">
@@ -130,6 +127,9 @@ and open the template in the editor.
                                             <button type="submit" name="asignarPreguntas" class="btn btn-outline-white btn-rounded btn-sm px-2"
                                                     data-toggle="tooltip" data-placement="top" title="Asignar preguntas">
                                                 <i class="far fa-file-powerpoint px-1" style="font-size: 20px"></i>
+                                            </button>
+                                            <button name="corregirTabla"  data-toggle="tooltip" data-placement="top" title="Corregir exámen" class="btn btn-outline-white btn-rounded btn-sm px-2">
+                                                <i class="fas fa-file-signature" style="font-size: 20px ;color: white"></i>
                                             </button>
                                             <button type="submit" name="activarExamen" class="btn btn-outline-white btn-rounded btn-sm px-2"
                                                     data-toggle="tooltip" data-placement="top" title="Activar">
@@ -160,6 +160,7 @@ and open the template in the editor.
                                         <thead>
                                             <tr>
                                                 <th scope="col"></th>
+                                                <th scope="col">Pendientes</th>
                                                 <th scope="col">Contenido</th>
                                                 <th scope="col">Activo</th>
                                                 <th scope="col">Preguntas</th>
@@ -173,6 +174,31 @@ and open the template in the editor.
 
                                                     <th scope="row"> <input class="form-check-input" type="checkbox" id="checkbox1" name="<?= $i ?>">
                                                     </th>
+                                                    <td><?php
+                                                        $alumnos = $asignatura[0]->getAlumnos();
+                                                        foreach ($alumnos as $i => $alumno) {
+                                                            $soluciones = $alumno->getSoluciones();
+                                                            $correcto = false;
+                                                            foreach ($soluciones as $j => $solucion) {
+                                                                if ($solucion->getExamen() == $examen->getId() && $solucion->getCorreccion() == null) {
+                                                                    $correcto = true;
+                                                                }
+                                                            }
+                                                            if ($correcto) {
+                                                                $alumnosExamen[] = $alumno;
+                                                            }
+                                                        }
+                                                        if (!isset($alumnosExamen)) {
+                                                            ?> <i class="fas fa-check-double"></i><?php
+                                                        } else {
+                                                            if (count($alumnosExamen) > 0) {
+                                                                echo count($alumnosExamen);
+                                                                unset($alumnosExamen);
+                                                            } else {
+                                                                ?> <i class="fas fa-check-double"></i><?php
+                                                            }
+                                                        }
+                                                        ?></td>
                                                     <td><?php echo $examen->getContenido(); ?></td>
                                                     <td><span class="badge badge-<?php
                                                         if ($examen->getActivo() == 0) {

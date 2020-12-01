@@ -18,7 +18,7 @@ class Alumno extends Usuario {
     private $soluciones;
 
     public function __construct($id, $email, $dni, $nombre, $apellidos, $telefono, $activo, $imagen) {
-        $soluciones = array();
+        $this->soluciones = array();
         parent::__construct($id, $email, $dni, $nombre, $apellidos, $telefono, $activo, $imagen);
     }
 

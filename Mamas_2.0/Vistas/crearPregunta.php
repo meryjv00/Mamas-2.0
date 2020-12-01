@@ -69,12 +69,6 @@ and open the template in the editor.
                             <ul class="navbar-nav">
                                 <li class="nav-item">
                                     <button type="submit" class="btn mean-fruit-gradient text-white 
-                                            btn-rounded waves-effect z-depth-1a" name="verExamenes" value="Ver exámenes">
-                                        <i class="far fa-eye pr-1"></i> exámenes
-                                    </button>
-                                </li>
-                                <li class="nav-item">
-                                    <button type="submit" class="btn mean-fruit-gradient text-white 
                                             btn-rounded waves-effect z-depth-1a" name="crearExamenes" value="Crear exámenes">
                                         <i class="fas fa-plus pr-1"></i> exámenes
                                     </button>
@@ -103,7 +97,7 @@ and open the template in the editor.
                 </nav>
             </form>
         </header>
-        <main class="pb-5 pt-5 ml-4">
+        <main class="pb-5 pt-5 mb-5">
             <div class="container-fluid row ">
                 <div class="col-md-9 mt-5">
                     <div class="row">
@@ -318,7 +312,8 @@ and open the template in the editor.
         <script type="text/javascript" src="../js/bootstrap.min.js"></script>
         <!-- MDB core JavaScript -->
         <script type="text/javascript" src="../js/mdb.min.js"></script>
-        <script type="text/javascript" src="../js/validar.js"></script>
+        <script type="text/javascript" src="../js/validar.js"></script><!-- comment -->
+        <script type="text/javascript" src="../js/objetos.js"></script>
         <!--<script type="text/javascript" src="../js/obj.js"></script>-->
     </body>
 </html>
