@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+AUTOR: Israel Molina Pulpon
 -->
 <html>
     <head>
@@ -35,6 +33,7 @@ and open the template in the editor.
             $preguntas = $_SESSION['preguntasDisponibles'];
         }
         ?>
+        <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
         <header>
             <form name="formu" action="../Controlador/controladorProfesor.php" method="post">
                 <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar colorNav">
@@ -104,6 +103,7 @@ and open the template in the editor.
                 </nav>
             </form>
         </header>
+        <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
         <div class="container my-5 pt-5">
             <!-- Section: Block Content -->
             <section>
@@ -219,10 +219,9 @@ and open the template in the editor.
                         </div>
                     </div>
                 </div>
-
             </section>
-            <!-- Section: Block Content -->
         </div>
+        <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
         <footer class="footer-copyright text-center text-white py-3 z-depth-2 colorNav fixed-bottom">
             <div> © 2020 Copyright: Israel y María</div>
         </footer>

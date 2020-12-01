@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+autor:Israel Molina Pulpon
 -->
 <html>
     <head>
@@ -40,6 +38,7 @@ and open the template in the editor.
         $tem = array();
         $notaTotal;
         ?>
+        <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
         <header class="bg-white">
             <nav class="row navbar navbar-expand-lg navbar-dark fixed-top colorNav">
                 <div class="container-fluid">
@@ -81,6 +80,7 @@ and open the template in the editor.
                 </div>
             </nav>
         </header>
+        <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
         <div class="container my-5 pt-5">
             <!-- Section: Block Content -->
             <section>
@@ -152,9 +152,11 @@ and open the template in the editor.
                                             }
                                             ?>
                                         <td></td> <td></td> <td></td> <td></td> 
-                                        <td class="pt-2 pb-0 font-weight-bold font-weight-lighter" style="font-size: 20px"><i class="fas fa-poll pr-2 letra"></i>Nota media:<?php if (count($not)) {
+                                        <td class="pt-2 pb-0 font-weight-bold font-weight-lighter" style="font-size: 20px"><i class="fas fa-poll pr-2 letra"></i>Nota media:<?php
+                                            if (count($not)) {
                                                 echo array_sum($not) / count($not);
-                                            } ?></td>
+                                            }
+                                            ?></td>
                                         </tbody>
                                     </table>
                                 </form>
@@ -165,7 +167,7 @@ and open the template in the editor.
                 </div>
             </section>
         </div>
-
+        <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
         <footer class="footer-copyright text-center text-white py-3 z-depth-2 colorNav fixed-bottom">
             <div> © 2020 Copyright: Israel y María</div>
         </footer>

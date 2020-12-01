@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+Autor: Israel Molina Pulpon
 -->
 <html>
     <head>
@@ -34,6 +32,7 @@ and open the template in the editor.
         $examen = $_SESSION['examenS'];
         $creador = $_SESSION['creadorEx'];
         ?>
+        <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
         <header>
             <form name="formu" action="../Controlador/controladorProfesor.php" method="post">
                 <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar colorNav">
@@ -103,6 +102,7 @@ and open the template in the editor.
                 </nav>
             </form>
         </header>
+        <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
         <main class="pt-5">
             <div class="container mt-5 ">
                 <!--Section: Content-->
@@ -237,22 +237,20 @@ and open the template in the editor.
                 </form>
             </div>
         </main>
-    </div>
-    <footer class="footer-copyright text-center text-white py-3 z-depth-2 colorNav fixed-bottom">
-        <div> © 2020 Copyright: Israel y María</div>
-    </footer>
-
-
-    <!-- jQuery -->
-    <script type="text/javascript" src="../js/jquery.min.js"></script>
-    <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="../js/popper.min.js"></script>
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
-    <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="../js/mdb.min.js"></script>
-    <!-- Your custom scripts (optional) -->
-    <script type="text/javascript" src="../js/validar.js"></script>
-    <script type="text/javascript" src="../js/diseño.js"></script>
-</body>
+        <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
+        <footer class="footer-copyright text-center text-white py-3 z-depth-2 colorNav fixed-bottom">
+            <div> © 2020 Copyright: Israel y María</div>
+        </footer>
+        <!-- jQuery -->
+        <script type="text/javascript" src="../js/jquery.min.js"></script>
+        <!-- Bootstrap tooltips -->
+        <script type="text/javascript" src="../js/popper.min.js"></script>
+        <!-- Bootstrap core JavaScript -->
+        <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+        <!-- MDB core JavaScript -->
+        <script type="text/javascript" src="../js/mdb.min.js"></script>
+        <!-- Your custom scripts (optional) -->
+        <script type="text/javascript" src="../js/validar.js"></script>
+        <script type="text/javascript" src="../js/diseño.js"></script>
+    </body>
 </html>

@@ -6,11 +6,7 @@
  * and open the template in the editor.
  */
 
-/**
- * Description of gestionDatos
- *
- * @author isra9
- */
+
 include_once '../Modelo/Usuario.php';
 include_once '../Modelo/Asignatura.php';
 include_once '../Modelo/Examen.php';
@@ -23,6 +19,7 @@ include_once '../Auxiliar/constantes.php';
 include_once '../Modelo/Solucion.php';
 include_once '../Modelo/Correccion.php';
 
+//------AUTOR: ISRAEL MOLINA PULPON
 class gestionDatos {
 
     static private $conexion;
@@ -38,6 +35,7 @@ class gestionDatos {
         }
     }
 
+//------AUTOR: ISRAEL MOLINA PULPON
     static function cerrarBD() {
         mysqli_close(self::$conexion);
     }
@@ -45,7 +43,7 @@ class gestionDatos {
 //======================================================================
 // CONSULTAS
 //======================================================================
-
+    //------AUTOR: ISRAEL MOLINA PULPON
     static function getUsuario($mail, $password) {
         self::conexion();
         $stmt = self::$conexion->prepare("SELECT * FROM usuarios WHERE email= ? AND contrasenia= ?");
@@ -91,6 +89,7 @@ class gestionDatos {
         }
     }
 
+//------AUTOR: ISRAEL MOLINA PULPON & MARIA JUAN VIÑAS
     static function inicializarAlumno($idAl) {
         $asignaturas = array();
         $examenes = array();
@@ -102,6 +101,7 @@ class gestionDatos {
         return $asignaturas;
     }
 
+//------AUTOR: ISRAEL MOLINA PULPON
     static function inicializarProfesor($idP) {
         $asignaturas = array();
         $alumnos = array();
@@ -119,6 +119,7 @@ class gestionDatos {
         return $asignaturas;
     }
 
+//------AUTOR: ISRAEL MOLINA PULPON
     static function cargarAlumno($idUsuario) {
         self::conexion();
         $stmt = self::$conexion->prepare("SELECT * FROM usuarios WHERE idUsuario= ?");
@@ -184,6 +185,7 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
+//------AUTOR: ISRAEL MOLINA PULPON & MARIA JUAN VIÑAS
     static function getSolucionIdExamen($idAl, $idEx) {
         self::conexion();
         $respuestas = array();
@@ -214,6 +216,7 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
+//------AUTOR: ISRAEL MOLINA PULPON
     static function getSoluciones($idAl) {
         self::conexion();
         $soluciones = array();
@@ -247,6 +250,7 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
+//------AUTOR: ISRAEL MOLINA PULPON
     static function getRespuestaAlumno($idResp) {
         $r;
         $stmt = self::$conexion->prepare("SELECT * FROM respuesta WHERE idRespuesta= ? ");
@@ -265,6 +269,7 @@ class gestionDatos {
         return $r;
     }
 
+//------AUTOR: ISRAEL MOLINA PULPON & MARIA JUAN VIÑAS
     static function getRespExamenAlumno($idSol) {
         self::conexion();
         $idResp = array();
@@ -285,6 +290,7 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
+//------AUTOR: ISRAEL MOLINA PULPON
     static function getRespuestas($idAl) {
         self::conexion();
         $respuestas = array();
@@ -305,6 +311,7 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
+//------AUTOR: ISRAEL MOLINA PULPON
     static function getNotas($idSol) {
         self::conexion();
         $notas = array();
@@ -322,6 +329,7 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
+//------AUTOR: ISRAEL MOLINA PULPON
     static function getAnotaciones($idSol) {
         self::conexion();
         $anotaciones = array();
@@ -339,6 +347,7 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
+//------AUTOR: ISRAEL MOLINA PULPON
     static function getCorreccion($idSol) {
         self::conexion();
         $corr = null;
@@ -356,6 +365,7 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
+//------AUTOR: ISRAEL MOLINA PULPON 
     static function getProfesor($idAsig) {
         self::conexion();
         $alumnos = array();
@@ -383,6 +393,7 @@ class gestionDatos {
         }
     }
 
+//------AUTOR: ISRAEL MOLINA PULPON & MARIA JUAN VIÑAS
     static function crearTipo($usuario) {
         self::conexion();
         $id = $usuario->getId();
@@ -560,6 +571,7 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
+//------AUTOR: ISRAEL MOLINA PULPON & MARIA JUAN VIÑAS
     static function getExamenesActivos($idAs) {
         self::conexion();
         $examenes = array();
@@ -585,6 +597,7 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
+//------AUTOR: ISRAEL MOLINA PULPON & MARIA JUAN VIÑAS
     static function getExamenes($id) {
         self::conexion();
         $examenes = array();
@@ -610,6 +623,7 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
+//------AUTOR: ISRAEL MOLINA PULPON & MARIA JUAN VIÑAS
     static function getPreguntasExamen($idE) {
         $preguntas = array();
         $stmt = self::$conexion->prepare("SELECT * FROM asignacionpregunta,pregunta where pregunta.idPregunta = asignacionpregunta.idPregunta "
@@ -633,6 +647,7 @@ class gestionDatos {
         }
     }
 
+//------AUTOR: ISRAEL MOLINA PULPON
     static function getPreguntas($idAsignatura) {
         self::conexion();
         $preguntas = array();
@@ -691,6 +706,7 @@ class gestionDatos {
         return $idAlumnos;
     }
 
+//------AUTOR: ISRAEL MOLINA PULPON
     static function getAlumnosAsignaturas($idA, $idR) {
         self::conexion();
         $alumnos = array();
@@ -726,6 +742,7 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
+//------AUTOR: ISRAEL MOLINA PULPON & MARIA JUAN VIÑAS
     static function getAsignaturasUsu2($id) {
         $asignaturas = Array();
         self::conexion();
@@ -920,6 +937,7 @@ class gestionDatos {
 //======================================================================
 // INSERT
 //======================================================================
+    //------AUTOR: ISRAEL MOLINA PULPON & MARIA JUAN VIÑAS
     static function insertCorreccion($correccion, $idSolucion) {
         self::conexion();
         $consulta = "INSERT INTO correccion VALUES (" . $idSolucion . "," . $correccion->getProfesor() . "," . array_sum($correccion->getNotas()) . ",'" . $correccion->getAnotacion() . "')";
@@ -1038,6 +1056,7 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
+//------AUTOR: ISRAEL MOLINA PULPON
     static function getIdPregunta() {
         self::conexion();
         $consulta = "SELECT max(idPregunta) FROM pregunta";
@@ -1050,6 +1069,7 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
+//------AUTOR: ISRAEL MOLINA PULPON
     static function getIdSolucion() {
         self::conexion();
         $consulta = "SELECT max(idSolucion) FROM solucion";
@@ -1075,6 +1095,7 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
+//------AUTOR: ISRAEL MOLINA PULPON
     static function insertSolucion($usuarioId, $examenId) {
         self::conexion();
         $consulta = "INSERT INTO solucion VALUES (default," . $usuarioId . "," . $examenId . ")";
@@ -1089,6 +1110,7 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
+//------AUTOR: ISRAEL MOLINA PULPON
     static function getIdRespuesta() {
         self::conexion();
         $consulta = "SELECT max(idRespuesta) FROM respuesta";
@@ -1101,6 +1123,7 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
+//------AUTOR: ISRAEL MOLINA PULPON
     static function asignarPregunta($pregunta, $examen) {
         self::conexion();
         $consulta = "INSERT INTO asignacionPregunta VALUES (" . $examen->getId() . "," . $pregunta->getId() . ")";
@@ -1115,6 +1138,7 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
+//------AUTOR: ISRAEL MOLINA PULPON
     static function insertExamen($examen, $idasignatura) {
         self::conexion();
         $consulta = "INSERT INTO examen VALUES (" . $examen->getId() . "," . $idasignatura . ",'" . $examen->getProfesor() . "','" . $examen->getContenido() . "','" . $examen->getDescripcion() . "','" . $examen->getActivo() . "')";

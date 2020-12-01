@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+<!--AUTOR Israel Molina Pulpon -->
+
+
 <html>
     <head>
         <meta charset="UTF-8">
@@ -42,6 +40,7 @@ and open the template in the editor.
         }
         ?>
         <?php ?>
+        <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
         <header>
             <form name="formu" action="../Controlador/controladorProfesor.php" method="post">
                 <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar colorNav">
@@ -111,6 +110,7 @@ and open the template in the editor.
                 </nav>
             </form>
         </header>
+        <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
         <main class="pb-5 pt-5 ml-4 mb-5">
             <div class="container-fluid row ">
                 <div class="col-md-3 mt-5 card card-cascade narrower align-self-start">
@@ -162,7 +162,7 @@ and open the template in the editor.
                         </form>
                     </div>
                 </div>
-
+                <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
                 <div class="col-md-8 mx-auto mt-5 card card-cascade narrower">
                     <form name="examen" action="../Controlador/controladorProfesor.php" method="post">
                         <div class="view view-cascade gradient-card-header mean-fruit-gradient">
@@ -296,6 +296,7 @@ and open the template in the editor.
                 </div>
             </div>
         </main>
+        <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
         <footer class="footer-copyright text-center text-white py-3 z-depth-2 colorNav fixed-bottom">
             <div> © 2020 Copyright: Israel y María</div>
         </footer>

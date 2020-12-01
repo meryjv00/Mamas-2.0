@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+Autor: Israel Molina Pulpon
 -->
 <html>
     <head>
@@ -31,6 +29,7 @@ and open the template in the editor.
         </script>
     </head>
     <body onload="validacionLogin()" >
+        <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
         <div class="container my-5 px-0 z-depth-1">
             <!--Section: Content-->
             <section class="pb-5 text-center">
@@ -88,7 +87,7 @@ and open the template in the editor.
         </div>
     </section>
 </div>
-
+<!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 <!-- jQuery -->
 <script type="text/javascript" src="../js/jquery.min.js"></script>
 <!-- Bootstrap tooltips -->
