@@ -312,7 +312,8 @@ and open the template in the editor.
         <script type="text/javascript" src="../js/bootstrap.min.js"></script>
         <!-- MDB core JavaScript -->
         <script type="text/javascript" src="../js/mdb.min.js"></script>
-        <script type="text/javascript" src="../js/validar.js"></script>
+        <script type="text/javascript" src="../js/validar.js"></script><!-- comment -->
+        <script type="text/javascript" src="../js/objetos.js"></script>
         <!--<script type="text/javascript" src="../js/obj.js"></script>-->
     </body>
 </html>
