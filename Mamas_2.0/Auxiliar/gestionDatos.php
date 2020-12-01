@@ -94,7 +94,6 @@ class gestionDatos {
     static function inicializarAlumno($idAl) {
         $asignaturas = array();
         $examenes = array();
-        $preguntas = array();
         $asignaturas = self::getAsignaturasUsu2($idAl);
         for ($i = 0; $i < count($asignaturas); $i++) {
             $examenes = self::getExamenesActivos($asignaturas[$i]->getIdAsignatura());
@@ -185,6 +184,36 @@ class gestionDatos {
         mysqli_close(self::$conexion);
     }
 
+    static function getSolucionIdExamen($idAl, $idEx) {
+        self::conexion();
+        $respuestas = array();
+
+        $stmt = self::$conexion->prepare("SELECT * FROM solucion WHERE idUsuario= ? AND idExamen= ?");
+        $stmt->bind_param("ii", $idAl, $idEx);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            //var_dump($resultado);
+            if ($fila = $resultado->fetch_assoc()) {
+                //var_dump($fila);
+                $idSol = $fila['idSolucion'];
+                $idEx = $fila['idExamen'];
+                $solucion = new Solucion($idSol, $idEx);
+
+                $correccion = self::getCorreccion($idSol);
+                if ($correccion != null) {
+                    $correccion->setNotas(self::getNotas($idSol));
+                    $correccion->setAnotacion(self::getAnotaciones($idSol));
+                    $solucion->setCorreccion($correccion);
+                }
+                $respuestas = self::getRespExamenAlumno($idSol);
+                $solucion->setRespuestas($respuestas);
+                return $solucion;
+            }
+        }
+
+        mysqli_close(self::$conexion);
+    }
+
     static function getSoluciones($idAl) {
         self::conexion();
         $soluciones = array();
@@ -206,7 +235,7 @@ class gestionDatos {
                     $correccion->setAnotacion(self::getAnotaciones($idSol));
                     $solucion->setCorreccion($correccion);
                 }
-                $respuestas = self::getRespuestas($idAl);
+                $respuestas = self::getRespExamenAlumno($idSol);
 
                 $solucion->setRespuestas($respuestas);
 
@@ -215,6 +244,44 @@ class gestionDatos {
             }
         }
         return $soluciones;
+        mysqli_close(self::$conexion);
+    }
+
+    static function getRespuestaAlumno($idResp) {
+        $r;
+        $stmt = self::$conexion->prepare("SELECT * FROM respuesta WHERE idRespuesta= ? ");
+        $stmt->bind_param("i", $idResp);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            //var_dump($resultado);
+            if ($fila = $resultado->fetch_assoc()) {
+                $idRespuesta = $fila['idRespuesta'];
+                $correcto = $fila['correcto'];
+                $respuesta = $fila['respuesta'];
+                $idUsu = $fila['idUsuario'];
+                $r = new Respuesta($idRespuesta, $idUsu, $respuesta, $correcto);
+            }
+        }
+        return $r;
+    }
+
+    static function getRespExamenAlumno($idSol) {
+        self::conexion();
+        $idResp = array();
+        $respuestas = array();
+        $stmt = self::$conexion->prepare("SELECT * FROM asignacionrespuesta WHERE idSolucion= ? ");
+        $stmt->bind_param("i", $idSol);
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result();
+            //var_dump($resultado);
+            while ($fila = $resultado->fetch_assoc()) {
+                $idResp[] = $fila['idRespuesta'];
+            }
+        }foreach ($idResp as $i => $idR) {
+            $respuesta = self::getRespuestaAlumno($idR);
+            $respuestas[] = $respuesta;
+        }
+        return $respuestas;
         mysqli_close(self::$conexion);
     }
 
@@ -331,8 +398,22 @@ class gestionDatos {
                 if ($rol == 0) {
                     $alumno = new Alumno($usuario->getId(), $usuario->getEmail(), $usuario->getDni(), $usuario->getNombre(), $usuario->getApellidos(), $usuario->getTelefono(), $usuario->getActivo(), $usuario->getImagen());
                     $alumno->setRol(0);
+                    $asignaturas = array();
                     $soluciones = array();
-                    $soluciones = self::getSoluciones($alumno->getId());
+                    $examenes = array();
+                    $asignaturas = self::getAsignaturasUsu2($alumno->getId());
+                    for ($i = 0; $i < count($asignaturas); $i++) {
+                        $examenes = self::getExamenesActivos($asignaturas[$i]->getIdAsignatura());
+                        $asignaturas[$i]->setExamenes($examenes);
+                        foreach ($examenes as $k => $examen) {
+                            $solucion = self::getSolucionIdExamen($alumno->getId(), $examen->getId());
+                            if (isset($solucion)) {
+                                $soluciones[] = $solucion;
+                            }
+                        }
+                    }
+
+
                     $alumno->setSoluciones($soluciones);
                     $user = $alumno;
                 } else {

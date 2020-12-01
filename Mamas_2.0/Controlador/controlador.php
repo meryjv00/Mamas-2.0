@@ -54,14 +54,16 @@ if (isset($_REQUEST['login'])) {
                             }
                         }
                         $soluciones = $alumno->getSoluciones();
-                        foreach ($examenesPendientes as $key => $examenP) {
-                            foreach ($soluciones as $j => $solucion) {
-                                if ($solucion->getExamen() == $examenP->getId()) {
-                                    $examenesRealizados[] = $examenP;
-                                    if ($solucion->getCorreccion() != null) {
-                                        $examenesCorregidos[] = $examenP;
+                        if (isset($soluciones)) {
+                            foreach ($examenesPendientes as $key => $examenP) {
+                                foreach ($soluciones as $j => $solucion) {
+                                    if ($solucion->getExamen() == $examenP->getId()) {
+                                        $examenesRealizados[] = $examenP;
+                                        if ($solucion->getCorreccion() != null) {
+                                            $examenesCorregidos[] = $examenP;
+                                        }
+                                        unset($examenesPendientes[$key]);
                                     }
-                                    unset($examenesPendientes[$key]);
                                 }
                             }
                         }

@@ -89,7 +89,7 @@ and open the template in the editor.
                                         <h4 class="white-text text-center ">Mis exámenes</h4>
                                         <div class="ml-auto pr-3">
                                             <button type="submit" name="verExamenAlumno" class="btn btn-outline-white btn-rounded btn-sm px-2"
-                                                    data-toggle="tooltip" data-placement="top" title="Ver en detalle">
+                                                    data-toggle="tooltip" data-placement="top" title="Ver corrección">
                                                 <i class="far fa-eye" style="font-size: 18px"></i>
                                             </button>
                                             <button type="submit" name="verExamenesAlumno" class="btn btn-outline-white btn-rounded btn-sm px-2"

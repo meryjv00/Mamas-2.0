@@ -124,10 +124,7 @@ and open the template in the editor.
                         <!-- Text -->
                         <form id="formuAddPreguntas" action="../Controlador/controladorProfesor.php" method="post" novalidate>
                             <div class="col-md-12 mx-auto text-center">
-                                <button type="submit" name="aniadirPreguntas" class="btn purple lighten-3 text-white 
-                                        btn-block btn-rounded waves-effect z-depth-1a">Corregir automáticamente
-                                </button>
-                                <hr>
+
                                 <?php
                                 foreach ($alumnosS as $i => $alumno) {
                                     ?>
