@@ -92,6 +92,10 @@ and open the template in the editor.
                                                     data-toggle="tooltip" data-placement="top" title="Ver en detalle">
                                                 <i class="far fa-eye" style="font-size: 18px"></i>
                                             </button>
+                                            <button type="submit" name="verExamenesAlumno" class="btn btn-outline-white btn-rounded btn-sm px-2"
+                                                    data-toggle="tooltip" data-placement="top" title="Limpiar filtros">
+                                                <i class="fas fa-broom" style="font-size: 18px"></i>
+                                            </button>
                                             <button type="submit" name="verExamenesPendientes" class="btn btn-outline-white btn-rounded btn-sm px-2"
                                                     data-toggle="tooltip" data-placement="top" title="Ver exámenes pendientes">
                                                 <i class="fas fa-exclamation-triangle" style="font-size: 18px"></i>
@@ -129,12 +133,12 @@ and open the template in the editor.
                                         </thead>
                                         <tbody class="">
                                             <?php
-                                             foreach ($examenes as $i => $examen) { // crea una fila para cada examen
+                                            foreach ($examenes as $i => $examen) { // crea una fila para cada examen
                                                 ?>
                                                 <tr>
                                                     <th scope="row"> <input class="form-check-input" type="checkbox" id="checkbox1" name="<?= $i ?>">
                                                     </th>
-                                                    
+
                                                     <td><?php echo $examen->getContenido(); ?></td>
                                                     <td><span class="badge badge-<?php
                                                         if ($examen->getActivo() == 0) {

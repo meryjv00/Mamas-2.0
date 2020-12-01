@@ -179,6 +179,7 @@ and open the template in the editor.
                                                 <i class="fas fa-check-double fa-4x text-black-40"></i>
                                             </div>
                                         </div>
+
                                         <button class="card-footer footer-hover small text-center white-text border-0 p-2" type="submit" name="verExamenesAlumno">
                                             Más información<i class="fas fa-arrow-circle-right pl-2"></i>
                                         </button>

@@ -223,7 +223,7 @@ and open the template in the editor.
                                                                     ?>
                                                                     <i class="fas fa-hand-point-right letra" style="color: <?= $color ?>"></i>
                                                                     <?php
-                                                                } else {
+                                                                } else {//MIRAR AQUI!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                                                                     echo $contOpciones . ') ';
                                                                 }
                                                                 ?>
@@ -283,6 +283,7 @@ and open the template in the editor.
                                                     <textarea style="resize: none;"   rows="5" cols="10"  name="anotacion" class="form-control mb-3" placeholder="Deje su valoración aquí..."></textarea>
 
                                                 </div>
+                                            </div>
                                         </section>
                                         <button type="submit" class="btn purple lighten-3 text-white
                                                 btn-rounded waves-effect z-depth-1a" name="corregirExamen">Corregir
