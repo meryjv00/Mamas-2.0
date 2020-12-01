@@ -62,7 +62,7 @@ if (isset($_REQUEST['perfil'])) {
     header('Location: ../Vistas/perfilP.php');
 }
 
-//-----------------EDITAR FOTO PERFIL
+//-----------------EDITAR FOTO PERFIL AUTOR:MARIA
 if (isset($_REQUEST['editarFotoPerfil'])) {
     gestionDatos::updateFoto($usuario->getId());
     //Obtiene el usuario con la foto actualizada y lo guarda en sesión  
@@ -70,7 +70,7 @@ if (isset($_REQUEST['editarFotoPerfil'])) {
     header('Location: ../Vistas/perfil.php');
 }
 
-//-----------------EDITAR NUMERO TELEFONO
+//-----------------EDITAR NUMERO TELEFONO AUTOR:MARIA
 if (isset($_REQUEST['editarTfno'])) {
     $tfno = $_REQUEST['tfno'];
     $usuario->setTelefono($tfno);
@@ -81,7 +81,7 @@ if (isset($_REQUEST['editarTfno'])) {
     header('Location: ../Vistas/perfil.php');
 }
 
-//-----------------EDITAR CONTRASEÑA
+//-----------------EDITAR CONTRASEÑA AUTOR:MARIA
 if (isset($_REQUEST['nuevaPass'])) {
     $pass = md5($_REQUEST['pass']);
     if (!gestionDatos::updatePass($usuario, $pass)) {
@@ -120,6 +120,7 @@ if (isset($_REQUEST['crearExamen'])) {
     gestionDatos::insertExamen($ex, $idAsignatura);
     header('Location: ../Vistas/crudExamenes.php');
 }
+//---AUTOR:MARIA
 if (isset($_REQUEST['aniadirPreguntas'])) {
     if (isset($_SESSION['preguntasCreadas'])) {
         $preguntasEx = $_SESSION['preguntasCreadas'];
@@ -191,6 +192,7 @@ if (isset($_REQUEST['crearPreguntasEx'])) {
     $_SESSION['vienesEx'] = true;
     header('Location: ../Vistas/crearPregunta.php');
 }
+//---------AUTOR:MARIA
 if (isset($_REQUEST['verPreguntasCreadas'])) {
     $examenS = $_SESSION['examenS'];
     $preguntasExamen = $examenS->getPreguntas();
@@ -293,7 +295,7 @@ if (isset($_REQUEST['corregirTabla'])) {
         }
     }
 }
-//----------------ASIGNAR PREGUNTAS
+//----------------ASIGNAR PREGUNTAS AUTOR:MARIA
 if (isset($_REQUEST['asignarPreguntas'])) {
     $examenes = $asignaturas[0]->getExamenes();
     if (count($examenes) > 0) {
@@ -320,7 +322,7 @@ if (isset($_REQUEST['asignarPreguntas'])) {
         }
     }
 }
-//---------------------ASIGNAR PREGUNTAS A UN EXÁMEN
+//---------------------ASIGNAR PREGUNTAS A UN EXÁMEN AUTOR:MARIA
 if (isset($_REQUEST['aniadirPreguntasExamen'])) {
     $preguntasCreadas = $_SESSION['preguntasCreadas'];
     $examenS = $_SESSION['examenS'];
@@ -543,7 +545,7 @@ if (isset($_REQUEST['corregir'])) {
         $soluciones = $alumno->getSoluciones();
         $correcto = false;
         foreach ($soluciones as $j => $solucion) {
-            if ($solucion->getExamen() == $examenS->getId() && $solucion->getCorreccion() == null) {//!!!!!! comprobar que no esté corregido
+            if ($solucion->getExamen() == $examenS->getId() && $solucion->getCorreccion() == null) {
                 $correcto = true;
             }
         }
