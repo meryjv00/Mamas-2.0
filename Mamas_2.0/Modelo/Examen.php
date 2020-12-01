@@ -17,7 +17,7 @@ class Examen {
     private $profesor;
     private $contenido;
     private $descripcion;
-    private $preguntas = array();
+    private $preguntas;
     private $activo;
 
     function __construct($id, $profesor, $contenido, $descripcion, $activo) {
@@ -26,6 +26,7 @@ class Examen {
         $this->contenido = $contenido;
         $this->descripcion = $descripcion;
         $this->activo = $activo;
+        $this->preguntas = array();
     }
 
     //GET

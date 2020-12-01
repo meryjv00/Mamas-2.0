@@ -13,14 +13,12 @@ function validacionLogin() {
     const form = document.getElementById("login");
     const email = document.getElementById("email");
     const emailError = document.getElementById("emailError");
-
     form.addEventListener('submit', function (event) {
         if (!email.validity.valid) {
             error(email);
             event.preventDefault();
         }
     });
-
     email.addEventListener('blur', function (event) {
         if (email.validity.valid) {
             emailError.className = 'valid-feedback';
@@ -31,7 +29,6 @@ function validacionLogin() {
             error(email);
         }
     });
-
     function error(campo) {
         if (campo == email) {
             //Campo vacío
@@ -53,14 +50,13 @@ function validacionLogin() {
 //--------------------------VALIDACIÓN FORMULARIO REGISTRO----------------------
 //******************************************************************************
 function validarRegistro() {
-    //--------------------------ROLES
+//--------------------------ROLES
     if (document.getElementById("profesor") != null) {
 
         const admin = document.getElementById("admin");
         const asignaturas = document.getElementById("asignaturas");
         var radio = document.getElementById('profesor');
         var radio2 = document.getElementById('alumno');
-
         radio.addEventListener("change", validaRadio, false);
         function validaRadio()
         {
@@ -87,9 +83,8 @@ function validarRegistro() {
     }
 
 
-    //---------------------------VARIABLES
+//---------------------------VARIABLES
     const form = document.getElementById("registro");
-
     const email = document.getElementById("email");
     const nombre = document.getElementById("nombre");
     const apellidos = document.getElementById("apellidos");
@@ -97,7 +92,6 @@ function validarRegistro() {
     const tfno = document.getElementById("tfno");
     const pass = document.getElementById("pass");
     const pass2 = document.getElementById("pass2");
-
     const emailError = document.getElementById("emailError");
     const nombreError = document.getElementById("nombreError");
     const apellidosError = document.getElementById("apellidosError");
@@ -105,10 +99,8 @@ function validarRegistro() {
     const tfnoError = document.getElementById("tfnoError");
     const passError = document.getElementById("passError");
     const pass2Error = document.getElementById("pass2Error");
-
     //-----------------------------FORMULARIO SUBMIT
     var correcto;
-
     form.addEventListener('submit', function (event) {
         if (!nombre.validity.valid) {
             error(nombre);
@@ -139,7 +131,6 @@ function validarRegistro() {
             event.preventDefault();
         }
     });
-
     nombre.addEventListener('blur', function (event) {
         if (nombre.validity.valid) {
             nombreError.className = 'valid-feedback';
@@ -160,7 +151,6 @@ function validarRegistro() {
             error(apellidos);
         }
     });
-
     email.addEventListener('blur', function (event) {
         if (email.validity.valid) {
             emailError.className = 'valid-feedback';
@@ -171,7 +161,6 @@ function validarRegistro() {
             error(email);
         }
     });
-
     dni.addEventListener('blur', function (event) {
         if (dni.validity.valid) {
             dniError.className = 'valid-feedback';
@@ -182,7 +171,6 @@ function validarRegistro() {
             error(dni);
         }
     });
-
     tfno.addEventListener('blur', function (event) {
         if (tfno.validity.valid) {
             tfnoError.className = 'valid-feedback';
@@ -193,7 +181,6 @@ function validarRegistro() {
             error(tfno);
         }
     });
-
     pass.addEventListener('blur', function (event) {
         if (pass.validity.valid) {
             passError.className = 'valid-feedback';
@@ -204,11 +191,9 @@ function validarRegistro() {
             error(pass);
         }
     });
-
     pass2.addEventListener('input', function (event) {
         comprobarContras();
     });
-
     function comprobarContras() {
         var c1 = pass.value;
         var c2 = pass2.value;
@@ -230,7 +215,7 @@ function validarRegistro() {
     }
     function error(campo) {
         if (campo == nombre) {
-            //Campo vacío
+//Campo vacío
             if (nombre.validity.valueMissing) {
                 nombreError.textContent = 'Debe introducir su nombre.';
             } else if (nombre.validity.tooShort) {
@@ -238,13 +223,13 @@ function validarRegistro() {
             } else if (nombre.validity.tooLong) {
                 nombreError.textContent = 'Debe tener como máximo ' + nombre.maxLength + ' caracteres; ha introducido ' + nombre.value.length;
             }
-            // Establece el estilo apropiado
+// Establece el estilo apropiado
             nombre.classList.remove('is-valid');
             nombre.classList.add('is-invalid');
             nombreError.className = 'invalid-feedback';
         }
         if (campo == apellidos) {
-            //Campo vacío
+//Campo vacío
             if (apellidos.validity.valueMissing) {
                 apellidosError.textContent = 'Debe introducir sus apellidos.';
             } else if (apellidos.validity.tooShort) {
@@ -252,13 +237,13 @@ function validarRegistro() {
             } else if (apellidos.validity.tooLong) {
                 apellidosError.textContent = 'Debe tener como máximo ' + apellidos.maxLength + ' caracteres; ha introducido ' + apellidos.value.length;
             }
-            // Establece el estilo apropiado
+// Establece el estilo apropiado
             apellidos.classList.remove('is-valid');
             apellidos.classList.add('is-invalid');
             apellidosError.className = 'invalid-feedback';
         }
         if (campo == email) {
-            //Campo vacío
+//Campo vacío
             if (email.validity.valueMissing) {
                 emailError.textContent = 'Debe introducir su dirección de correo electrónico.';
                 //No cumple los requisitos del campo email
@@ -266,20 +251,20 @@ function validarRegistro() {
                 emailError.textContent = 'El valor introducido debe ser una dirección de correo electrónico ';
                 //Datos demasiado cortos
             }
-            // Establece el estilo apropiado
+// Establece el estilo apropiado
             email.classList.remove('is-valid');
             email.classList.add('is-invalid');
             emailError.className = 'invalid-feedback';
         }
         if (campo == dni) {
-            //Campo vacío
+//Campo vacío
             if (dni.validity.valueMissing) {
                 dniError.textContent = 'Debe introducir su dni.';
                 //No cumple con el pattern
             } else if (dni.validity.patternMismatch) {
                 dniError.textContent = 'El valor introducido debe seguir este patron 00000000X';
             }
-            // Establece el estilo apropiado
+// Establece el estilo apropiado
             dni.classList.remove('is-valid');
             dni.classList.add('is-invalid');
             dniError.className = 'invalid-feedback';
@@ -288,17 +273,17 @@ function validarRegistro() {
             if (tfno.validity.valueMissing) {
                 tfnoError.textContent = 'Debe introducir su teléfono.';
             }
-            //No cumple con el pattern
+//No cumple con el pattern
             else if (tfno.validity.patternMismatch) {
                 tfnoError.textContent = 'El valor introducido debe tener 9 números';
             }
-            // Establece el estilo apropiado
+// Establece el estilo apropiado
             tfno.classList.remove('is-valid');
             tfno.classList.add('is-invalid');
             tfnoError.className = 'invalid-feedback';
         }
         if (campo == pass) {
-            //Campo vacío
+//Campo vacío
             if (pass.validity.valueMissing) {
                 passError.textContent = 'Debe introducir una contraseña.';
                 //Dato demasiado cortos
@@ -308,7 +293,7 @@ function validarRegistro() {
             } else if (pass.validity.tooLong) {
                 passError.textContent = 'Debe tener como máximo ' + pass.maxLength + ' caracteres; ha introducido ' + pass.value.length;
             }
-            // Establece el estilo apropiado
+// Establece el estilo apropiado
             pass.classList.remove('is-valid');
             pass.classList.add('is-invalid');
             passError.className = 'invalid-feedback';
@@ -316,11 +301,12 @@ function validarRegistro() {
     }
 
 }
+
 //******************************************************************************
 //--------------------------VALIDACIÓN FORMULARIOS PERFIL-----------------------
 //******************************************************************************
 function validacionTfnoPass() {
-    //TELEFONO
+//TELEFONO
     const form = document.getElementById("editarTfno");
     const tfno = document.getElementById("tfno");
     const tfnoError = document.getElementById("tfnoError");
@@ -364,7 +350,7 @@ function validacionTfnoPass() {
         }
     }
 
-    //--------------------CONTRASEÑA-------------------------
+//--------------------CONTRASEÑA-------------------------
     form2.addEventListener('submit', function (event) {
         if (!pass.validity.valid) {
             error(pass);
@@ -388,7 +374,6 @@ function validacionTfnoPass() {
     pass2.addEventListener('input', function (event) {
         comprobarContras();
     });
-
     function comprobarContras() {
         var c1 = pass.value;
         var c2 = pass2.value;
@@ -419,7 +404,7 @@ function validacionTfnoPass() {
             } else if (pass.validity.tooLong) {
                 passError.textContent = 'Debe tener como máximo ' + pass.maxLength + ' caracteres; ha introducido ' + pass.value.length;
             }
-            // Establece el estilo apropiado
+// Establece el estilo apropiado
             pass.classList.remove('is-valid');
             pass.classList.add('is-invalid');
             passError.className = 'invalid-feedback';
@@ -428,24 +413,123 @@ function validacionTfnoPass() {
 
 }
 function validarPregunta() {
-    var check = document.getElementById('test');
-    const accordion = document.getElementById("accordion");
+    var tipoPregunta = document.getElementById('tipoPregunta');
     const addOpcion = document.getElementById("addOpcion");
-
-    check.addEventListener("change", validaCheck, false);
-    function validaCheck()
+    const addClave = document.getElementById("addClave");
+    tipoPregunta.addEventListener("change", compruebaPregunta, false);
+    function compruebaPregunta()
     {
-        var checked = check.checked;
-        if (checked) {
-            accordion.classList.remove('d-none');
-            accordion.classList.add('d-block');
-            addOpcion.classList.remove('d-none');
-            addOpcion.classList.add('d-block');
+        var opSelecc = tipoPregunta.options[tipoPregunta.selectedIndex].value;
+        if (opSelecc == "SeleccionePregunta") {
+            addClave.classList.add("d-none");
+            addClave.classList.remove("d-block");
+            addOpcion.classList.add("d-none");
+            addOpcion.classList.remove("d-block");
+        }
+        if (opSelecc === "PreguntaCorta") {
+            addClave.classList.add("d-block");
+            addClave.classList.remove("d-none");
+            addOpcion.classList.add("d-none");
+            addOpcion.classList.remove("d-block");
+        }
+        if (opSelecc == "Test") {
+            addClave.classList.add("d-none");
+            addClave.classList.remove("d-block");
+            addOpcion.classList.add("d-block");
+            addOpcion.classList.remove("d-none");
+        }
+    }
+
+}
+
+//******************************************************************************
+//--------------------------VALIDACIÓN FORMULARIO CREAR EXAMEN------------------
+//******************************************************************************
+function validacionExamen() {
+    var formulario = document.getElementById("formExamen");
+    var asignaturas = document.getElementById("asignaturas");
+    var contenido = document.getElementById("contenido");
+    var descripcion = document.getElementById("descripcion");
+
+    var asignaturaError = document.getElementById("asignaturaError");
+    var contenidoError = document.getElementById("contenidoError");
+    var descripcionError = document.getElementById("descripcionError");
+
+    formulario.addEventListener('submit', function (event) {
+        if (!contenido.validity.valid) {
+            error(contenido);
+            event.preventDefault();
+        }
+        if (!descripcion.validity.valid) {
+            error(descripcion);
+            event.preventDefault();
+
+        }
+        if (!asignaturaS()) {
+
+            event.preventDefault();
+        }
+    });
+    function asignaturaS() {
+        correct = false;
+        var asignaturaSeleccionada = asignaturas.options[asignaturas.selectedIndex].value;
+        if (asignaturaSeleccionada != "Seleccione una asignatura") {
+            correct = true;
+            asignaturasError.className = 'valid-feedback';
+            asignaturas.classList.remove('is-invalid');
+            asignaturas.classList.add('is-valid');
+            asignaturasError.textContent = '';
         } else {
-            accordion.classList.remove('d-block');
-            accordion.classList.add('d-none');
-            addOpcion.classList.remove('d-block');
-            addOpcion.classList.add('d-none');
+            error(asignaturas);
+        }
+        return correct;
+    }
+    contenido.addEventListener('blur', function (event) {
+        if (contenido.validity.valid) {
+            contenidoError.className = 'valid-feedback';
+            contenido.classList.remove('is-invalid');
+            contenido.classList.add('is-valid');
+            contenidoError.textContent = '';
+        } else {
+            error(contenido);
+        }
+    });
+    descripcion.addEventListener('blur', function (event) {
+        if (descripcion.validity.valid) {
+            descripcionError.className = 'valid-feedback';
+            descripcion.classList.remove('is-invalid');
+            descripcion.classList.add('is-valid');
+            descripcionError.textContent = '';
+        } else {
+            error(descripcion);
+        }
+    });
+    function error(campo) {
+        if (campo == contenido) {
+            //Campo vacío
+            if (contenido.validity.valueMissing) {
+                contenidoError.textContent = 'Debe introducir el contenido del examen';
+
+            }
+            contenido.classList.remove('is-valid');
+            contenido.classList.add('is-invalid');
+            contenidoError.className = 'invalid-feedback';
+        }
+        if (campo == descripcion) {
+            //Campo vacío
+            if (descripcion.validity.valueMissing) {
+                descripcionError.textContent = 'Debe introducir la descipcion del examen';
+
+            }
+            descripcion.classList.remove('is-valid');
+            descripcion.classList.add('is-invalid');
+            descripcionError.className = 'invalid-feedback';
+        }
+        if (campo == asignaturas) {
+            asignaturasError.textContent = 'Debe seleccionar una asignatura';
+            asignaturas.classList.remove('is-valid');
+            asignaturas.classList.add('is-invalid');
+            asignaturasError.className = 'invalid-feedback';
         }
     }
 }
