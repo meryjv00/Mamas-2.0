@@ -21,16 +21,13 @@ and open the template in the editor.
 
     </head>
     <body>
+        <!--******************************************************************************-->
+        <!--******************************************************************************-->
         <header>
             <nav class="row navbar navbar-expand-lg navbar-dark fixed-top">
                 <div class="container">
                     <!--Left-->
                     <ul class="navbar-nav mr-auto smooth-scroll">
-                        <!--
-                        <li class="nav-item">
-                            <a class="navbar-brand pl-2" href="">Mamás 2.0</a>
-                        </li>
-                        -->
                     </ul>
                     <!-- Right -->
                     <ul class="navbar-nav ">
@@ -53,6 +50,8 @@ and open the template in the editor.
                 </div>
             </nav>
         </header>
+        <!--******************************************************************************-->
+        <!--******************************************************************************-->
         <main class="mt-5">
             <div class="d-flex justify-content-center align-items-center portada">
                 <div class="container">
@@ -72,6 +71,8 @@ and open the template in the editor.
                 </div>
             </div>
         </main>
+        <!--******************************************************************************-->
+        <!--******************************************************************************-->
         <footer class="footer-copyright text-center text-white fixed-bottom py-3 z-depth-2">
             <a href="https://github.com/meryjv00/Mamas-2.0" class="text-white">
                 <button type="button" class="btn btn-git btgit" style="background-color: #543b54"><i class="fab fa-github pr-1" ></i> Github</button>

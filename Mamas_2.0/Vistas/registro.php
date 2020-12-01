@@ -31,20 +31,18 @@ and open the template in the editor.
         require_once '../Modelo/Usuario.php';
         session_start();
         ?>
+        <!--******************************************************************************-->
+        <!--******************************************************************************-->
         <div class="container my-5 px-0 z-depth-1">
-            <!--Section: Content-->
             <section class="pb-5 my-md-5 text-center">
                 <div class="my-5 mx-md-5">
                     <a href="../index.php"><img src="../img/log0.png" width="250px"/></a>
                     <div class="row">
+                        <!--CONTENIDO CENTRAL-->
                         <div class="col-md-8 mx-auto">
-                            <!-- Material form login -->
+                            <!--CARTA-->
                             <div class="card" style="border: 2px solid antiquewhite">
-
-                                <!--Card content-->
                                 <div class="card-body">
-
-                                    <!-- Form -->
                                     <form id="registro" name="registro" class="text-left" style="color: #757575;" action="../Controlador/controlador.php" method="POST" novalidate>
 
                                         <h3 class="font-weight-bold my-4 pb-2 text-center  tit">Regístrate</h3>
@@ -113,6 +111,7 @@ and open the template in the editor.
                                             <label for="pass2">Repite tu contraseña </label>
                                             <div id="pass2Error"></div>
                                         </div>
+                                        <!--MENSAJE-->
                                         <?php
                                         if (isset($_SESSION['mensaje'])) {
                                             $mensaje = $_SESSION['mensaje'];
@@ -132,21 +131,13 @@ and open the template in the editor.
                                         </div>
                                         <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
                                     </form>
-                                    <!-- Form -->
-
                                 </div>
-
                             </div>
-                            <!-- Material form login -->
                         </div>
                     </div>
-
                 </div>
-
             </section>
-            <!--Section: Content-->
         </div>
-
 
         <!-- jQuery -->
         <script type="text/javascript" src="../js/jquery.min.js"></script>

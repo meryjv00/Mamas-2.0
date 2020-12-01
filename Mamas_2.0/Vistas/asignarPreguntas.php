@@ -33,6 +33,8 @@ and open the template in the editor.
             $preguntasCreadas = $_SESSION['preguntasCreadas'];
         }
         ?>
+        <!--******************************************************************************-->
+        <!--******************************************************************************-->
         <header>
             <form name="formu" action="../Controlador/controladorProfesor.php" method="post">
                 <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar colorNav">
@@ -102,6 +104,8 @@ and open the template in the editor.
                 </nav>
             </form>
         </header>
+        <!--******************************************************************************-->
+        <!--******************************************************************************-->
         <main class="pt-5 pb-5 ml-4 align-content-center">
             <div class="container-fluid row ">
                 <div class=" col-md-8 mx-auto mt-5">
@@ -238,6 +242,8 @@ and open the template in the editor.
                 </div>
             </div>
         </main>
+        <!--******************************************************************************-->
+        <!--******************************************************************************-->
         <footer class="footer-copyright text-center text-white py-3 z-depth-2 colorNav fixed-bottom">
             <div> © 2020 Copyright: Israel y María</div>
         </footer>

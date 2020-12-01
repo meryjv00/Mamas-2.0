@@ -31,6 +31,8 @@ and open the template in the editor.
         $examenesPendientes = $_SESSION['examenesPendientes'];
         $controlador = '../Controlador/controladorAlumno.php';
         ?>
+        <!--******************************************************************************-->
+        <!--******************************************************************************-->
         <header class="bg-white">
             <nav class="row navbar navbar-expand-lg navbar-dark fixed-top colorNav">
                 <div class="container-fluid">
@@ -72,8 +74,11 @@ and open the template in the editor.
                 </div>
             </nav>
         </header>
+        <!--******************************************************************************-->
+        <!--******************************************************************************-->
         <main class="pb-5 pt-5 ml-4 mb-5">
             <div class="container-fluid row ">
+                <!--COLUMNA PRINCIPAL-->
                 <div class="col-md-9 mt-5">
                     <div class="row">
                         <div class="col-md-10 mx-auto card card-cascade narrower pb-5 bg-transparent">
@@ -126,20 +131,14 @@ and open the template in the editor.
                             </form>
 
                         </div>
-
                     </div>
-
                 </div>
-
+                <!--COLUMNA LATERAL-->
                 <div class="col-md-3 mt-5 card card-cascade narrower align-self-start">
-                    <!-- Card image -->
                     <div class="view view-cascade gradient-card-header mean-fruit-gradient">
-                        <!-- Title -->
                         <h1 class="card-header-title text-center titulo text-white pt-1">Exámenes sin realizar</h1>
                     </div>
-                    <!-- Card content -->
                     <div class="card-body card-body-cascade">
-                        <!-- Text -->
                         <form name="examenes" action="<?= $controlador ?>" method="post">
                             <?php foreach ($examenesPendientes as $key => $examenP) { ?>
                                 <p  style="font-size: 20px;color: #4D2034"><i class="fas fa-angle-right pr-2" ></i><?= $examenP->getContenido() ?></p>
@@ -157,7 +156,8 @@ and open the template in the editor.
                 </div>
             </div>
         </main>
-
+        <!--******************************************************************************-->
+        <!--******************************************************************************-->
         <footer class="footer-copyright text-center text-white py-3 z-depth-2 colorNav fixed-bottom">
             <div> © 2020 Copyright: Israel y María</div>
         </footer>

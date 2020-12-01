@@ -40,9 +40,12 @@ and open the template in the editor.
         $respuestasSolucion = $solucion->getRespuestas();
         $notaTotal = $_SESSION['notaTotal'];
         ?>
+        <!--******************************************************************************-->
+        <!--******************************************************************************-->
         <header>
             <nav class="row navbar navbar-expand-lg navbar-dark fixed-top colorNav">
                 <div class="container-fluid">
+                    <!--LEFT-->
                     <ul class="navbar-nav mr-auto ml-5">
                         <li class="nav-item">
                             <!--CRUD ADMINISTRADOR-->
@@ -65,6 +68,7 @@ and open the template in the editor.
                             </form>
                         </li> 
                     </ul>
+                    <!--RIGHT-->
                     <ul class="navbar-nav ml-auto mr-5">
                         <li class="nav-item">
                             <form name="cerrarSes" action="../Controlador/controladorAlumno.php" method="post">
@@ -82,155 +86,142 @@ and open the template in the editor.
                 </div>
             </nav>
         </header>
+        <!--******************************************************************************-->
+        <!--******************************************************************************-->
         <main class="pt-5">
-            <div class="container mt-5 ">
-                <!--Section: Content-->
+            <div class="container-fluid my-5">
                 <form name="formu" action="../Controlador/controladorProfesor.php" method="post">
-                    <section class="mx-md-5 dark-grey-text">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="card card-cascade wider reverse">
-                                    <div class="view view-cascade gradient-card-header mean-fruit-gradient">
-                                        <h4 class="card-header-title  text-center titulo text-white pt-2 pb-2">Exámen</h4>
-                                    </div>
+                    <section class="row dark-grey-text">
+                        <!--DIV CENTRAL-->
+                        <div class="col-md-7 mx-auto">
+                            <div class="card card-cascade wider reverse mb-5">
+                                <div class="view view-cascade gradient-card-header mean-fruit-gradient">
+                                    <h4 class="card-header-title  text-center titulo text-white pt-2 pb-2">Exámen</h4>
+                                </div>
 
-                                    <!-- Card content -->
-                                    <div class="card-body card-body-cascade text-center">
-                                        <!-- Title --><?php
-                                        if (isset($_SESSION['mensaje'])) {
-                                            $mensaje = $_SESSION['mensaje'];
-                                            ?>
-                                            <div class="row">
-                                                <div class="mx-auto text-center text-white badge badge-secondary mb-2"><?= $mensaje ?></div>
-                                            </div>
-                                            <?php
-                                            unset($_SESSION['mensaje']);
-                                        }
+                                <div class="card-body card-body-cascade text-center">
+                                    <!--MENSAJE-->
+                                    <?php
+                                    if (isset($_SESSION['mensaje'])) {
+                                        $mensaje = $_SESSION['mensaje'];
                                         ?>
-                                        <h3 class="font-weight-bold "><a><?= $examen->getContenido() ?></a></h3>
-                                        <!-- Data -->
-                                        <span class="badge fa-2x badge-pill badge-secondary mb-2"><?php echo $notas[0] . '/' . $notaTotal; ?></span>
-                                        <p>Numero de preguntas: <?= count($examen->getPreguntas()); ?></p>
-
-                                        <div class="mt-3">
-                                            <h3 class="font-weight-bold">Descripción</h3>
-                                            <p><?= $examen->getDescripcion() ?></p>
+                                        <div class="row">
+                                            <div class="mx-auto text-center text-white badge badge-secondary mb-2"><?= $mensaje ?></div>
                                         </div>
-                                        <div class="row pt-3 text-left">
-                                            <div class="col-md-8 mx-auto border pb-3">
-                                                <h3 class="text-center">Preguntas </h3>
-                                                <?php
-                                                $preguntas = $examen->getPreguntas();
-                                                $contOpciones = 0;
-                                                $contPregunta = 0;
-                                                foreach ($preguntas as $i => $pregunta) {
-                                                    $contPregunta++;
-                                                    ?>
-                                                    <section class="mx-auto mt-3 white-dark purple lighten-4 py-3 pt-1 rounded">
-                                                        <div class="row px-4">
-                                                            <div class="col-md-12">
-                                                                <h5><?= $contPregunta . '. ' ?><?= $pregunta->getEnunciado() ?><?= ' (' . $pregunta->getPuntuacion() . ' puntos)' ?> </h5> 
-                                                            </div>
+                                        <?php
+                                        unset($_SESSION['mensaje']);
+                                    }
+                                    ?>
+                                    <!--INFOR EXAMEN-->
+                                    <h3 class="font-weight-bold "><a><?= $examen->getContenido() ?></a></h3>
+                                    <!-- NOTA -->
+                                    <span class="badge fa-2x badge-pill badge-secondary mb-2"><?php echo $notas[0] . '/' . $notaTotal; ?></span>
+                                    <p>Numero de preguntas: <?= count($examen->getPreguntas()); ?></p>
 
+                                    <div class="mt-3">
+                                        <h3 class="font-weight-bold">Descripción</h3>
+                                        <p><?= $examen->getDescripcion() ?></p>
+                                    </div>
+                                    <div class="row pt-3 text-left">
+                                        <!--PREGUNTAS-->
+                                        <div class="col-md-8 mx-auto border pb-3">
+                                            <h3 class="text-center">Preguntas </h3>
+                                            <?php
+                                            $preguntas = $examen->getPreguntas();
+                                            $contOpciones = 0;
+                                            $contPregunta = 0;
+                                            foreach ($preguntas as $i => $pregunta) {
+                                                $contPregunta++;
+                                                ?>
+                                                <section class="mx-auto mt-3 white-dark purple lighten-4 py-3 pt-1 rounded">
+                                                    <div class="row px-4">
+                                                        <div class="col-md-12">
+                                                            <h5><?= $contPregunta . '. ' ?><?= $pregunta->getEnunciado() ?><?= ' (' . $pregunta->getPuntuacion() . ' puntos)' ?> </h5> 
+                                                        </div>
+
+                                                        <?php
+                                                        $respuestas = $pregunta->getRespuestas();
+                                                        ?>
+
+                                                        <div class="col-md-12">
                                                             <?php
-                                                            $respuestas = $pregunta->getRespuestas();
-                                                            ?>
-
-                                                            <div class="col-md-12">
-                                                                <?php
-                                                                foreach ($respuestas as $j => $respuesta) {
-                                                                    $contOpciones++;
-                                                                    if ($pregunta->getTipo() == 1) {
-                                                                        if ($respuestasSolucion[$i]->getRespuesta() == $respuesta->getRespuesta()) {
-                                                                            if ($respuesta->getCorrecta() == 1) {
-                                                                                $color = "#237965";
-                                                                            } else {
-                                                                                $color = "#E25B64";
-                                                                            }
-                                                                            ?>
-                                                                            <i class="fas fa-hand-point-right letra" style="color: <?= $color ?>"></i>
-                                                                            <?php
-                                                                        }
-                                                                        if ($respuesta->getCorrecta() == 0) {
-                                                                            $icono = "fas fa-times";
+                                                            foreach ($respuestas as $j => $respuesta) {
+                                                                $contOpciones++;
+                                                                if ($pregunta->getTipo() == 1) {
+                                                                    if ($respuestasSolucion[$i]->getRespuesta() == $respuesta->getRespuesta()) {
+                                                                        if ($respuesta->getCorrecta() == 1) {
+                                                                            $color = "#237965";
                                                                         } else {
-                                                                            $icono = "fas fa-check";
-                                                                        }
-                                                                        ?>  <span><?= $contOpciones . ') ' . $respuesta->getRespuesta() ?> <i class="<?= $icono ?> letra"></i></span><br>
-                                                                        <?php
-                                                                    } else {
-                                                                        if ($contOpciones == 1) {
-                                                                            ?><textarea style="resize: none;" readonly  rows="5" cols="10"  class="form-control mb-3" ><?= $respuestasSolucion[$i]->getRespuesta() ?></textarea><?php
-                                                                            }
+                                                                            $color = "#E25B64";
                                                                         }
                                                                         ?>
-
+                                                                        <i class="fas fa-hand-point-right letra" style="color: <?= $color ?>"></i>
+                                                                        <?php
+                                                                    }
+                                                                    if ($respuesta->getCorrecta() == 0) {
+                                                                        $icono = "fas fa-times";
+                                                                    } else {
+                                                                        $icono = "fas fa-check";
+                                                                    }
+                                                                    ?>  <span><?= $contOpciones . ') ' . $respuesta->getRespuesta() ?> <i class="<?= $icono ?> letra"></i></span><br>
                                                                     <?php
-                                                                }
-                                                                $contOpciones = 0;
-                                                                ?>
-                                                            </div>
-                                                        </div>
+                                                                } else {
+                                                                    if ($contOpciones == 1) {
+                                                                        ?><textarea style="resize: none;" readonly  rows="5" cols="10"  class="form-control mb-3" ><?= $respuestasSolucion[$i]->getRespuesta() ?></textarea><?php
+                                                                        }
+                                                                    }
+                                                                    ?>
 
-                                                    </section>
-                                                    <?php
-                                                }
-                                                ?>
-
-                                            </div>
-                                            <div class="col-md-8 mx-auto border pb-3 mt-3">
-                                                <section class="mx-auto mt-3 white-dark text-left orange lighten-3 pt-1 rounded py-2 my-2">
-                                                    <div class="row px-4">
-                                                        <div class="col-md-12 mx-auto">
-                                                            <h5 class="text-center">Anotación</h5>
-                                                            <textarea style="resize: none;"  readonly  rows="5" cols="10"  class="form-control mb-3" ><?= $correccion->getAnotacion()[0] ?></textarea>
-
+                                                                <?php
+                                                            }
+                                                            $contOpciones = 0;
+                                                            ?>
                                                         </div>
                                                     </div>
+
                                                 </section>
-
-                                            </div>
+                                                <?php
+                                            }
+                                            ?>
                                         </div>
+                                        <!--ANOTACION-->
+                                        <div class="col-md-8 mx-auto border pb-3 mt-3">
+                                            <section class="mx-auto mt-3 white-dark text-left orange lighten-3 pt-1 rounded py-2 my-2">
+                                                <div class="row px-4">
+                                                    <div class="col-md-12 mx-auto">
+                                                        <h5 class="text-center">Anotación</h5>
+                                                        <textarea style="resize: none;"  readonly  rows="5" cols="10"  class="form-control mb-3" ><?= $correccion->getAnotacion()[0] ?></textarea>
 
-                                        <!-- Social shares -->
+                                                    </div>
+                                                </div>
+                                            </section>
 
+                                        </div>
                                     </div>
-                                    <!-- Card content -->
-
                                 </div>
-                                <!-- Card -->
-
-
-
                             </div>
-                            <!-- Grid column -->
-
                         </div>
-                        <!-- Grid row -->
-
-                        <hr class="mb-5 mt-4">
-
                     </section>
-                    <!--Section: Content-->
                 </form>
             </div>
         </main>
-    </div>
-    <footer class="footer-copyright text-center text-white py-3 z-depth-2 colorNav fixed-bottom">
-        <div> © 2020 Copyright: Israel y María</div>
-    </footer>
+        <!--******************************************************************************-->
+        <!--******************************************************************************-->
+        <footer class="footer-copyright text-center text-white py-3 z-depth-2 colorNav fixed-bottom">
+            <div> © 2020 Copyright: Israel y María</div>
+        </footer>
 
 
-    <!-- jQuery -->
-    <script type="text/javascript" src="../js/jquery.min.js"></script>
-    <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="../js/popper.min.js"></script>
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
-    <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="../js/mdb.min.js"></script>
-    <!-- Your custom scripts (optional) -->
-    <script type="text/javascript" src="../js/validar.js"></script>
-    <script type="text/javascript" src="../js/diseño.js"></script>
-</body>
+        <!-- jQuery -->
+        <script type="text/javascript" src="../js/jquery.min.js"></script>
+        <!-- Bootstrap tooltips -->
+        <script type="text/javascript" src="../js/popper.min.js"></script>
+        <!-- Bootstrap core JavaScript -->
+        <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+        <!-- MDB core JavaScript -->
+        <script type="text/javascript" src="../js/mdb.min.js"></script>
+        <!-- Your custom scripts (optional) -->
+        <script type="text/javascript" src="../js/validar.js"></script>
+        <script type="text/javascript" src="../js/diseño.js"></script>
+    </body>
 </html>

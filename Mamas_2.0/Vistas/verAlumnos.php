@@ -31,6 +31,8 @@ and open the template in the editor.
         $asignaturas = $_SESSION['asignaturasImpartidas'];
         $asignatura = $asignaturas[0];
         ?>
+        <!--******************************************************************************-->
+        <!--******************************************************************************-->
         <header>
             <form name="formu" action="../Controlador/controladorProfesor.php" method="post">
                 <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar colorNav">
@@ -100,21 +102,21 @@ and open the template in the editor.
                 </nav>
             </form>
         </header>
+        <!--******************************************************************************-->
+        <!--******************************************************************************-->
         <main class="pb-5 pt-5">
             <div class="container-fluid my-5">
                 <div class="row mt-4">
                     <div class="col-lg-7 mx-auto">
                         <div class="card card-cascade narrower">
-                            <!--Card image-->
                             <div class="view view-cascade gradient-card-header mean-fruit-gradient narrower pt-2 mx-4  justify-content-between align-items-center">
                                 <h4 class="white-text text-center">Mis alumnos</h4>
                             </div>
-                            <!--/Card image-->
                             <div class="px-4">
                                 <div class="table-responsive">
-                                    <!--Table-->
+                                    <!--TABLA-->
                                     <table class="table table-hover mb-0">
-                                        <!--Table head-->
+                                        <!--CABECERA-->
                                         <thead>
                                             <tr>
                                                 <th></th>
@@ -137,9 +139,7 @@ and open the template in the editor.
                                                 <th></th>
                                             </tr>
                                         </thead>
-                                        <!--Table head-->
-
-                                        <!--Table body-->
+                                        <!--CUERPO-->
                                         <tbody>
                                             <?php
                                             for ($i = 0; $i < count($asignaturas); $i++) {
@@ -172,17 +172,16 @@ and open the template in the editor.
                                             }
                                             ?>
                                         </tbody>
-                                        <!--Table body-->
                                     </table>
-                                    <!--Table-->
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </main>
+        <!--******************************************************************************-->
+        <!--******************************************************************************-->
         <footer class="footer-copyright text-center text-white py-3 z-depth-2 colorNav fixed-bottom">
             <div> © 2020 Copyright: Israel y María</div>
         </footer>

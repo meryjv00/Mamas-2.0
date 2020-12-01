@@ -23,6 +23,8 @@ and open the template in the editor.
         include_once '../Modelo/Alumno.php';
         session_start()
         ?>
+        <!--******************************************************************************-->
+        <!--******************************************************************************-->
         <header>
             <nav class="row navbar navbar-expand-lg navbar-dark fixed-top colorNav">
                 <div class="container-fluid ml-5 mr-5">
@@ -54,6 +56,8 @@ and open the template in the editor.
                 </div>
             </nav>
         </header>
+        <!--******************************************************************************-->
+        <!--******************************************************************************-->
         <div class="pt-5"></div>
         <div class="container my-5 px-0 z-depth-1 mb-5">
             <!--Section: Content-->
@@ -207,22 +211,16 @@ and open the template in the editor.
                                             <button type="submit" name="crearUsuario" class="btn mean-fruit-gradient text-white btn-block 
                                                     btn-rounded my-4 waves-effect z-depth-1a">Registrar</button>
                                         </div>
-
                                     </form>
-                                    <!-- Form -->
-
                                 </div>
-
                             </div>
-                            <!-- Material form login -->
                         </div>
                     </div>
-
                 </div>
-
             </section>
-            <!--Section: Content-->
         </div>
+        <!--******************************************************************************-->
+        <!--******************************************************************************-->
         <footer class="footer-copyright text-center text-white py-3 z-depth-2 colorNav fixed-bottom">
             <div> © 2020 Copyright: Israel y María</div>
         </footer>

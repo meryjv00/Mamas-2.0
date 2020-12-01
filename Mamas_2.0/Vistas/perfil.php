@@ -29,10 +29,12 @@ and open the template in the editor.
         $examenesPendientes = $_SESSION['examenesPendientes'];
         $controlador = '../Controlador/controladorAlumno.php';
         ?>
-
+        <!--******************************************************************************-->
+        <!--******************************************************************************-->
         <header>
             <nav class="row navbar navbar-expand-lg navbar-dark fixed-top colorNav">
                 <div class="container-fluid">
+                    <!--LEFT-->
                     <ul class="navbar-nav mr-auto ml-5">
                         <li class="nav-item">
 
@@ -57,6 +59,7 @@ and open the template in the editor.
                             </form>
                         </li> 
                     </ul>
+                    <!--RIGHT-->
                     <ul class="navbar-nav ml-auto mr-5">
                         <li class="nav-item">
 
@@ -75,6 +78,8 @@ and open the template in the editor.
                 </div>
             </nav>
         </header>
+        <!--******************************************************************************-->
+        <!--******************************************************************************-->
         <main class="pb-5 pt-5 ml-4 mb-5">
             <div class="container-fluid row">
                 <div class="col-md-4 mt-5 mx-auto">
@@ -95,7 +100,6 @@ and open the template in the editor.
                                      }
                                      ?>
                             </div>
-
                             <h2 class="font-weight-bold my-4 text-center letra"><?= $usuario->getNombre() . ' ' ?><?= $usuario->getApellidos() ?></h2>
                             <p class="grey-text font-weight-bold">
                                 <?php
@@ -103,11 +107,11 @@ and open the template in the editor.
                                     ?>
                                     Alumno - DAW:
                                     <?php
-                                } else if($usuario->getRol() == 1){
+                                } else if ($usuario->getRol() == 1) {
                                     ?>
                                     Profesor - DAW:
                                     <?php
-                                }else{
+                                } else {
                                     ?>
                                     Profesor Administrador - DAW:
                                     <?php
@@ -141,9 +145,9 @@ and open the template in the editor.
                                 <!--BOTON-->
                                 <div class="text-center mb-3 pl-5 pr-5">
                                     <button type="submit" name="editarFotoPerfil"  class="btn purple lighten-3 text-white 
-                                            btn-block btn-rounded my-4 waves-effect z-depth-1a">Editar foto</button>
+                                            btn-block btn-rounded my-4 waves-effect z-depth-1a">Editar foto
+                                    </button>
                                 </div>
-
                                 <hr>
                             </form>
                             <p class="grey-text font-weight-bold">Datos personales:</p>
@@ -169,7 +173,8 @@ and open the template in the editor.
 
                                         <div class="text-center mb-3 pl-5 pr-5">
                                             <button type="submit" name="editarTfno"  class="btn purple lighten-3 text-white 
-                                                    btn-block btn-rounded my-4 waves-effect z-depth-1a">Editar número de teléfono</button>
+                                                    btn-block btn-rounded my-4 waves-effect z-depth-1a">Editar número de teléfono
+                                            </button>
                                         </div>
                                     </div>
 
@@ -193,23 +198,21 @@ and open the template in the editor.
                                         </div>
                                         <div class="text-center mb-3 pl-5 pr-5">
                                             <button type="submit" name="nuevaPass"  class="btn purple lighten-3 text-white 
-                                                    btn-block btn-rounded my-4 waves-effect z-depth-1a">Confirmar</button>
+                                                    btn-block btn-rounded my-4 waves-effect z-depth-1a">Confirmar
+                                            </button>
                                         </div>
-
                                     </div>
-
                                 </div>
                             </form>
                             <hr>
                         </div>
-                        <!-- Content -->
-
                     </div>
                 </div>
             </div>
         </div>
     </main>
-
+        <!--******************************************************************************-->
+        <!--******************************************************************************-->
     <footer class="footer-copyright text-center text-white py-3 z-depth-2 colorNav fixed-bottom">
         <div> © 2020 Copyright: Israel y María</div>
     </footer>

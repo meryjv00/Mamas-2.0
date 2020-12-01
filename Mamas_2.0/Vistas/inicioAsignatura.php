@@ -33,6 +33,8 @@ and open the template in the editor.
         $examenesCorregidos = $_SESSION['examenesC'];
         $controlador = '../Controlador/controladorAlumno.php';
         ?>
+        <!--******************************************************************************-->
+        <!--******************************************************************************-->
         <header class="bg-white">
             <nav class="row navbar navbar-expand-lg navbar-dark fixed-top colorNav">
                 <div class="container-fluid">
@@ -74,6 +76,8 @@ and open the template in the editor.
                 </div>
             </nav>
         </header>
+        <!--******************************************************************************-->
+        <!--******************************************************************************-->
         <main class="pb-5 pt-5 mb-5">
             <?php
             if (isset($_SESSION['mensaje'])) {
@@ -87,8 +91,6 @@ and open the template in the editor.
             }
             ?>
             <div class="container-fluid my-4 py-4  mb-5">
-
-                <!-- Section: Block Content -->
                 <section class="row altura d-flex justify-content-center align-items-center">
 
                     <style>
@@ -208,6 +210,8 @@ and open the template in the editor.
                 </section>
             </div>
         </main>
+        <!--******************************************************************************-->
+        <!--******************************************************************************-->
         <footer class="footer-copyright text-center text-white py-3 z-depth-2 colorNav fixed-bottom">
             <div> © 2020 Copyright: Israel y María</div>
         </footer>

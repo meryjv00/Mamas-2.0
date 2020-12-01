@@ -38,7 +38,7 @@ if (isset($_REQUEST['cerrarSesion'])) {
 }
 
 
-//-----------------EDITAR FOTO PERFIL
+//-----------------EDITAR FOTO PERFIL AUTOR:MARIA
 if (isset($_REQUEST['editarFotoPerfil'])) {
     gestionDatos::updateFoto($usuario->getId());
 //Obtiene el usuario con la foto actualizada y lo guarda en sesión  
@@ -46,7 +46,7 @@ if (isset($_REQUEST['editarFotoPerfil'])) {
     header('Location: ../Vistas/perfil.php');
 }
 
-//-----------------EDITAR NUMERO TELEFONO
+//-----------------EDITAR NUMERO TELEFONO AUTOR:MARIA
 if (isset($_REQUEST['editarTfno'])) {
     $tfno = $_REQUEST['tfno'];
     $usuario->setTelefono($tfno);
@@ -57,7 +57,7 @@ if (isset($_REQUEST['editarTfno'])) {
     header('Location: ../Vistas/perfil.php');
 }
 
-//-----------------EDITAR CONTRASEÑA
+//-----------------EDITAR CONTRASEÑA AUTOR:MARIA
 if (isset($_REQUEST['nuevaPass'])) {
     $pass = md5($_REQUEST['pass']);
     if (!gestionDatos::updatePass($usuario, $pass)) {

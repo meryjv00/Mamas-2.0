@@ -28,6 +28,8 @@ and open the template in the editor.
         session_start();
         $usuarios = $_SESSION['usuarios'];
         ?>
+        <!--******************************************************************************-->
+        <!--******************************************************************************-->
         <header>
             <form name="cerrarSes" action="../Controlador/controladorCrud.php" method="post">
                 <nav class="row navbar navbar-expand-lg navbar-dark fixed-top colorNav">
@@ -65,6 +67,8 @@ and open the template in the editor.
                 </nav>
             </form>
         </header>
+        <!--******************************************************************************-->
+        <!--******************************************************************************-->
         <div class="pt-5"></div>
         <main class="my-5 z-depth-1">
             <div class="container">
@@ -122,13 +126,10 @@ and open the template in the editor.
 
                                             </div>
                                             <!--/Card image-->
-
                                             <div class="px-4">
-
                                                 <div class="table-responsive">
                                                     <!--Table-->
                                                     <table class="table table-hover mb-0">
-
                                                         <!--Table head-->
                                                         <thead>
                                                             <tr>
@@ -157,8 +158,6 @@ and open the template in the editor.
                                                                 <th></th>
                                                             </tr>
                                                         </thead>
-                                                        <!--Table head-->
-
                                                         <!--Table body-->
                                                         <tbody>
                                                             <?php
@@ -214,15 +213,10 @@ and open the template in the editor.
                                                                 <?php
                                                             }
                                                             ?>
-
                                                         </tbody>
-                                                        <!--Table body-->
                                                     </table>
-                                                    <!--Table-->
                                                 </div>
-
                                             </div>
-
                                         </div>
                                     </form>
                                 </div>
@@ -232,6 +226,8 @@ and open the template in the editor.
                 </section>
             </div>
         </main>
+        <!--******************************************************************************-->
+        <!--******************************************************************************-->
         <footer class="footer-copyright text-center text-white py-3 z-depth-2 colorNav fixed-bottom">
             <div> © 2020 Copyright: Israel y María</div>
         </footer>

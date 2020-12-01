@@ -115,7 +115,7 @@ if (isset($_REQUEST['login'])) {
     }
 }
 
-//---------------REGISTRO
+//---------------REGISTRO  AUTOR:MARIA
 if (isset($_REQUEST['registro'])) {
     $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
     $recaptcha_secret = '6LetBuUZAAAAACJbleMS9s-GX9s5jhcdRL4gtPP8';
@@ -188,7 +188,7 @@ if (isset($_REQUEST['perfil'])) {
     header('Location: ../Vistas/perfil.php');
 }
 
-//-----------------EDITAR FOTO PERFIL
+//-----------------EDITAR FOTO PERFIL AUTOR:MARIA
 if (isset($_REQUEST['editarFotoPerfil'])) {
     gestionDatos::updateFoto($usuario->getId());
     //Obtiene el usuario con la foto actualizada y lo guarda en sesión  
@@ -204,7 +204,7 @@ if (isset($_REQUEST['editarFotoPerfil'])) {
     }
 }
 
-//-----------------EDITAR NUMERO TELEFONO
+//-----------------EDITAR NUMERO TELEFONO AUTOR:MARIA
 if (isset($_REQUEST['editarTfno'])) {
     $tfno = $_REQUEST['tfno'];
     $usuario->setTelefono($tfno);
@@ -220,7 +220,7 @@ if (isset($_REQUEST['editarTfno'])) {
     }
 }
 
-//-----------------EDITAR CONTRASEÑA
+//-----------------EDITAR CONTRASEÑA AUTOR:MARIA
 if (isset($_REQUEST['nuevaPass'])) {
     $pass = md5($_REQUEST['pass']);
     if (!gestionDatos::setPassword($usuario->getEmail(), $pass)) {

@@ -28,6 +28,8 @@ and open the template in the editor.
         $usuario = $_SESSION['usuario'];
         $asignatura = $_SESSION['asignaturasImpartidas'];
         ?>
+        <!--******************************************************************************-->
+        <!--******************************************************************************-->
         <header>
             <form name="formu" action="../Controlador/controladorProfesor.php" method="post">
                 <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar colorNav">
@@ -97,6 +99,8 @@ and open the template in the editor.
                 </nav>
             </form>
         </header>
+        <!--******************************************************************************-->
+        <!--******************************************************************************-->
         <main class="pb-5 pt-5 mb-5">
             <div class="container-fluid row ">
                 <div class="col-md-9 mt-5">
@@ -301,6 +305,8 @@ and open the template in the editor.
                 </div>
             </div>
         </main>
+        <!--******************************************************************************-->
+        <!--******************************************************************************-->
         <footer class="footer-copyright text-center text-white py-3 z-depth-2 colorNav fixed-bottom">
             <div> © 2020 Copyright: Israel y María</div>
         </footer>
