@@ -11,12 +11,13 @@ and open the template in the editor.
     </head>
     <body>
         <?php
+        include_once '../Auxiliar/constantes.php';
         session_start();
 
         use PHPMailer\PHPMailer\PHPMailer;
         use PHPMailer\PHPMailer\SMTP;
 
-        require_once '../phpmailer/src/Exception.php';
+require_once '../phpmailer/src/Exception.php';
         require_once '../phpmailer/src/PHPMailer.php';
         require_once '../phpmailer/src/SMTP.php';
         require_once '../Auxiliar/gestionDatos.php';
@@ -32,14 +33,14 @@ and open the template in the editor.
             $mail = new PHPMailer();
             try {
                 $mail->isSMTP();
-                $mail->Host = 'smtp.gmail.com';  // Host de conexión SMTP
+                $mail->Host = constantes::$smtpMail;  // Host de conexión SMTP
                 $mail->SMTPAuth = true;
-                $mail->Username = 'AuxiliarDAW2@gmail.com';
-                $mail->Password = 'Chubaca20';
+                $mail->Username = constantes::$usuarioMail;
+                $mail->Password = constantes::$passMail;
                 $mail->SMTPSecure = 'ssl';
                 $mail->Port = 465;
 
-                $mail->setFrom('AuxiliarDAW2@gmail.com');
+                $mail->setFrom(constantes::$usuarioMail);
                 $mail->addAddress($emailDestino);
 
                 $mail->isHTML(true);
@@ -67,6 +68,6 @@ and open the template in the editor.
             header('Location: ../Vistas/olvidado.php');
         }
         ?>
-        
+
     </body>
 </html>

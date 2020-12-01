@@ -17,6 +17,11 @@ body{
     font-size: 90px;
     color:  #543b54; 
 }
+.tit3{
+    font-family: Pacifico;
+    font-size: 35px;
+    color:  #543b54; 
+}
 .letra{
     color:  #543b54; 
 }
@@ -49,7 +54,7 @@ button, input[type=submit]{
 }
 .titulo{
     font-family: Rubik;
-    font-size: 22px;
+    font-size: 30px;
     color:  #543b54; 
 }
 .titulo2{
@@ -60,4 +65,17 @@ button, input[type=submit]{
 
 .t1{
     font-size: 30px;
+}
+
+#preguntasCreadas li{
+    margin-top: 10px;
+}
+#preguntasCreadas li p:nth-child(1), .enunciadoPregunta{
+    background-color: #d5e1df;
+}
+.colorNav{
+    background: #543B54;
+}
+#navbarTogglerDemo02.show{
+    display: flex;
 }

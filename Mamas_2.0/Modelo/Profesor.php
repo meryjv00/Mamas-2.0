@@ -15,8 +15,23 @@ include_once 'Usuario.php';
 
 class Profesor extends Usuario {
 
+    private $correcciones;
+
     public function __construct($id, $email, $dni, $nombre, $apellidos, $telefono, $activo, $imagen) {
+        $this->correcciones = array();
         parent::__construct($id, $email, $dni, $nombre, $apellidos, $telefono, $activo, $imagen);
+    }
+
+    function getCorrecciones() {
+        return $this->correcciones;
+    }
+
+    function setCorrecciones($correcciones): void {
+        $this->correcciones = $correcciones;
+    }
+
+    function addCorreccion($correc) {
+        $this->correcciones[] = $correc;
     }
 
 }

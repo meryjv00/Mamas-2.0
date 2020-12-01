@@ -6,6 +6,8 @@
  * and open the template in the editor.
  */
 include_once '../Modelo/Usuario.php';
+include_once '../Modelo/Profesor.php';
+        include_once '../Modelo/Alumno.php';
 include_once '../Auxiliar/gestionDatos.php';
 session_start();
 
