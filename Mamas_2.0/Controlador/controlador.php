@@ -43,7 +43,6 @@ if (isset($_REQUEST['login'])) {
                     if ($usuario->getRol() == 0) { //ROL ALUMNO
                         $alumno = $usuario; // nombre alumno , ya que contiene un objeto alumno. Por evitar confusiones.
                         $asig = gestionDatos::inicializarAlumno($alumno->getId());
-                        $_SESSION['alumno'] = $alumno;
                         $_SESSION['asignaturasImpartidas'] = $asig;
                         $examenesPendientes = array();
                         $examenesCorregidos = array();
@@ -66,10 +65,10 @@ if (isset($_REQUEST['login'])) {
                                 }
                             }
                         }
-
                         $_SESSION['examenesPendientes'] = $examenesPendientes;
                         $_SESSION['examenesR'] = $examenesRealizados;
                         $_SESSION['examenesC'] = $examenesCorregidos;
+
                         header('Location: ../Vistas/inicio.php');
                     } else if ($usuario->getRol() == 1 || $usuario->getRol() == 2) { //ROL ADMIN O PROFESOR
                         $profesor = $usuario; // nombre pofesor , ya que contiene un objeto profesor . Por evitar confusiones.
@@ -88,8 +87,8 @@ if (isset($_REQUEST['login'])) {
                             }
                         }
                         $_SESSION['examenesPendientes'] = $examenesPendientes;
-                        $_SESSION['examenesR'] = 0;
-                        $_SESSION['examenesC'] = 0;
+                        $_SESSION['examenesR'] = [];
+                        $_SESSION['examenesC'] = [];
                         $_SESSION['origen'] = 'profesor';
                         $_SESSION['usuario'] = $profesor;
                         header('Location: ../Vistas/inicioProfesor.php');

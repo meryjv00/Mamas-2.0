@@ -166,40 +166,44 @@ and open the template in the editor.
                                 </div>
                             </div>
                         </div>
-
-                        <div class="row mb-5">
-                            <div class="col-md-6  mb-4">
-                                <div class="card purple lighten-3 white-text">
-                                    <div class="card-body d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <p class="h2-responsive font-weight-bold mt-n2 mb-0"><?= count($examenesRealizados) + count($examenesPendientes) ?></p>
-                                            <p class="mb-0">Exámenes</p>
+                        <form action="../Controlador/controladorAlumno.php" method="post">
+                            <div class="row mb-5">
+                                <div class="col-md-6  mb-4">
+                                    <div class="card purple lighten-3 white-text">
+                                        <div class="card-body d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <p class="h2-responsive font-weight-bold mt-n2 mb-0"><?= count($examenesRealizados) + count($examenesPendientes) ?></p>
+                                                <p class="mb-0">Exámenes</p>
+                                            </div>
+                                            <div>
+                                                <i class="fas fa-check-double fa-4x text-black-40"></i>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <i class="fas fa-check-double fa-4x text-black-40"></i>
-                                        </div>
+                                        <button class="card-footer footer-hover small text-center white-text border-0 p-2" type="submit" name="verExamenesAlumno">
+                                            Más información<i class="fas fa-arrow-circle-right pl-2"></i>
+                                        </button>
                                     </div>
-                                    <a class="card-footer footer-hover small text-center white-text border-0 p-2">Más información<i class="fas fa-arrow-circle-right pl-2"></i></a>
+                                </div>
+
+                                <div class="col-md-6  mb-4">
+                                    <div class="card orange lighten-3 white-text">
+                                        <div class="card-body d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <p class="h2-responsive font-weight-bold mt-n2 mb-0 pr-2"><i class="fas fa-graduation-cap fa-x "></i> </p>
+                                                <p class="mb-0">Resultados</p>
+                                            </div>
+                                            <div>
+                                                <i class="fas fa-chart-pie fa-4x text-black-40"></i>
+                                            </div>
+                                        </div>
+                                        <button class="card-footer footer-hover small text-center white-text border-0 p-2" type="submit" name="verNotasAlumno">
+                                            Más información<i class="fas fa-arrow-circle-right pl-2"></i>
+                                        </button>                                
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="col-md-6  mb-4">
-                                <div class="card orange lighten-3 white-text">
-                                    <div class="card-body d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <p class="h2-responsive font-weight-bold mt-n2 mb-0 pr-2"><i class="fas fa-graduation-cap fa-x "></i> </p>
-                                            <p class="mb-0">Resultados</p>
-                                        </div>
-                                        <div>
-                                            <i class="fas fa-chart-pie fa-4x text-black-40"></i>
-                                        </div>
-                                    </div>
-                                    <a class="card-footer footer-hover small text-center white-text border-0 p-2">Más información<i class="fas fa-arrow-circle-right pl-2"></i></a>
-                                </div>
-                            </div>
-                        </div>
+                        </form>
                     </div>
-
                 </section>
             </div>
         </main>

@@ -196,30 +196,30 @@ and open the template in the editor.
                                                                 unset($alumnosExamen);
                                                             } else {
                                                                 ?> <i class="fas fa-check-double"></i><?php
-                                                    }
-                                                    }
-                                                                ?></td>
-                                                            <td><?php echo $examen->getContenido(); ?></td>
-                                                            <td><span class="badge badge-<?php
-                                                                if ($examen->getActivo() == 0) {
-                                                                    //Cambia el color de verde en activado y rojo en desactivado
-                                                                    echo'danger';
-                                                                } else {
-                                                                    echo'success';
-                                                                }
-                                                                ?>"><?php
-                                                                          if ($examen->getActivo() == 0) {
-                                                                              //Cambia el color de verde en activado y rojo en desactivado
-                                                                              echo'Desactivado';
-                                                                          } else {
-                                                                              echo'Activado';
-                                                                          }
-                                                                          ?></span></td>
-                                                            <td class="pt-2 pb-0"><?php echo count($examen->getPreguntas()); ?></td>
-                                                        </tr>
-            <?php
-        }
-        ?>
+                                                            }
+                                                        }
+                                                        ?></td>
+                                                    <td><?php echo $examen->getContenido(); ?></td>
+                                                    <td><span class="badge badge-<?php
+                                                        if ($examen->getActivo() == 0) {
+                                                            //Cambia el color de verde en activado y rojo en desactivado
+                                                            echo'danger';
+                                                        } else {
+                                                            echo'success';
+                                                        }
+                                                        ?>"><?php
+                                                                  if ($examen->getActivo() == 0) {
+                                                                      //Cambia el color de verde en activado y rojo en desactivado
+                                                                      echo'Desactivado';
+                                                                  } else {
+                                                                      echo'Activado';
+                                                                  }
+                                                                  ?></span></td>
+                                                    <td class="pt-2 pb-0"><?php echo count($examen->getPreguntas()); ?></td>
+                                                </tr>
+                                                <?php
+                                            }
+                                            ?>
                                         </tbody>
                                     </table>
                                 </form>
