@@ -18,7 +18,7 @@ class Pregunta {
     private $enunciado;
     private $tipo;
     private $puntuacion;
-    private $respuestas = array();
+    private $respuestas;
 
     function __construct($id, $profesor, $enunciado, $tipo, $puntuacion) {
         $this->id = $id;
@@ -26,6 +26,7 @@ class Pregunta {
         $this->enunciado = $enunciado;
         $this->tipo = $tipo;
         $this->puntuacion = $puntuacion;
+        $this->respuestas = array();
     }
 
     function getId() {

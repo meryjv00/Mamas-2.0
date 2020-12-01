@@ -19,35 +19,43 @@ and open the template in the editor.
     <body onload="validarRegistro()">
         <?php
         require_once '../Modelo/Usuario.php';
+        include_once '../Modelo/Profesor.php';
+        include_once '../Modelo/Alumno.php';
         session_start()
         ?>
         <header>
-            <nav class="row navbar navbar-expand-lg navbar-dark fixed-top">
+            <nav class="row navbar navbar-expand-lg navbar-dark fixed-top colorNav">
                 <div class="container-fluid ml-5 mr-5">
-                    <!--Left-->
-                    <ul class="navbar-nav mr-auto smooth-scroll">
-                        <li>
-                            <a href="crudAdmin.php" class="btn mean-fruit-gradient btn-rounded text-white">
-                                <i class="fas fa-arrow-left"></i>
-                            </a>
-                        </li>
-                    </ul>
-                    <!-- Right -->
-                    <ul class="navbar-nav ">
-                        <li class="nav-item">
-                            <form name="cerrarSes" action="../Controlador/controladorCrud.php" method="post">
-                                <button type="submit" class="btn mean-fruit-gradient text-white
-                                        btn-rounded waves-effect z-depth-1a" name="cerrarSesion" value="Cerrar sesión">
-                                    <i class="fas fa-sign-out-alt"></i>
-                                </button>
-                            </form>
-                        </li> 
-                    </ul>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+                            aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                        <!--Left-->
+                        <ul class="navbar-nav mr-auto smooth-scroll">
+                            <li>
+                                <a href="crudAdmin.php" class="btn mean-fruit-gradient btn-rounded text-white">
+                                    <i class="fas fa-arrow-left"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- Right -->
+                        <ul class="navbar-nav ">
+                            <li class="nav-item">
+                                <form name="cerrarSes" action="../Controlador/controladorCrud.php" method="post">
+                                    <button type="submit" class="btn mean-fruit-gradient text-white
+                                            btn-rounded waves-effect z-depth-1a" name="cerrarSesion" value="Cerrar sesión">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                    </button>
+                                </form>
+                            </li> 
+                        </ul>
+                    </div>
                 </div>
             </nav>
         </header>
         <div class="pt-5"></div>
-        <div class="container my-5 px-0 z-depth-1">
+        <div class="container my-5 px-0 z-depth-1 mb-5">
             <!--Section: Content-->
             <section class="pb-5 my-md-5 text-center">
                 <div class="my-5 mx-md-5">
@@ -215,7 +223,9 @@ and open the template in the editor.
             </section>
             <!--Section: Content-->
         </div>
-
+        <footer class="footer-copyright text-center text-white py-3 z-depth-2 colorNav fixed-bottom">
+            <div> © 2020 Copyright: Israel y María</div>
+        </footer>
         <!-- jQuery -->
         <script type="text/javascript" src="../js/jquery.min.js"></script>
         <!-- Bootstrap tooltips -->

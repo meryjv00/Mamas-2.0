@@ -66,7 +66,7 @@ and open the template in the editor.
                             <hr class="hr-light my-4 w-75">
                             <h4 class="subtext-header mt-2 mb-4">Hoy en día el aprendizaje no conoce barreras. Accede al aula virtual o haz un 
                                 recorrido para que conozcas su funcionamiento</h4>
-                            
+
                         </div>
                     </div>
                 </div>
