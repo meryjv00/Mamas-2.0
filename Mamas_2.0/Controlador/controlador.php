@@ -15,7 +15,7 @@ if (isset($_SESSION['usuario'])) {
     $asignaturas = $_SESSION['asignaturasImpartidas'];
     $examenesPendientes = $_SESSION['examenesPendientes'];
 }
-//---------------LOGIN
+//---------------LOGIN------AUTOR: ISRAEL MOLINA PULPON
 if (isset($_REQUEST['login'])) {
     $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
     $recaptcha_secret = '6LdU7-QZAAAAAChZ7pnDbgTL--nSmYG6aJxTMj2f';
@@ -244,7 +244,7 @@ if (isset($_REQUEST['salirAlumno'])) {
     }
     header('Location: ../Vistas/inicioProfesor.php');
 }
-//------------------REALIZAR EXAMEN
+//------------------REALIZAR EXAMEN----------AUTOR: ISRAEL MOLINA PULPON
 if (isset($_REQUEST['realizarExamen'])) {
     $idE = $_REQUEST['realizarExamen'];
     foreach ($examenesPendientes as $key => $examen) {

@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+autor: Israel Molina Pulpon
 -->
 <html>
     <head>
@@ -39,7 +37,7 @@ and open the template in the editor.
             $controlador = '../Controlador/controlador.php';
         }
         ?>
-
+        <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
         <header>
             <nav class="row navbar navbar-expand-lg navbar-dark fixed-top colorNav">
                 <div class="container-fluid">
@@ -82,6 +80,7 @@ and open the template in the editor.
                 </div>
             </nav>
         </header>
+        <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
         <main class="pt-5 mb-5">
             <div class="container mt-5 ">
                 <section class="mx-md-5 dark-grey-text">
@@ -171,6 +170,7 @@ and open the template in the editor.
                 </section>
             </div>
         </main> 
+        <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
         <footer class="footer-copyright text-center text-white py-3 z-depth-2 colorNav fixed-bottom">
             <div> © 2020 Copyright: Israel y María</div>
         </footer>
